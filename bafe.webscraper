@@ -1,0 +1,1 @@
+{"_id":"bafe","startUrl":["http://bafe.fr"],"selectors":[{"id":"link_title","type":"SelectorLink","parentSelectors":["_root","next_page"],"selector":".entry-header a","multiple":true,"delay":0},{"id":"next_page","type":"SelectorLink","parentSelectors":["_root","next_page"],"selector":"a.next","multiple":false,"delay":0}]}
