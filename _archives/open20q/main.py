@@ -1,0 +1,277 @@
+# According to the ideas of http://lists.canonical.org/pipermail/kragen-tol/2010-March/000912.html
+
+LICENSE = """Copyright (c) 2012, Gereon Kaiping <anaphory@yahoo.de>"""
+
+# Python2
+# Extending the array unsupported yet.
+
+import numpy
+from collections import OrderedDict
+
+def xlogx(x):
+    """Calculate x*log(x) for x array-like, continually extended to 0."""
+    x = numpy.asarray(x)
+    l = numpy.zeros_like(x)
+    l[x>0] = numpy.log(x[x>0])
+    return x * l
+
+def entropy(Ps):
+    """Calculate the 'Remaining Bit Rate' of the given probabilities.
+
+    That is, the entropy measured in 0.693 bits (i.e. using log instead of lg_2)
+    """
+    Ps = numpy.asarray(Ps)
+    Ps /= sum(Ps)
+    Ps[numpy.isnan(Ps)] = 0
+    return -sum(xlogx(Ps)) #/log(2), but that is a constant
+
+def bayes(P_X_given_Y, P_Y, P_X):
+    """Given P(X|Y), P(Y) and P(X), calculate P(Y|X)."""
+    P_X_given_Y = numpy.asarray(P_X_given_Y)
+    P_Y = numpy.asarray(P_Y)
+    P_X = numpy.asarray(P_X)
+    y = P_Y.view().reshape((1, -1))
+    x = P_X.view().reshape((-1, 1))
+    xy = P_X_given_Y.view().reshape((-1, y.shape[1]))
+    yx = ((xy*y)/x).transpose()
+    yx[numpy.isnan(yx)]=0
+    yx.shape = (P_Y.shape+P_X.shape)
+    return yx
+
+def entropy_after_answer(P_QA, P_XQA):
+    """Given the probabilities of all answers to all questions, calculate the expected entropy after getting an answer to every question."""
+    # There might be a more transparent formula.
+    # Use .sum(axes=) instead of sum(.transpose) ?
+    return sum((P_QA * entropy(P_XQA)).transpose())
+
+class open20q (object):
+
+    #additional answer to be displayed
+    additional = ["idk"]
+    
+    #conclusive question
+    final = "Are you thinking of %s?"
+
+    #generic answers
+    Yes = {"y": 1., "n": 0.}
+    No = {"y": 0., "n": 1.}
+
+    #probability for a totally random question
+    epsilon = 0.05
+
+    #Always assume that this many games have led to the current
+    #data. (This is something like a weight factor for the current
+    #game.)
+    n = 50
+
+    def __init__(self, items):
+        """
+        Parameters:
+        items   # {"Thing 1":
+                    {"Question 1":
+                      {"Answer 1.1": P(A1.1|T1),
+                       ...}
+                     ...}
+                   ...}
+        """
+        self.questions = OrderedDict()
+        max_answers = 3 #As in, one additional question, and every Question has at least two answers, otherwise we would not ask.
+        self.items = items.keys() #The keys of the dictionary passed are the items to be identified.
+
+        #Build a database of questions
+        for questions in items.values():
+            for (question, answers) in questions.iteritems():
+                known_answers = self.questions.setdefault(question, self.additional[:])
+                for answer in answers:
+                    if answer not in known_answers:
+                        known_answers.append(answer)
+                max_answers = max(max_answers, len(known_answers))
+        self.connections = numpy.zeros((len(self.questions), max_answers, len(items)))
+            #Use a sparse tensor or database implementation later.
+        for i, item in enumerate(self.items):
+            for q, (question, answers) in enumerate(self.questions.iteritems()):
+                for a in xrange(len(answers)):
+                    self.connections[q, a, i] = items.get(item, {}).get(question, {}).get(answers[a], 0)
+        self.item_frequencies = numpy.ones(len(self.items))
+        self.max_answers = max_answers
+
+    def ask(self, question, answers):
+        print question
+        print " / ".join(answers)
+        answer = raw_input()
+        try: # do with startswith instead
+            a = int(answer)
+        except ValueError:
+            try:
+                a = answers.index(answer)
+            except ValueError:
+                a = 0
+        return a
+        
+    def identify(self, max_questions=20):
+        P_X = self.item_frequencies
+        answers = {}
+        X = None
+        for counter in xrange(max_questions):
+            print entropy(P_X)
+            for i, item in enumerate(self.items):
+                print item, P_X[i],
+            print
+            entr = entropy(P_X)
+            if entr < 1 or counter == max_questions-1:
+                X = P_X.argmax()
+                if self.ask(self.final%self.items[X], ["n", "y"]):
+                    break
+                P_X[X] = 0
+                X = None
+                if entr == 0:
+                    break
+            else:
+                P_QA = numpy.tensordot(self.connections, P_X, 1)
+                P_XQA = bayes(self.connections, P_X, P_QA)
+                if numpy.random.random()<self.epsilon:
+                    print "Random Question:"
+                    q = numpy.random.randint(len(self.questions))
+                else:
+                    entropys = entropy_after_answer(P_QA, P_XQA)
+                    for q in answers.keys():
+                        entropys[q] = numpy.inf
+                    q = entropys.argmin()
+                    print "Best Question:"
+                question, q_answers = self.questions.items()[q]
+                a = self.ask(question, q_answers)
+                answers[q] = numpy.zeros(self.max_answers)
+                answers[q][a] = 1
+                P_X = P_XQA[:, q, a]
+
+        if X is None:
+            item_name = raw_input("What were you thinking of? - ")
+            try:
+                X = self.items.index(item_name)
+                #add_question(item)
+            except ValueError:
+                self.add_item(answers, item_name)
+        if X is not None:
+            self.update(answers, X)
+
+    def update(self, answers, item):
+        for q in answers.keys():
+            self.connections[q, :, item] *= (self.n-1.)/self.n
+            self.connections[q, :, item] += answers[q]/self.n
+            self.item_frequencies *= (self.n-1.)/self.n
+            self.item_frequencies[item] += 1./self.n
+
+    def add_item(self, answers, item):
+        self.connections = numpy.dstack(
+            (self.connections,
+             numpy.zeros((len(self.questions),
+                          self.max_answers,
+                          1))))
+        for q, answer in answers.iteritems():
+            self.connections[q, :, -1] = answer
+        self.item_frequencies *= (self.n-1.)/self.n
+        self.item_frequencies = numpy.hstack((
+            self.item_frequencies,
+            numpy.array(1./self.n)))
+        self.items.append(item)
+
+    def add_question(self, question, answers):
+        assert(len(answers)<=self.max_answers)
+            #Extending the array is not implemented yet.
+        self.connections = numpy.vstack((self.connections,
+             numpy.hstack((
+                 numpy.ones((1,
+                             len(answers),
+                             len(self.items))),
+                 numpy.zeros((1,
+                              self.max_answers-len(answers),
+                              len(self.items)))))))
+        self.questions[question]=answers
+  
+Yes = {"y": 1., "n": 0}
+No = {"y": 0., "n": 1}
+            
+numbers = open20q({
+    "0": {"Is X<=5?": Yes,
+          "Is X>5?": No,
+          "Is X odd?": No,
+          "Is X even?": Yes,
+          "Is X<=1?": Yes,
+          "Is X<=7?": Yes,
+          "Is X close to 5?": No,
+          "Is X prime?": No},
+    "1": {"Is X<=5?": Yes,
+          "Is X>5?": No,
+          "Is X odd?": Yes,
+          "Is X even?": No,
+          "Is X<=1?": Yes,
+          "Is X<=7?": Yes,
+          "Is X close to 5?": No,
+          "Is X prime?": No},
+    "2": {"Is X<=5?": Yes,
+          "Is X>5?": No,
+          "Is X odd?": No,
+          "Is X even?": Yes,
+          "Is X<=1?": No,
+          "Is X<=7?": Yes,
+          "Is X close to 5?": No,
+          "Is X prime?": No},
+    "3": {"Is X<=5?": Yes,
+          "Is X>5?": No,
+          "Is X odd?": Yes,
+          "Is X even?": No,
+          "Is X<=1?": No,
+          "Is X<=7?": Yes,
+          "Is X close to 5?": No,
+          "Is X prime?": Yes},
+    "4": {"Is X<=5?": Yes,
+          "Is X>5?": No,
+          "Is X odd?": No,
+          "Is X even?": Yes,
+          "Is X<=1?": No,
+          "Is X<=7?": Yes,
+          "Is X close to 5?": No,
+          "Is X prime?": No},
+    "5": {"Is X<=5?": Yes,
+          "Is X>5?": No,
+          "Is X odd?": Yes,
+          "Is X even?": No,
+          "Is X<=1?": No,
+          "Is X<=7?": Yes,
+          "Is X close to 5?": No,
+          "Is X prime?": Yes},
+    "6": {"Is X<=5?": No,
+          "Is X>5?": Yes,
+          "Is X odd?": No,
+          "Is X even?": Yes,
+          "Is X<=1?": No,
+          "Is X<=7?": Yes,
+          "Is X close to 5?": No,
+          "Is X prime?": No},
+    "7": {"Is X<=5?": No,
+          "Is X>5?": Yes,
+          "Is X odd?": Yes,
+          "Is X even?": No,
+          "Is X<=1?": No,
+          "Is X<=7?": Yes,
+          "Is X close to 5?": No,
+          "Is X prime?": Yes},
+    "8": {"Is X<=5?": No,
+          "Is X>5?": Yes,
+          "Is X odd?": No,
+          "Is X even?": Yes,
+          "Is X<=1?": No,
+          "Is X<=7?": No,
+          "Is X close to 5?": No,
+          "Is X prime?": No},
+    "9": {"Is X<=5?": No,
+          "Is X>5?": Yes,
+          "Is X odd?": Yes,
+          "Is X even?": No,
+          "Is X<=1?": No,
+          "Is X<=7?": No,
+          "Is X close to 5?": No,
+          "Is X prime?": No}
+    })
+ 
+numbers.identify()
