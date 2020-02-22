@@ -13,5 +13,5 @@
 
 import web
 web.config.debug = False
-db = web.database(dbn='sqlite', db='data/20q.db')
+db = web.database(dbn='sqlite', db='data/bafe_20q.db')
 DISPLAY_CANDIDATES = True
