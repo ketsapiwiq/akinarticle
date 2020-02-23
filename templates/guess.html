@@ -1,19 +1,20 @@
 $def with (chosen)
 
 $if chosen:
-    <p>I guess....</p>
-    <h1 id="guess">$chosen.name</h1>
-    <p>Was I right?</p>
+    <p>Serait-ce...</p>
+    <h1 id="guess"><a href="$chosen.link">$chosen.name</a></h1>
+    <p>Était-ce l'article recherché ?</p>
     <form action="/guess/$chosen.id" method="post" id="answer_form">
-        <input type="button" name="yes" value="yes">
-        <input type="button" name="no" value="no">
+        <input type="button" name="yes" value="oui">
+        <input type="button" name="no" value="non">
         <input type="hidden" name="answer">
     </form>
-    <p>Played $chosen.times_played times.
+    <p>
     $if chosen.times_played >0:
-        Last played $chosen.last_played.</p>
+        Joué $chosen.times_played de fois.
+        La dernière fois à $chosen.last_played.</p>
 $else:
-    <p>I've got nothing.</p>
+    <p>Je n'ai rien trouvé.</p>
     <form action="/guess" method="post">
-        <input type="submit" name="answer" value="teach me">
+        <input type="submit" name="answer" value="Ajouter un article">
     </form>

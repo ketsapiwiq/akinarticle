@@ -13,7 +13,9 @@
 
 import web
 import config, model
+
 import twentyquestions as game
+import re, base64
 
 urls = (
     '', 'admin',
@@ -21,24 +23,40 @@ urls = (
     '/dq', 'delete_question',
     '/do', 'delete_object',
     '/data', 'data',
-    '/retrain/(\d+)', 'retrain'
+    '/retrain/(\d+)', 'retrain',
+    '/login', 'login'
 )
 
 render = web.template.render('templates', base='base')
 app = web.application(urls, locals())
 
+def logged_in():
+    if web.ctx.env.get('HTTP_AUTHORIZATION') is not None:
+        web.session.loggedin=True
+        return True
+    else:
+        raise web.seeother('/login')
+        return False
+
 class admin:
     def GET(self):
         '''Renders the admin page, presenting a menu of administrative functions.'''
-        return render.admin()
+        if logged_in():
+            render.admin()
+
 
 class delete_question:
     def GET(self):
         '''Lists all of the questions so that selected questions can be deleted.'''
+        login_required()
         questions = model.get_questions()
+
         return render.delete_question(questions)
+
+
     def POST(self):
         '''Deletes selected questions and returns to the admin page.'''
+        login_required()
         question_ids = web.input()
         for id in question_ids:
             model.delete_question(id)
@@ -46,10 +64,12 @@ class delete_question:
 
 class delete_object:
     def GET(self):
+        login_required()
         '''Lists all of the objects so that selected objects can be deleted.'''
         objects = model.get_objects()
         return render.delete_object(objects)
     def POST(self):
+        login_required()
         '''Deletes selected objects. and returns to the admin page.'''
         object_ids = web.input()
         for id in object_ids:
@@ -67,9 +87,8 @@ class retrain:
         '''Renders a page with all of the questions and values for a specified
            object_id so that it can be retrained manually.'''
         object = model.get_object_by_id(object_id)
-        questions = model.get_questions()
-        data = model.get_data_dictionary()
         if object:
+            questions, value = model.get_questions_value_for_object(object_id)
             return render.retrain(object, list(questions), data)
         else:
             raise web.seeother('/') # returns to admin page
@@ -84,3 +103,21 @@ class retrain:
                 model.update_data(object_id, question_id, value)
         
         raise web.seeother('/data')
+
+class login:
+    def GET(self):
+        auth = web.ctx.env.get('HTTP_AUTHORIZATION')
+        authreq = False
+        if auth is None:
+            authreq = True
+        else:
+            auth = re.sub('^Basic ','',auth)
+            username,password = base64.decodestring(auth).split(':')
+            if (username,password) == config.allowed:
+                raise web.seeother('/')
+            else:
+                authreq = True
+        if authreq:
+            web.header('WWW-Authenticate','Basic realm="Administration"')
+            web.ctx.status = '401 Unauthorized'
+            return

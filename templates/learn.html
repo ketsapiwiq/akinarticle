@@ -1,16 +1,20 @@
 $def with(nearby_objects)
 
 <form action="/learn" method="post">
-    <h1>Who were you thinking of?</h1>
+    <h1>À quel article pensiez-vous ?</h1>
     
     $for object in nearby_objects:
-        <label><a href="$object.link"><input type="radio" name="name" class="known" value="$object.name">$object.name</a></label><br>
-    
-    <input type="radio" name="name" id="unknown" value="new"><input type="text" name="new_article" id="new_article" readonly="readonly"><br>
+        <label><input type="radio" name="name" class="known" value="$object.name"><a target="_blank" href="$object.link">$object.name</a></label><br>
+    <input type="radio" name="name" id="unknown" value="new">
+        <label><p>Titre :</p><input type="text" name="new_article" id="new_article" readonly="readonly"></label>
+        <label><p>Lien :</p><input type="text" name="new_link" id="new_link" readonly="readonly"></label><br>
     
     <h2 id="suggest">Suggest a question <strong>(optional)</strong> and answer for the correct article?</h2>
     <p><input type="text" name="question"><label><input type="radio" name="new_question_answer" value="yes">Yes</label><label><input type="radio" name="new_question_answer" value="no">No</label></p>
      
     <p><input type="submit" value="submit"></p>      
 </form>
-
+<form action="/restart" method="post">
+    <input type="submit" value="recommencer">
+</form>
+<br />

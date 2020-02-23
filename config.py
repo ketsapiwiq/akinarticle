@@ -15,5 +15,8 @@ import web
 web.config.debug = False
 db = web.database(dbn='sqlite', db='data/bafe_20q.db')
 DISPLAY_CANDIDATES = True
-how_many_questions = 30
-how_many_candidates = 50
+how_many_questions = 5
+how_many_candidates = 200
+answer_score_threshold = 5
+
+allowed=('lucas','OMIFMAOZEFUNPZENUF0EF0Z')

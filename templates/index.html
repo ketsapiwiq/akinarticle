@@ -7,31 +7,32 @@ $if question == 'begin':
             <h1>Baf(f)ekinator</h1>
         </hgroup>
     </header>
-    <h1>Chercher un article de <a href="https://bafe.fr">bafe.fr</a> en répondant à des questions...</h1>
+    <p>Chercher un article de <a href="https://bafe.fr">bafe.fr</a> en répondant à des questions...</p>
     <br />
     <form action="/begin" method="post">
-        <input type="submit" value="Begin!">
+        <input type="submit" value="Commencer !">
     </form>
 $elif question:
-    <p><span id="count">$count.</span> $question.text</p>
+    <p>$count. L'article est-il lié à :<br><span id="question">$question.text</span></p>
     <form action="/answer/$question.id" method="post" id="answer_form">
-        <input type="button" name="yes" value="yes">
-        <input type="button" name="unsure" value="unsure">
-        <input type="button" name="no" value="no">
+        <input type="button" name="yes" value="oui">
+        <input type="button" name="unsure" value="pas sûr·e">
+        <input type="button" name="no" value="non">
         <input type="hidden" name="answer">
     </form>
     <br />
     <form action="/restart" method="post">
-        <input type="submit" value="restart">
+        <input type="submit" value="recommencer">
     </form>
 
 $if nearby_objects_values:
-    <h2>Considering...</h2>
-    <ol>
-    $for i in range(len(nearby_objects_values)):
-        $ value = nearby_objects_values[i][0]
-        $ object = nearby_objects_values[i][1]
-        $if object and value > 0:
-            <!-- Adding link -->
-                <li><a href="$object.link">$object.name = $value</a></li>
-    </ol>
+    $if nearby_objects_values[0][0] > 0:
+        <h2>Peut-être...</h2>
+        <ol>
+        $for i in range(len(nearby_objects_values)):
+            $ value = nearby_objects_values[i][0]
+            $ object = nearby_objects_values[i][1]
+            $if object and value >= 0:
+                <!-- Adding link -->
+                    <li><a target="_blank" href="$object.link">$object.name = $value</a></li>
+        </ol>
