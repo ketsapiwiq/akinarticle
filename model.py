@@ -13,11 +13,11 @@
 import web
 from config import db
 
-def add_object(name):
+def add_object(name, link):
     '''Adds an object with the given name to the objects table in the database.
        Also initializes weights for each question in the data table.'''
        
-    object_id = db.insert('objects', name=name)
+    object_id = db.insert('objects', name=name, link=link)
     # initialize weights for each question in data
     questions = get_questions()
     for question in questions:
@@ -82,6 +82,13 @@ def get_object_by_name(name):
     '''Returns a Storage object containing an object where name=name.'''
     try:
         return db.select('objects', vars=locals(), where='name=$name')[0]
+    except IndexError:
+        return None
+
+def get_object_by_link(link):
+    '''Returns a Storage object containing an object where link=link.'''
+    try:
+        return db.select('objects', vars=locals(), where='link=$link')[0]
     except IndexError:
         return None
 

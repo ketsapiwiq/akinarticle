@@ -4,10 +4,10 @@ $def with (question, count, nearby_objects_values)
 $if question == 'begin':
     <header>
         <hgroup>
-            <h1>Bienvenue dans Bafekinator !</h1>
+            <h1>Baf(f)ekinator</h1>
         </hgroup>
     </header>
-    <h1>Pensez à un article de <a href="https://bafe.fr">bafe.fr</a>...</h1>
+    <h1>Chercher un article de <a href="https://bafe.fr">bafe.fr</a> en répondant à des questions...</h1>
     <br />
     <form action="/begin" method="post">
         <input type="submit" value="Begin!">
@@ -27,8 +27,11 @@ $elif question:
 
 $if nearby_objects_values:
     <h2>Considering...</h2>
+    <ol>
     $for i in range(len(nearby_objects_values)):
         $ value = nearby_objects_values[i][0]
         $ object = nearby_objects_values[i][1]
         $if object and value > 0:
-            <p>$object.name = $value</p>
+            <!-- Adding link -->
+                <li><a href="$object.link">$object.name = $value</a></li>
+    </ol>

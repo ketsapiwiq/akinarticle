@@ -127,7 +127,12 @@ class learn:
         
         name = inputs.get('name')
         if name == "new":
-            name = inputs.get('new_character')
+            name = inputs.get('new_article')
+            
+        
+        link = inputs.get('link')
+        if link == "new":
+            link = inputs.get('new_link')
             
         question = inputs.get('question', '')
         if question:

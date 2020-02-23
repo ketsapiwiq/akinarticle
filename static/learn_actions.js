@@ -1,20 +1,20 @@
 $(document).ready(function() {
     
     $('.known').change(function() {
-        if($('#new_character').attr('readonly') == false) {
-            $('#new_character').attr('readonly', true);
+        if($('#new_article').attr('readonly') == false) {
+            $('#new_article').attr('readonly', true);
         }
     });
     
     $('#unknown').change(function() {
-        if($('#new_character').attr('readonly') == true) {
-            $('#new_character').removeAttr('readonly');
+        if($('#new_article').attr('readonly') == true) {
+            $('#new_article').removeAttr('readonly');
         }
     });
 
-    $('#new_character').click(function() {
-        if($('#new_character').attr('readonly') == true) {
-            $('#new_character').removeAttr('readonly');
+    $('#new_article').click(function() {
+        if($('#new_article').attr('readonly') == true) {
+            $('#new_article').removeAttr('readonly');
             $('#unknown').attr('checked', true);
         }
     });
