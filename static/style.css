@@ -4,47 +4,45 @@ body {
   margin:0; 
 }
 
+a {
+    /* font-family:'America-mono'; */
+    /* border: 1px solid black; */
+    /* padding: 5px; */
+    color: black;
+}
+
+a:hover {
+    color: #666;
+}
+
 a img { border: none; }
 
 /* America mono + America */
-@font-face{font-family:'America-mono';src:url('http://www.ondinevermenot.fr/baffe/wp-content/themes/baffe-1/GT-America-Mono-Medium.eot');src:local('☺'),url('http://www.ondinevermenot.fr/baffe/wp-content/themes/baffe-1/GT-America-Mono-Medium.woff') format('woff'),url('http://www.ondinevermenot.fr/baffe/wp-content/themes/baffe-1/GT-America-Mono-Medium.ttf') format('truetype'),url('http://www.ondinevermenot.fr/baffe/wp-content/themes/baffe-1/GT-America-Mono-Medium.svg') format('svg');font-weight:400;font-style:normal}
-@font-face{font-family:'America';src:url('http://www.ondinevermenot.fr/baffe/wp-content/themes/baffe-1/GT-America-Extended-Black.eot');src:local('☺'),url('http://www.ondinevermenot.fr/baffe/wp-content/themes/baffe-1/GT-America-Extended-Black.woff') format('woff'),url('http://www.ondinevermenot.fr/baffe/wp-content/themes/baffe-1/GT-America-Extended-Black.ttf') format('truetype'),url('http://www.ondinevermenot.fr/baffe/wp-content/themes/baffe-1/GT-America-Extended-Black.svg') format('svg');font-weight:400;font-style:normal}
-/* @font-face{font-family:'America-mono';src:url('http://www.ondinevermenot.fr/baffe/wp-content/themes/baffe-1/GT-America-Mono-Medium.eot');src:local('☺'),url('http://www.ondinevermenot.fr/baffe/wp-content/themes/baffe-1/GT-America-Mono-Medium.woff') format('woff'),url('http://www.ondinevermenot.fr/baffe/wp-content/themes/baffe-1/GT-America-Mono-Medium.ttf') format('truetype'),url('http://www.ondinevermenot.fr/baffe/wp-content/themes/baffe-1/GT-America-Mono-Medium.svg') format('svg');font-weight:400;font-style:normal}
-@font-face{font-family:'America';src:url('http://www.ondinevermenot.fr/baffe/wp-content/themes/baffe-1/GT-America-Extended-Black.eot');src:local('☺'),url('http://www.ondinevermenot.fr/baffe/wp-content/themes/baffe-1/GT-America-Extended-Black.woff') format('woff'),url('http://www.ondinevermenot.fr/baffe/wp-content/themes/baffe-1/GT-America-Extended-Black.ttf') format('truetype'),url('http://www.ondinevermenot.fr/baffe/wp-content/themes/baffe-1/GT-America-Extended-Black.svg') format('svg');font-weight:400;font-style:normal} */
-/* @font-face {
-font-family: 'America-mono';
-src: url('/static/f/UniversalisADFStd-Regular.eot');
-src: local('Universalis ADF Std'), local('UniversalisADFStd-Regular'), url('/static/f/UniversalisADFStd-Regular.woff') format('woff'), url('/static/f/UniversalisADFStd-Regular.otf') format('opentype');
-}
-@font-face {
-font-family: 'America';
-src: url('/static/f/UniversalisADFStd-Oblique.eot');
-src: local('Universalis ADF Std'), local('UniversalisADFStd-Oblique'), url('/static/f/UniversalisADFStd-Oblique.woff') format('woff'), url('/static/f/UniversalisADFStd-Oblique.otf') format('opentype');
-} */
-/* @font-face {
-font-family: 'UniversalisADFStdBold';
-src: url('/static/f/UniversalisADFStd-Bold.eot');
-src: local('Universalis ADF Std'), local('UniversalisADFStd-Bold'), url('/static/f/UniversalisADFStd-Bold.woff') format('woff'), url('/static/f/UniversalisADFStd-Bold.otf') format('opentype');
-} */
-
+@font-face{font-family:'America-mono';src:url('f/GT-America-Mono-Medium.eot');src:local('☺'),url('f/GT-America-Mono-Medium.woff') format('woff'),url('f/GT-America-Mono-Medium.ttf') format('truetype'),url('f/GT-America-Mono-Medium.svg') format('svg');font-weight:400;font-style:normal}
+@font-face{font-family:'America';src:url('f/GT-America-Extended-Black.eot');src:local('☺'),url('f/GT-America-Extended-Black.woff') format('woff'),url('f/GT-America-Extended-Black.ttf') format('truetype'),url('f/GT-America-Extended-Black.svg') format('svg');font-weight:400;font-style:normal}
 
 body {
     background-color: white;
     color: black;
     font-family: 'America-mono';
     width: 80%;
+    /* text-transform: uppercase; */
+
     text-align: center;
     margin-left: auto;
     margin-right: auto;
 }
 
 #count {
-    color: red;
+    text-transform: uppercase;
     font-size: 40px;
+    font-family: 'America-mono';
 }
 
 #guess, #suggest, h1, h2, a, .value {
-    color: red;
+    text-transform: uppercase;
+    font-family: 'America';
+
 }
 
 #retrain, #display_data {

@@ -18,6 +18,10 @@ import config, model
 import twentyquestions as game
 import admin
 
+import sys
+sys.dont_write_bytecode = True
+
+
 urls = (
     '/', 'index',
     '/begin', 'begin',
@@ -45,7 +49,7 @@ class index:
         '''Shows the index page and asks the questions.'''
         
         if config.DISPLAY_CANDIDATES: # clean up this section somehow
-            nearby_objects_values = game.get_nearby_objects_values(session.objects_values, how_many=10)
+            nearby_objects_values = game.get_nearby_objects_values(session.objects_values, how_many=config.how_many_candidates)
         else:
             nearby_objects_values = None
         
@@ -112,7 +116,7 @@ class learn:
     def GET(self):
         '''Renders the learn page, allowing the user to select the correct character
            and add a new question.'''
-        nearby_objects = game.get_nearby_objects(session.objects_values, how_many=20)
+        nearby_objects = game.get_nearby_objects(session.objects_values, how_many=config.how_many_questions)
         return render.learn(nearby_objects)
         
     def POST(self):

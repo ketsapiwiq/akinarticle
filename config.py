@@ -15,3 +15,5 @@ import web
 web.config.debug = False
 db = web.database(dbn='sqlite', db='data/bafe_20q.db')
 DISPLAY_CANDIDATES = True
+how_many_questions = 30
+how_many_candidates = 50
