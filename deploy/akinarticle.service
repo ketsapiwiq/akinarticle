@@ -1,0 +1,21 @@
+[Unit]
+Description=Akinarticle Python web script daemon
+# Todo: add virtualenv
+After=network-online.target
+ 
+[Service]
+Type=simple
+ 
+User=akinarticle
+Group=akinarticle
+UMask=007
+ 
+#ExecStart=/usr/bin/deluged -d
+ 
+Restart=on-failure
+ 
+# Configures the time to wait before service is stopped forcefully.
+TimeoutStopSec=300
+ 
+[Install]
+WantedBy=multi-user.target
