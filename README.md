@@ -1,4 +1,4 @@
-# Bafekinator
+# Akinarticle
 
 An adaptation of the 20 questions game to create an Akinator for [bafe.fr](https://bafe.fr) articles.
 20 questions game adapted from Andy Freeland and Dan Levy's student project.

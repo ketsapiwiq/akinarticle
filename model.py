@@ -132,17 +132,18 @@ def get_data_by_object_id(object_id):
 def get_questions_value_for_object(object_id):
     '''Returns the data as a dictionary object, where keys are (object_id, question_id)
        tuples, and values are the weights for that pair.'''
-       
-    d = get_data()
-    q = get_questions()
-    data = {}
     
-    for row in q:
-        if [object_id, q] in d:
-            data[object_id, q] = d[object_id, q].value
-        else:
-            data[object_id, q] = 0
-    return data
+    return NotImplementedError
+    # d = get_data()
+    # q = get_questions()
+    # data = {(d, q)}
+    
+    # for row in q:
+    #     if q not in d:
+    #         data[] ++ {(d[object_id, q].value)}
+    #     else:
+    #         data[] ++ {()}
+    # return data
 
 # To rewrite
 def get_num_unknowns(object_tuple, question_id):
