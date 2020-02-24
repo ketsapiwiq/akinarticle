@@ -207,7 +207,7 @@ def guess(objects_values):
         chosen = get_nearby_objects(objects_values, how_many=1)[0]     
         return chosen
             
-def learn_character(asked_questions, name):
+def learn_article(asked_questions, name, link):
     '''Adds a new object to the database and then learns that object. Returns
        the id of that object.'''
     if name.strip() != '':
@@ -216,7 +216,7 @@ def learn_character(asked_questions, name):
             learn(asked_questions, object.id)
             return object.id
         else:
-            new_object_id = model.add_object(name) ### adds to database and trains
+            new_object_id = model.add_object(name, link) ### adds to database and trains
             learn(asked_questions, new_object_id)
             return new_object_id
         

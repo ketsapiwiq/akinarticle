@@ -19,6 +19,8 @@ import model
 import twentyquestions as game
 import admin
 
+from urllib import quote
+
 import sys
 sys.dont_write_bytecode = True
 
@@ -151,7 +153,7 @@ class learn:
 
         link = inputs.get('link')
         if link == "new":
-            link = inputs.get('new_link')
+            link = quote(inputs.get('new_link'), safe='/:?&')
 
         question = inputs.get('question', '')
         if question:
@@ -173,9 +175,9 @@ class learn:
                 new_question_id = new_question.id
             else:
                 new_question_id = None
-
-        if name:
-            new_object_id = game.learn_character(session.asked_questions, name)
+# TODO: add regex to link check
+        if name and link:
+            new_object_id = game.learn_article(session.asked_questions, name, link)
         else:
             new_object_id = None
 
