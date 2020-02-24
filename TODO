@@ -1,3 +1,4 @@
+* FIX BIG BUG IN models.py for question-object couples that don't already have a score.
 * adjust weights
 * clean up code (esp. select statements: sql alchemy? json? elasticsearch? postgresql?)
 * document!

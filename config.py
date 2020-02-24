@@ -17,6 +17,6 @@ db = web.database(dbn='sqlite', db='data/bafe_20q.db')
 DISPLAY_CANDIDATES = True
 how_many_questions = 5
 how_many_candidates = 200
-answer_score_threshold = 5
+answer_score_threshold = 100
 
-allowed=('lucas','OMIFMAOZEFUNPZENUF0EF0Z')
+# allowed=('lucas','OMIFMAOZEFUNPZENUF0EF0Z')

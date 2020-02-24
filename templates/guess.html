@@ -11,8 +11,8 @@ $if chosen:
     </form>
     <p>
     $if chosen.times_played >0:
-        Joué $chosen.times_played de fois.
-        La dernière fois à $chosen.last_played.</p>
+        Joué $chosen.times_played fois.
+        La dernière fois le : $chosen.last_played.</p>
 $else:
     <p>Je n'ai rien trouvé.</p>
     <form action="/guess" method="post">
