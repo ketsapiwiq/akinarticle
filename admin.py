@@ -42,7 +42,7 @@ class admin:
     def GET(self):
         '''Renders the admin page, presenting a menu of administrative functions.'''
         # if logged_in():
-        render.admin()
+        return render.admin()
 
 
 class delete_question:
