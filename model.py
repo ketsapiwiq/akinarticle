@@ -49,12 +49,12 @@ def update_data(object_id, question_id, value):
        
     db.update('data', where='object_id = $object_id AND question_id = $question_id', vars=locals(), value=value)
     
-#def update_weights(object_id, asked_questions):
+# def update_weights(object_id, asked_questions):
     
-    ## Dictionary {question: value}
-    #for question in asked_questions:
-        #value = asked_questions[question]
-        #update_data(object_id, question, value)
+#     ## Dictionary {question: value}
+#     for question in asked_questions:
+#         value = asked_questions[question]
+#         update_data(object_id, question, value)
 
 def get_objects():
     '''Returns an IterBetter of all the objects in database, where each row is a Storage object.'''
@@ -129,23 +129,31 @@ def get_data_by_object_id(object_id):
     except IndexError:
         return None
 
-def get_questions_value_for_object(object_id):
-    '''Returns the data as a dictionary object, where keys are (object_id, question_id)
-       tuples, and values are the weights for that pair.'''
-    
-    return NotImplementedError
-    # d = get_data()
-    # q = get_questions()
-    # data = {(d, q)}
-    
-    # for row in q:
-    #     if q not in d:
-    #         data[] ++ {(d[object_id, q].value)}
-    #     else:
-    #         data[] ++ {()}
-    # return data
+def get_weighted_questions_for_object_id(object_id):
 
-# To rewrite
+    # List of weighted questions objects with attributes: 
+    #  id, text, value
+    #    Hardcodes zero when weight value is undefined.
+       
+    # (data = object_id,question_id,value)
+
+    d = list(get_data_by_object_id(object_id))
+    q = list(get_questions())
+    weighted_questions = []
+
+    for question in q:
+        weighted_question = question
+        weighted_question.value = 0
+
+        for datum in d:
+            if datum.question_id == question.id:
+                weighted_question.value = datum.value
+
+        weighted_questions.append(weighted_question)
+
+    return weighted_questions
+
+# To rewrite?
 def get_num_unknowns(object_tuple, question_id):
     '''Returns the number of objects in the object_tuple where the value for the
        given question_id is zero, or unknown.'''

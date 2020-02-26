@@ -83,14 +83,14 @@ class data:
         return render.data(list(objects))
 
 class retrain:
-    # Not working
     def GET(self, object_id):
         '''Renders a page with all of the questions and values for a specified
            object_id so that it can be retrained manually.'''
         object = model.get_object_by_id(object_id)
         if object:
-            questions, value = model.get_questions_value_for_object(object_id)
-            return render.retrain(object, list(questions), data)
+            weighted_questions_for_object = model.get_weighted_questions_for_object_id(object_id)
+
+            return render.retrain(object, weighted_questions_for_object)
         else:
             raise web.seeother('/') # returns to admin page
             
@@ -104,21 +104,3 @@ class retrain:
                 model.update_data(object_id, question_id, value)
         
         raise web.seeother('/data')
-
-# class login:
-#     def GET(self):
-#         auth = web.ctx.env.get('HTTP_AUTHORIZATION')
-#         authreq = False
-#         if auth is None:
-#             authreq = True
-#         else:
-#             auth = re.sub('^Basic ','',auth)
-#             username,password = base64.decodestring(auth).split(':')
-#             if (username,password) == config.allowed:
-#                 raise web.seeother('/')
-#             else:
-#                 authreq = True
-#         if authreq:
-#             web.header('WWW-Authenticate','Basic realm="Administration"')
-#             web.ctx.status = '401 Unauthorized'
-#             return

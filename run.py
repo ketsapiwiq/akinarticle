@@ -20,6 +20,7 @@ import twentyquestions as game
 import admin
 
 from urllib import quote
+import bleach
 
 import sys
 sys.dont_write_bytecode = True
@@ -149,13 +150,13 @@ class learn:
 
         name = inputs.get('name')
         if name == "new":
-            name = inputs.get('new_article')
+            name = bleach.clean(inputs.get('new_article'))
 
         link = inputs.get('link')
         if link == "new":
-            link = quote(inputs.get('new_link'), safe='/:?&')
+            link = quote(inputs.get('new_link'), safe='/:?&#')
 
-        question = inputs.get('question', '')
+        question = bleach.clean(inputs.get('question', ''))
         if question:
             new_question_answer = inputs.get('new_question_answer')
             if new_question_answer in ['yes', 'no', 'unsure']:
@@ -175,7 +176,7 @@ class learn:
                 new_question_id = new_question.id
             else:
                 new_question_id = None
-# TODO: add regex to link check
+
         if name and link:
             new_object_id = game.learn_article(session.asked_questions, name, link)
         else:
