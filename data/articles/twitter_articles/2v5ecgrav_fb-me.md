@@ -1,0 +1,8 @@
+---
+title: "Lundi Matin"
+url: http://fb.me/2v5ecgrAv
+keywords: statut,lundi,monde,matin,sorcellerie,régimes,vie,vanuatu,temporalité,sécrétées,transforment,vécu
+---
+...
+
+nt dans d'autres mondes la notion de personne est intimement liée à des modes d'existence relationnels qui ne se laissent pas représenter. Dans le débat « décolonial » franco-français prolongeant le statut de l'Indigène colonial comme un prédicat en miroir avec les identités sécrétées par la gouvernementalité républicaine (ou ce qu'il en reste, à l'époque des réseaux qui font imploser ses institutions), il est bon de se pencher sur une pensée des multiplicités qui ne se laisse pas réduire à la logique hégémonique d'un nouveau Sujet « dominé ». Des Aborigènes australiens ne cessent de réinventer le monde tout en luttant contre leur assignation à un indigénat héritier de la brutalité coloniale. Comme la sorcellerie du Vanuatu de recomposer des régimes d'historicité postcoloniaux différents qui transforment le monde vécu dans lequel s'agence la vie de la communauté. Ici, donc, pas de rapport à « l'authenticité » culturelle, ni de critique de l'acculturation mais plutôt l'attention portée, et partagée, à la réinvention de nouvelles formes de vie inévitablement métisses, des ontologies multiples et relationnelles qui impliquent une pluralité de régimes de temporalité. [https://lundi.am/Resister-aux-mauvais-s...](https://l.facebook.com/l.php?u=https%3A%2F%2Flundi.am%2FResister-aux-mauvais-sorts-Barbara-Glowczewski&h=AT2uYCJPrChbDXg7UWYyhCkOyTbUx5ykPG5fTjOagUrS8f5xOR8XLPBt9nb10DbvaLT7r0xxfrqmQtTTVVTGQFOZiBTu48If9oU2_nOLPHJqdL2it4-3MqxzlvI7UQJtBvNGFI0oSNGZDpfttxHL-RGrCAeO9w)

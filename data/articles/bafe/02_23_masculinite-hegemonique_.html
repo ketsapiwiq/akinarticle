@@ -1,0 +1,1534 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="https://cafaitgenre.org/xmlrpc.php" />
+<!--[if lt IE 9]>
+<script src="https://s0.wp.com/wp-content/themes/pub/confit/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+
+<title>Masculinité hégémonique &#8211; Genre !</title>
+<meta name="google-site-verification" content="-F-sUeQW8RLD_71HOMvv_OEfZz8YKxmRmZcBB-p8DqI" />
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9jYWZhaXRnZW5yZS5vcmc%3D"
+		+ "&wpcomid=27116365"
+		+ "&time=1589683626";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//cafaitgenre.wordpress.com' />
+<link rel='dns-prefetch' href='//wordpress.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.pubmine.com' />
+<link rel='dns-prefetch' href='//x.bidswitch.net' />
+<link rel='dns-prefetch' href='//static.criteo.net' />
+<link rel='dns-prefetch' href='//ib.adnxs.com' />
+<link rel='dns-prefetch' href='//aax.amazon-adsystem.com' />
+<link rel='dns-prefetch' href='//bidder.criteo.com' />
+<link rel='dns-prefetch' href='//cas.criteo.com' />
+<link rel='dns-prefetch' href='//gum.criteo.com' />
+<link rel='dns-prefetch' href='//ads.pubmatic.com' />
+<link rel='dns-prefetch' href='//gads.pubmatic.com' />
+<link rel='dns-prefetch' href='//tpc.googlesyndication.com' />
+<link rel='dns-prefetch' href='//ad.doubleclick.net' />
+<link rel='dns-prefetch' href='//googleads.g.doubleclick.net' />
+<link rel='dns-prefetch' href='//www.googletagservices.com' />
+<link rel='dns-prefetch' href='//cdn.switchadhub.com' />
+<link rel='dns-prefetch' href='//delivery.g.switchadhub.com' />
+<link rel='dns-prefetch' href='//delivery.swid.switchadhub.com' />
+<link rel='dns-prefetch' href='//a.teads.tv' />
+<link rel='dns-prefetch' href='//prebid.media.net' />
+<link rel='dns-prefetch' href='//adserver-us.adtech.advertising.com' />
+<link rel='dns-prefetch' href='//fastlane.rubiconproject.com' />
+<link rel='dns-prefetch' href='//prebid-server.rubiconproject.com' />
+<link rel='dns-prefetch' href='//hb-api.omnitagjs.com' />
+<link rel='dns-prefetch' href='//mtrx.go.sonobi.com' />
+<link rel='dns-prefetch' href='//apex.go.sonobi.com' />
+<link rel='dns-prefetch' href='//u.openx.net' />
+<link rel="alternate" type="application/rss+xml" title="Genre ! &raquo; Flux" href="https://cafaitgenre.org/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Genre ! &raquo; Flux des commentaires" href="https://cafaitgenre.org/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Genre ! &raquo; Masculinité hégémonique Flux des commentaires" href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s0.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.1"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s0.wp.com/_static/??-eJytk9FWwyAMhl9IyrpV7S48PguUFNmgcAhY+/bS0s26earH7Y6EfPnTv4T2jjS2C9AFaiJxOkrVIe1dYw1BozQMF1HRID7QBca1lV+g9YIJpFJbzvRV7ULCg2YBBHEWw0W0hml1BKQHCI41RzJFV+WnWhlTyMHLdOOB1sWm2FAelRbj0BPOPfMDxTBo+EObiVqos8HGQKRX4r8tPAuqk/gL3katCaoABIQagdkOWm7K+nn3tK9oBz1OHWcBofD0a0ZLc5q8K+jvrtIwbyOCvpOG82BUNGd03ZrGzqOUxXaXfm+eaE6Sm23N5unUNH9d7n+ZXXuw49NLeeNYGCtMkmKgwaSyNaxXQkJajFQyn0mAj3VkWlPOk4GI5GRjeEtaqyuVqHGavEyT4LdMRhXtbFCJxvPhtoWZr1pvfzAiD01d5GmWrlWLV/BqXsrHer+tq6qsDp9D18UU?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<link crossorigin="anonymous" rel='stylesheet' id='confit-font-muli-css'  href='https://fonts.googleapis.com/css?family=Muli:300,400,300italic,400italic' media='all' />
+<link crossorigin="anonymous" rel='stylesheet' id='confit-font-enriqueta-css'  href='https://fonts.googleapis.com/css?family=Enriqueta:400,700&#038;subset=latin,latin-ext' media='all' />
+<link rel='stylesheet' id='all-css-4-1' href='https://s0.wp.com/_static/??-eJyNjEESwiAMRS8kZqq1rhzPQjHF2ECYEga9veiqbtTd//l5D2oyTqJiVNArBsyQygjtNJECRQdZH4ymJidh63LewIoIxSQunmKGShePmgFLW2UmNGwrKIbEVpv1rflHMFmHYzMYprmF+2/SoxgWZ5UkfhQzsaXlG7rgyOJb9NC+VvUFncOpO+yOw77v+uH2BApZb20=?cssminify=yes' type='text/css' media='all' />
+<link rel='stylesheet' id='print-css-5-1' href='https://s0.wp.com/wp-content/mu-plugins/global-print/global-print.css?m=1465851035h&cssminify=yes' type='text/css' media='print' />
+<link rel='stylesheet' id='all-css-6-1' href='https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?m=1560469195h&cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-8-1' href='https://s0.wp.com/_static/??-eJxti0EKgCAQAD+ULWGJHaK3mJgaqyut0fejQ4eo0zAwA2cRlnJ1uUI6RMHDx8xQiKtY0cQdOJg9Zv+wtcwN/F9MNhoUSJ7e8plqcMkxhB480mLwDuY0dYMepVJaqu0CZXY33g==?cssminify=yes' type='text/css' media='all' />
+<script>
+var related_posts_js_options = {"post_heading":"h4"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJx9jMEOwjAMQ3+IruzABgfEt4wtVKmatDSNpv39ggSXHZAsWbae7dfikOekC4iPprdC3b7WRTn5f4AjDHVq0BHyD54zN+D2YSk/MYFTgToF6+zolY8cqStJA7L4CsnOFleytEOy1YPu/WXsb+dxGK5xB1+BRFU='></script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://cafaitgenre.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s0.wp.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Dans ma bibliothèque &#8211; Désirée et Alain Frappier, Le choix (2015)' href='https://cafaitgenre.org/2015/02/19/dans-ma-bibliotheque-desiree-et-alain-frappier-le-choix-2015/' />
+<link rel='next' title='(Grosse) Sélection de podcasts' href='https://cafaitgenre.org/2015/02/26/grosse-selection-de-podcasts/' />
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/" />
+<link rel='shortlink' href='https://wp.me/p1PMcJ-Kc' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fcafaitgenre.org%2F2015%2F02%2F23%2Fmasculinite-hegemonique%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fcafaitgenre.org%2F2015%2F02%2F23%2Fmasculinite-hegemonique%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Masculinité hégémonique" />
+<meta property="og:url" content="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/" />
+<meta property="og:description" content="Quand on parle du genre, au singulier, on l&rsquo;envisage à la fois comme une construction sociale, comme un processus relationnel et comme un rapport de pouvoir imbriqué dans d&rsquo;autres rappo…" />
+<meta property="article:published_time" content="2015-02-23T16:37:52+00:00" />
+<meta property="article:modified_time" content="2015-02-23T16:38:00+00:00" />
+<meta property="og:site_name" content="Genre !" />
+<meta property="og:image" content="https://cafaitgenre.files.wordpress.com/2015/02/masculinitc3a9s.png" />
+<meta property="og:image:width" content="559" />
+<meta property="og:image:height" content="824" />
+<meta property="og:locale" content="fr_FR" />
+<meta name="twitter:creator" content="@A_C_Husson" />
+<meta name="twitter:site" content="@A_C_Husson" />
+<meta name="twitter:text:title" content="Masculinité hégémonique" />
+<meta name="twitter:image" content="https://cafaitgenre.files.wordpress.com/2015/02/masculinitc3a9s.png?w=640" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://s0.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="icon" type="image/x-icon" href="https://s0.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="apple-touch-icon" href="https://s0.wp.com/i/webclip.png" />
+<link rel='openid.server' href='https://cafaitgenre.org/?openidserver=1' />
+<link rel='openid.delegate' href='https://cafaitgenre.org/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://cafaitgenre.org/osd.xml" title="Genre !" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<meta name="theme-color" content="#d31900" />
+		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="Genre !" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Je m&#039;interroge, tu t&#039;interroges, interrogez-vous" /><meta name="msapplication-task" content="name=Souscrire;action-uri=https://cafaitgenre.org/feed/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Inscrivez-vous pour créer un blog gratuitement;action-uri=http://wordpress.com/signup/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Assistance WordPress.com;action-uri=http://support.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Forums WordPress.com;action-uri=http://forums.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="description" content="Quand on parle du genre, au singulier, on l&#039;envisage à la fois comme une construction sociale, comme un processus relationnel et comme un rapport de pouvoir imbriqué dans d&#039;autres rapports de pouvoir. Pour comprendre ce qui suit, il faut notamment bien comprendre cette idée de processus relationnel. Le genre crée de la division et de&hellip;" />
+<style type="text/css" id="custom-background-css">
+	body.custom-background { background-color: #d31900; background-image: url('https://cafaitgenre.files.wordpress.com/2016/01/wallpaper_group-p4m-5.jpg'); background-repeat: repeat; background-position: top right; background-attachment: scroll; }
+	</style>
+		<script type="text/javascript">
+
+			window.doNotSellCallback = function() {
+
+				var linkElements = [
+					'a[href="https://wordpress.com/?ref=footer_blog"]',
+					'a[href="https://wordpress.com/?ref=footer_website"]',
+					'a[href="https://wordpress.com/?ref=vertical_footer"]',
+					'a[href^="https://wordpress.com/?ref=footer_segment_"]',
+				].join(',');
+
+				var dnsLink = document.createElement( 'a' );
+				dnsLink.href = 'https://wordpress.com/advertising-program-optout';
+				dnsLink.classList.add( 'do-not-sell-link' );
+				dnsLink.rel = 'nofollow';
+				dnsLink.style.marginLeft = '0.5em';
+				dnsLink.textContent = 'Ne pas vendre mes informations personnelles.';
+
+				var creditLinks = document.querySelectorAll( linkElements );
+
+				if ( 0 === creditLinks.length ) {
+					return false;
+				}
+
+				Array.prototype.forEach.call( creditLinks, function( el ) {
+					el.insertAdjacentElement( 'afterend', dnsLink );
+				});
+
+				return true;
+			};
+
+		</script>
+				<script type="text/javascript">
+		function __ATA_CC() {var v = document.cookie.match('(^|;) ?personalized-ads-consent=([^;]*)(;|$)');return v ? 1 : 0;}
+		var __ATA_PP = { pt: 1, ht: 0, tn: 'confit', amp: false, siteid: 8982, blogid: 27116365, consent: __ATA_CC() };
+		var __ATA = __ATA || {};
+		__ATA.cmd = __ATA.cmd || [];
+		__ATA.criteo = __ATA.criteo || {};
+		__ATA.criteo.cmd = __ATA.criteo.cmd || [];
+		</script>
+		<script type="text/javascript">
+		(function(){var g=Date.now||function(){return+new Date};function h(a,b){a:{for(var c=a.length,d="string"==typeof a?a.split(""):a,e=0;e<c;e++)if(e in d&&b.call(void 0,d[e],e,a)){b=e;break a}b=-1}return 0>b?null:"string"==typeof a?a.charAt(b):a[b]};function k(a,b,c){c=null!=c?"="+encodeURIComponent(String(c)):"";if(b+=c){c=a.indexOf("#");0>c&&(c=a.length);var d=a.indexOf("?");if(0>d||d>c){d=c;var e=""}else e=a.substring(d+1,c);a=[a.substr(0,d),e,a.substr(c)];c=a[1];a[1]=b?c?c+"&"+b:b:c;a=a[0]+(a[1]?"?"+a[1]:"")+a[2]}return a};var l=0;function m(a,b){var c=document.createElement("script");c.src=a;c.onload=function(){b&&b(void 0)};c.onerror=function(){b("error")};a=document.getElementsByTagName("head");var d;a&&0!==a.length?d=a[0]:d=document.documentElement;d.appendChild(c)}function n(a){var b=void 0===b?document.cookie:b;return(b=h(b.split("; "),function(c){return-1!=c.indexOf(a+"=")}))?b.split("=")[1]:""}function p(a){return"string"==typeof a&&0<a.length}
+		function r(a,b,c){b=void 0===b?"":b;c=void 0===c?".":c;var d=[];Object.keys(a).forEach(function(e){var f=a[e],q=typeof f;"object"==q&&null!=f||"function"==q?d.push(r(f,b+e+c)):null!==f&&void 0!==f&&(e=encodeURIComponent(b+e),d.push(e+"="+encodeURIComponent(f)))});return d.filter(p).join("&")}function t(a,b){a||((window.__ATA||{}).config=b.c,m(b.url))}var u=Math.floor(1E13*Math.random()),v=window.__ATA||{};window.__ATA=v;v.rid=u;v.createdAt=g();var w=window.__ATA||{},x="s.pubmine.com";
+		w&&w.serverDomain&&(x=w.serverDomain);var y="//"+x+"/conf",z=window.top===window,A=window.__ATA_PP&&window.__ATA_PP.gdpr_applies,B="boolean"===typeof A?Number(A):null,C=window.__ATA_PP||null,D=z?document.referrer?document.referrer:null:null,E=z?window.location.href:document.referrer?document.referrer:null,F,G=n("__ATA_tuuid");F=G?G:null;var H=window.innerWidth+"x"+window.innerHeight,I=n("usprivacy"),J=r({gdpr:B,pp:C,rid:u,src:D,ref:E,tuuid:F,vp:H,us_privacy:I?I:null},"",".");
+		(function(a){var b=void 0===b?"cb":b;l++;var c="callback__"+g().toString(36)+"_"+l.toString(36);a=k(a,b,c);window[c]=function(d){t(void 0,d)};m(a,function(d){d&&t(d)})})(y+"?"+J);}).call(this);
+		</script><link rel="amphtml" href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/amp/"><script type="text/javascript">
+	window.google_analytics_uacct = "UA-52447-2";
+</script>
+
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-52447-2']);
+	_gaq.push(['_gat._anonymizeIp']);
+	_gaq.push(['_setDomainName', 'none']);
+	_gaq.push(['_setAllowLinker', true]);
+	_gaq.push(['_initData']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	})();
+</script>
+</head>
+
+<body class="post-template-default single single-post postid-2864 single-format-standard custom-background customizer-styles-applied group-blog highlander-enabled highlander-light">
+
+<div id="wrapper">
+	<div id="page" class="hfeed site">
+				<header id="masthead" class="site-header" role="banner">
+
+			
+			<a href="https://cafaitgenre.org/" class="site-logo-link" rel="home" itemprop="url"></a>
+			<hgroup>
+				<h1 class="site-title"><a href="https://cafaitgenre.org/" title="Genre !" rel="home">Genre !</a></h1>
+				<h2 class="site-description">Je m&#039;interroge, tu t&#039;interroges, interrogez-vous</h2>
+			</hgroup>
+
+			<nav role="navigation" class="site-navigation main-navigation">
+				<h1 class="assistive-text">Navigation</h1>
+				<div class="assistive-text skip-link"><a href="#content" title="Aller au contenu principal">Aller au contenu principal</a></div>
+
+				<div class="menu-menu-custom-container"><ul id="menu-menu-custom" class="menu"><li id="menu-item-2332" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2332"><a href="https://cafaitgenre.org/genre/">Genre?</a></li>
+<li id="menu-item-2635" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2635"><a href="https://cafaitgenre.org/des-questions/">Des questions?</a></li>
+<li id="menu-item-2333" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-2333"><a href="https://cafaitgenre.org/ressources-2/">Ressources</a>
+<ul class="sub-menu">
+	<li id="menu-item-2341" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2341"><a href="https://cafaitgenre.org/ressources-2/feminisme/">Féminisme</a></li>
+	<li id="menu-item-2340" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2340"><a href="https://cafaitgenre.org/ressources-2/sur-la-notion-meme-de-genre/">Sur la notion de &laquo; genre &raquo;</a></li>
+</ul>
+</li>
+<li id="menu-item-2339" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2339"><a href="https://cafaitgenre.org/moderation/">Modération</a></li>
+<li id="menu-item-2908" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2908"><a href="https://cafaitgenre.org/medias-et-publications/">Médias, publications, vidéos</a></li>
+<li id="menu-item-2963" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2963"><a href="https://cafaitgenre.org/lexique/">Lexique</a></li>
+</ul></div>			</nav><!-- .site-navigation .main-navigation -->
+		</header><!-- #masthead .site-header -->
+
+		<div id="main" class="site-main">
+
+		<div id="primary" class="content-area">
+			<div id="content" class="site-content" role="main">
+
+			
+					<nav role="navigation" id="nav-above" class="site-navigation post-navigation">
+		<h1 class="assistive-text">Navigation des articles</h1>
+
+	
+		<div class="nav-previous"><a href="https://cafaitgenre.org/2015/02/19/dans-ma-bibliotheque-desiree-et-alain-frappier-le-choix-2015/" rel="prev"><span class="meta-nav">&larr;</span> Dans ma bibliothèque &#8211; Désirée et Alain Frappier, Le choix (2015)</a></div>		<div class="nav-next"><a href="https://cafaitgenre.org/2015/02/26/grosse-selection-de-podcasts/" rel="next">(Grosse) Sélection de podcasts <span class="meta-nav">&rarr;</span></a></div>
+	
+	</nav><!-- #nav-above -->
+	
+				
+<article id="post-2864" class="post-2864 post type-post status-publish format-standard hentry category-concepts-feministes tag-masculinite-hegemonique tag-masculinites tag-raewyn-connell">
+	<header class="entry-header">
+		<h1 class="entry-title">Masculinité hégémonique</h1>
+
+		<div class="entry-meta">
+		Publié le <a href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/" title="5:37  " rel="bookmark"><time class="entry-date" datetime="2015-02-23T17:37:52+01:00" pubdate>23/02/2015</time></a><span class="byline"> par <span class="author vcard"><a class="url fn n" href="https://cafaitgenre.org/author/cafaitgenre/" title="Voir tous les articles par Genre!" rel="author">Genre!</a></span></span>		</div><!-- .entry-meta -->
+	</header><!-- .entry-header -->
+
+	<div class="entry-content">
+		<p style="text-align:justify;">Quand on parle <a href="https://cafaitgenre.org/genre/"><em>du</em> genre</a>, au singulier, on l&rsquo;envisage à la fois comme une <a href="https://cafaitgenre.org/2014/11/11/le-genre-est-une-construction-sociale-quest-ce-que-cela-veut-dire/">construction sociale</a>, comme un processus relationnel et comme un rapport de pouvoir <a href="https://cafaitgenre.org/2013/02/22/anti-homophobie-et-anti-racisme-la-question-de-lintersectionnalite/">imbriqué </a>dans d&rsquo;autres rapports de pouvoir. Pour comprendre ce qui suit, il faut notamment bien comprendre cette idée de processus relationnel. Le genre crée de la division et de la binarité : il produit deux groupes, sur le mode de l&rsquo;opposition, le groupe des &laquo;&nbsp;hommes&nbsp;&raquo; et celui des &laquo;&nbsp;femmes&nbsp;&raquo;. La &laquo;&nbsp;différence des sexes&nbsp;&raquo; est donc toujours aussi une opposition : on apprend les caractéristiques de son genre par opposition à celles de l&rsquo;autre genre. Mais les recherches sur les masculinités montrent que cette opposition entre &laquo;&nbsp;le masculin&nbsp;&raquo; et &laquo;&nbsp;le féminin&nbsp;&raquo; n&rsquo;est pas qu&rsquo;une opposition entre hommes et femmes: elle fonctionne aussi au sein de ces deux groupes.</p>
+<p style="text-align:justify;">Il faut également garder à l&rsquo;esprit que le genre est conçu comme un rapport de pouvoir. Cela signifie non seulement qu&rsquo;on ne peut pas comprendre le genre sans comprendre ce mode de relation / opposition entre &laquo;&nbsp;masculin&nbsp;&raquo; et &laquo;&nbsp;féminin&nbsp;&raquo;, mais aussi qu&rsquo;on ne peut pas comprendre comment est produite la subordination des femmes sans comprendre les mécanismes de domination qui profitent aux hommes. Et comme ce rapport de pouvoir qu&rsquo;est le genre est toujours imbriqué dans d&rsquo;autres rapports de pouvoir, il faut prendre en compte d&rsquo;autres dominations, liées à la classe, à la sexualité, à la &laquo;&nbsp;race&nbsp;&raquo;, à l&rsquo;âge&#8230;</p>
+<p style="text-align:justify;">Vous l&rsquo;aurez compris, ceci est un billet théorique. La question des masculinités (le pluriel est important) est une question complexe, mais je pense qu&rsquo;il est essentiel, parfois, de se donner le temps de la complexité et de la nuance. On verra donc notamment que &laquo;&nbsp;<strong>masculinité</strong>&nbsp;&raquo; se distingue de &laquo;&nbsp;<strong>virilité</strong>&#187;; que parler <em><strong>des </em>masculinités</strong> permet d&rsquo;envisager des rapports de pouvoir et de subordination au sein du groupe &laquo;&nbsp;hommes&nbsp;&raquo;; que l&rsquo;<strong>hégémonie </strong>est une autre manière, plus complexe, plus riche, d&rsquo;envisager la domination. Je m&rsquo;appuie essentiellement sur les travaux de Raewyn Connell, travaux majeurs dans le champ des <em>masculinity studies</em>. J&rsquo;essaie aussi de montrer en quoi, loin de l&rsquo;idéologie masculiniste, ces travaux permettent de penser une action politique féministe et intersectionnelle. Je reviendrai sans doute sur cette question dans un prochain billet.</p>
+<h3>Masculinité ou virilité?</h3>
+<p style="text-align:justify;">Pour pouvoir comprendre le concept de masculinité hégémonique, il faut d&rsquo;abord comprendre ce que signifie &laquo;&nbsp;masculinité&nbsp;&raquo; dans ce contexte, et comment celle-ci est distinguée de la virilité. Il a été maintes fois souligné qu&rsquo;une telle distinction n&rsquo;existe pas en ce qui concerne la féminité. Le Trésor de la Langue Française définit la <strong>virilité </strong>comme l&rsquo;&#171;&nbsp;ensemble des qualités (fermeté, courage, force, vigueur, etc.) culturellement attribuées à l&rsquo;homme adulte&nbsp;&raquo;; le mot a également le sens de &laquo;&nbsp;ensemble des attributs, des caractères physiques de l&rsquo;homme adulte&nbsp;&raquo;, et se rapporte, en particulier, à la &laquo;&nbsp;vigueur sexuelle&nbsp;&raquo;, au &laquo;&nbsp;comportement sexuel&nbsp;&raquo; de l&rsquo;homme. On peut noter au passage l&rsquo;impact des représentations culturelles dans cette définition, en particulier dans l&#8217;emploi du mot &laquo;&nbsp;vigueur&nbsp;&raquo;. On peut aussi remarquer que le terme est rarement employé de manière négative, souvent en lien avec le sexe, et enfin que la virilité est généralement conçue comme quelque chose que l&rsquo;on possède en plus ou moins grande quantité: on est plus ou moins viril, on &laquo;&nbsp;en a&nbsp;&raquo; plus ou moins.</p>
+<p style="text-align:justify;">La <strong>masculinité</strong>, elle, est définie comme le &laquo;&nbsp;caractère masculin&nbsp;&raquo;, l&rsquo;&#171;&nbsp;ensemble des caractères spécifiques ou considérés comme tels de l&rsquo;homme&nbsp;&raquo; (bizarrement, ce dictionnaire n&rsquo;a pas d&rsquo;entrée propre pour ce terme). &laquo;&nbsp;Virilité&nbsp;&raquo; et &laquo;&nbsp;masculinité&nbsp;&raquo; sont généralement présentés comme synonymes; pourtant, tout ce qui est masculin (identifié comme masculin) n&rsquo;est pas forcément viril. Comme je le disais plus haut, un homme peut être plus ou moins viril; s&rsquo;il l&rsquo;est peu, il est considéré comme &laquo;&nbsp;efféminé&nbsp;&raquo;. (Une femme peu féminine, elle, est considérée comme &laquo;&nbsp;masculine&nbsp;&raquo;, et non comme &laquo;&nbsp;virile&nbsp;&raquo;.)</p>
+<p><span id="more-2864"></span><br />
+<div style="width: 614px" class="wp-caption aligncenter"><a href="http://www.lesinrocks.com/2011/01/20/cinema/clint-eastwood-summum-de-la-virilite-ou-heros-macho-1120775/"><img src="https://i1.wp.com/www.lesinrocks.com/wp-content/thumbnails/uploads/2011/01/clint_6042-tt-width-604-height-393-bgcolor-000000.jpg" width="604" height="393" class /></a><p class="wp-caption-text">Tiré d&rsquo;un article des Inrocks intitulé &laquo;&nbsp;Clint Eastwood, summum de la virilité ou héros macho ?&nbsp;&raquo; (clic clic)</p></div></p>
+<p style="text-align:justify;">L&rsquo;historien John Tosh, dans <em>Manliness and Masculinities in Nineteenth-Century Britain</em>, explique que la virilité (&laquo;&nbsp;manliness&nbsp;&raquo;) est toujours conjuguée au singulier (toutes les références se situent à la fin de l&rsquo;article). Il s&rsquo;agit d&rsquo;une façon unique d&rsquo;être un homme, s&rsquo;exprimant à travers des attributs physiques et des dispositions morales; un homme correspondra alors plus ou moins à cet idéal normatif, mais ce dernier est présenté comme étant sans alternative. Les attributs associés à la virilité sont le fruit d&rsquo;un effort et source de fierté. Tosh parle en revanche (comme le font en général les théoricien&middot;nes des <em>masculinity studies</em>) de &laquo;&nbsp;masculinités&nbsp;&raquo; parce que le concept se veut <strong>pluriel </strong>et <strong>non normatif</strong>. Il s&rsquo;agit, à une époque et dans un contexte social donnés, de l&rsquo;ensemble des éléments socialement reconnus comme devant être le propre des hommes; ce n&rsquo;est donc pas une notion universelle, elle est <strong>socialement et historiquement située</strong>.</p>
+<p style="text-align:justify;">Le concept de &laquo;&nbsp;masculinité(s)&nbsp;&raquo;, dans ce sens, est récent, même si le mot ne l&rsquo;est évidemment pas.</p>
+<h3>&laquo;&nbsp;Masculinité hégémonique&nbsp;&raquo;: apparition d&rsquo;un concept et définitions</h3>
+<p style="text-align:justify;">Le concept apparaît en Australie au début des années 1980 dans des travaux en sociologie de l&rsquo;éducation, et il est formalisé théoriquement pour la première fois en 1985 dans un article intitulé &laquo;&nbsp;Towards a new sociology of masculinity&nbsp;&raquo;. Mais, dans son état actuel, il doit énormément aux travaux de Reawyn Connell, chercheuse trans elle aussi sociologue et australienne. Je mentionne le fait qu&rsquo;elle est trans car, si toute recherche est socialement située, la sienne se comprend d&rsquo;autant mieux par rapport à son parcours. Avant de s&rsquo;intéresser à cette question, elle travaille sur les dynamiques de classe et les relations entre rapports de genre et de classe en milieu scolaire. Elle permet, à partir de la fin des années 1980, de déplacer l&rsquo;étude des masculinités sur les terrains de la santé, de la sexualité, de la colonialité et de la globalisation.</p>
+<p><a href="https://cafaitgenre.files.wordpress.com/2015/02/masculinitc3a9s.png"><img data-attachment-id="2888" data-permalink="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/masculinites/#main" data-orig-file="https://cafaitgenre.files.wordpress.com/2015/02/masculinitc3a9s.png" data-orig-size="559,824" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="masculinités" data-image-description="" data-medium-file="https://cafaitgenre.files.wordpress.com/2015/02/masculinitc3a9s.png?w=204" data-large-file="https://cafaitgenre.files.wordpress.com/2015/02/masculinitc3a9s.png?w=558" src="https://cafaitgenre.files.wordpress.com/2015/02/masculinitc3a9s.png?w=204&#038;h=300" alt="masculinités" width="204" height="300" class="aligncenter size-medium wp-image-2888" srcset="https://cafaitgenre.files.wordpress.com/2015/02/masculinitc3a9s.png?w=204&amp;h=300 204w, https://cafaitgenre.files.wordpress.com/2015/02/masculinitc3a9s.png?w=408&amp;h=600 408w, https://cafaitgenre.files.wordpress.com/2015/02/masculinitc3a9s.png?w=102&amp;h=150 102w" sizes="(max-width: 204px) 100vw, 204px" /></a></p>
+<p style="text-align:justify;">Dans un entretien publié sur le site <em>Contretemps</em>, elle revient sur le contexte d&rsquo;émergence du concept dans l&rsquo;Australie des années 80, contexte propice, explique-t-elle, à une remise en cause de <strong>la </strong>masculinité traditionnelle:</p>
+<blockquote><p>Plusieurs facteurs ont ainsi convergé à l’aube des années 1980 et permis une mise en question des hommes et de la masculinité. Le militarisme et l’héroïsme guerrier avaient été vivement critiqués par le mouvement pour la paix. La masculinité hétérosexuelle était questionnée par le mouvement de libération gay ; et, à mesure que se développait l’épidémie de VIH/sida, c’était également la masculinité gay qui se voyait interrogée. Les sciences sociales féministes remettaient en cause la « naturalité » des formes dominantes de masculinité. Un certain nombre d’avancées féministes ayant été obtenues à travers des alliances avec des hommes au sein du Parti Travaillistes et des bureaucraties d’État, la question de la participation des hommes à des changements positifs dans les rapports de genre gagnait aussi en visibilité. (<a href="http://www.contretemps.eu/interviews/masculinit%C3%A9s-colonialit%C3%A9-n%C3%A9olib%C3%A9ralisme-entretien-raewyn-connell">source</a>)</p></blockquote>
+<p style="text-align:justify;">Comme l&rsquo;<a href="http://www.raewynconnell.net/p/masculinities_20.html">écrit </a>ailleurs Connell, &laquo;&nbsp;<strong>les masculinités ne sont pas un équivalent des hommes</strong>; elles concernent la position des hommes dans un ordre genré&nbsp;&raquo;. Dans les deux articles parus sur <em>Contretemps</em> et consacrés aux recherches de Connell, on trouve ces deux définitions de la masculinité hégémoniques, toutes deux utiles il me semble pour comprendre le concept; je les livre donc telles quelles:</p>
+<blockquote><p>Ce concept vise à analyser les processus de <strong>hiérarchisation</strong>, de <strong>normalisation </strong>et de <strong>marginalisation </strong>des masculinités, par lesquels certaines catégories d’hommes imposent, à travers un travail sur eux-mêmes et sur les autres, leur domination aux femmes, mais également à d’autres catégories d’hommes. (<a href="http://www.contretemps.eu/interviews/masculinit%C3%A9s-colonialit%C3%A9-n%C3%A9olib%C3%A9ralisme-entretien-raewyn-connell">source</a>)</p></blockquote>
+<blockquote><p>La masculinité hégémonique est toujours <strong>l&rsquo;expression hégémonique de la masculinité dans un contexte précis</strong> : elle est la stratégie qui permet à un moment donné et en un lieu donné aux hommes et aux institutions qu&rsquo;ils représentent d&rsquo;asseoir leur domination. Parfois, ses fondements sont remis en cause, par exemple suite à l&rsquo;effondrement d&rsquo;un système politique ou économique, mais elle ne disparaît pas, simplement remplacée par de nouvelles formes d&rsquo;hégémonie reprenant à nouveaux frais les mêmes ressorts de pouvoir. (<a href="http://www.contretemps.eu/interventions/masculinit%C3%A9s-critique-lh%C3%A9g%C3%A9monie-recherche-horizons-politiques">source</a>)</p></blockquote>
+<p style="text-align:justify;">Connell insiste toujours sur l&rsquo;<strong>articulation entre théorie et domaines d&rsquo;application concrète</strong>. Elle s&rsquo;attache aux pratiques qui produisent les masculinités, des pratiques culturelles qui ont un impact sur les définitions des corps. C&rsquo;est pourquoi elle définit les masculinités comme &laquo;&nbsp;des configurations de pratiques structurées par des rapports de genre&nbsp;&raquo; (<em>Masculinities</em>, p. 44), ces pratiques devant toujours et avant tout être envisagées dans leur dimension corporelle. Elle développe ainsi une grille de lecture et une typologie des masculinités, sur laquelle je reviens ci-dessous.</p>
+<p style="text-align:justify;">Le concept d&rsquo;<strong>hégémonie </strong>doit être compris comme <strong>une façon parmi d&rsquo;autres de théoriser la domination</strong>. Connell utilise en fait un concept qui existait déjà pour penser les rapports de classe et issu de l&rsquo;analyse par <a href="http://www.laviedesidees.fr/Critique-de-l-hegemonie-culturelle.html et http://www.contretemps.eu/lectures/domination-culturelle-quand-gramsci-rencontre-bourdieu">Gramsci </a>de l&rsquo;hégémonie culturelle. Je cite ici le <a href="http://genere.hypotheses.org/79">compte-rendu</a> d&rsquo;un séminaire de l&rsquo;EHESS:</p>
+<blockquote><p>L’intérêt du concept d’hégémonie de Gramsci est de toujours envisager les rapports de pouvoir comme <strong>asymétriques</strong>: ce concept évite l’effet de symétrisation entre dominants et subalternes. Il ne se conçoit pas uniquement sur la base du symbolique (comme chez Bourdieu) mais se fonde sur les rapports sociaux réels. <strong>L’hégémonie est à la fois ce qui est produit par ces rapports sociaux et ce qui produit des rapports sociaux spécifiques</strong>. L’hégémonie doit être pensée comme un processus, une dynamique, non comme un état de fait doté d’une certaine permanence à travers les siècles (comme c’est le cas chez Bourdieu).  Pour Marie-Hélène Bourcier, il faut même en finir avec le concept de &laquo;&nbsp;domination masculine&nbsp;&raquo;. Elle affirme que ces théories sont trop tributaires d’une vision dualiste et fataliste.</p></blockquote>
+<p style="text-align:justify;">Pour conclure sur l&rsquo;aspect théorique, il faut noter que le concept de masculinité hégémonique et, de manière générale, le travail de Connell étaient jusqu&rsquo;à récemment très peu utilisés en France. La traduction de son ouvrage majeur sur le sujet, <em>Masculinities</em>, vient seulement de paraître aux éditions Amsterdam.</p>
+<h3>De la masculinité aux masculinités</h3>
+<p style="text-align:justify;">Connell propose une typologie dans laquelle la masculinité hégémonique ne figure que comme une forme de masculinité parmi d&rsquo;autres, ayant cependant le statut privilégié de &laquo;&nbsp;sous-texte sexué du pouvoir&nbsp;&raquo; &#8211; autrement dit, les <strong>représentations attachées au pouvoir</strong> sont, toujours, celles qu&rsquo;on attache aussi à la masculinité hégémonique (<a href="http://www.contretemps.eu/interventions/masculinit%C3%A9s-critique-lh%C3%A9g%C3%A9monie-recherche-horizons-politiques">source</a>). La figure de &laquo;&nbsp;l&rsquo;homme politique&nbsp;&raquo; moderne illustre bien ce statut et fournit un exemple parfait de ce que Connell entend par &laquo;&nbsp;masculinité hégémonique&nbsp;&raquo;. En effet, la profession politique est associée à une représentation dominante qui est une représentation masculine, et qui revêt aussi des dimensions liées à la classe, à la sexualité, à l&rsquo;âge et à la &laquo;&nbsp;race&nbsp;&raquo; (au sens sociologique du terme). Les auteur&middot;es du manuel <em>Introduction aux études sur le genre</em> expliquent ainsi que</p>
+<blockquote><p>les qualités et compétences qui sont requises d&rsquo;un &laquo;&nbsp;homme politique&nbsp;&raquo; sont celles qui ont été traditionnellement monopolisées par les hommes: charisme, disponibilité, aisance oratoire, combativité, maîtrise technique&#8230; Plus précisément les compétences et le style corporel associés à l&rsquo;image légitime de &laquo;&nbsp;l&rsquo;homme politique&nbsp;&raquo; correspondent à une forme située de masculinité: il s&rsquo;agit le plus souvent d&rsquo;une virilité bourgeoise, hétérosexuelle et blanche [donc un modèle de masculinité hégémonique]. (p. 233)</p></blockquote>
+<p style="text-align:justify;">L&rsquo;exercice du pouvoir politique n&rsquo;est qu&rsquo;une forme parmi d&rsquo;autres, mais la plus visible, de l&rsquo;exercice du pouvoir; autrement dit, pouvoir et politique ne se cantonnent pas au champ de LA politique. S&rsquo;il est juste de dire que le pouvoir est culturellement associé à la masculinité, il faut aussi mettre en évidence le fait que ce qu&rsquo;on appelle traditionnellement &laquo;&nbsp;la masculinité&nbsp;&raquo; correspond en fait à ce que Connell appelle la masculinité hégémonique, c&rsquo;est-à-dire un modèle parmi d&rsquo;autres, qui lui sont subordonnés. Il faut donc tacher de comprendre quelles relations les autres types de masculinité entretiennent avec le pouvoir et la domination, que ce soit dans les relations entre hommes ou entre hommes et femmes: en effet, <strong>le genre intervient dans tous les rapports sociaux</strong>, même dans les relations entre hommes ou entre femmes. Il est partout où les relations de pouvoir et de subordination s&rsquo;articulent à des représentations liées à &laquo;&nbsp;la différence des sexes&nbsp;&raquo;. Or on sait, pour revenir aux masculinités, que certains hommes, considérés comme pas assez virils, sont rejetés du côté du féminin; pour Connell, cela signifie qu&rsquo;ils sont exclus de la masculinité hégémonique, et qu&rsquo;ils ne jouissent donc pas automatiquement et/ou pas de la même façon des privilèges sociaux associés à cette masculinité.</p>
+<p style="text-align:justify;">Connell distingue donc, outre la masculinité hégémonique: </p>
+<ul>
+&#8211; des formes de masculinité &laquo;&nbsp;<strong>complices</strong>&#187;, qui participent de la masculinité hégémonique sans toutefois la réaliser pleinement ni bénéficier totalement des privilèges qui en découlent. Connell décrit les hommes participant de ce type de masculinité comme admirant / aspirant à la masculinité hégéomique;<br />
+&#8211; des masculinités &laquo;&nbsp;<strong>marginalisées</strong>&#187;, soumises à l&#8217;emprise de la masculinité hégémonique et qui en sont exclues du fait de certains facteurs, comme la &laquo;&nbsp;race&nbsp;&raquo; ou le handicap;<br />
+&#8211; des masculinités &laquo;&nbsp;<strong>subordonnées</strong>&#187;, comme les masculinités homosexuelles, qui servent de figure repoussoir et présentent des caractéristiques opposées à celles qui sont valorisées dans le cadre de la masculinité hégémonique.
+</ul>
+</p>
+<p style="text-align:justify;">Il est important de ne pas considérer ces catégories comme fixes et correspondant à des essences immuables. Les traits qu&rsquo;elle identifie, loin d&rsquo;être fixés de toute éternité, correspondent à ce qu&rsquo;elle appelle des &laquo;&nbsp;configurations de pratiques&nbsp;&raquo; dépendant des contextes dans lesquels elles s&rsquo;inscrivent. Les catégories qu&rsquo;elle propose sont donc <strong>fluctuantes </strong>et <strong>historiquement situées</strong>, ce qui a des conséquences politiques importantes, puisque cela permet justement une action politique de subversion et de reconfiguration. Certaines des catégories qu&rsquo;elle décrit peuvent, dit-elle, remettre en cause la masculinité hégémonique.</p>
+<h3>Une &laquo;&nbsp;crise de la virilité&nbsp;&raquo; ou une &laquo;&nbsp;crise des masculinités&nbsp;&raquo;? <em>Masculinity studies</em> et masculinisme</h3>
+<p style="text-align:justify;">C&rsquo;est une rengaine désormais bien connue: la masculinité serait en crise &#8211; ou bien serait-ce la virilité? La question divise notamment les historien&middot;es du corps et des masculinités, et elle trouve un écho important dans la littérature masculiniste, comme le prouve notamment le dernier pamphlet commis par Eric Z. Ces gens-là voient dans la &laquo;&nbsp;crise de la virilité&nbsp;&raquo; (la masculinité étant évidemment impensable au pluriel pour eux) un effet de la féminisation de la société et un indice de sa décadence certaine.</p>
+<p style="text-align:justify;"><strong>La masculinité est bien en crise</strong> &#8211; mais là aussi, il faut rappeler que &laquo;&nbsp;masculinité&nbsp;&raquo; est généralement utilisé pour désigner la masculinité hégémonique, la seule concevable et acceptable pour beaucoup. Connell soutient que les <strong>hiérarchies de genre</strong> (qui se portent toujours bien, merci pour elles) ont connu des modifications majeures dans les dernières décennies:</p>
+<blockquote><p>malgré une domination toujours bien présente des hommes sur les femmes, et malgré des formes d&rsquo;hégémonie toujours renouvelées, les hommes n&rsquo;apparaissent plus comme un groupe homogène mais comme une catégorie profondément fragmentée. La masculinité hégémonique comme expression homogène des intérêts des hommes dominants laisse alors place à une &laquo;&nbsp;variété des masculinités&nbsp;&raquo; (p. 203) qui ne doit cependant pas faire oublier certains intérêts communs des hommes, défendus de différentes manières selon les places qu&rsquo;ils occupent. (<a href="http://www.contretemps.eu/interventions/masculinit%C3%A9s-critique-lh%C3%A9g%C3%A9monie-recherche-horizons-politiques">source</a>)</p></blockquote>
+<p style="text-align:justify;">Loin, donc, du discours masculiniste, qui déplore la perte de la virilité, Connell est très attentive aux liens entre <em>masculinity studies</em>, masculinisme et antiféminisme, ainsi qu&rsquo;aux détournements potentiels des travaux sur les masculinités dans un but masculiniste &#8211; détournement, puisque cela irait totalement à l&rsquo;encontre de la manière dont ces théories sont formulées. Montrer que les masculinités sont diverses et historiquement changeantes, c&rsquo;est aller <strong>contre l&rsquo;idée d&rsquo;un idéal masculin (viril) fixé de toute éternité</strong>; c&rsquo;est aussi mettre en évidence les formes de domination qui découlent de cet idéal, pour se donner les moyens de lutter contre elles.</p>
+<p><HR></p>
+<p><strong>Annonce: journée d&rsquo;étude sur les masculinités</strong><br />
+Intitulée &laquo;&nbsp;Produire des hommes. La production des modèles de masculinité: sources et pratiques de recherche&nbsp;&raquo; et organisée par le laboratoire junior GenERe, elle se tiendra le 5 mars à l&rsquo;ENS de Lyon. Plus de renseignements <a href="http://labogenere.fr/2015/02/produire-des-hommes-la-production-des-modeles-de-masculinites-sources-et-pratiques-de-recherche/">sur le site du labo</a>.</p>
+<p><img src="https://i0.wp.com/labogenere.fr/wp/wp-content/uploads/2015/02/affichemasculinit%C3%A9slastessai6.jpg" width="450" height="300" class="aligncenter" /></p>
+<p><strong>Références</strong><br />
+Mélanie Gourarier, Gianfranco Rebucini et Florian Voros, <a href="http://www.contretemps.eu/interviews/masculinit%C3%A9s-colonialit%C3%A9-n%C3%A9olib%C3%A9ralisme-entretien-raewyn-connell">&laquo;&nbsp;Masculinités, colonialité et néolibéralisme. Entretien avec Raewyn Connell&nbsp;&raquo;</a>, <em>Contretemps</em>, 10/09/2013.<br />
+Arthur Vuatoux et Meoin Hagège, <a href="http://www.contretemps.eu/interventions/masculinit%C3%A9s-critique-lh%C3%A9g%C3%A9monie-recherche-horizons-politiques">&laquo;&nbsp;Les masculinités : critique de l&rsquo;hégémonie, recherche et horizons politiques&nbsp;&raquo;</a>, <em>Contretemps</em>, 25/10/2013.<br />
+Raewyn Connell, <em>Masculinities</em>, Polity Press [1995] 2005. Traduction française: <em>Masculinités. Enjeux sociaux de l&rsquo;hégémonie</em>, trad.  Claire Richard, Clémence Garrot, Florian Voros, Marion Duval, Maxime Cervulle, Sous la direction de Meoïn Hagège et Arthur Vuattoux, Editions Amsterdam, 2015. Plus d&rsquo;infos <a href="http://www.editionsamsterdam.fr/articles.php?idArt=235">ici</a>.<br />
+John Tosh, <em>Manliness and Masculinities in Nineteenth-Century Britain. Essays on Gender, Family and Empire</em>, Pearson Education, 2005.<br />
+Tim Carrigan, Bob Connell et John Lee, &laquo;&nbsp;Toward a New Sociology of Masculinity&nbsp;&raquo;, <em>Theory and Society<br />
+</em>Vol. 14, No. 5, 1985, p. 551-604.<br />
+Laure Bereni et al., <em>Introduction aux études sur le genre</em>, De Boeck, 2012. </p>
+<p><strong>Pour aller plus loin</strong><br />
+Pauline Debenest, Vincent Gay et Gabriel Girard, &laquo;&nbsp;Les masculinités et les hommes dans les mouvements féministes, entretien avec Raewyn Connell&nbsp;&raquo; dans <em>Féminisme au pluriel</em>, Syllepse, 2010, p.59-76.<br />
+Sylvie Ayral, <em>La Fabrique des garçons. Sanctions et genre au collège</em>, PUF, 2011. Compte-rendu par <a href="http://www.crepegeorgette.com/2014/01/03/fabrique-garcons-ayral/">Crêpe Georgette</a>.<br />
+Catherine Achin et Elsa Dorlin, &laquo;&nbsp;Nicolas Sarkozy ou la masculinité mascarade du Président&nbsp;&raquo;, <em>Raisons politiques</em>, 31, 2008.<br />
+La série de podcasts de France Culture intitulée &laquo;&nbsp;Devenir homme&nbsp;&raquo;, en particulier <a href="http://www.franceculture.fr/emission-sur-les-docks-devenir-homme-24-%C2%AB-masculinites-homosexuelles-%C2%BB-2013-03-26">ce documentaire </a>sur les &laquo;&nbsp;masculinités homosexuelles&nbsp;&raquo;. </p>
+<div id="atatags-370373-5ec0a5aab81d0">
+        <script type="text/javascript">
+            __ATA.cmd.push(function() {
+                __ATA.initVideoSlot('atatags-370373-5ec0a5aab81d0', {
+                    sectionId: '370373',
+                    format: 'inread'
+                });
+            });
+        </script>
+    </div>			<div id="atatags-26942-5ec0a5aab826b"></div>
+			
+			<script>
+				__ATA.cmd.push(function() {
+					__ATA.initDynamicSlot({
+						id: 'atatags-26942-5ec0a5aab826b',
+						location: 120,
+						formFactor: '001',
+						label: {
+							text: 'Publicités',
+						},
+						creative: {
+							reportAd: {
+								text: 'Report this Ad',
+							},
+							privacySettings: {
+								text: 'Paramètres de confidentialité',
+							}
+						}
+					});
+				});
+			</script><div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Partager ceci:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-2864" class="share-twitter sd-button share-icon" href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?share=twitter" target="_blank" title="Cliquez pour partager sur Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-2864" class="share-facebook sd-button share-icon" href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?share=facebook" target="_blank" title="Cliquez pour partager sur Facebook"><span>Facebook</span></a></li><li class="share-email"><a rel="nofollow noopener noreferrer" data-shared="" class="share-email sd-button share-icon" href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?share=email" target="_blank" title="Cliquez pour envoyer par e-mail à un ami"><span>E-mail</span></a></li><li class="share-tumblr"><a rel="nofollow noopener noreferrer" data-shared="" class="share-tumblr sd-button share-icon" href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?share=tumblr" target="_blank" title="Cliquez pour partager sur Tumblr"><span>Tumblr</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-27116365-2864-5ec0a5aab9b16' data-src='//widgets.wp.com/likes/index.html?ver=20190321#blog_id=27116365&amp;post_id=2864&amp;origin=cafaitgenre.wordpress.com&amp;obj_id=27116365-2864-5ec0a5aab9b16&amp;domain=cafaitgenre.org' data-name='like-post-frame-27116365-2864-5ec0a5aab9b16'><h3 class='sd-title'>WordPress:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>J&#039;aime</span></span> <span class="loading">chargement&hellip;</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div>
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	<h3 class="jp-relatedposts-headline"><em>Articles similaires</em></h3>
+</div></div>			</div><!-- .entry-content -->
+
+	<footer class="entry-meta">
+		
+		Cette entrée, publiée dans <a href="https://cafaitgenre.org/category/matiere-a-reflechir-des-cles-pour-comprendre/concepts-feministes/" rel="category tag">Concepts féministes</a>, est taguée <a href="https://cafaitgenre.org/tag/masculinite-hegemonique/" rel="tag">masculinité hégémonique</a>, <a href="https://cafaitgenre.org/tag/masculinites/" rel="tag">masculinités</a>, <a href="https://cafaitgenre.org/tag/raewyn-connell/" rel="tag">Raewyn Connell</a>. Bookmarquez ce <a href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/" title="Permalien vers Masculinité hégémonique" rel="bookmark">permalien</a>.
+			</footer><!-- .entry-meta -->
+</article><!-- #post-2864 -->
+
+					<nav role="navigation" id="nav-below" class="site-navigation post-navigation">
+		<h1 class="assistive-text">Navigation des articles</h1>
+
+	
+		<div class="nav-previous"><a href="https://cafaitgenre.org/2015/02/19/dans-ma-bibliotheque-desiree-et-alain-frappier-le-choix-2015/" rel="prev"><span class="meta-nav">&larr;</span> Dans ma bibliothèque &#8211; Désirée et Alain Frappier, Le choix (2015)</a></div>		<div class="nav-next"><a href="https://cafaitgenre.org/2015/02/26/grosse-selection-de-podcasts/" rel="next">(Grosse) Sélection de podcasts <span class="meta-nav">&rarr;</span></a></div>
+	
+	</nav><!-- #nav-below -->
+	
+				
+
+	<div id="comments" class="comments-area">
+
+	
+			<h2 class="comments-title">
+			15 r&eacute;flexions sur &ldquo;<span>Masculinité hégémonique</span>&rdquo;		</h2>
+
+		<ol class="commentlist">
+				<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-10925">
+		<article id="comment-10925" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://0.gravatar.com/avatar/c2bf6628f46030856a0cbacfd724f703?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn">mauswiesel</cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/#comment-10925"><time pubdate datetime="2015-02-24T13:38:28+01:00">
+					24/02/2015 à 1:38  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?replytocom=10925#respond' data-commentid="10925" data-postid="2864" data-belowelement="comment-10925" data-respondelement="respond" aria-label='Répondre à mauswiesel'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>Article très intéressant, mais quelque chose me chiffonne dans le premier paragraphe.<br />
+Vous dites que l&rsquo;on envisage le genre à la fois comme une construction sociale et comme un processus relationnel. Ce processus est selon vous l&rsquo;idée que le genre crée la division et la binarité. Or, pour moi, cette construction sociale et ce processus relationnel sont contradictoires : d&rsquo;un côté, le genre est créé socialement, de l&rsquo;autre, il crée la division ? Ça ne me paraît pas très logique. Ce que je ne comprends pas dans cette idée, c&rsquo;est pourquoi la société aurait créé des genres si ce n&rsquo;est pour marquer des divisions déjà présentes ? Il me semble alors qu&rsquo;il faut réfléchir dans l&rsquo;autre sens : les genres ne créent pas les divisions, ils les marquent. Ce ne sont pas les genres qui créent une hiérarchie, la hiérarchie est créée par la société – et ça arrange bien la classe des oppresseurs si l&rsquo;on croit que c&rsquo;est le genre qui crée l&rsquo;oppression. Dans ce sens, multiplier les genres ne résoudraient absolument pas l&rsquo;oppression sexiste, elle ne ferait que créer des catégories plus ou moins opprimées sur une échelle qui va de ce qui est bien considéré (les hommes) à ce qui est mal considéré (les femmes), pour faire simple.<br />
+C&rsquo;est comme avec les races : le fait qu&rsquo;il y ait des métis n&rsquo;a pas du tout supprimé le racisme. Seulement, les Noir·e·s le subissent de plein fouet, les personnes métisses ou avec la peau pas tout à fait blanche mais pas trop sombre non plus le subissent également, parfois aussi violemment que les Noir·e·s, parfois moins parce qu&rsquo;ielles « passent » ou sont vu·e·s comme blanc·he·s.<br />
+Le problème avec cette idée que le genre est oppressif parce qu&rsquo;il empêche les gens de faire ce qu&rsquo;ielles veulent avec leur genre, c&rsquo;est que ça ne remet pas en cause la construction sociale du féminin et du masculin. Ça me paraît au final assez essentialiste dans le sens où ça sous-tend l&rsquo;idée qu&rsquo;il y a du féminin et du masculin en chacun·e de nous.<br />
+En gros, ma question est : où placez-vous le genre dans la construction de l&rsquo;oppression sexiste ? Est-il antérieur, simultané ou postérieur ?</p>
+<p id="comment-like-10925" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?like_comment=10925&#038;_wpnonce=165da6872b" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-10925" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-cafaitgenre bypostauthor odd alt depth-2 highlander-comment" id="li-comment-10927">
+		<article id="comment-10927" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://0.gravatar.com/avatar/f7ce0b72e75e08b260a851c005533802?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn"><a href='https://cafaitgenre.wordpress.com' rel='external nofollow ugc' class='url'>Genre!</a></cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/#comment-10927"><time pubdate datetime="2015-02-24T15:29:18+01:00">
+					24/02/2015 à 3:29  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?replytocom=10927#respond' data-commentid="10927" data-postid="2864" data-belowelement="comment-10927" data-respondelement="respond" aria-label='Répondre à Genre!'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>Je crois qu&rsquo;il y a de gros malentendus par rapport à la définition du genre, donc je vais essayer d&rsquo;expliquer plus clairement ce que je voulais dire &#8211; n&rsquo;hésitez pas à me dire si ça vous paraît toujours confus.</p>
+<p>1) La définition du genre comme construction sociale et comme processus relationnel. Je n&rsquo;arrive pas à comprendre où vous voyez un paradoxe. Je vous renvoie à mon <a href="https://cafaitgenre.org/2014/11/11/le-genre-est-une-construction-sociale-quest-ce-que-cela-veut-dire/" rel="nofollow">billet </a>sur cette idée de construction sociale: cela signifie que le genre n&rsquo;a aucune nécessité biologique, et qu&rsquo;il dépend du cadre socio-historique dans lequel on s&rsquo;inscrit. La définition de la masculinité et de la féminité est historiquement et culturellement située, et ne se rapporte pas à une essence immuable. Quant à l&rsquo;aspect relationnel, cela signifie simplement que, pour les études de genre, on ne peut pas étudier les femmes sans étudier les hommes, et vice versa. Le genre se construit par différenciation et par opposition: on apprend à être un garçon en apprenant à rejeter ce qui est féminin, etc. </p>
+<p>2) &laquo;&nbsp;Ce que je ne comprends pas dans cette idée, c’est pourquoi la société aurait créé des genres si ce n’est pour marquer des divisions déjà présentes?&nbsp;&raquo; Autrement dit: le genre ne viendrait que corroborer des divisions existant de tous temps, en tous lieux, des divisions naturelles et indépendantes de la culture. C&rsquo;est justement ce que la perspective constructiviste vient démentir. De plus, on ne voit pas très bien dans votre argument ce qui relève du social et ce qui relève de la nature: si le genre ne venait que &laquo;&nbsp;marquer des divisions déjà présentes&nbsp;&raquo;, à quoi ces divisions tiennent-elles? Sont-elles culturelles ou naturelles? Et si elles sont culturelles, alors c&rsquo;est que &laquo;&nbsp;la différence des sexes&nbsp;&raquo; n&rsquo;est pas naturelle, mais on arrive à une aporie dans votre raisonnement. En outre, je ne vois pas bien à quoi réfère cette &laquo;&nbsp;classe des oppresseurs&nbsp;&raquo; que vous évoquez. Qui sont &laquo;&nbsp;les oppresseurs&nbsp;&raquo; pour vous? </p>
+<p>3) En parlant de &laquo;&nbsp;multiplier les genres&nbsp;&raquo;, vous faites référence aux stratégies queer, qui reposent sur la prolifération <em>des</em> genres plutôt sur l&rsquo;abolition <em>du</em> genre comme système. On a là deux définitions en fait très différentes du (des) genre(s). Je souligne bien, dans mon article, que je fais référence à la 2ème, c&rsquo;est pourquoi j&#8217;emploie &laquo;&nbsp;genre&nbsp;&raquo; au singulier. Je reviendrai peut-être dans un autre billet sur ces deux définitions. </p>
+<p>4) Votre comparaison avec le racisme me semble pour le moins étrange et maladroite, et je ne sais vraiment pas où vous voulez en venir avec ça. </p>
+<p>5) &laquo;&nbsp;Le problème avec cette idée que le genre est oppressif parce qu’il empêche les gens de faire ce qu’ielles veulent avec leur genre, c’est que ça ne remet pas en cause la construction sociale du féminin et du masculin. Ça me paraît au final assez essentialiste dans le sens où ça sous-tend l’idée qu’il y a du féminin et du masculin en chacun·e de nous.&nbsp;&raquo; Je ne crois avoir dit ça nulle part&#8230; A nouveau, vous semblez confondre deux conceptions très différentes du genre: l&rsquo;une où le genre est défini comme système (c&rsquo;est celle que j&rsquo;utilise, sauf mention contraire) et l&rsquo;autre où il est défini comme appartenant de manière propre à une personne. Ce n&rsquo;est pas tellement de cela qu&rsquo;il est question dans cet article: il est question du caractère normatif <em>du</em> genre, auquel est associé <em>une</em> définition là aussi normative de <em>la</em> masculinité; il est aussi question d&rsquo;autres conceptions des masculinités qui permettent d&rsquo;échapper à cette normativité et de rendre compte des multiples manières d&rsquo;être un homme aujourd&rsquo;hui. Cette façon de concevoir les masculinités est, fondamentalement, une remise en cause des mécanismes de domination et de hiérarchisation entre masculin et féminin; donc où se trouve, pour vous, l&rsquo;essentialisme là-dedans?? Je ne dis pas qu&rsquo;il y a &laquo;&nbsp;du féminin et du masculin en chacun&middot;e de nous&nbsp;&raquo;, c&rsquo;est une façon simpliste et erronée de comprendre le propos de Connell; je parle des caractéristiques que la société attribue au masculin et au féminin, et j&rsquo;explique que ces caractéristiques peuvent se trouver à la fois dans le groupe &laquo;&nbsp;hommes&nbsp;&raquo; et dans le groupe &laquo;&nbsp;femmes&nbsp;&raquo;, ce qui permet de mieux comprendre comment fonctionne le genre. </p>
+<p>Et donc pour finir avec votre dernière question: <em>c&rsquo;est le genre qui produit</em> l&rsquo;oppression sexiste.</p>
+<p id="comment-like-10927" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?like_comment=10927&#038;_wpnonce=e004d0e290" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-10927" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment even depth-3 highlander-comment" id="li-comment-10929">
+		<article id="comment-10929" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://0.gravatar.com/avatar/c2bf6628f46030856a0cbacfd724f703?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn">mauswiesel</cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/#comment-10929"><time pubdate datetime="2015-02-24T20:54:33+01:00">
+					24/02/2015 à 8:54  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?replytocom=10929#respond' data-commentid="10929" data-postid="2864" data-belowelement="comment-10929" data-respondelement="respond" aria-label='Répondre à mauswiesel'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>Ok, il me semble que je n&rsquo;ai pas été très claire à certains endroits, mais aussi que nous ne sommes pas d&rsquo;accord quant à nos prémisses. Quand je parle de divisions déjà présentes, j&rsquo;aurais dû préciser que je ne pense pas que ces divisions soient naturelles, mais que les hommes ont divisé la société en deux groupes, qui sont devenus les opprimées et les oppresseurs, qui, par « chance », correspondent aux femmes et aux hommes, et que le système de genre vient s&rsquo;ajouter à cette division, mais qu&rsquo;il ne la crée pas. Le genre permet certes de renforcer l&rsquo;oppression sexiste, mais pour moi, il ne crée pas l&rsquo;oppression sexiste, c&rsquo;est l&rsquo;inverse qui se passe, parce que naturaliser une oppression (ce qui est un peu le but du système de genre) facilite grandement son application. Ainsi par exemple, les femmes ne sont pas significativement moins fortes physiquement que les hommes, mais le système d&rsquo;oppression sexiste, donc les hommes, nous dit que si (tout en ayant pris soin de faire en sorte que les femmes soient effectivement moins fortes physiquement), donc c&rsquo;est pour ça que les femmes seraient reléguées à certains travaux, certaines tâches et exclues d&rsquo;autres travaux. On peut continuer ce raisonnement sur les capacités intellectuelles, etc. Je pense en fait (Christine Delphy le dit bien mieux que moi&#8230;) que même le sexe n&rsquo;est pas un donné naturel, au sens où c&rsquo;est un prétexte pour justifier une opposition déjà créée par la société. Comme la couleur de peau n&rsquo;est qu&rsquo;un prétexte qui a justifié à l&rsquo;esclavage des Africain·e·s et le racisme (ce qu&rsquo;explique La Controverse de Valladolid, de Jean-Claude Carrière). En gros, ce n&rsquo;est pas la couleur de peau qui crée le racisme, tout comme ce n&rsquo;est pas le sexe ou le genre qui crée le sexisme.<br />
+Effectivement, j&rsquo;ai sans doute fait un amalgame entre le genre et les genres. Je pense qu&rsquo;il me manquait l&rsquo;idée de système, que vous développez mieux dans votre commentaire. J&rsquo;aurais mieux compris si vous aviez parlé de système de genre plutôt que de genre tout court.</p>
+<p id="comment-like-10929" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?like_comment=10929&#038;_wpnonce=d80ef99884" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-10929" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-cafaitgenre bypostauthor odd alt depth-4 highlander-comment" id="li-comment-10935">
+		<article id="comment-10935" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://0.gravatar.com/avatar/f7ce0b72e75e08b260a851c005533802?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn"><a href='https://cafaitgenre.wordpress.com' rel='external nofollow ugc' class='url'>Genre!</a></cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/#comment-10935"><time pubdate datetime="2015-02-25T17:31:58+01:00">
+					25/02/2015 à 5:31  					</time></a>
+														</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>Vous avez l&rsquo;air de penser que les hommes (si j&rsquo;ai bien compris) se sont réveillés un jour en disant: on va dominer les femmes, et un peu plus tard en disant: on va inventer le genre pour justifier cette domination. Evidemment, je caricature, mais c&rsquo;est ce qui se dégage de vos propos (&laquo;&nbsp;les hommes ont divisé la société en deux groupes&nbsp;&raquo;). Vous ne trouverez cela dans aucun écrit féministe et dans aucun écrit sur le genre&#8230; C&rsquo;est simplificateur et erroné. Ce n&rsquo;est pas ainsi que les oppressions naissent, et ce n&rsquo;est pas ainsi que les mécanismes d&rsquo;oppression sont décrits.<br />
+&laquo;&nbsp;Je pense en fait (Christine Delphy le dit bien mieux que moi…) que même le sexe n’est pas un donné naturel, au sens où c’est un prétexte pour justifier une opposition déjà créée par la société.&nbsp;&raquo; Ce que dit Delphy, c&rsquo;est que le sexe précède le genre: cela signifie que, dans notre manière de concevoir le sexe, il y a déjà du genre (c&rsquo;est-à-dire de la hiérarchisation), parce qu&rsquo;il est impossible de concevoir le sexe hors de toute culture, hors de l&rsquo;influence des représentations de genre. J&rsquo;avais évoqué cette question dans un article intitulé <a href="https://cafaitgenre.org/2014/11/17/quels-sont-les-rapports-entre-sexe-et-genre/" rel="nofollow">&laquo;&nbsp;Quels sont les rapports entre sexe et genre?&nbsp;&raquo;</a>.<br />
+Quant à la définition du genre, je l&#8217;emploie toujours au singulier et j&rsquo;en ai rappelé la définition (pour la énième fois sur ce blog) au début de l&rsquo;article; donc je n&rsquo;ai peut-être pas écrit noir sur blanc &laquo;&nbsp;système de genre&nbsp;&raquo;, mais il n&rsquo;y avait normalement pas de place pour l&rsquo;ambiguïté&#8230; Je comprends bien que l&rsquo;existence de plusieurs définitions complique les choses, et qu&rsquo;il faut déjà savoir que ces définitions peuvent éventuellement se contredire; mais c&rsquo;est bien pour cela que je me donne la peine de définir le genre dans chaque billet théorique et toutes les fois où cela est nécessaire.</p>
+<p id="comment-like-10935" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?like_comment=10935&#038;_wpnonce=87dcb46b99" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-10935" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='http://www.pearltrees.com/t/gender-feminism/id12600536/item138472397' rel='external nofollow ugc' class='url'>Gender &amp; feminism | Pearltrees</a></p>
+	</li><!-- #comment-## -->
+	<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-10939">
+		<article id="comment-10939" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://1.gravatar.com/avatar/4415ab420f2243ddbd0010cebbc10b56?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn">Talon</cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/#comment-10939"><time pubdate datetime="2015-02-26T09:31:24+01:00">
+					26/02/2015 à 9:31  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?replytocom=10939#respond' data-commentid="10939" data-postid="2864" data-belowelement="comment-10939" data-respondelement="respond" aria-label='Répondre à Talon'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>&laquo;&nbsp;Ce n’est pas ainsi que les oppressions naissent, et ce n’est pas ainsi que les mécanismes d’oppression sont décrits&nbsp;&raquo;<br />
+Je ne sais pas si cela a déjà été abordé sur le blog, mais pouvez vous développer ? Comment naissent-ils ?</p>
+<p id="comment-like-10939" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?like_comment=10939&#038;_wpnonce=953cbcc21b" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-10939" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-10952">
+		<article id="comment-10952" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://0.gravatar.com/avatar/3f9efdaf3e3f4c89cb0be0c3224d437f?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn">V13</cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/#comment-10952"><time pubdate datetime="2015-03-01T14:03:06+01:00">
+					01/03/2015 à 2:03  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?replytocom=10952#respond' data-commentid="10952" data-postid="2864" data-belowelement="comment-10952" data-respondelement="respond" aria-label='Répondre à V13'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>Le rapport crée le sujet, quoi. Matérialisme conséquent. Matthieu, ou dans une certaine mesure Guillaumin, l&rsquo;avaient déjà systématisé, en partie. Mais de ce fait, le masculin ne peut être réduit à une simple question d&rsquo;identité ; le valorisé est masculin, dans un seul et même mouvement (et il n&rsquo;y a pas &laquo;&nbsp;d&rsquo;ailleurs&nbsp;&raquo; de référence, l&rsquo;humain étant masculiniforme). Ce qui pose la question, abordée autrefois de front par Solanas, et aujourd&rsquo;hui plus doctement par Scholz (&laquo;&nbsp;La valeur c&rsquo;est le mâle&nbsp;&raquo;), de la critique unifiée des formes positivées dans une société d&rsquo;échange contraint et concurrence, de leur conssubstantialité possible avec le viriarcat (autonomie, force, concurrence, sexualité ; plaisir, bonheur comme buts&#8230;). Et donc de la question : un féminisme qui voudrait sortir de ce cadre pet-il se limiter à sa réappropriation, en croyant que le sujet est multiple et que si &laquo;&nbsp;autrui&nbsp;&raquo; met en oeuvre les mêmes formes sociales, elle en récoltera d&rsquo;autres fruits ?</p>
+<p id="comment-like-10952" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?like_comment=10952&#038;_wpnonce=cbdd4c27c5" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-10952" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-10971">
+		<article id="comment-10971" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://0.gravatar.com/avatar/97df6e9e53b10ed4cc4726d65a297fb0?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn">Lilian</cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/#comment-10971"><time pubdate datetime="2015-03-10T11:11:36+01:00">
+					10/03/2015 à 11:11  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?replytocom=10971#respond' data-commentid="10971" data-postid="2864" data-belowelement="comment-10971" data-respondelement="respond" aria-label='Répondre à Lilian'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>Hello,<br />
+Je n&rsquo;ai pas (encore) fini la lecture, mais il y a une petite erreur sur le lien donné en cliquant sur &laquo;&nbsp;Gramsci&nbsp;&raquo;, juste avant le compte-rendu de séminaire de l&rsquo;EHESS, la balise de lien en contient deux, séparés par &laquo;&nbsp;et&nbsp;&raquo;, et au lieu d&rsquo;accéder aux deux sites, on a une belle erreur 404 🙂<br />
+Merci.</p>
+<p id="comment-like-10971" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?like_comment=10971&#038;_wpnonce=5565653818" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-10971" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='https://cafaitgenre.org/2015/04/30/pourquoi-les-hommes-devraient-ils-etre-feministes/' rel='external nofollow ugc' class='url'>Pourquoi les hommes devraient-ils être féministes? | Genre !</a></p>
+	</li><!-- #comment-## -->
+	<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-11125">
+		<article id="comment-11125" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://i2.wp.com/graph.facebook.com/v2.2/1560708968/picture?q=type%3Dlarge%26_md5%3D37dfd83efb873d3c0d4dc4aa14c3fcb8&#038;resize=44%2C44' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn"><a href='http://www.facebook.com/1560708968' rel='external nofollow ugc' class='url'>Damien Wertz</a></cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/#comment-11125"><time pubdate datetime="2015-05-06T17:34:08+02:00">
+					06/05/2015 à 5:34  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?replytocom=11125#respond' data-commentid="11125" data-postid="2864" data-belowelement="comment-11125" data-respondelement="respond" aria-label='Répondre à Damien Wertz'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>Peut on considéré la masculinité traditionnelle comme hégémonique ou complice?</p>
+<p id="comment-like-11125" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?like_comment=11125&#038;_wpnonce=1970bc734b" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-11125" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='https://cafaitgenre.org/2015/06/22/petit-lexique-du-genre-2-feminite-masculinite-masculinite-hegemonique/' rel='external nofollow ugc' class='url'>Petit lexique du genre (2): féminité, masculinité, masculinité hégémonique | Genre !</a></p>
+	</li><!-- #comment-## -->
+	<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-11423">
+		<article id="comment-11423" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://0.gravatar.com/avatar/94ea52bfea4a21ec7887174754fcc237?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn">Guarnera</cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/#comment-11423"><time pubdate datetime="2015-10-20T15:37:06+02:00">
+					20/10/2015 à 3:37  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?replytocom=11423#respond' data-commentid="11423" data-postid="2864" data-belowelement="comment-11423" data-respondelement="respond" aria-label='Répondre à Guarnera'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>Qu&rsquo;en est-il de la féminité? Est-elle multiple est aussi? A-t-elle son penchant de la virilité masculine?<br />
+Merci beaucoup</p>
+<p id="comment-like-11423" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2015/02/23/masculinite-hegemonique/?like_comment=11423&#038;_wpnonce=45ec8ad364" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-11423" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='http://www.pearltrees.com/poulet/anti-patriarchy/id9769412/item158965862' rel='external nofollow ugc' class='url'>Anti patriarchy | Pearltrees</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='http://www.pearltrees.com/kuartna/autres-marque-pages/id16509779/item187853692' rel='external nofollow ugc' class='url'>Autres marque-pages | Pearltrees</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='http://simonae.fr/militantisme/feminismes/les-happy-men-et-la-liberation-des-hommes-de-legalite-professionnelle-au-rejet-du-feminisme/' rel='external nofollow ugc' class='url'>Les Happy Men et la libération des hommes : de l&rsquo;égalité professionnelle au rejet du féminisme | Simonæ</a></p>
+	</li><!-- #comment-## -->
+		</ol><!-- .commentlist -->
+
+		
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Votre commentaire <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2015/02/23/masculinite-hegemonique/#respond" style="display:none;">Annuler la réponse.</a></small></h3><form action="https://cafaitgenre.org/wp-comments-post.php" method="post" id="commentform" class="comment-form"><input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="647d1c6fe3" /><input type="hidden" name="_wp_http_referer" value="/2015/02/23/masculinite-hegemonique/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Entrez votre commentaire...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Entrez votre commentaire..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+	<div id="comment-form-nascar">
+		<p>Entrez vos coordonnées ci-dessous ou cliquez sur une icône pour vous connecter:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" class="nascar-signin-link"
+                   title="Connexion avec Visiteur">
+									</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" class="nascar-signin-link"
+                   title="Connexion avec WordPress.com">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" class="nascar-signin-link"
+                   title="Connexion avec Twitter">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" class="nascar-signin-link"
+                   title="Connexion avec Facebook">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg>				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">E-mail <span class="required">(obligatoire)</span> <span class="nopublish">(adresse strictement confidentielle)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Nom <span class="required">(obligatoire)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Site web</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url" value="" /></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Logo WordPress.com" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+						<p class="comment-form-posting-as pa-wordpress">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte WordPress.com.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Photo Google" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+						<p class="comment-form-posting-as pa-googleplus">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Google.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" x="0px" y="0px" viewBox="0 0 60 60" ><path fill="#519bf7" d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" /><path fill="#3db366" d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" /><path fill="#fdc600" d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" /><path fill="#f15b44" d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" /></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Image Twitter" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+						<p class="comment-form-posting-as pa-twitter">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Twitter.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Photo Facebook" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+						<p class="comment-form-posting-as pa-facebook">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Facebook.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Annuler</a></div>
+		<p>Connexion à %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Avertissez-moi par e-mail des nouveaux commentaires.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Avertissez-moi par e-mail des nouveaux articles.</label></p></div>
+
+
+
+
+<p class="form-submit"><input name="submit" type="submit" id="comment-submit" class="submit" value="Laisser un commentaire" /> <input type='hidden' name='comment_post_ID' value='2864' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="1ceaac3c1b" /></p>
+<input type="hidden" name="genseq" value="1589683626" />
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="105"/></p></form>	</div><!-- #respond -->
+	<div style="clear: both"></div>
+</div><!-- #comments .comments-area -->
+
+			
+			</div><!-- #content .site-content -->
+		</div><!-- #primary .content-area -->
+
+
+		</div><!-- #main .site-main -->
+
+		
+		<div id="secondary" class="widget-area" role="complementary">
+						<aside id="search-3" class="widget widget_search">	<form method="get" id="searchform" action="https://cafaitgenre.org/" role="search">
+		<label for="s" class="assistive-text">Recherche</label>
+		<input type="text" class="field" name="s" value="" id="s" placeholder="Recherche &hellip;" />
+		<input type="submit" class="submit" name="submit" id="searchsubmit" value="Recherche" />
+	</form>
+</aside><aside id="media_image-3" class="widget widget_media_image"><h1 class="widget-title">Le féminisme (en 7 slogans et citations)</h1><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><div style="width: 335px" class="wp-caption alignnone"><a href="http://www.lelombard.com/albums-fiche-bd/petite-bedetheque-savoirs/feminisme-7-slogans-et-citations,3502.html"><img class="image alignnone" src="http://bdi.dlpdomain.com/album/9782803637409/couv/I325x456/petite-bedetheque-savoirs-tome-11-feminisme-7-slogans-et-citations.jpg" alt="" width="325" height="456" /></a><p class="wp-caption-text">Paru en octobre 2016 aux éditions du Lombard (cliquer sur l'image)</p></div></aside><aside id="linkcat-542119702" class="widget widget_links"><h1 class="widget-title">Revue de presse</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="https://cafaitgenre.org/2016/12/11/on-parle-de-mon-livre-sur-les-interwebz/">On parle de mon livre sur les interwebz</a></li>
+
+	</ul>
+</aside>
+<aside id="categories-3" class="widget widget_categories"><h1 class="widget-title">Genres d&rsquo;articles</h1>		<ul>
+				<li class="cat-item cat-item-241915657"><a href="https://cafaitgenre.org/category/arguments-anti-feministes/">Arguments anti-féministes</a>
+</li>
+	<li class="cat-item cat-item-245564688"><a href="https://cafaitgenre.org/category/matiere-a-reflechir-des-cles-pour-comprendre/concepts-feministes/">Concepts féministes</a>
+</li>
+	<li class="cat-item cat-item-79501"><a href="https://cafaitgenre.org/category/coups-de-gueule/">Coups de gueule</a>
+</li>
+	<li class="cat-item cat-item-384303"><a href="https://cafaitgenre.org/category/dans-ma-bibliotheque/">Dans ma bibliothèque</a>
+</li>
+	<li class="cat-item cat-item-66367270"><a href="https://cafaitgenre.org/category/le-genre-dans-lactualite/genre-et-politique/">Genre et politique</a>
+</li>
+	<li class="cat-item cat-item-158877146"><a href="https://cafaitgenre.org/category/le-genre-dans-lactualite/" title="Réactions à des sujets d&#039;actualité, regard sur l&#039;actualité du point de vue du genre">Le genre dans l&#039;actualité</a>
+</li>
+	<li class="cat-item cat-item-64278490"><a href="https://cafaitgenre.org/category/matiere-a-reflechir-des-cles-pour-comprendre/" title="Questionnements, ressources et éclairages sur les questions liées au genre, pour rester curieux et attentifs, et pour se donner les moyens de réfléchir de manière éclairée!">Matière à réfléchir / Des clés pour comprendre</a>
+</li>
+	<li class="cat-item cat-item-2773730"><a href="https://cafaitgenre.org/category/mobilisations/">Mobilisations</a>
+</li>
+	<li class="cat-item cat-item-330146390"><a href="https://cafaitgenre.org/category/dans-ma-bibliotheque/podcasts-dans-ma-bibliotheque/">Podcasts</a>
+</li>
+	<li class="cat-item cat-item-6270"><a href="https://cafaitgenre.org/category/publications/">Publications</a>
+</li>
+	<li class="cat-item cat-item-60696323"><a href="https://cafaitgenre.org/category/reflexions-feministes/">Réflexions féministes</a>
+</li>
+	<li class="cat-item cat-item-64278403"><a href="https://cafaitgenre.org/category/representations-du-genre/" title="Essai de décryptage des différents types de discours tenus sue le féminin et le masculin dans les médias (popculture, publicité...)">Représentations du genre</a>
+</li>
+	<li class="cat-item cat-item-259679739"><a href="https://cafaitgenre.org/category/matiere-a-reflechir-des-cles-pour-comprendre/slogans-expliques/">Slogans expliqués</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="https://cafaitgenre.org/category/uncategorized/">Uncategorized</a>
+</li>
+		</ul>
+			</aside>		<aside id="recent-posts-3" class="widget widget_recent_entries">		<h1 class="widget-title">Articles récents</h1>		<ul>
+											<li>
+					<a href="https://cafaitgenre.org/2017/11/09/un-livre-peut-en-cacher-un-autre/">Un livre peut en cacher un autre</a>
+									</li>
+											<li>
+					<a href="https://cafaitgenre.org/2017/10/19/realiser-que-moi-aussi/">Réaliser: &laquo;&nbsp;moi aussi&nbsp;&raquo;</a>
+									</li>
+											<li>
+					<a href="https://cafaitgenre.org/2017/05/29/travail-militant-travail-emotionnel/">Travail militant, travail émotionnel</a>
+									</li>
+											<li>
+					<a href="https://cafaitgenre.org/2017/04/21/des-urnes-et-du-papier/">Des urnes et du papier</a>
+									</li>
+											<li>
+					<a href="https://cafaitgenre.org/2017/04/07/le-genre-dans-les-discours-de-la-presidentielle/">Le genre dans les discours de la Présidentielle</a>
+									</li>
+					</ul>
+		</aside><aside id="linkcat-158883272" class="widget widget_links"><h1 class="widget-title">Liens - Autour du genre</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://allodoxia.blog.lemonde.fr/" title="Observatoire critique de la vulgarisation (de nombreux articles sur le sexe et le genre)" target="_blank">Allodoxia</a></li>
+<li><a href="http://labogenere.fr/" title="Diffuser et expliquer les études de genre (laboratoire junior auquel j&rsquo;appartiens)" target="_blank">GenERe (Genre: Epistémologie &amp; Recherches)</a></li>
+<li><a href="http://penser-le-genre-catholique.over-blog.com/" target="_blank">Penser le genre catholique</a></li>
+
+	</ul>
+</aside>
+<aside id="linkcat-67793" class="widget widget_links"><h1 class="widget-title">Liens - Féminismes</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://www.acontrario.net/" target="_blank">A Contrario</a></li>
+<li><a href="http://antisexisme.wordpress.com/" title="Lutter contre le sexisme grâce aux sciences humaines" target="_blank">Antisexisme</a></li>
+<li><a href="http://egalitariste.net/" target="_blank">Égalitariste</a></li>
+<li><a href="http://www.crepegeorgette.com/" target="_blank">Crêpe Georgette</a></li>
+<li><a href="http://dariamarx.com/" target="_blank">Daria Marx</a></li>
+<li><a href="http://www.scoop.it/t/feminisme" title="Rassemble presque quotidiennement des articles en français et en anglais sur le thème du féminisme" target="_blank">Féminisme sur Scoop.it</a></li>
+<li><a href="http://www.feministfrequency.com/" title="« Conversations with Pop Culture » – vidéos, la plupart sont traduites en français" target="_blank">Feminist Frequency</a></li>
+<li><a href="http://blog.francetvinfo.fr/ladies-and-gentlemen/" target="_blank">Ladies and Gentlemen</a></li>
+<li><a href="http://www.dechainees.fr/" target="_blank">Les déchaînées</a></li>
+<li><a href="http://lesquestionscomposent.fr/" target="_blank">Les questions composent</a></li>
+<li><a href="http://www.sexysoucis.fr/" target="_blank">Sexy souciS</a></li>
+<li><a href="http://www.toutalego.com/" target="_blank">Tout à l&#039;ego</a></li>
+
+	</ul>
+</aside>
+<aside id="linkcat-219169176" class="widget widget_links"><h1 class="widget-title">Liens - sites d'infos</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://www.slate.fr/genres" title="Le fil genre de Slate" target="_blank">Classé X ou Y (Slate)</a></li>
+<li><a href="http://www.lesnouvellesnews.fr/" title="“L’autre genre d’info”" target="_blank">Les Nouvelles News</a></li>
+<li><a href="http://rue89.nouvelobs.com/rue69" target="_blank">Rue 69</a></li>
+<li><a href="http://blogs.lexpress.fr/sexpress/" title="Mettez le doigt dans l&rsquo;engrenage du genre" target="_blank">Sexpress</a></li>
+
+	</ul>
+</aside>
+<aside id="archives-3" class="widget widget_archive"><h1 class="widget-title">Archives</h1>		<label class="screen-reader-text" for="archives-dropdown-3">Archives</label>
+		<select id="archives-dropdown-3" name="archive-dropdown">
+			
+			<option value="">Sélectionner un mois</option>
+				<option value='https://cafaitgenre.org/2017/11/'> novembre 2017 </option>
+	<option value='https://cafaitgenre.org/2017/10/'> octobre 2017 </option>
+	<option value='https://cafaitgenre.org/2017/05/'> mai 2017 </option>
+	<option value='https://cafaitgenre.org/2017/04/'> avril 2017 </option>
+	<option value='https://cafaitgenre.org/2017/02/'> février 2017 </option>
+	<option value='https://cafaitgenre.org/2016/12/'> décembre 2016 </option>
+	<option value='https://cafaitgenre.org/2016/11/'> novembre 2016 </option>
+	<option value='https://cafaitgenre.org/2016/10/'> octobre 2016 </option>
+	<option value='https://cafaitgenre.org/2016/08/'> août 2016 </option>
+	<option value='https://cafaitgenre.org/2016/06/'> juin 2016 </option>
+	<option value='https://cafaitgenre.org/2016/05/'> mai 2016 </option>
+	<option value='https://cafaitgenre.org/2016/04/'> avril 2016 </option>
+	<option value='https://cafaitgenre.org/2016/03/'> mars 2016 </option>
+	<option value='https://cafaitgenre.org/2016/02/'> février 2016 </option>
+	<option value='https://cafaitgenre.org/2016/01/'> janvier 2016 </option>
+	<option value='https://cafaitgenre.org/2015/09/'> septembre 2015 </option>
+	<option value='https://cafaitgenre.org/2015/07/'> juillet 2015 </option>
+	<option value='https://cafaitgenre.org/2015/06/'> juin 2015 </option>
+	<option value='https://cafaitgenre.org/2015/05/'> mai 2015 </option>
+	<option value='https://cafaitgenre.org/2015/04/'> avril 2015 </option>
+	<option value='https://cafaitgenre.org/2015/02/'> février 2015 </option>
+	<option value='https://cafaitgenre.org/2015/01/'> janvier 2015 </option>
+	<option value='https://cafaitgenre.org/2014/12/'> décembre 2014 </option>
+	<option value='https://cafaitgenre.org/2014/11/'> novembre 2014 </option>
+	<option value='https://cafaitgenre.org/2014/09/'> septembre 2014 </option>
+	<option value='https://cafaitgenre.org/2014/08/'> août 2014 </option>
+	<option value='https://cafaitgenre.org/2014/07/'> juillet 2014 </option>
+	<option value='https://cafaitgenre.org/2014/06/'> juin 2014 </option>
+	<option value='https://cafaitgenre.org/2014/05/'> mai 2014 </option>
+	<option value='https://cafaitgenre.org/2014/04/'> avril 2014 </option>
+	<option value='https://cafaitgenre.org/2014/03/'> mars 2014 </option>
+	<option value='https://cafaitgenre.org/2014/02/'> février 2014 </option>
+	<option value='https://cafaitgenre.org/2014/01/'> janvier 2014 </option>
+	<option value='https://cafaitgenre.org/2013/12/'> décembre 2013 </option>
+	<option value='https://cafaitgenre.org/2013/11/'> novembre 2013 </option>
+	<option value='https://cafaitgenre.org/2013/09/'> septembre 2013 </option>
+	<option value='https://cafaitgenre.org/2013/08/'> août 2013 </option>
+	<option value='https://cafaitgenre.org/2013/07/'> juillet 2013 </option>
+	<option value='https://cafaitgenre.org/2013/06/'> juin 2013 </option>
+	<option value='https://cafaitgenre.org/2013/05/'> mai 2013 </option>
+	<option value='https://cafaitgenre.org/2013/04/'> avril 2013 </option>
+	<option value='https://cafaitgenre.org/2013/03/'> mars 2013 </option>
+	<option value='https://cafaitgenre.org/2013/02/'> février 2013 </option>
+	<option value='https://cafaitgenre.org/2013/01/'> janvier 2013 </option>
+	<option value='https://cafaitgenre.org/2012/12/'> décembre 2012 </option>
+	<option value='https://cafaitgenre.org/2012/11/'> novembre 2012 </option>
+	<option value='https://cafaitgenre.org/2012/10/'> octobre 2012 </option>
+	<option value='https://cafaitgenre.org/2012/09/'> septembre 2012 </option>
+	<option value='https://cafaitgenre.org/2012/08/'> août 2012 </option>
+	<option value='https://cafaitgenre.org/2012/07/'> juillet 2012 </option>
+	<option value='https://cafaitgenre.org/2012/06/'> juin 2012 </option>
+	<option value='https://cafaitgenre.org/2012/05/'> mai 2012 </option>
+	<option value='https://cafaitgenre.org/2012/04/'> avril 2012 </option>
+	<option value='https://cafaitgenre.org/2012/03/'> mars 2012 </option>
+	<option value='https://cafaitgenre.org/2012/02/'> février 2012 </option>
+	<option value='https://cafaitgenre.org/2012/01/'> janvier 2012 </option>
+	<option value='https://cafaitgenre.org/2011/12/'> décembre 2011 </option>
+	<option value='https://cafaitgenre.org/2011/11/'> novembre 2011 </option>
+	<option value='https://cafaitgenre.org/2011/10/'> octobre 2011 </option>
+	<option value='https://cafaitgenre.org/2011/09/'> septembre 2011 </option>
+
+		</select>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+	var dropdown = document.getElementById( "archives-dropdown-3" );
+	function onSelectChange() {
+		if ( dropdown.options[ dropdown.selectedIndex ].value !== '' ) {
+			document.location.href = this.options[ this.selectedIndex ].value;
+		}
+	}
+	dropdown.onchange = onSelectChange;
+})();
+/* ]]> */
+</script>
+
+		</aside><aside id="facebook-likebox-3" class="widget widget_facebook_likebox"><h1 class="widget-title"><a href="https://www.facebook.com/cafaitgenreleblog/">Veille sur le genre et les féminismes</a></h1>		<div id="fb-root"></div>
+		<div class="fb-page" data-href="https://www.facebook.com/cafaitgenreleblog/" data-width="340"  data-height="130" data-hide-cover="false" data-show-facepile="false" data-tabs="false" data-hide-cta="false" data-small-header="false">
+		<div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/cafaitgenreleblog/"><a href="https://www.facebook.com/cafaitgenreleblog/">Veille sur le genre et les féminismes</a></blockquote></div>
+		</div>
+		</aside><aside id="text-4" class="widget widget_text"><h1 class="widget-title">S&rsquo;abonner</h1>			<div class="textwidget"><a href="http://twitter.com/a_c_husson"><img src="https://cafaitgenre.files.wordpress.com/2014/01/twitter.png" alt="twitter" width="40" height="40" class="aligncenter size-full wp-image-2359" /></a>
+<a href="https://www.facebook.com/pages/Genre/258912184140660"><img src="https://cafaitgenre.files.wordpress.com/2014/01/facebook.png" alt="facebook" width="40" height="40" class="aligncenter size-full wp-image-2358" /></a><a href="https://cafaitgenre.org/feed/"><img src="https://cafaitgenre.files.wordpress.com/2014/01/rss.png" alt="rss" width="40" height="40" class="aligncenter size-full wp-image-2360" /></a></div>
+		</aside><aside id="text-3" class="widget widget_text"><h1 class="widget-title">Conditions de partage </h1>			<div class="textwidget"><p><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0;" src="https://i1.wp.com/i.creativecommons.org/l/by-nc-nd/3.0/fr/88x31.png" class="aligncenter" /></a></p>
+</div>
+		</aside>			<div id="atatags-286348-5ec0a5aac9abc"></div>
+			
+			<script>
+				__ATA.cmd.push(function() {
+					__ATA.initDynamicSlot({
+						id: 'atatags-286348-5ec0a5aac9abc',
+						location: 140,
+						formFactor: '003',
+						label: {
+							text: 'Publicités',
+						},
+						creative: {
+							reportAd: {
+								text: 'Report this Ad',
+							},
+							privacySettings: {
+								text: 'Paramètres de confidentialité',
+							}
+						}
+					});
+				});
+			</script>		</div><!-- #secondary .widget-area -->
+
+		<footer id="colophon" class="site-footer" role="contentinfo">
+			<div class="site-info">
+								<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Propulsé par WordPress.com.</a>
+				
+							</div><!-- .site-info -->
+		</footer><!-- #colophon .site-footer -->
+	</div><!-- #page .hfeed .site -->
+</div><!-- #wrapper -->
+<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202020y'></script>
+<script>
+var WPGroHo = {"my_hash":""};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-c2bf6628f46030856a0cbacfd724f703">
+	</div>
+	<div class="grofile-hash-map-f7ce0b72e75e08b260a851c005533802">
+	</div>
+	<div class="grofile-hash-map-4415ab420f2243ddbd0010cebbc10b56">
+	</div>
+	<div class="grofile-hash-map-3f9efdaf3e3f4c89cb0be0c3224d437f">
+	</div>
+	<div class="grofile-hash-map-97df6e9e53b10ed4cc4726d65a297fb0">
+	</div>
+	<div class="grofile-hash-map-e24f65b2aa66498b480dd4205a6d6b2f">
+	</div>
+	<div class="grofile-hash-map-94ea52bfea4a21ec7887174754fcc237">
+	</div>
+	</div>
+<script>
+var HighlanderComments = {"loggingInText":"Connexion\u2026","submittingText":"Publication d\u2019un Commentaire\u2026","postCommentText":"Laisser un commentaire","connectingToText":"Connexion \u00e0 %s","commentingAsText":"%1$s: Vous commentez \u00e0 l\u2019aide de votre compte %2$s.","logoutText":"Se d\u00e9connecter","loginText":"Se connecter","connectURL":"https:\/\/cafaitgenre.wordpress.com\/public.api\/connect\/?action=request&domain=cafaitgenre.org","logoutURL":"https:\/\/cafaitgenre.wordpress.com\/wp-login.php?action=logout&_wpnonce=f37b16d984","homeURL":"https:\/\/cafaitgenre.org\/","postID":"2864","gravDefault":"identicon","enterACommentError":"Entrez un commentaire","enterEmailError":"Veuillez entrer votre adresse mail","invalidEmailError":"Adresse email invalide","enterAuthorError":"Veuillez entrer votre nom","gravatarFromEmail":"L\u2019image s\u2019affiche lorsque vous postez un commentaire. Cliquez pour personnaliser.","logInToExternalAccount":"Connectez-vous pour utiliser les informations li\u00e9es \u00e0 un de ces comptes:","change":"Changer","changeAccount":"Changer de compte","comment_registration":"","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1573483029j'></script>
+		<!-- CCPA [start] -->
+		<script type="text/javascript">
+			( function () {
+
+				var setupPrivacy = function() {
+
+					document.addEventListener( 'DOMContentLoaded', function() {
+
+						// Minimal Mozilla Cookie library
+						// https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie/Simple_document.cookie_framework
+						var cookieLib = window.cookieLib = {getItem:function(e){return e&&decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*"+encodeURIComponent(e).replace(/[\-\.\+\*]/g,"\\$&")+"\\s*\\=\\s*([^;]*).*$)|^.*$"),"$1"))||null},setItem:function(e,o,n,t,r,i){if(!e||/^(?:expires|max\-age|path|domain|secure)$/i.test(e))return!1;var c="";if(n)switch(n.constructor){case Number:c=n===1/0?"; expires=Fri, 31 Dec 9999 23:59:59 GMT":"; max-age="+n;break;case String:c="; expires="+n;break;case Date:c="; expires="+n.toUTCString()}return"rootDomain"!==r&&".rootDomain"!==r||(r=(".rootDomain"===r?".":"")+document.location.hostname.split(".").slice(-2).join(".")),document.cookie=encodeURIComponent(e)+"="+encodeURIComponent(o)+c+(r?"; domain="+r:"")+(t?"; path="+t:"")+(i?"; secure":""),!0}};
+
+						var setDefaultOptInCookie = function() {
+							var value = '1YNN';
+							var domain = '.wordpress.com' === location.hostname.slice( -14 ) ? '.rootDomain' : location.hostname;
+							cookieLib.setItem( 'usprivacy', value, 365 * 24 * 60 * 60, '/', domain );
+						};
+
+						var setCcpaAppliesCookie = function( value ) {
+							var domain = '.wordpress.com' === location.hostname.slice( -14 ) ? '.rootDomain' : location.hostname;
+							cookieLib.setItem( 'ccpa_applies', value, 24 * 60 * 60, '/', domain );
+						}
+
+						var maybeCallDoNotSellCallback = function() {
+							if ( 'function' === typeof window.doNotSellCallback ) {
+								return window.doNotSellCallback();
+							}
+
+							return false;
+						}
+
+						var usprivacyCookie = cookieLib.getItem( 'usprivacy' );
+
+						if ( null !== usprivacyCookie ) {
+							maybeCallDoNotSellCallback();
+							return;
+						}
+
+						var ccpaCookie = cookieLib.getItem( 'ccpa_applies' );
+
+						if ( null === ccpaCookie ) {
+
+							var request = new XMLHttpRequest();
+							request.open( 'GET', 'https://public-api.wordpress.com/geo/', true );
+
+							request.onreadystatechange = function () {
+								if ( 4 === this.readyState ) {
+									if ( 200 === this.status ) {
+
+										var data = JSON.parse( this.response );
+										var ccpa_applies = data['region'] && data['region'].toLowerCase() === 'california';
+
+										setCcpaAppliesCookie( ccpa_applies );
+
+										if ( ccpa_applies ) {
+											if ( maybeCallDoNotSellCallback() ) {
+												setDefaultOptInCookie();
+											}
+										}
+									} else {
+										setCcpaAppliesCookie( true );
+										if ( maybeCallDoNotSellCallback() ) {
+											setDefaultOptInCookie();
+										}
+									}
+								}
+							};
+
+							request.send();
+						} else {
+							if ( ccpaCookie === 'true' ) {
+								if ( maybeCallDoNotSellCallback() ) {
+									setDefaultOptInCookie();
+								}
+							}
+						}
+					} );
+				};
+
+				if ( window.defQueue && defQueue.isLOHP && defQueue.isLOHP === 2020 ) {
+					defQueue.items.push( setupPrivacy );
+				} else {
+					setupPrivacy();
+				}
+
+			} )();
+		</script>
+
+		<!-- CCPA [end] -->
+		
+	<div id="carousel-reblog-box">
+		<form action="#" name="carousel-reblog">
+			<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Ajoutez votre grain de sel personnel... (facultatif)"></textarea>
+			<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Publier sur</label>
+			<select name="carousel-reblog-to-blog-id" id="carousel-reblog-to-blog-id">
+						</select>
+
+			<div class="submit">
+				<span class="canceltext"><a href="#" class="cancel">Annuler</a></span>
+				<input type="submit" name="carousel-reblog-submit" class="button" id="carousel-reblog-submit" value="Reblog Article" />
+				<input type="hidden" id="carousel-reblog-blog-id" value="27116365" />
+				<input type="hidden" id="carousel-reblog-blog-url" value="https://cafaitgenre.org" />
+				<input type="hidden" id="carousel-reblog-blog-title" value="Genre !" />
+				<input type="hidden" id="carousel-reblog-post-url" value="" />
+				<input type="hidden" id="carousel-reblog-post-title" value="" />
+			</div>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="9cf7ca1c98" /><input type="hidden" name="_wp_http_referer" value="/2015/02/23/masculinite-hegemonique/" />		</form>
+
+		<div class="arrow"></div>
+	</div>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/cafaitgenre.org\/2015\/02\/23\/masculinite-hegemonique\/":2864};
+	</script>
+					<div id="sharing_email" style="display: none;">
+		<form action="/2015/02/23/masculinite-hegemonique/" method="post">
+			<label for="target_email">Envoyer à l'adresse e-mail</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Votre nom</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Votre adresse e-mail</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="Ce champ est utilisé pour la validation du formulaire et ne doit pas être changé" />
+			
+			<div
+				class="g-recaptcha"
+				data-sitekey="6LcmyE0UAAAAALID28yVNg7pFCodGaArJzHitez_"
+				data-theme="light"
+				data-type="image"
+				data-tabindex="0"></div>
+			<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?hl=fr" async></script>
+			
+			<img style="float: right; display: none" class="loading" src="https://s0.wp.com/wp-content/mu-plugins/post-flair/sharing/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Envoyer un e-mail" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel" role="button">Annuler</a>
+
+			<div class="errors errors-1" style="display: none;">
+				L'article n'a pas été envoyé - Vérifiez vos adresses e-mail&nbsp;!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				La vérification e-mail a échoué, veuillez réessayer			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Impossible de partager les articles de votre blog par e-mail.			</div>
+		</form>
+	</div>
+<div class="widget widget_eu_cookie_law_widget"><div
+	class="hide-on-button ads-active"
+	data-hide-timeout="30"
+	data-consent-expiration="180"
+	id="eu-cookie-law"
+>
+	<form method="post">
+		<input type="submit" value="Fermer et accepter" class="accept" />
+
+		Confidentialité &amp; Cookies : Ce site utilise des cookies. En continuant à utiliser ce site, vous acceptez leur utilisation.<br />
+Pour en savoir davantage, y compris comment contrôler les cookies, voir :
+		<a href="https://automattic.com/cookies" >
+			Politique relative aux cookies		</a>
+ </form>
+</div>
+</div><link rel='stylesheet' id='all-css-0-3' href='https://s0.wp.com/wp-content/mu-plugins/carousel/jetpack-carousel.css?m=1563361695h&cssminify=yes' type='text/css' media='all' />
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyFUEFSwzAM/BCOCKSQHpi+JdhqKkeR3chOCK+vC+mhwAwnabSr3ZVgicYGSSgJvILDmSzGj8rrA9xDMWgaUbXr8Q/UnzNO61Yqkplw+ZfmMcXODmZCpc9fqmM2kXNPosA0oEJZynjqxDFONzKJ5ewKeA1PmmBGcWG6QjHweiTmaiT5qX0TPmZmo5TQoKNE0m+WUD/W7evzy74BwUW/Ur5zsMPmUvpCLR/R77HZ7j2Mb/Wu3T+1TVM3/gLyqYDg'></script>
+<script type='text/javascript'>
+( 'fetch' in window ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?m=1573572739h&#038;ver=3.0.0"></scr' + 'ipt>' );( document.contains ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?m=1540208548h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?m=1585663916h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?m=1585663916h&#038;ver=3.6.4"></scr' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?m=1550600082h&#038;ver=3.0.12"></scr' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?m=1540208548h&#038;ver=2.0.2"></scr' + 'ipt>' );
+( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-url.min.7490158b.js?m=1588209800h&#038;ver=3.6.4"></scr' + 'ipt>' );
+( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-dom-rect.7e21c103.js?m=1588209800h&#038;ver=3.42.0"></scr' + 'ipt>' );
+</script>
+<script src='https://s0.wp.com/wp-includes/js/dist/vendor/lodash.min.js?m=1573572739h&#038;ver=4.17.15'></script>
+<script>
+window.lodash = _.noConflict();
+</script>
+<script>
+var comment_like_text = {"loading":"chargement\u2026"};
+</script>
+<script>
+var jpfbembed = {"appid":"249643311490","locale":"fr_FR"};
+</script>
+<script>
+var actionbardata = {"siteID":"27116365","siteName":"Genre !","siteURL":"https:\/\/cafaitgenre.org","icon":"<img alt='' src='https:\/\/s0.wp.com\/i\/logo\/wpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/confit","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fcafaitgenre.org%2F2015%2F02%2F23%2Fmasculinite-hegemonique%2F&signup_flow=account&domain=cafaitgenre.org","themeURL":"https:\/\/wordpress.com\/theme\/confit\/","xhrURL":"https:\/\/cafaitgenre.org\/wp-admin\/admin-ajax.php","nonce":"08de5007a5","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"bb3655026b\" \/>","referer":"https:\/\/cafaitgenre.org\/2015\/02\/23\/masculinite-hegemonique\/","canFollow":"1","feedID":"1313951","statusMessage":"","customizeLink":"https:\/\/cafaitgenre.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fcafaitgenre.wordpress.com%2F2015%2F02%2F23%2Fmasculinite-hegemonique%2F","postID":"2864","shortlink":"https:\/\/wp.me\/p1PMcJ-Kc","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/cafaitgenre.org\/2864","statsLink":"https:\/\/wordpress.com\/stats\/post\/2864\/cafaitgenre.org","i18n":{"view":"Afficher le site","follow":"Suivre","following":"Abonn\u00e9","edit":"Modifier","login":"Connexion","signup":"S'inscrire","customize":"Personnaliser","report":"Signaler ce contenu","themeInfo":"Obtenir le th\u00e8me: Confit","shortlink":"Copier shortlink","copied":"Copi\u00e9","followedText":"Les nouveaux articles de ce site appara\u00eetront d\u00e9sormais dans votre <a href=\"https:\/\/wordpress.com\/\">Lecteur<\/a>","foldBar":"R\u00e9duire cette barre","unfoldBar":"\u00c9tendre cette barre","editSubs":"G\u00e9rer les abonnements","viewReader":"Voir le site dans le Lecteur","viewReadPost":"Voir l\u2019article dans le Lecteur","subscribe":"M\u2019inscrire","enterEmail":"Entrez votre adresse e-mail","followers":"Rejoignez 10&nbsp;500 autres abonn\u00e9s","alreadyUser":"Vous disposez d\u00e9j\u00e0 d\u02bcun compte WordPress ? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fcafaitgenre.org%2F2015%2F02%2F23%2Fmasculinite-hegemonique%2F&signup_flow=account&domain=cafaitgenre.org\">Connectez-vous maintenant.<\/a>","stats":"Statistiques"}};
+</script>
+<script>
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"fr","ajaxurl":"https:\/\/cafaitgenre.org\/wp-admin\/admin-ajax.php","nonce":"e1e93fd6ec","display_exif":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Commentaire","post_comment":"Laisser un commentaire","write_comment":"\u00c9crire un commentaire...","loading_comments":"Chargement des commentaires\u2026","download_original":"Afficher dans sa taille r\u00e9elle <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>.","no_comment_text":"Veuillez ajouter du contenu \u00e0 votre commentaire.","no_comment_email":"Merci de renseigner une adresse e-mail.","no_comment_author":"Merci de renseigner votre nom.","comment_post_error":"Une erreur s'est produite \u00e0 la publication de votre commentaire. Veuillez nous en excuser, et r\u00e9essayer dans quelques instants.","comment_approved":"Votre commentaire a \u00e9t\u00e9 approuv\u00e9.","comment_unapproved":"Votre commentaire est en attente de validation.","camera":"Appareil photo","aperture":"Ouverture","shutter_speed":"Vitesse d'obturation","focal_length":"Focale","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/cafaitgenre.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fcafaitgenre.org%2F2015%2F02%2F23%2Fmasculinite-hegemonique%2F","blog_id":"27116365","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">E-mail (requis)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Nom (requis)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Site web<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogu\u00e9","reblog_add_thoughts":"Ajoutez votre grain de sel personnel... (facultatif)","reblogging":"Reblogging...","post_reblog":"Relais d\u2019article","stats_query_args":"blog=27116365&v=wpcom&tz=2&user_id=0&subd=cafaitgenre","is_public":"1","reblog_enabled":""};
+</script>
+<script>
+var sharing_js_options = {"lang":"fr","counts":"1","is_stats_active":"1"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyVkt1uwjAMhV9oqenotnIx7VGmtHGL2/wtTuh4+6WCMkCoEldJjv05zolh8qJ1NqKN4HXqyTL0KR8bDH2OBIS62BQbaBJpBVTWFsgq/C0GfoHnYOWMCCjVcb1Cl7QWTBEFKopke3GKQLkp64/t+64CixN72Y6i0a4dGRRxhFYGlxj1SRQHwun+CpPEckvrjMmS0DQiw8CgqQGeyOMz0I2wgGRbndRtQkCvj4Uhe1897tHkVJ+anGs7ijPFRmYPMphWmplI9RgZMOWoGwmFlhNENF7LiHf6Sp0B4+wlfOe+oZMtNpkSaBpUK5RU+TGikQGM5Igh74Q7YAg0v/yiPVkhhtwJr0FtJGdn6LJ7ZDv7f6ev9eEnYTiel+I669FvnwdqcUgswlp/I7HBKLZ56k+GumBW8r3jKDotKQDvZcjTvqwZ+jKf5Vu9e62rqqyGP4vBW5E='></script>
+<script type='text/javascript'>
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-tumblr', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtumblr', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<iframe src='https://widgets.wp.com/likes/master.html?ver=20190321#ver=20190321&amp;lang=fr' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+		<div id='likes-other-gravatars'><div class="likes-text"><span>%d</span> blogueurs aiment cette page :</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+<script src="//stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'27116365','blog_tz':'2','user_lang':'fr','blog_lang':'fr','user_id':'0'}]);
+_stq.push(['view', {'blog':'27116365','v':'wpcom','tz':'2','user_id':'0','post':'2864','subd':'cafaitgenre'}]);
+_stq.push(['extra', {'crypt':'UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdWtpP0NsWnVkPS9sL0ViLndld3AyMWJHeTE5ZSxINUQvYTM1OTF4ZXlaSXdXZ3JnTW9hUHdSdVdnLmFGd01DWXpRfkl6N3d4VXdJek95SWNLaXJOay0/c0NnLjZrMzhpfEd5RkxzSD9Kanc3dElXdndwXXxvPzNUeWZMemYtMTVTaVVxbVE3OSVtem8uSDhPL0VlJnJMPzdQc2UrZkQmbCsyVUwvaXpULl1qREdsWVt+c201NXpWVDdJMy8zPTBKRz8rQ21ld1QwRDlreXYlcys4MHRZNltBbz18TSwlMXExTFFWeEZLY3JpUll2ZFZjdEpYQ35YbmFxVUpDW3pFczZ4UlI3MyZXRQ=='}]);
+_stq.push([ 'clickTrackerInit', '27116365', '2864' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>

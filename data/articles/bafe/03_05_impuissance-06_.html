@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="https://antisexisme.net/xmlrpc.php" />
+<!--[if lt IE 9]>
+<script src="https://s0.wp.com/wp-content/themes/pub/misty-lake/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+
+<title>L’impuissance comme idéal de beauté des femmes – la répression des désirs &#8211; Sexisme et Sciences humaines &#8211;  Féminisme</title>
+<meta name="google-site-verification" content="dDACYGJrsQEvuv-oy7_QanXA08avLRLBt-o49nmhsyw" />
+<meta name="msvalidate.01" content="71E10DBC12B1F5E339D377CAC0E2DFFB" />
+<meta name="yandex-verification" content="447d4b39d7c45d60" />
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9hbnRpc2V4aXNtZS5uZXQ%3D"
+		+ "&wpcomid=20930585"
+		+ "&time=1589683561";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//antisexisme.wordpress.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.pubmine.com' />
+<link rel='dns-prefetch' href='//x.bidswitch.net' />
+<link rel='dns-prefetch' href='//static.criteo.net' />
+<link rel='dns-prefetch' href='//ib.adnxs.com' />
+<link rel='dns-prefetch' href='//aax.amazon-adsystem.com' />
+<link rel='dns-prefetch' href='//bidder.criteo.com' />
+<link rel='dns-prefetch' href='//cas.criteo.com' />
+<link rel='dns-prefetch' href='//gum.criteo.com' />
+<link rel='dns-prefetch' href='//ads.pubmatic.com' />
+<link rel='dns-prefetch' href='//gads.pubmatic.com' />
+<link rel='dns-prefetch' href='//tpc.googlesyndication.com' />
+<link rel='dns-prefetch' href='//ad.doubleclick.net' />
+<link rel='dns-prefetch' href='//googleads.g.doubleclick.net' />
+<link rel='dns-prefetch' href='//www.googletagservices.com' />
+<link rel='dns-prefetch' href='//cdn.switchadhub.com' />
+<link rel='dns-prefetch' href='//delivery.g.switchadhub.com' />
+<link rel='dns-prefetch' href='//delivery.swid.switchadhub.com' />
+<link rel='dns-prefetch' href='//a.teads.tv' />
+<link rel='dns-prefetch' href='//prebid.media.net' />
+<link rel='dns-prefetch' href='//adserver-us.adtech.advertising.com' />
+<link rel='dns-prefetch' href='//fastlane.rubiconproject.com' />
+<link rel='dns-prefetch' href='//prebid-server.rubiconproject.com' />
+<link rel='dns-prefetch' href='//hb-api.omnitagjs.com' />
+<link rel='dns-prefetch' href='//mtrx.go.sonobi.com' />
+<link rel='dns-prefetch' href='//apex.go.sonobi.com' />
+<link rel='dns-prefetch' href='//u.openx.net' />
+<link rel="alternate" type="application/rss+xml" title="Sexisme et Sciences humaines -  Féminisme &raquo; Flux" href="https://antisexisme.net/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Sexisme et Sciences humaines -  Féminisme &raquo; Flux des commentaires" href="https://antisexisme.net/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Sexisme et Sciences humaines -  Féminisme &raquo; L’impuissance comme idéal de beauté des femmes – la répression des&nbsp;désirs Flux des commentaires" href="https://antisexisme.net/2016/03/05/impuissance-06/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s0.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.1"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s0.wp.com/_static/??-eJytU1tywyAMvFAxceK2zkcnZwGjUBJhGAR1ffviR5pM0nEzbf4ssauVVxLvPGtcG6GN3CbmMWnTEu984ywjaxD6q6hoiJ74BU2i02eiC0oo4hqdFHiDvZAIgCKCYt5RvIqWaGiOQPwA0YvmyMboBn7C6pRDCUHnlwC8LlbFistkUA1Nj3QZROg5xR7hjjIj60Jd9C5FpoNRfy0RRDStpl/o+4TIyERgoMxAmO3g5aqsXzcv24q30NFYcRZQhk6jGSyd0uzDQPdwlUYElwjwQRo+gDXJflOXrWnc3EpZrDd5vFNHc5L929bJPMxFp7+b6l9nlxZ2WL2ct17EAWGzlAAEm2FLtM4oDfkwMmT+ZhE+lynjmUqZDSRiJxvje9a650YWlnt+2gf3Q9OTAPdJcpsd6TPzCOep7exb+Vxv13VVldXhC+NOprc=?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<!--[if IE 8]>
+<link rel='stylesheet' id='mistylake-ie-css'  href='https://s0.wp.com/wp-content/themes/pub/misty-lake/ie.css?m=1377549400h&#038;ver=5.4.1' media='all' />
+<![endif]-->
+<link crossorigin="anonymous" rel='stylesheet' id='mistylake-open-sans-css'  href='https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic,700,700italic&#038;subset=latin,latin-ext' media='all' />
+<link crossorigin="anonymous" rel='stylesheet' id='mistylake-droid-serif-css'  href='https://fonts.googleapis.com/css?family=Droid+Serif%3A400%2C400italic%2C400bold&#038;subset=latin&#038;ver=5.4.1' media='all' />
+<link rel='stylesheet' id='all-css-6-1' href='https://s0.wp.com/_static/??-eJyFjEEOwjAMBD+EsQqlnBBvSYMbhTpxVTtK+T3hBpdy29HuLNYFvGSjbJgKLFxCzIo1PgKZIpXWyhwJ2FU0Sgs7I0W1F9PRqx5w/2Bynsb2ABznFrb/ZiABFu8sSv4BmNjFdU9daWQJLQZsqy/8SPd06y6n63Duu354vgHjwVyT?cssminify=yes' type='text/css' media='all' />
+<link rel='stylesheet' id='print-css-7-1' href='https://s0.wp.com/wp-content/mu-plugins/global-print/global-print.css?m=1465851035h&cssminify=yes' type='text/css' media='print' />
+<link rel='stylesheet' id='all-css-8-1' href='https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?m=1560469195h&cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-10-1' href='https://s0.wp.com/_static/??-eJxti0EKgCAQAD+ULWGJHaK3mJgaqyut0fejQ4eo0zAwA2cRlnJ1uUI6RMHDx8xQiKtY0cQdOJg9Zv+wtcwN/F9MNhoUSJ7e8plqcMkxhB480mLwDuY0dYMepVJaqu0CZXY33g==?cssminify=yes' type='text/css' media='all' />
+<script>
+var related_posts_js_options = {"post_heading":"h4"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJx9jMEOwjAMQ3+IruzABgfEt4wtVKmatDSNpv39ggSXHZAsWbae7dfikOekC4iPprdC3b7WRTn5f4AjDHVq0BHyD54zN+D2YSk/MYFTgToF6+zolY8cqStJA7L4CsnOFleytEOy1YPu/WXsb+dxGK5xB1+BRFU='></script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://antisexisme.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s0.wp.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='L’impuissance comme idéal de beauté des femmes – le&nbsp;sourire' href='https://antisexisme.net/2016/02/21/impuissance-05/' />
+<link rel='next' title='8 mars 2016' href='https://antisexisme.net/2016/03/08/8-mars/' />
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://antisexisme.net/2016/03/05/impuissance-06/" />
+<link rel='shortlink' href='https://wp.me/p1pP05-rl' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fantisexisme.net%2F2016%2F03%2F05%2Fimpuissance-06%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fantisexisme.net%2F2016%2F03%2F05%2Fimpuissance-06%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="L’impuissance comme idéal de beauté des femmes – la répression des désirs" />
+<meta property="og:url" content="https://antisexisme.net/2016/03/05/impuissance-06/" />
+<meta property="og:description" content="Merci à Pimprenelle pour la relecture de cet article. Partie 1 : Introduction Partie 2 : Un beau corps féminin est un corps qui n’occupe pas trop d’espace Partie 3 : Un beau corps féminin se déplac…" />
+<meta property="article:published_time" content="2016-03-05T09:00:15+00:00" />
+<meta property="article:modified_time" content="2017-04-06T13:16:17+00:00" />
+<meta property="og:site_name" content="Sexisme et Sciences humaines -  Féminisme" />
+<meta property="og:image" content="https://antisexisme.files.wordpress.com/2016/03/marie_bracquemond_under_the_lamp.jpg" />
+<meta property="og:image:width" content="800" />
+<meta property="og:image:height" content="536" />
+<meta property="og:image:alt" content="Sous la lampe" />
+<meta property="og:locale" content="fr_FR" />
+<meta name="twitter:creator" content="@anti_sexism" />
+<meta name="twitter:site" content="@anti_sexism" />
+<meta name="twitter:text:title" content="L’impuissance comme idéal de beauté des femmes – la répression des&nbsp;désirs" />
+<meta name="twitter:image" content="https://antisexisme.files.wordpress.com/2016/03/scene_from_the_opera_carmen.jpg?w=640" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/e776828ff2f5e62ad07e68335ddca469?s=32" sizes="16x16" />
+<link rel="icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/e776828ff2f5e62ad07e68335ddca469?s=32" sizes="16x16" />
+<link rel="apple-touch-icon" href="https://secure.gravatar.com/blavatar/e776828ff2f5e62ad07e68335ddca469?s=114" />
+<link rel='openid.server' href='https://antisexisme.net/?openidserver=1' />
+<link rel='openid.delegate' href='https://antisexisme.net/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://antisexisme.net/osd.xml" title="Sexisme et Sciences humaines -  Féminisme" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<meta name="theme-color" content="#f3f3eb" />
+<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="Sexisme et Sciences humaines -  Féminisme" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Un blog féministe pour déceler les mécanismes sexistes qui maintiennent les inégalités entre femmes et hommes – ISSN 2430-5812" /><meta name="msapplication-task" content="name=Souscrire;action-uri=https://antisexisme.net/feed/;icon-uri=https://secure.gravatar.com/blavatar/e776828ff2f5e62ad07e68335ddca469?s=16" /><meta name="msapplication-task" content="name=Inscrivez-vous pour créer un blog gratuitement;action-uri=http://wordpress.com/signup/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Assistance WordPress.com;action-uri=http://support.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Forums WordPress.com;action-uri=http://forums.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="description" content="Merci à Pimprenelle pour la relecture de cet article. Partie 1 : Introduction Partie 2 : Un beau corps féminin est un corps qui n’occupe pas trop d’espace Partie 3 : Un beau corps féminin se déplace avec difficulté Partie 4 : Un beau corps féminin est un corps à l’air jeune voire enfantin et qui est sexualisé&hellip;" />
+<style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #f3f3eb; background-image: url("https://antisexisme.files.wordpress.com/2017/04/fond3-min.jpg"); background-position: left top; background-size: auto; background-repeat: repeat; background-attachment: scroll; }
+</style>
+			<script type="text/javascript">
+
+			window.doNotSellCallback = function() {
+
+				var linkElements = [
+					'a[href="https://wordpress.com/?ref=footer_blog"]',
+					'a[href="https://wordpress.com/?ref=footer_website"]',
+					'a[href="https://wordpress.com/?ref=vertical_footer"]',
+					'a[href^="https://wordpress.com/?ref=footer_segment_"]',
+				].join(',');
+
+				var dnsLink = document.createElement( 'a' );
+				dnsLink.href = 'https://wordpress.com/advertising-program-optout';
+				dnsLink.classList.add( 'do-not-sell-link' );
+				dnsLink.rel = 'nofollow';
+				dnsLink.style.marginLeft = '0.5em';
+				dnsLink.textContent = 'Ne pas vendre mes informations personnelles.';
+
+				var creditLinks = document.querySelectorAll( linkElements );
+
+				if ( 0 === creditLinks.length ) {
+					return false;
+				}
+
+				Array.prototype.forEach.call( creditLinks, function( el ) {
+					el.insertAdjacentElement( 'afterend', dnsLink );
+				});
+
+				return true;
+			};
+
+		</script>
+				<script type="text/javascript">
+		function __ATA_CC() {var v = document.cookie.match('(^|;) ?personalized-ads-consent=([^;]*)(;|$)');return v ? 1 : 0;}
+		var __ATA_PP = { pt: 1, ht: 0, tn: 'misty-lake', amp: false, siteid: 8982, blogid: 20930585, consent: __ATA_CC() };
+		var __ATA = __ATA || {};
+		__ATA.cmd = __ATA.cmd || [];
+		__ATA.criteo = __ATA.criteo || {};
+		__ATA.criteo.cmd = __ATA.criteo.cmd || [];
+		</script>
+		<script type="text/javascript">
+		(function(){var g=Date.now||function(){return+new Date};function h(a,b){a:{for(var c=a.length,d="string"==typeof a?a.split(""):a,e=0;e<c;e++)if(e in d&&b.call(void 0,d[e],e,a)){b=e;break a}b=-1}return 0>b?null:"string"==typeof a?a.charAt(b):a[b]};function k(a,b,c){c=null!=c?"="+encodeURIComponent(String(c)):"";if(b+=c){c=a.indexOf("#");0>c&&(c=a.length);var d=a.indexOf("?");if(0>d||d>c){d=c;var e=""}else e=a.substring(d+1,c);a=[a.substr(0,d),e,a.substr(c)];c=a[1];a[1]=b?c?c+"&"+b:b:c;a=a[0]+(a[1]?"?"+a[1]:"")+a[2]}return a};var l=0;function m(a,b){var c=document.createElement("script");c.src=a;c.onload=function(){b&&b(void 0)};c.onerror=function(){b("error")};a=document.getElementsByTagName("head");var d;a&&0!==a.length?d=a[0]:d=document.documentElement;d.appendChild(c)}function n(a){var b=void 0===b?document.cookie:b;return(b=h(b.split("; "),function(c){return-1!=c.indexOf(a+"=")}))?b.split("=")[1]:""}function p(a){return"string"==typeof a&&0<a.length}
+		function r(a,b,c){b=void 0===b?"":b;c=void 0===c?".":c;var d=[];Object.keys(a).forEach(function(e){var f=a[e],q=typeof f;"object"==q&&null!=f||"function"==q?d.push(r(f,b+e+c)):null!==f&&void 0!==f&&(e=encodeURIComponent(b+e),d.push(e+"="+encodeURIComponent(f)))});return d.filter(p).join("&")}function t(a,b){a||((window.__ATA||{}).config=b.c,m(b.url))}var u=Math.floor(1E13*Math.random()),v=window.__ATA||{};window.__ATA=v;v.rid=u;v.createdAt=g();var w=window.__ATA||{},x="s.pubmine.com";
+		w&&w.serverDomain&&(x=w.serverDomain);var y="//"+x+"/conf",z=window.top===window,A=window.__ATA_PP&&window.__ATA_PP.gdpr_applies,B="boolean"===typeof A?Number(A):null,C=window.__ATA_PP||null,D=z?document.referrer?document.referrer:null:null,E=z?window.location.href:document.referrer?document.referrer:null,F,G=n("__ATA_tuuid");F=G?G:null;var H=window.innerWidth+"x"+window.innerHeight,I=n("usprivacy"),J=r({gdpr:B,pp:C,rid:u,src:D,ref:E,tuuid:F,vp:H,us_privacy:I?I:null},"",".");
+		(function(a){var b=void 0===b?"cb":b;l++;var c="callback__"+g().toString(36)+"_"+l.toString(36);a=k(a,b,c);window[c]=function(d){t(void 0,d)};m(a,function(d){d&&t(d)})})(y+"?"+J);}).call(this);
+		</script><link rel="amphtml" href="https://antisexisme.net/2016/03/05/impuissance-06/amp/"><script type="text/javascript">
+	window.google_analytics_uacct = "UA-52447-2";
+</script>
+
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-52447-2']);
+	_gaq.push(['_gat._anonymizeIp']);
+	_gaq.push(['_setDomainName', 'none']);
+	_gaq.push(['_setAllowLinker', true]);
+	_gaq.push(['_initData']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	})();
+</script>
+</head>
+
+<body class="post-template-default single single-post postid-1695 single-format-standard custom-background customizer-styles-applied highlander-enabled highlander-light">
+<div id="page" class="hfeed site">
+		<header id="masthead" class="site-header" role="banner">
+		<div class="site-branding">
+			<h1 class="site-title"><a href="https://antisexisme.net/" title="Sexisme et Sciences humaines &#8211;  Féminisme" rel="home">Sexisme et Sciences humaines &#8211;  Féminisme</a></h1>
+			<h2 class="site-description">Un blog féministe pour déceler les mécanismes sexistes qui maintiennent les inégalités entre femmes et hommes – ISSN 2430-5812</h2>
+		</div>
+
+		<nav id="nav" role="navigation" class="site-navigation main-navigation">
+			<h1 class="assistive-text screen-reader-text">Menu</h1>
+			<div class="assistive-text skip-link screen-reader-text"><a href="#content" title="Aller au contenu principal">Aller au contenu principal</a></div>
+
+			<div class="menu-menu-1-container"><ul id="menu-menu-1" class="menu"><li id="menu-item-2033" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-2033"><a href="https://antisexisme.net/">Accueil</a></li>
+<li id="menu-item-2035" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-2035"><a href="https://antisexisme.net/articles-par-categorie/">Articles par catégorie</a>
+<ul class="sub-menu">
+	<li id="menu-item-2044" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2044"><a href="https://antisexisme.net/category/culture-du-viol/">Culture du viol</a></li>
+	<li id="menu-item-2072" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2072"><a href="https://antisexisme.net/category/mythes-sur-le-viol-2/">Mythes sur le viol</a></li>
+	<li id="menu-item-2039" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2039"><a href="https://antisexisme.net/category/objectivation-sexuelle-2/">Objectivation sexuelle</a></li>
+	<li id="menu-item-2038" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-2038"><a href="https://antisexisme.net/category/limpuissance-comme-ideal-de-beaute/">L’impuissance comme idéal de beauté</a></li>
+	<li id="menu-item-2042" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2042"><a href="https://antisexisme.net/category/attributs-du-pouvoir/">Attributs du pouvoir</a></li>
+	<li id="menu-item-2604" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2604"><a href="https://antisexisme.net/category/interactions-sexuelles-a-coercition-graduelle/">Interactions sexuelles à coercition graduelle</a></li>
+	<li id="menu-item-2043" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2043"><a href="https://antisexisme.net/category/sexualite/">Sexualité</a></li>
+	<li id="menu-item-2045" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2045"><a href="https://antisexisme.net/category/a-lecole/">A l&rsquo;école</a></li>
+	<li id="menu-item-2046" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2046"><a href="https://antisexisme.net/category/videos/">Vidéos</a></li>
+	<li id="menu-item-2047" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2047"><a href="https://antisexisme.net/category/livres/">Livres</a></li>
+</ul>
+</li>
+<li id="menu-item-2034" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2034"><a href="https://antisexisme.net/a-propos-about/">A propos</a></li>
+<li id="menu-item-2036" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2036"><a href="https://antisexisme.net/contactez-moi/">Contactez-moi !</a></li>
+<li id="menu-item-2037" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2037"><a href="https://antisexisme.net/presse/">Dans la presse</a></li>
+<li id="menu-item-2819" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2819"><a href="https://antisexisme.net/mon-livre/">Mon livre : En finir avec la culture du viol</a></li>
+</ul></div>		</nav><!-- .site-navigation .main-navigation -->
+	</header><!-- #masthead .site-header -->
+
+	<div id="main" class="site-main">
+
+					<div class="header-image">
+				<a href="https://antisexisme.net/" title="Sexisme et Sciences humaines &#8211;  Féminisme" rel="home">
+					<img src="https://antisexisme.files.wordpress.com/2017/04/cropped-headernew.jpg" width="1015" height="276" alt="" />
+				</a>
+			</div>
+		
+	<div id="primary" class="content-area">
+		<div id="content" class="site-content" role="main">
+
+		
+			
+<article id="post-1695" class="post-1695 post type-post status-publish format-standard hentry category-limpuissance-comme-ideal-de-beaute tag-mythes-sur-le-viol tag-sexualite-des-femmes">
+	<header class="entry-header">
+		<div class="entry-meta">
+			<a href="https://antisexisme.net/2016/03/05/impuissance-06/" title="10 h 00 min" rel="bookmark"><time class="entry-date" datetime="2016-03-05T10:00:15+01:00" pubdate>5 mars 2016</time></a><span class="byline"> par <span class="author vcard"><a class="url fn n" href="https://antisexisme.net/author/antisexisme/" title="Voir tous les articles par antisexisme" rel="author">antisexisme</a></span></span>		</div><!-- .entry-meta -->
+		<h1 class="entry-title">L’impuissance comme idéal de beauté des femmes – la répression des&nbsp;désirs</h1>	</header><!-- .entry-header -->
+
+	<div class="entry-content">
+		<div data-shortcode="caption" id="attachment_1618" style="width: 670px" class="wp-caption aligncenter"><img aria-describedby="caption-attachment-1618" data-attachment-id="1618" data-permalink="https://antisexisme.net/2016/02/21/impuissance-05/the-stepford-wives-film-stills-1975/#main" data-orig-file="https://antisexisme.files.wordpress.com/2016/02/the-stepford-wives-film-s-009.jpg" data-orig-size="2060,1236" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;Photograph: Everett Collection\/R&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;Everett Collection \/ Rex Features&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&#039;THE STEPFORD WIVES&#039; FILM STILLS - 1975&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="The Stepford Wives" data-image-description="&lt;p&gt;The Stepford Wives&lt;/p&gt;
+" data-medium-file="https://antisexisme.files.wordpress.com/2016/02/the-stepford-wives-film-s-009.jpg?w=300" data-large-file="https://antisexisme.files.wordpress.com/2016/02/the-stepford-wives-film-s-009.jpg?w=660" class="size-large wp-image-1618" src="https://antisexisme.files.wordpress.com/2016/02/the-stepford-wives-film-s-009.jpg?w=660&#038;h=396" alt="The Stepford Wives" width="660" height="396" srcset="https://antisexisme.files.wordpress.com/2016/02/the-stepford-wives-film-s-009.jpg?w=660&amp;h=396 660w, https://antisexisme.files.wordpress.com/2016/02/the-stepford-wives-film-s-009.jpg?w=1320&amp;h=792 1320w, https://antisexisme.files.wordpress.com/2016/02/the-stepford-wives-film-s-009.jpg?w=150&amp;h=90 150w, https://antisexisme.files.wordpress.com/2016/02/the-stepford-wives-film-s-009.jpg?w=300&amp;h=180 300w, https://antisexisme.files.wordpress.com/2016/02/the-stepford-wives-film-s-009.jpg?w=768&amp;h=461 768w, https://antisexisme.files.wordpress.com/2016/02/the-stepford-wives-film-s-009.jpg?w=1024&amp;h=614 1024w" sizes="(max-width: 660px) 100vw, 660px" /><p id="caption-attachment-1618" class="wp-caption-text">Dans le film (dont je vous conseille la version de 1975) et le livre <em>The Stepford Wives</em>, l’héroïne débarque dans une ville où toutes les femmes sont des épouses modèles : elles adorent s’adonner aux tâches ménagères et elles hurlent de plaisir lors des coïts avec leur mari (leur disant qu’ils sont des dieux au lit). Tout cela, avec le sourire, bien sûr ! Dans le livre, elles sont aussi décrites comme portant des robes très moulantes et révélatrices, dévoilant leur forte poitrine et leur silhouette exceptionnelle.</p></div>
+<p><em>Merci à Pimprenelle pour la relecture de cet article.</em></p>
+<p><a href="https://antisexisme.net/2016/01/02/impuissance-01/" target="_blank"><strong>Partie 1 </strong>: Introduction<br />
+</a><a href="https://antisexisme.net/2016/01/11/impuissance-02" target="_blank"><strong>Partie 2</strong> : Un beau corps féminin est un corps qui n’occupe pas trop d’espace<br />
+</a><a href="https://antisexisme.net/2016/01/23/impuissance-03/" target="_blank"><strong>Partie 3</strong> : Un beau corps féminin se déplace avec difficulté<br />
+</a><a href="https://antisexisme.net/2016/02/06/impuissance-04/" target="_blank"><strong>Partie 4</strong> : Un beau corps féminin est un corps à l’air jeune voire enfantin et qui est sexualisé<br />
+</a><a href="https://antisexisme.net/2016/02/21/impuissance-05/" target="_blank"><strong>Partie 5</strong> : Un beau corps féminin est un corps qui exprime l’abnégation – le sourire<br />
+</a><span style="color:#99cc00;"><strong>Partie 6 : Un beau corps féminin est un corps qui exprime l’abnégation – la répression des désirs</strong></span><a href="https://antisexisme.net/2016/03/05/impuissance-06/" target="_blank"><br />
+</a><a href="https://antisexisme.net/2017/03/19/douleur-physique/" target="_blank"><strong>Partie 7</strong> : Un beau corps féminin est un corps qui exprime l’abnégation – la souffrance physique</a><br />
+<strong>Partie 8</strong> : Un beau corps féminin est un corps qui exprime l’abnégation – la souffrance morale<br />
+<a href="https://antisexisme.net/2016/03/19/impuissance09/" target="_blank"><strong>Partie 9</strong> : Sorcières et féministes, quelques figures de la laideur féminine<br />
+</a><a href="https://antisexisme.net/2017/04/06/universalite-1/" target="_blank"><strong>Partie 10</strong> : Universalité des idéaux de faiblesse 1</a><br />
+<span style="color:#000000;"><strong>Partie 11</strong> : Universalité des idéaux de faiblesse 2<br />
+<strong>Partie 12</strong> : Conclusion<br />
+<a href="https://antisexisme.net/2017/03/19/coercition-beaute/" target="_blank"><strong>Supplément</strong> : la coercition à la beauté<br />
+</a><a href="https://antisexisme.net/2016/03/26/limpuissance-comme-ideal-de-beaute-des-femmes-en-video/" target="_blank"><strong>Supplément</strong> : L’impuissance comme idéal de beauté en vidéo</a></span></p>
+<p>Nous avons vu dans l’article précédent comment l’abnégation des femmes peut se traduire par le sourire, notamment quand ce sourire permet de camoufler des émotions négatives. Cet article revient sur l&rsquo;abnégation, en montrant cette fois-ci comment la beauté s’oppose aux plaisirs et désirs des femmes.</p>
+<h1>L’interdiction des plaisirs et désirs</h1>
+<div data-shortcode="caption" id="attachment_1697" style="width: 205px" class="wp-caption alignleft"><img aria-describedby="caption-attachment-1697" data-attachment-id="1697" data-permalink="https://antisexisme.net/2016/03/05/impuissance-06/causeur/#main" data-orig-file="https://antisexisme.files.wordpress.com/2016/02/causeur.png" data-orig-size="270,278" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Causeur" data-image-description="&lt;p&gt;Touche pas à ma pute&lt;/p&gt;
+" data-medium-file="https://antisexisme.files.wordpress.com/2016/02/causeur.png?w=270" data-large-file="https://antisexisme.files.wordpress.com/2016/02/causeur.png?w=270" class="wp-image-1697 " src="https://antisexisme.files.wordpress.com/2016/02/causeur.png?w=195&#038;h=200" alt="Touche pas à ma pute" width="195" height="200" srcset="https://antisexisme.files.wordpress.com/2016/02/causeur.png?w=195&amp;h=200 195w, https://antisexisme.files.wordpress.com/2016/02/causeur.png?w=146&amp;h=150 146w, https://antisexisme.files.wordpress.com/2016/02/causeur.png 270w" sizes="(max-width: 195px) 100vw, 195px" /><p id="caption-attachment-1697" class="wp-caption-text">Dans <em>Causeur</em>, des hommes ont clamé leur droit à &laquo;&nbsp;leur pute&nbsp;&raquo;.</p></div>
+<p style="text-align:justify;"><strong>La nourriture et la sexualité ont beaucoup en commun. </strong>Toutes deux sont sources d’un intense <strong>plaisir</strong>. Mais <strong>l’accès à ce plaisir ne se fait pas de manière symétrique chez les hommes et chez les femmes. </strong>Les hommes ont tout à fait droit à leur plaisir, et certains n’hésitent pas à l’exiger fermement. Les femmes, quant à elles, doivent générer ce plaisir chez les hommes, particulièrement chez leur conjoint, en préparant les repas et en étant sexuellement disponibles. C’est ainsi qu’un certain nombre d’hommes exigent un « droit au sexe » qui passe en particulier par la prostitution, la pornographie ou d’autres violences sexuelles. Le fait que le viol soit <a href="https://antisexisme.net/2013/02/17/les-cultures-enclines-au-viol/" target="_blank">banalisé</a> et justifié (à l’aide de <a href="https://antisexisme.net/category/mythes-sur-le-viol-2/" target="_blank">mythes sur le viol</a>) dans notre société indique bien qu’il semble « normal » qu’un homme puisse s’approprier le corps d’une femme pour son bon plaisir. Peu  importe que ces violences aient <a href="https://antisexisme.net/2015/02/27/dissociation/" target="_blank">des impacts terribles sur les victimes</a>, rien ne paraît plus sacré que ce droit à l’accès au corps des femmes par les hommes, quand ils le souhaitent et comme ils le souhaitent. L’accomplissement de ces désirs sexuels semble si vital, si nécessaire, si important, que ces derniers sont requalifiés en « besoins sexuels ». Quant à la préparation de la nourriture, elle correspond au rôle maternel et nourricier traditionnellement féminin<sup>1,2</sup>. À l’heure actuelle, ce sont <strong>les femmes qui se chargent encore très majoritairement  de la cuisine</strong>. Ainsi, en 2010, les femmes françaises y passaient en moyenne 70 minutes par jour, contre 24 minutes pour les hommes français<sup>3</sup>.</p>
+<p style="text-align:justify;"><span id="more-1695"></span></p>
+<p style="text-align:justify;"><strong>Il y a donc une moitié de la population qui a droit au plaisir, et l’autre qui doit faire plaisir. </strong>Ces deux rôles doivent être clairement distincts : la moitié féminine qui fait plaisir ne doit pas chercher à se faire plaisir à elle-même, mais être toujours tournée vers les désirs de l’autre (généralement ceux d&rsquo;un homme). Si cette moitié subordonnée commençait à trop se centrer sur ses propres désirs, elle risquerait d’oublier quelle est sa tâche : répondre aux désirs de l’autre moitié (celle qui domine) et lui faire plaisir. La répression des appétits féminins passe par une stigmatisation qui utilise plusieurs mécanismes, notamment les doubles standards, la justification des violences envers les femmes ou les représentations culturelles qui diabolisent les désirs féminins. Nous verrons que la beauté constitue également un puissant outil destiné à détourner les femmes de leurs désirs.</p>
+<h2 style="text-align:justify;">La répression de l’appétit oral</h2>
+<p style="text-align:justify;">Nous avons déjà vu dans cette série d’articles que <a href="https://antisexisme.net/2016/01/11/impuissance-02/" target="_blank">la minceur constitue un idéal de beauté</a> prédominant à l’heure actuelle. Nous avons également constaté que pour atteindre cet idéal, les femmes s’adonnaient aux régimes et restreignaient <strong>leur appétit alimentaire</strong>. Plusieurs études indiquent que <strong>la nourriture est perçue comme « genrée »</strong> : indépendamment de son sexe, une personne qui dit aimer les aliments « sains » (des fruits et du pain complet) ou peu caloriques est perçue comme plus féminine et moins masculine qu’une personne qui préfère manger des hamburgers et des glaces<sup>4–6</sup>. De la même façon, si une personne est décrite comme consommant un régime riche en graisses, on supposera qu’elle est de sexe masculin, alors que si elle est décrite comme ayant un régime pauvre en graisses, elle sera perçue comme étant de sexe féminin<sup>7</sup>. Par ailleurs, plus une personne mange, plus elle sera perçue comme masculine et peu féminine<sup>8</sup>.</p>
+<div data-shortcode="caption" id="attachment_1700" style="width: 201px" class="wp-caption alignright"><img aria-describedby="caption-attachment-1700" data-attachment-id="1700" data-permalink="https://antisexisme.net/2016/03/05/impuissance-06/femme-qui-mange-hamburger-2/#main" data-orig-file="https://antisexisme.files.wordpress.com/2016/03/femme-qui-mange-hamburger1.jpg" data-orig-size="302,300" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1455313985&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="femme-qui-mange-hamburger" data-image-description="&lt;p&gt;femme qui mange un hamburger&lt;/p&gt;
+" data-medium-file="https://antisexisme.files.wordpress.com/2016/03/femme-qui-mange-hamburger1.jpg?w=300" data-large-file="https://antisexisme.files.wordpress.com/2016/03/femme-qui-mange-hamburger1.jpg?w=302" class=" wp-image-1700" src="https://antisexisme.files.wordpress.com/2016/03/femme-qui-mange-hamburger1.jpg?w=191&#038;h=190" alt="femme hamburger" width="191" height="190" srcset="https://antisexisme.files.wordpress.com/2016/03/femme-qui-mange-hamburger1.jpg?w=191&amp;h=190 191w, https://antisexisme.files.wordpress.com/2016/03/femme-qui-mange-hamburger1.jpg?w=150&amp;h=150 150w, https://antisexisme.files.wordpress.com/2016/03/femme-qui-mange-hamburger1.jpg?w=300&amp;h=298 300w, https://antisexisme.files.wordpress.com/2016/03/femme-qui-mange-hamburger1.jpg 302w" sizes="(max-width: 191px) 100vw, 191px" /><p id="caption-attachment-1700" class="wp-caption-text">Les femmes sont évaluées plus négativement que les hommes quand elles mangent des aliments perçus comme étant mauvais pour la santé.</p></div>
+<p style="text-align:justify;">Même si femmes et hommes bénéficient indistinctement d’une meilleure évaluation quand iels mangent sainement<sup>4,6,7,9</sup> (iels sont perçu∙e∙s comme moralement supérieur∙e∙s, en meilleure santé, plus belles/beaux, plus amicales/aux, etc. que s’iels mangent de la nourriture mauvaise pour la santé), il s&rsquo;avère qu’il existe <strong>un double standard</strong>, c’est-à-dire que <strong>les femmes sont jugées plus négativement quand elles mangent « mal » que les hommes</strong>. Par exemple, dans une étude<sup>6</sup>, on a demandé à des participant∙e∙s d’évaluer une personne, appelée « Pat », en fonction de ce qu’elle mangeait au petit déjeuner : des flocons d&rsquo;avoine avec des fruits frais et des noix (considérés comme des aliments bons pour la santé) ou bien de la tarte (perçue comme mauvaise pour la santé). Pat était soit décrit∙e comme étant un homme, soit comme étant une femme. Indépendamment de son sexe, Pat était évalué∙e moins positivement quand iel mangeait mal que quand iel mangeait bien, sur plusieurs critères (beauté, intelligence…). Néanmoins, pour certains critères (l’amabilité, la beauté, la santé et la sportivité), Pat la femme était plus sévèrement sanctionnée que Pat l’homme. Autrement dit, manger de la nourriture malsaine coûte socialement plus cher quand on est une femme que quand on est un homme.</p>
+<p style="text-align:justify;">Une autre étude indique que <strong>le même régime alimentaire</strong> (sans préciser la quantité, mais en indiquant le type d’aliments consommés) <strong>va être perçu comme plus gras et moins sain s&rsquo;il est suivi par une femme plutôt que par un homme</strong><sup>4</sup>. Autrement dit, la nourriture absorbée par une femme est perçue comme intrinsèquement « moins saine », uniquement parce qu&rsquo;elle est consommée par une personne de sexe féminin. C’est sans doute pour cette raison que si l&rsquo;on détaille un régime alimentaire, il est préférable d&rsquo;indiquer qu’il est suivi par un homme plutôt que par une femme, si le but est de donner envie à de nombreuses personnes de le suivre<sup>9</sup>.</p>
+<h2 style="text-align:justify;">La répression de l’appétit sexuel</h2>
+<div data-shortcode="caption" id="attachment_785" style="width: 196px" class="wp-caption alignleft"><img aria-describedby="caption-attachment-785" data-attachment-id="785" data-permalink="https://antisexisme.net/2013/02/17/les-cultures-enclines-au-viol/dom-juan/#main" data-orig-file="https://antisexisme.files.wordpress.com/2013/02/dom-juan.jpg" data-orig-size="400,683" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Dom Juan" data-image-description="&lt;p&gt;Dom Juan&lt;/p&gt;
+" data-medium-file="https://antisexisme.files.wordpress.com/2013/02/dom-juan.jpg?w=176" data-large-file="https://antisexisme.files.wordpress.com/2013/02/dom-juan.jpg?w=400" class=" wp-image-785" src="https://antisexisme.files.wordpress.com/2013/02/dom-juan.jpg?w=186&#038;h=318" alt="Dom Juan" width="186" height="318" srcset="https://antisexisme.files.wordpress.com/2013/02/dom-juan.jpg?w=186&amp;h=318 186w, https://antisexisme.files.wordpress.com/2013/02/dom-juan.jpg?w=372&amp;h=636 372w, https://antisexisme.files.wordpress.com/2013/02/dom-juan.jpg?w=88&amp;h=150 88w, https://antisexisme.files.wordpress.com/2013/02/dom-juan.jpg?w=176&amp;h=300 176w" sizes="(max-width: 186px) 100vw, 186px" /><p id="caption-attachment-785" class="wp-caption-text">Double standard sexuel : une femme ayant beaucoup de partenaires sexuels est une salope, un homme, un Don Juan.</p></div>
+<p style="text-align:justify;">Quant <strong>aux appétits sexuels</strong>, si les femmes sont perçues comme des objets sexuels, <strong>elles ne sont en revanche pas considérées comme des sujets sexuels à part entière</strong>. <a href="https://antisexisme.net/2015/12/18/sexualite-feminine/" target="_blank">Elles ont moins accès au plaisir sexuel</a> et sont en moyenne moins satisfaites de leur sexualité que les hommes<sup>10</sup>.</p>
+<p style="text-align:justify;">Même si la répression sexuelle a considérablement diminué depuis les années 1960,<strong> les femmes restent plus stigmatisées que les hommes si elles ont une sexualité jugée trop « libre »</strong><sup>11–14</sup>. On parle de « double standard sexuel » pour désigner le fait que les femmes sont jugées plus négativement que les hommes pour les mêmes actes sexuels. Ce <strong>double standard </strong>a fortement diminué depuis les années 1960, et les femmes ne sont plus condamnées pour avoir des relations sexuelles hors mariage, par exemple. Néanmoins le double standard persiste pour certains comportements : les femmes sont jugées plus négativement que les hommes si elles ont de nombreux partenaires<sup>15–17</sup>, si elles font du triolisme<sup>18</sup> ou si elles sont atteintes d’une maladie sexuellement transmissible<sup>19</sup>. Une étude<sup>15</sup> menée auprès d’adolescent∙e∙s américain∙e∙s montre ainsi que, plus un garçon a eu de partenaires sexuelles au cours de sa vie, plus il sera apprécié de ses camarades, tandis que la situation inverse est observée chez les filles. Précisons que les hommes adhéreraient davantage au double standard sexuel, surtout les sexistes hostiles (à propos de la différence entre sexisme hostile et sexisme bienveillant, voir <a href="https://antisexisme.net/2011/03/09/sexisme-ambivalent-ambivalent-sexism-2/" target="_blank">cet article</a>)<sup>20</sup>. En outre, on adhérerait plus fortement au double standard dans certaines conditions, par exemple sous l’influence d’un groupe<sup>17</sup> ou quand notre attention est détournée<sup>16</sup>.</p>
+<p style="text-align:justify;">Par ailleurs, <a href="https://antisexisme.net/2011/12/04/mythes-sur-les-viols-partie-1-quels-sont-ces-mythes-qui-y-adhere/" target="_blank"><strong>les mythes sur le viol</strong></a> – des idées qui permettent de transférer la responsabilité des agressions sexuelles du coupable vers la victime – participent aussi à <strong>une réduction de la liberté sexuelle</strong> des femmes. En effet, l’un des mythes sur le viol consiste à dire qu’une femme qui a une sexualité « trop libre » et qui serait violée l’aurait « bien cherché ». D’après les résultats d’un sondage d’Amnesty International mené en Grande-Bretagne en 2005, 22% des personnes interrogées sont d’accord pour dire qu’<strong>une femme qui aurait beaucoup de partenaires sexuels et qui serait violée serait au moins partiellement responsable de ce qui lui serait arrivé</strong><sup>21</sup>. Tout récemment, <a href="http://www.lalibre.be/actu/belgique/koen-geens-envisage-de-rendre-impossible-la-suspension-du-prononce-en-cas-de-viol-56b74ce93570fdebf5c61615" target="_blank">un homme condamné pour viol en Belgique, et qui a reconnu les faits, a obtenu une suspension du prononcé</a>, ce qui signifie qu’il n’a écopé d&rsquo;aucune peine. La raison à cela ? « <a href="https://www.rtbf.be/info/societe/detail_la-question-de-la-violence-sexuelle-envers-les-femmes-n-a-pas-attendu-l-arrivee-des-refugies?id=9205105" target="_blank">La femme a participé jusqu&rsquo;à un certain moment à un jeu de séduction qui a débouché sur les faits</a> », d&rsquo;après le jugement rendu. Autrement dit, comme la victime semble avoir exprimé à un moment donné une certaine attirance pour le violeur, le viol n’en est plus vraiment un. <strong>Les violences sexuelles apparaissent donc comme étant une sorte de « juste punition » pour celles qui vivraient et exprimeraient leur sexualité trop librement</strong>, en tout cas comme une conséquence logique et naturelle de leurs actes<strong>.</strong> On comprend alors pourquoi les mythes sur le viol constituent un mécanisme efficace de limitation de la liberté sexuelle des femmes.</p>
+<div data-shortcode="caption" id="attachment_646" style="width: 179px" class="wp-caption alignright"><img aria-describedby="caption-attachment-646" data-attachment-id="646" data-permalink="https://antisexisme.net/2012/08/25/catharsis/9weeks-2/#main" data-orig-file="https://antisexisme.files.wordpress.com/2012/08/9weeks.png" data-orig-size="169,299" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="9weeks" data-image-description="" data-medium-file="https://antisexisme.files.wordpress.com/2012/08/9weeks.png?w=169" data-large-file="https://antisexisme.files.wordpress.com/2012/08/9weeks.png?w=169" class="size-full wp-image-646" src="https://antisexisme.files.wordpress.com/2012/08/9weeks.png?w=660" alt="9weeks" srcset="https://antisexisme.files.wordpress.com/2012/08/9weeks.png 169w, https://antisexisme.files.wordpress.com/2012/08/9weeks.png?w=85 85w" sizes="(max-width: 169px) 100vw, 169px"   /><p id="caption-attachment-646" class="wp-caption-text">Visualiser certaines scènes de &laquo;&nbsp;9 semaines 1/2&nbsp;&raquo; augmente l&rsquo;adhésion aux mythes sur le viol.</p></div>
+<p style="text-align:justify;">À ce sujet, on peut aussi faire remarquer que les représentations objectivantes des femmes augmentent l’adhésion aux mythes sur le viol de celleux qui les regardent (cela a notamment été démontré avec des publicités<sup>22,23</sup> ou des scènes érotiques tirées de films interdits aux moins de 17 ans non accompagnés d&rsquo;un adulte<sup>24</sup>). Les publicités, les clips ou la pornographie représentant des femmes comme des objets sexuels réduisent donc indirectement la liberté sexuelle des femmes, via une plus grande acceptation des mythes sur le viol.</p>
+<p style="text-align:justify;">Cette <strong>stigmatisation des femmes « dépravées »</strong> peut expliquer au moins en partie pourquoi les femmes ont <strong>une sexualité en moyenne moins « libre » que les hommes</strong><sup>10</sup>. En effet, par rapport aux hommes, les femmes rapportent qu’elles ont effectué moins d’actes sexuels dans leur vie, qu’elles ont des rapports sexuels moins fréquemment, qu’elles se masturbent moins, qu’elles trompent moins leur partenaire, qu’elles ont connu un plus faible nombre de partenaires, qu’elles s’engagent moins dans des « coups d’un soir », etc. Cette stigmatisation pourrait expliquer également pourquoi <strong>les femmes minimisent leurs expériences sexuelles.</strong> En effet, une étude a montré que si l’on demandait à des participant∙e∙s de remplir un questionnaire sur leurs expériences sexuelles, l’écart entre hommes et femmes se creusait quand l’anonymat des réponses n’était pas garanti (un expérimentateur pouvait lire leurs réponses).  En particulier, les femmes avaient tendance à déclarer moins de comportements d’autosexualité (masturbation, visionnage de vidéos érotiques ou pornographiques) et de partenaires sexuels dans cette situation que dans la situation d&rsquo;anonymat.</p>
+<p style="text-align:justify;">Enfin, la sexualité féminine reste également entourée de stéréotypes. On considère par exemple que <strong>le désir sexuel des femmes est faible (en tout cas plus faible que celui des hommes)</strong>, voire inexistant et que leur sexualité est passive. Cette dernière consisterait avant tout à répondre aux stimulations érotiques d’un partenaire actif et désirant (implicitement, masculin). Le plaisir et l’orgasme féminins sont peu considérés : la pratique la plus courante, la pénétration vaginale, ne provoque régulièrement un orgasme que chez une minorité de femmes (30-50%). Quant à la stimulation du clitoris (qui a plus de chances de provoquer un orgasme), elle est reléguée au rang des « préliminaires ». Par ailleurs, à travers l’orgasme féminin, ce n’est pas nécessairement le plaisir de la femme qui est recherché en premier, mais la valorisation du partenaire masculin en tant qu’amant compétent. Dans la sexualité, les hommes sont généralement tournés vers eux-mêmes : ils recherchent du plaisir, le sentiment d’être aimé et d’être un « bon coup ». <strong>Les femmes sont davantage tournées vers leur partenaire</strong> : elles veulent lui faire plaisir, lui témoigner de l’amour, et surtout ne pas le blesser (en n’ayant par exemple pas d’orgasme). Pour plus de détails, je vous invite à lire <a href="https://antisexisme.net/2015/12/18/sexualite-feminine/" target="_blank">mon article sur la sexualité des femmes et les mythes qui l’entourent</a>.</p>
+<h2 style="text-align:justify;">Des représentations culturelles d&rsquo;appétits féminins dangereux et monstrueux</h2>
+<p style="text-align:justify;">Susan Bordo note dans son livre <em>An Unbearable Weight</em> que les femmes sont souvent considérées dans le « trop plein »<sup>1</sup> : on estime qu’elles en veulent toujours plus, n’en ont jamais assez. Elles veulent toujours plus de nourriture, plus d’amour, plus d’affection, plus de sexe, plus de cadeaux. Elles veulent toujours en savoir trop. Les femmes elles-mêmes adhèrent à cette idée et semblent parfois effrayées par leurs propres appétits qu’elles perçoivent comme dangereux et excessifs<sup>25</sup>. « Si je m’écoutais, je mangerais tout le temps » entend-on ou lit-on régulièrement de la part de femmes. Notre culture (mythes, cinéma, littérature&#8230;) est émaillée de références à des désirs féminins qui sèment le chaos et la désolation. Par exemple, dans les récits originels d&rsquo;Adam et Ève et de la boîte de Pandore, la soif de connaissance des femmes (symbolisée par le désir de nourriture dans le cas d&rsquo;Adam et Ève) a tout simplement conduit à tous les maux de l&rsquo;humanité. L&rsquo;idée sous-jacente est que <strong>les appétits féminins doivent donc être absolument bridés et contrôlés.</strong></p>
+<div data-shortcode="caption" id="attachment_1701" style="width: 286px" class="wp-caption alignleft"><img aria-describedby="caption-attachment-1701" data-attachment-id="1701" data-permalink="https://antisexisme.net/2016/03/05/impuissance-06/philip-burne-jones-vampire/#main" data-orig-file="https://antisexisme.files.wordpress.com/2016/03/philip-burne-jones-vampire.jpg" data-orig-size="1134,1600" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Philip Burne Jones Vampire" data-image-description="&lt;p&gt;The vampire&lt;/p&gt;
+" data-medium-file="https://antisexisme.files.wordpress.com/2016/03/philip-burne-jones-vampire.jpg?w=213" data-large-file="https://antisexisme.files.wordpress.com/2016/03/philip-burne-jones-vampire.jpg?w=660" class=" wp-image-1701" src="https://antisexisme.files.wordpress.com/2016/03/philip-burne-jones-vampire.jpg?w=276&#038;h=390" alt="The vampire" width="276" height="390" srcset="https://antisexisme.files.wordpress.com/2016/03/philip-burne-jones-vampire.jpg?w=276&amp;h=390 276w, https://antisexisme.files.wordpress.com/2016/03/philip-burne-jones-vampire.jpg?w=552&amp;h=780 552w, https://antisexisme.files.wordpress.com/2016/03/philip-burne-jones-vampire.jpg?w=106&amp;h=150 106w, https://antisexisme.files.wordpress.com/2016/03/philip-burne-jones-vampire.jpg?w=213&amp;h=300 213w" sizes="(max-width: 276px) 100vw, 276px" /><p id="caption-attachment-1701" class="wp-caption-text"><em>The Vampire</em> (1897), par Philip Burne-Jones. Son cousin, Rudyard Kipling, écrivit un poème inspiré de ce tableau, appelé également <em>The Vampire</em>. Dans ce poème misogyne, la femme vampire représente toutes les femmes qui n’aiment pas leur mari et qui causeraient leur perte en dépensant tout leur argent. Ici, la femme vampire est donc la femme matérialiste, obsédée par la possession de biens.</p></div>
+<p style="text-align:justify;">Ainsi,<strong> les appétits destructeurs</strong> semblent caractériser <strong>des monstres féminins dépeints à plusieurs époques</strong>, notamment à celles où les femmes ont gagné en droits et indépendance<sup>1</sup>. À la Renaissance, on dit que le <strong>Diable parvient à séduire plus facilement les femmes et à en faire des sorcières</strong>, car celles-ci sont plus facilement dominées par leur appétit sexuel que les hommes : le désir sexuel des femmes, mais pas celui des hommes, est ainsi source de danger et de chaos<sup>26</sup> . L’appétit oral des ogresses et des sorcières des contes de fées est tel qu’il se traduit souvent par du <strong>cannibalisme</strong><sup>27</sup>. La littérature victorienne du XIXème siècle voit fleurir de multiples figures de monstres féminins, toutes guidées par des appétits grotesques<sup>1,28</sup>. L’une des plus célèbres est celle de la <strong>femme vampire</strong>. Les vampires sont des êtres monstrueux, dont la soif de pouvoir et de domination – symbolisée par l’acte de manger – entraîne la maladie, la désolation et la mort. Si Dracula est le plus célèbre des vampires, c’est bien sous la forme d&rsquo;une femme que la figure du vampire a dominé la littérature de la fin du XIXème siècle<sup>28</sup>. <strong>La faim et l’appétit des femmes provoquent à cette époque un tel effroi qu’ils sont placés au cœur de la littérature d’horreur d’alors</strong>. Ces femmes vampires étaient décrites comme dominées par leur faim, habitées d’un appétit sexuel insatiable et agressif, et guidées par leur désir pour les biens matériels. À la même époque, les féministes suffragistes – des figures quasi-monstrueuses puisque représentées sous les traits de femmes extrêmement laides – sont dépeintes comme étant guidées par leur haine des hommes et leur soif de pouvoir<sup>27</sup>. Cette image perdure, et encore maintenant, on se demande ce que les féministes veulent <u>encore</u> !</p>
+<div data-shortcode="caption" id="attachment_1702" style="width: 267px" class="wp-caption alignright"><img aria-describedby="caption-attachment-1702" data-attachment-id="1702" data-permalink="https://antisexisme.net/2016/03/05/impuissance-06/02-crumb-yeti-woman/#main" data-orig-file="https://antisexisme.files.wordpress.com/2016/03/02-crumb-yeti-woman.jpg" data-orig-size="585,684" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1452098218&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="Yeti woman" data-image-description="&lt;p&gt;femme yéti&lt;/p&gt;
+" data-medium-file="https://antisexisme.files.wordpress.com/2016/03/02-crumb-yeti-woman.jpg?w=257" data-large-file="https://antisexisme.files.wordpress.com/2016/03/02-crumb-yeti-woman.jpg?w=585" class="size-medium wp-image-1702" src="https://antisexisme.files.wordpress.com/2016/03/02-crumb-yeti-woman.jpg?w=257&#038;h=300" alt="femme yéti" width="257" height="300" srcset="https://antisexisme.files.wordpress.com/2016/03/02-crumb-yeti-woman.jpg?w=257&amp;h=300 257w, https://antisexisme.files.wordpress.com/2016/03/02-crumb-yeti-woman.jpg?w=514&amp;h=600 514w, https://antisexisme.files.wordpress.com/2016/03/02-crumb-yeti-woman.jpg?w=128&amp;h=150 128w" sizes="(max-width: 257px) 100vw, 257px" /><p id="caption-attachment-1702" class="wp-caption-text">Une femme yéti, forte et vorace, par Crumb.</p></div>
+<p style="text-align:justify;">À cause de leur agressivité sexuelle, ces monstres féminins peuvent certes détenir une portée érotique et constituer un fantasme sexuel pour certains hommes. C’est particulièrement le cas pour les femmes vampires. On peut aussi penser aux femmes représentées par l’auteur de bandes dessinées américain Crumb, qui sont pour ainsi dire des monstres. Gigantesques, musclées, parfois poilues, violentes et animées d’un appétit sexuel incontrôlable, elles constituent clairement un objet de fantasme pour leur auteur. Notons que <a href="http://www.popmatters.com/feature/no-girls-allowed-crumb-and-the-comix-counterculture/" target="_blank">cela ne fait pas de Crumb un féministe</a>, bien au contraire ! Il se qualifie lui-même de « porc misogyne » et ne cache pas son hostilité envers les femmes (qui n’auraient pas répondu assez positivement à ses avances). Un rapide coup d’œil à son œuvre permet de se rendre compte que ses personnages féminins, aussi peu conventionnels soient-ils, ne sont cantonnés qu’au rôle d’objet masturbatoire. Il n’hésite pas non plus à remplir ses BD de violences misogynes (non pas pour les dénoncer, mais plutôt par hostilité envers les femmes).</p>
+<p style="text-align:justify;">Ainsi, bien que ces figures féminines soient parfois pourvues d’une belle apparence (par exemple les femmes vampires) et puissent même constituer un objet de fantasme, elles restent monstrueuses et cauchemardesques. Dangereuses, toujours dotées d’une laideur morale, les femmes-monstres aux appétits excessifs entraînent inéluctablement la chute des hommes.</p>
+<div data-shortcode="caption" id="attachment_1718" style="width: 469px" class="wp-caption aligncenter"><img aria-describedby="caption-attachment-1718" data-attachment-id="1718" data-permalink="https://antisexisme.net/2016/03/05/impuissance-06/xjl379427/#main" data-orig-file="https://antisexisme.files.wordpress.com/2016/03/scene_from_the_opera_carmen.jpg" data-orig-size="550,409" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;www.bridgemanart.com&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;XJL379427 Scene from the opera &#039;Carmen&#039;, by Georges Bizet (1838-75) (colour litho) ; colour lithograph; Civica Raccolta Stampe Bertarelli, Milan, Italy; (add. info.: &#039;Carmen&#039;, premiere 1875; Libretto based on Prosper Merimee&#039;s novella of the same title; Act IV: Don Jose about to stab Carmen, as her lover the toreador Escamillo is hailed inside the Plaza de Toros, in Seville); out of copyright&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;Copyright: www.bridgemanart.com&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;XJL379427&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Carmen" data-image-description="" data-medium-file="https://antisexisme.files.wordpress.com/2016/03/scene_from_the_opera_carmen.jpg?w=300" data-large-file="https://antisexisme.files.wordpress.com/2016/03/scene_from_the_opera_carmen.jpg?w=550" class="wp-image-1718" src="https://antisexisme.files.wordpress.com/2016/03/scene_from_the_opera_carmen.jpg?w=459&#038;h=341" alt="Dans l'opéra Carmen de Bizet (1875), le brigadier se laisse séduire par Carmen, une gitane libre et incontrôlable, et oublie Micaëla, jeune femme douce et soumise. Carmen est sans doute plus fascinante que Micaëla, mais le message de l'opéra est clair : Carmen provoquera la chute de Don José." width="459" height="341" srcset="https://antisexisme.files.wordpress.com/2016/03/scene_from_the_opera_carmen.jpg?w=459&amp;h=341 459w, https://antisexisme.files.wordpress.com/2016/03/scene_from_the_opera_carmen.jpg?w=150&amp;h=112 150w, https://antisexisme.files.wordpress.com/2016/03/scene_from_the_opera_carmen.jpg?w=300&amp;h=223 300w, https://antisexisme.files.wordpress.com/2016/03/scene_from_the_opera_carmen.jpg 550w" sizes="(max-width: 459px) 100vw, 459px" /><p id="caption-attachment-1718" class="wp-caption-text">Dans l&rsquo;opéra <em>Carmen</em> de Bizet (1875), le brigadier Don José se laisse séduire par Carmen, une gitane libre et incontrôlable, à la sexualité active et désirante. Pour elle, il délaissera Micaëla, sa fiancée, une jeune femme douce et soumise. Carmen est sans doute plus fascinante que Micaëla, mais le message de l&rsquo;opéra, qui constitue un avertissement aux hommes, est clair : Carmen provoquera la chute de Don José.</p></div>
+<h2 style="text-align:justify;">Liens entre désir sexuel et désir de nourriture</h2>
+<div data-shortcode="caption" id="attachment_1703" style="width: 310px" class="wp-caption alignleft"><img aria-describedby="caption-attachment-1703" data-attachment-id="1703" data-permalink="https://antisexisme.net/2016/03/05/impuissance-06/marie_bracquemond_under_the_lamp/#main" data-orig-file="https://antisexisme.files.wordpress.com/2016/03/marie_bracquemond_under_the_lamp.jpg" data-orig-size="800,536" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Marie_Bracquemond_Under_the_Lamp" data-image-description="&lt;p&gt;Sous la lampe, par Marie  Braquemond  (1887) &lt;/p&gt;
+" data-medium-file="https://antisexisme.files.wordpress.com/2016/03/marie_bracquemond_under_the_lamp.jpg?w=300" data-large-file="https://antisexisme.files.wordpress.com/2016/03/marie_bracquemond_under_the_lamp.jpg?w=660" class="size-medium wp-image-1703" src="https://antisexisme.files.wordpress.com/2016/03/marie_bracquemond_under_the_lamp.jpg?w=300&#038;h=201" alt="Sous la lampe" width="300" height="201" srcset="https://antisexisme.files.wordpress.com/2016/03/marie_bracquemond_under_the_lamp.jpg?w=300&amp;h=201 300w, https://antisexisme.files.wordpress.com/2016/03/marie_bracquemond_under_the_lamp.jpg?w=600&amp;h=402 600w, https://antisexisme.files.wordpress.com/2016/03/marie_bracquemond_under_the_lamp.jpg?w=150&amp;h=101 150w" sizes="(max-width: 300px) 100vw, 300px" /><p id="caption-attachment-1703" class="wp-caption-text"><em>Sous la Lampe</em> par Marie Braquemond (1887).</p></div>
+<p style="text-align:justify;">Du fait que la sexualité et la nourriture créent désirs et plaisirs, <strong>elles ont été symboliquement associées dans nombre de sociétés humaines, dont la nôtre</strong>. On prodigue plaisir nourricier (« les bons petits plats ») et plaisir sexuel pour montrer son attachement à autrui, et c’est ce que font les femmes vis-à-vis de leur conjoint et de leurs enfants (en ce qui concerne la nourriture). La sexualité, et en particulier la sexualité agressive, violente et objectivante, est aussi associée au fait de manger : on parle de consommation sexuelle ou de prédateur sexuel. Quand une femme est harcelée sexuellement, on dit d’elle qu’elle est traitée comme un bout de viande. Une femme sexuellement attirante est dite « appétissante », et certaines femmes se préparent avant les rapports sexuels (épilation, lingerie…) pour être, justement, « appétissantes », tout comme elles préparent la nourriture afin qu’elle soit attrayante. Les femmes ne sont donc pas seulement celles qui préparent la nourriture des hommes, elles sont aussi parfois considérées symboliquement comme un « aliment sexuel » destiné aux hommes. Enfin, ce n’est peut-être pas par un hasard si les seins, organes nourriciers par excellence, sont  devenus des organes fortement sexualisés.</p>
+<p style="text-align:justify;">Il est bien connu qu’à l’époque victorienne, la sexualité était réprimée. <strong>Mais l’appétit oral des femmes l’était également</strong>. Il était tabou dans la littérature<sup>1,29</sup> : on ne dépeignait pas des femmes en train de manger, surtout si la nourriture était riche, et surtout si les femmes mangeaient de manière sensuelle. A cette même époque, les normes et conventions voulaient que les femmes mangent peu et délicatement. Des magazines de mode féminins stipulaient qu’il était vulgaire pour les femmes de remplir leur assiette avec beaucoup de nourriture<sup>1</sup>. Dès lors, les ladies délicates et raffinées ne faisaient plus que picorer lors des repas et dîners publics, et la véritable consommation de nourriture devint pour ces femmes <strong>une activité privée et secrète, confinée à la chambre à coucher</strong><sup>29</sup>. L’association entre sexualité et nourriture fut alors encore plus évidente. A l’heure actuelle, l’appétit oral des femmes semble encore, à certains égards, tabou et caché, en tout cas lorsqu&rsquo;il apparaît comme excessif. Ainsi, les femmes boulimiques se cachent dans les phases où elles avalent une grande quantité de nourriture, alors que les quelques hommes atteints de cette même maladie mangent excessivement de manière publique<sup>1</sup>.</p>
+<div data-shortcode="caption" id="attachment_1704" style="width: 196px" class="wp-caption alignright"><img aria-describedby="caption-attachment-1704" data-attachment-id="1704" data-permalink="https://antisexisme.net/2016/03/05/impuissance-06/catherinedesienne/#main" data-orig-file="https://antisexisme.files.wordpress.com/2016/03/catherinedesienne.jpg" data-orig-size="280,451" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="CatherinedeSienne" data-image-description="" data-medium-file="https://antisexisme.files.wordpress.com/2016/03/catherinedesienne.jpg?w=186" data-large-file="https://antisexisme.files.wordpress.com/2016/03/catherinedesienne.jpg?w=280" class="wp-image-1704 size-medium" src="https://antisexisme.files.wordpress.com/2016/03/catherinedesienne.jpg?w=186&#038;h=300" alt="Catherine de Sienne, blabla" width="186" height="300" srcset="https://antisexisme.files.wordpress.com/2016/03/catherinedesienne.jpg?w=186&amp;h=300 186w, https://antisexisme.files.wordpress.com/2016/03/catherinedesienne.jpg?w=93&amp;h=150 93w, https://antisexisme.files.wordpress.com/2016/03/catherinedesienne.jpg 280w" sizes="(max-width: 186px) 100vw, 186px" /><p id="caption-attachment-1704" class="wp-caption-text">Comme beaucoup de saintes du Moyen Âge, Catherine de Sienne a exprimé son abnégation à travers de nombreux actes de dévotions : auto-flagellation, temps de sommeil minimal et en particulier refus de la nourriture (cf <em>Holy Feast and Holy Fast</em>, 1987 par C. Bynum).</p></div>
+<p style="text-align:justify;">Au Moyen Âge, des femmes jeûnaient pour se défendre contre les tentations de la chair<sup>30</sup>. Des hommes disaient aux femmes de se méfier de la nourriture, car elle provoquait le désir sexuel. A l’époque victorienne aussi, certains auteurs considéraient que la nourriture, surtout si elle était riche et épicée, induisait une augmentation de la libido et était associée à ce « fléau » qu’était la masturbation féminine<sup>29</sup>. Aujourd’hui, on constate que<strong> les femmes anorexiques, qui s’efforcent donc de contrôler au maximum leur appétit pour la nourriture, présentent également en général un plus faible désir sexuel que les femmes non anorexiques</strong><sup>31–33</sup>. S’il peut exister des liens indirects (<a href="https://antisexisme.net/2015/02/27/dissociation/" target="_blank">les femmes ayant subi des violences sexuelles sont à la fois plus à risques pour les troubles alimentaires et pour la perte de désir sexuel</a>), il est également clair que la perte importante de poids entraîne une diminution de la libido<sup>34</sup>. De la même manière, le gain de poids chez les patientes anorexiques restaure le désir sexuel<sup>35</sup>. De façon générale, les femmes et les adolescentes anorexiques manifestent une anxiété non seulement vis-à-vis de la nourriture, mais également par rapport à la sexualité et à l’apparition de signes de maturation sexuelle lors de la puberté<sup>1,32,33</sup>.</p>
+<p style="text-align:justify;">Enfin, il existe par exemple des ressemblances frappantes entre l’importante répression de la sexualité qui prévalait jusque dans les années 1960 et le culte de la minceur actuel<sup>36,37</sup>. Certaines théoriciennes ont pu montrer <strong>que le culte de la minceur a une structure proche de celle des religions « classiques », et que ce culte réprime l’appétit pour la nourriture de la même façon que les religions réprimaient (et répriment encore) la sexualité</strong><sup>36–38</sup>. Comme les religions, le culte de la minceur promet le « salut » si on suit ses injonctions. La minceur est en effet une véritable quête pour beaucoup de femmes, car on leur affirme qu’elle est la clé du succès, amoureux et professionnel. On leur fait croire qu’une fois qu’elles seront minces, elles auront atteint une sorte de « paradis », un bonheur total et parfait. Au contraire, le culte de la minceur fait vivre aux femmes obèses un véritable enfer de stigmatisation. De la même manière, la religion promettait un beau mariage et le salut de l’âme si l&rsquo;on se comportait « bien », en restant notamment vierge jusqu’au mariage. Celles qui se comportaient « mal » étai<img data-attachment-id="1705" data-permalink="https://antisexisme.net/2016/03/05/impuissance-06/food-temptation/#main" data-orig-file="https://antisexisme.files.wordpress.com/2016/03/food-temptation.jpg" data-orig-size="600,539" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="food-temptation" data-image-description="" data-medium-file="https://antisexisme.files.wordpress.com/2016/03/food-temptation.jpg?w=300" data-large-file="https://antisexisme.files.wordpress.com/2016/03/food-temptation.jpg?w=600" class="alignleft wp-image-1705" src="https://antisexisme.files.wordpress.com/2016/03/food-temptation.jpg?w=211&#038;h=190" alt="food-temptation" width="211" height="190" srcset="https://antisexisme.files.wordpress.com/2016/03/food-temptation.jpg?w=211&amp;h=190 211w, https://antisexisme.files.wordpress.com/2016/03/food-temptation.jpg?w=422&amp;h=380 422w, https://antisexisme.files.wordpress.com/2016/03/food-temptation.jpg?w=150&amp;h=135 150w, https://antisexisme.files.wordpress.com/2016/03/food-temptation.jpg?w=300&amp;h=270 300w" sizes="(max-width: 211px) 100vw, 211px" />ent promises à un enfer sur terre (la stigmatisation des filles-mères) et dans l’au-delà. Par ailleurs, comme précédemment avec la sexualité, les femmes se sentent tiraillées : leur « mauvais » côté les enjoint de céder à l’appel de la nourriture (avant : à la tentation de la chair) et leur « bon » côté leur dit de résister<sup>36–38</sup>. De même que pour la répression de la sexualité, la répression du désir de nourriture s’appuie sur des émotions comme la peur, la honte ou la culpabilité. Comme les religions traditionnelles, le culte de la minceur propose des actions de « purification » à celles qui ont « mal agi » en cédant à leurs désirs : purgations (vomissements et usage de laxatifs), régimes et exercices physiques. En bref, on retrouve dans les deux types de culte le même cycle :<strong> désir, tentation, capitulation, haine de soi, purification</strong>.</p>
+<h1 style="text-align:justify;">Quand le mythe de la beauté s’oppose aux désirs des femmes</h1>
+<p style="text-align:justify;">Le mythe de la beauté aide efficacement les femmes à nier leurs désirs. Nous avons vu que l’une des pratiques les plus courantes pour atteindre l&rsquo;idéal de la minceur est le régime<strong>. Pour être « belles », les femmes sont donc contraintes de sacrifier, au moins en partie, ce plaisir précieux qu’est celui de manger, et ne pas répondre à l’appel de la nourriture.</strong> Mona Chollet écrit à ce propos : « Il est frappant de constater autour de soi le nombre de femmes qui se sont résignées à une sorte de frigidité gustative, tirant un trait sur cette source de plaisir, de connaissance et d’expérience du monde pourtant non négligeable que représente la nourriture. »<sup>39</sup></p>
+<div data-shortcode="caption" id="attachment_1484" style="width: 158px" class="wp-caption alignright"><img aria-describedby="caption-attachment-1484" data-attachment-id="1484" data-permalink="https://antisexisme.net/2016/01/11/impuissance-02/visit-to-the-plastic-surgeon-1960/#main" data-orig-file="https://antisexisme.files.wordpress.com/2016/01/visit-to-the-plastic-surgeon-1960.jpg" data-orig-size="394,800" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="Visite au chirurgien esthétique" data-image-description="&lt;p&gt;Visite au chirurgien esthétique (Visita al Cirujano Plástico), tableau de Remedios Varo (1960)&lt;/p&gt;
+" data-medium-file="https://antisexisme.files.wordpress.com/2016/01/visit-to-the-plastic-surgeon-1960.jpg?w=148" data-large-file="https://antisexisme.files.wordpress.com/2016/01/visit-to-the-plastic-surgeon-1960.jpg?w=394" class="size-medium wp-image-1484" src="https://antisexisme.files.wordpress.com/2016/01/visit-to-the-plastic-surgeon-1960.jpg?w=148&#038;h=300" alt="Visite au chirurgien esthétique" width="148" height="300" srcset="https://antisexisme.files.wordpress.com/2016/01/visit-to-the-plastic-surgeon-1960.jpg?w=148&amp;h=300 148w, https://antisexisme.files.wordpress.com/2016/01/visit-to-the-plastic-surgeon-1960.jpg?w=296&amp;h=600 296w, https://antisexisme.files.wordpress.com/2016/01/visit-to-the-plastic-surgeon-1960.jpg?w=74&amp;h=150 74w" sizes="(max-width: 148px) 100vw, 148px" /><p id="caption-attachment-1484" class="wp-caption-text"><em>Visite au chirurgien esthétique</em> (<em>Visita al Cirujano Plástico</em>), tableau de Remedios Varo (1960).</p></div>
+<p style="text-align:justify;">Mais le mythe de la beauté s’oppose également au plaisir sexuel des femmes. Dans un certain nombre de cas, <strong>objectivation sexuelle et plaisir sexuel s’opposent franchement</strong>. Certaines pratiques de beauté requises pour être un bel objet sexuel nuisent directement au plaisir des femmes qui s’y adonnent. On peut penser en l’occurrence à la <strong>chirurgie esthétique</strong>, et plus précisément à l’augmentation mammaire et à la nymphoplastie. Les nymphes (petites lèvres) sont fortement innervées et contribuent aux sensations sexuelles<sup>40,41</sup>. Des données suggèrent que les femmes avec de grandes nymphes ressentent plus de plaisir<sup>42</sup>. Peu d’études ont été menées sur les effets de la <strong>nymphoplastie</strong>, mais il semblerait qu’il y ait un vrai risque de perte de sensibilité, étant donné l’innervation des petites lèvres. Quant à <strong>l’augmentation mammaire</strong>, la perte de sensibilité au niveau des tétons et/ou de la peau du sein en est une complication relativement courante. Une étude indique ainsi que 25% des femmes opérées avaient perdu en sensibilité au niveau de la peau des seins, 4 à 6 ans après l’opération<sup>43</sup>. Une autre étude indique que le seuil sensoriel (stimulus minimum pouvant être détecté) des tétons est significativement plus élevé chez les femmes ayant subi une augmentation mammaire que chez les femmes non opérées<sup>44</sup>. Plus précisément : il serait presque 10 fois plus élevé pour les premières, ce qui signifie qu’il faudrait exercer, pour qu’elle soit ressentie, une pression presque 10 fois plus forte sur le téton des femmes opérées que sur celui des femmes non opérées.</p>
+<p style="text-align:justify;">L’objectivation sexuelle nuit également de manière plus subtile au plaisir sexuel. En effet, des études de psychologie sociale montrent que l’auto-objectivation (le fait de se considérer comme un objet sexuel) entraîne une anxiété quant à son apparence. Or, <strong>cette anxiété induit une focalisation sur son apparence pendant les rapports sexuels</strong> : « Est-ce qu’il ne voit pas trop ma graisse ? Suis-je bien épilée ? » Etant moins capables de se concentrer sur leurs sensations, les femmes qui s’auto-objectivent voient leur sexualité se détériorer<sup>45–47</sup>. Encore une fois, le mythe de la beauté, par la surveillance constante qu’il induit, conduit à un enfermement, cette fois-ci de type sensoriel.</p>
+<div data-shortcode="caption" id="attachment_1711" style="width: 310px" class="wp-caption alignleft"><img aria-describedby="caption-attachment-1711" data-attachment-id="1711" data-permalink="https://antisexisme.net/2016/03/05/impuissance-06/672px-nuremberg_chronicles_-_strange_people_-_hairy_lady_xiiv/#main" data-orig-file="https://antisexisme.files.wordpress.com/2016/03/672px-nuremberg_chronicles_-_strange_people_-_hairy_lady_xiiv.jpg" data-orig-size="672,600" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="672px-Nuremberg_chronicles_-_Strange_People_-_Hairy_Lady_(XIIv)" data-image-description="" data-medium-file="https://antisexisme.files.wordpress.com/2016/03/672px-nuremberg_chronicles_-_strange_people_-_hairy_lady_xiiv.jpg?w=300" data-large-file="https://antisexisme.files.wordpress.com/2016/03/672px-nuremberg_chronicles_-_strange_people_-_hairy_lady_xiiv.jpg?w=660" class="size-medium wp-image-1711" src="https://antisexisme.files.wordpress.com/2016/03/672px-nuremberg_chronicles_-_strange_people_-_hairy_lady_xiiv.jpg?w=300&#038;h=268" alt="Femme sauvage, illustration de la Chronique de Nuremberg (1493) (source)" width="300" height="268" srcset="https://antisexisme.files.wordpress.com/2016/03/672px-nuremberg_chronicles_-_strange_people_-_hairy_lady_xiiv.jpg?w=300&amp;h=268 300w, https://antisexisme.files.wordpress.com/2016/03/672px-nuremberg_chronicles_-_strange_people_-_hairy_lady_xiiv.jpg?w=600&amp;h=536 600w, https://antisexisme.files.wordpress.com/2016/03/672px-nuremberg_chronicles_-_strange_people_-_hairy_lady_xiiv.jpg?w=150&amp;h=134 150w" sizes="(max-width: 300px) 100vw, 300px" /><p id="caption-attachment-1711" class="wp-caption-text">Femme sauvage, illustration de <em>la Chronique de Nuremberg</em> (1493) (<a href="https://commons.wikimedia.org/wiki/File:Nuremberg_chronicles_-_Strange_People_-_Hairy_Lady_%28XIIv%29.jpg" target="_blank">source</a>).</p></div>
+<p style="text-align:justify;">Enfin, la passivité et le manque de désir sexuel que l’on attribue aux femmes pourraient se retrouver dans <strong>plusieurs idéaux de beauté</strong>. Nous l’avons vu, appétit oral et appétit sexuel sont liés, symboliquement mais aussi physiologiquement, la perte de poids induisant une baisse de la libido. Il se pourrait donc que <strong>l’idéal de la minceur ne représente pas simplement le renoncement aux plaisirs de la nourriture, mais également le renoncement aux plaisirs en général, et notamment au plaisir sexuel</strong>. Par ailleurs, les organes génitaux féminins changent d’aspect lors de l’excitation sexuelle : le clitoris et les petites lèvres s’engorgent de sang, augmentant de volume ; le diamètre des petites lèvres augmente de deux à trois fois<sup>48,49</sup>. Elles changent également de couleur, devenant plus foncées ou plus rouges. Or la vulve est elle-même soumise à des normes de beauté qui valorisent une petite taille (voir <a href="https://antisexisme.net/2016/02/06/impuissance-04/" target="_blank">l’article sur l’idéal de jeunesse</a>)<sup>50,51</sup>. Il se pourrait que <strong>des nymphes trop grosses ou trop foncées puissent symboliser un désir sexuel trop important</strong>, et soient donc considérées comme laides pour ces raisons. Enfin, historiquement, <strong>les poils ont été associés au désir sexuel</strong>. Au Moyen Âge, des femmes sauvages couvertes de poils et à l’appétit sexuel débridé peuplent les contes<sup>52,53</sup>. Durant la Renaissance, les cheveux lâchés des sorcières représentent leur désir sexuel ; et ces créatures sont parfois décrites comme poilues et/ou portant une barbe, comme par exemple dans la pièce <em>Macbeth</em> de Shakespeare<sup>53,54</sup>. A cette même époque, le physicien italien Giambattista della Porta pensait que plus une femme avait des poils épais, plus elle était lubrique<sup>54</sup>. Au XIXème siècle, cette théorie du lien entre la pilosité d’une femme (notamment celle de son pubis) et son appétit sexuel se retrouve dans les écrits de plusieurs « savants », notamment de médecins<sup>54</sup>. Lombroso, qui recherchait des traits physiques associés à la criminalité, considérait que les prostituées étaient plus poilues<sup>54</sup> et plus grosses<sup>28</sup> (« des monstres positifs de tissus adipeux ») que la moyenne, ces caractéristiques étant prétendument le signe de leur « impudicité » et de leur côté « sauvage » et « primitif ».</p>
+<h1 style="text-align:justify;">Conclusion</h1>
+<p style="text-align:justify;">En conclusion, si les femmes sont sexualisées, ce n’est pas pour autant qu’elles sont autorisées à goûter aux plaisirs sensuels. <strong>Les normes de beauté contribuent à renforcer cet interdit.</strong> L’un des exemples les plus évidents est celui de la norme de minceur : pour l’atteindre ou même s’en approcher, les femmes doivent refréner leurs désirs de nourriture. De manière plus subtile, l’interdiction du plaisir sexuel pourrait également être consolidée ou du moins symbolisée par certaines normes de beauté : celle de la minceur, de l’absence de pilosité ou encore celle de la petitesse des nymphes. Dans tous les cas, la chirurgie esthétique et l&rsquo;auto-objectivation peuvent réduire les sensations sexuelles.</p>
+<h1 style="text-align:justify;">Références</h1>
+<ol>
+<li style="text-align:justify;">Bordo, S. <em>Unbearable Weight: Feminism, Western Culture, and the Body</em>. (University of California Press, 1993).</li>
+<li style="text-align:justify;">Liss-Levinson, N. Disorders of desire: Women, sex, and food. <em>Women &amp; Therapy</em> <strong>7,</strong> 121–129 (1988).</li>
+<li style="text-align:justify;">Ricroch, L. En 25 ans, moins de tâches domestiques pour les femmes, l’écart de situation avec les hommes se réduit. (2012). at &lt;<a href="http://www.cor-retraites.fr/IMG/pdf/doc-1723.pdf&#038;gt" rel="nofollow">http://www.cor-retraites.fr/IMG/pdf/doc-1723.pdf&#038;gt</a>;</li>
+<li style="text-align:justify;">Steim, R. I. &amp; Nemeroff, C. J. Moral Overtones of Food: Judgments of Others Based on What they Eat. <em>Pers Soc Psychol Bull</em> <strong>21,</strong> 480–490 (1995).</li>
+<li style="text-align:justify;">Mooney, K. M., DeTore, J. &amp; Malloy, K. A. Perceptions of women related to food choice. <em>Sex Roles</em> <strong>31,</strong> 433–442 (1994).</li>
+<li style="text-align:justify;">Oakes, M. E. &amp; Slotterback, C. S. Prejudgments of those who eat a ‘healthy’ versus an ‘unhealthy’ food for breakfast. <em>Curr Psychol</em> <strong>23,</strong> 267–278 (2004).</li>
+<li style="text-align:justify;">Barker, M. E., Tandy, M. &amp; Stookey, J. D. How are Consumers of Low-fat and High-fat Diets Perceived by those with Lower and Higher Fat Intake? <em>Appetite</em> <strong>33,</strong> 309–317 (1999).</li>
+<li style="text-align:justify;">Bock, B. C. &amp; Kanarek, R. B. Women and men are what they eat: The effects of gender and reported meal size on perceived characteristics. <em>Sex Roles</em> <strong>33,</strong> 109–119 (1995).</li>
+<li style="text-align:justify;">Mooney, K. M. &amp; Lorenz, E. The Effects of Food and Gender on Interpersonal Perceptions. <em>Sex Roles</em> <strong>36,</strong> 639–653 (1997).</li>
+<li style="text-align:justify;">Petersen, J. L. &amp; Hyde, J. S. A meta-analytic review of research on gender differences in sexuality, 1993–2007. <em>Psychological Bulletin</em> <strong>136,</strong> 21–38 (2010).</li>
+<li style="text-align:justify;">Crawford, M. &amp; Popp, D. Sexual double standards: A review and methodological critique of two decades of research. <em>The Journal of Sex Research</em> <strong>40,</strong> 13–26 (2003).</li>
+<li style="text-align:justify;">Bordini, G. S. &amp; Sperb, T. M. Sexual Double Standard: A Review of the Literature Between 2001 and 2010. <em>Sexuality &amp; Culture</em> <strong>17,</strong> 686–704 (2012).</li>
+<li style="text-align:justify;">Fugere, M. A., Escoto, C., Cousins, A. J., Riggs, M. L. &amp; Haerich, P. Sexual attitudes and double standards: a literature review focusing on participant gender and ethnic background. <em>Sexuality &amp; Culture</em> 169 (2008).</li>
+<li style="text-align:justify;">Fasula, A. M., Miller, K. S. &amp; Wiener, J. The sexual double standard in African American adolescent women’s sexual risk reduction socialization. <em>Women Health</em> <strong>46,</strong> 3–21 (2007).</li>
+<li style="text-align:justify;">Kreager, D. A. &amp; Staff, J. The Sexual Double Standard and Adolescent Peer Acceptance. <em>Social Psychology Quarterly</em> <strong>72,</strong> 143–164 (2009).</li>
+<li style="text-align:justify;">Marks, M. J. Evaluations of Sexually Active Men and Women Under Divided Attention: A Social Cognitive Approach to the Sexual Double Standard. <em>Basic and Applied Social Psychology</em> <strong>30,</strong> 84–91 (2008).</li>
+<li style="text-align:justify;">Marks, M. J. &amp; Fraley, R. C. The impact of social interaction on the sexual double standard. <em>Social Influence</em> <strong>2,</strong> 29–54 (2007).</li>
+<li style="text-align:justify;">Jonason, P. K. &amp; Marks, M. J. Common vs. Uncommon Sexual Acts: Evidence for the Sexual Double Standard. <em>Sex Roles</em> <strong>60,</strong> 357–365 (2008).</li>
+<li style="text-align:justify;">Smith, G., Mysak, K. &amp; Michael, S. Sexual Double Standards and Sexually Transmitted Illnesses: Social Rejection and Stigmatization of Women. <em>Sex Roles</em> <strong>58,</strong> 391–401 (2007).</li>
+<li style="text-align:justify;">Rudman, L. A., Fetterolf, J. C. &amp; Sanchez, D. T. What Motivates the Sexual Double Standard? More Support for Male Versus Female Control Theory. <em>Pers Soc Psychol Bull</em> <strong>39,</strong> 250–263 (2013).</li>
+<li style="text-align:justify;">Edwards, K. M., Turchik, J. A., Dardis, C. M., Reynolds, N. &amp; Gidycz, C. A. Rape Myths: History, Individual and Institutional-Level Presence, and Implications for Change. <em>Sex Roles</em> <strong>65,</strong> 761–773 (2011).</li>
+<li style="text-align:justify;">Lanis, K. &amp; Covell, K. Images of women in advertisements: Effects on attitudes related to sexual aggression. <em>Sex Roles</em> <strong>32,</strong> 639–649 (1995).</li>
+<li style="text-align:justify;">MacKay, N. J. &amp; Covell, K. The Impact of Women in Advertisements on Attitudes Toward Women. <em>Sex Roles</em> <strong>36,</strong> 573–583 (1997).</li>
+<li style="text-align:justify;">Milburn, M. A., Mather, R. &amp; Conrad, S. D. The Effects of Viewing R-rated Movie Scenes That Objectify Women on Perceptions of Date Rape. <em>Sex Roles</em> <strong>43,</strong> 645–664 (2000).</li>
+<li style="text-align:justify;">Cole, E. &amp; Rothblum, E. D. <em>Women and Sex Therapy: Closing the Circle of Sexual Knowledge</em>. (Routledge, 1988).</li>
+<li style="text-align:justify;">Bras-Chopard, A. L. <em>Les putains du Diable: Le procès en sorcellerie des femmes</em>. (Plon, 2006).</li>
+<li style="text-align:justify;">Sagaert, C. <em>Histoire de la laideur féminine</em>. (IMAGO, 2015).</li>
+<li style="text-align:justify;">Silver, A. <em>Victorian Literature and the Anorexic Body</em>. (Cambridge University Press, 2002).</li>
+<li style="text-align:justify;">Michie, H. <em>The Flesh Made Word: Female Figures and Women’s Bodies</em>. (OUP USA, 1990).</li>
+<li style="text-align:justify;">Bynum, C. W. Fast, Feast, and Flesh: The Religious Significance of Food to Medieval Women. <em>Representations</em> 1–25 (1985). doi:10.2307/2928425</li>
+<li style="text-align:justify;">Pinheiro, A. P. <em>et al.</em> Sexual functioning in women with eating disorders. <em>Int J Eat Disord</em> <strong>43,</strong> 123–129 (2010).</li>
+<li style="text-align:justify;">Wiederman, M. W. Women, sex, and food: A review of research on eating disorders and sexuality. <em>The Journal of Sex Research</em> <strong>33,</strong> 301–311 (1996).</li>
+<li style="text-align:justify;">Ghizzani, A. &amp; Montomoli, M. Anorexia Nervosa and Sexuality in Women: A Review. <em>Journal of Sex Education and Therapy</em> <strong>25,</strong> 80–88 (2000).</li>
+<li style="text-align:justify;">Tuiten, A. <em>et al.</em> The paradoxical nature of sexuality in anorexia nervosa. <em>Journal of Sex &amp; Marital Therapy</em> <strong>19,</strong> 259–275 (1993).</li>
+<li style="text-align:justify;">Morgan, J. F., Lacey, J. H. &amp; Reid, F. Anorexia nervosa: changes in sexuality during weight restoration. <em>Psychosom Med</em> <strong>61,</strong> 541–545 (1999).</li>
+<li style="text-align:justify;">Wolf, N. <em>The Beauty Myth: How Images of Beauty Are Used Against Women</em>. (Harper Perennial, 1991).</li>
+<li style="text-align:justify;">Cole, E., Rothblum, E. D., Weiss, L. &amp; Meadow, R. <em>Women’s Conflicts About Eating and Sexuality: The Relationship Between Food and Sex</em>. (Routledge, 1992).</li>
+<li style="text-align:justify;">Lelwica, M. M. <em>The Religion of Thinness: Satisfying the Spiritual Hungers Behind Women’s Obsession with Food and Weight</em>. (Gürze Books, 2009).</li>
+<li style="text-align:justify;">Chollet, M. <em>Beauté fatale</em>. (Zones, 2012).</li>
+<li style="text-align:justify;">Ginger, V. A. T., Cold, C. J. &amp; Yang, C. C. Structure and innervation of the labia minora: more than minor skin folds. <em>Female Pelvic Med Reconstr Surg</em> <strong>17,</strong> 180–183 (2011).</li>
+<li style="text-align:justify;">Schober, J., Cooney, T., Pfaff, D., Mayoglou, L. &amp; Martin-Alguacil, N. Innervation of the Labia Minora of Prepubertal Girls. <em>Journal of Pediatric and Adolescent Gynecology</em> <strong>23,</strong> 352–357 (2010).</li>
+<li style="text-align:justify;">Schober, J. M., Alguacil, N. M., Cooper, R. S., Pfaff, D. W. &amp; Meyer-Bahlburg, H. F. L. Self-assessment of anatomy, sexual sensitivity, and function of the labia and vagina. <em>Clin. Anat.</em> <strong>28,</strong> 355–362 (2015).</li>
+<li style="text-align:justify;">Niechajev, I., Jurell, G. &amp; Lohjelm, L. Prospective Study Comparing Two Brands of Cohesive Gel Breast Implants with Anatomic Shape: 5-Year Follow-Up Evaluation. <em>Aesth Plast Surg</em> <strong>31,</strong> 697–710 (2007).</li>
+<li style="text-align:justify;">Mofid, M. M., Klatsky, S. A., Singh, N. K. &amp; Nahabedian, M. Y. Nipple-areola complex sensitivity after primary breast augmentation: a comparison of periareolar and inframammary incision approaches. <em>Plast. Reconstr. Surg.</em> <strong>117,</strong> 1694–1698 (2006).</li>
+<li style="text-align:justify;">Calogero, R. M. &amp; Thompson, J. K. Potential implications of the objectification of women’s bodies for women’s sexual satisfaction. <em>Body Image</em> <strong>6,</strong> 145–148 (2009).</li>
+<li style="text-align:justify;">Steer, A. &amp; Tiggemann, M. The Role of Self-Objectification in Women’s Sexual Functioning. <em>Journal of Social and Clinical Psychology</em> <strong>27,</strong> 205–225 (2008).</li>
+<li style="text-align:justify;">Tiggemann, M. &amp; Williams, E. The Role of Self-Objectification in Disordered Eating, Depressed Mood, and Sexual Functioning Among Women A Comprehensive Test of Objectification Theory. <em>Psychology of Women Quarterly</em> <strong>36,</strong> 66–75 (2012).</li>
+<li style="text-align:justify;">Cindy M. Meston, Roy J. Levin, Marca L. Sipski MD, Elaine M. Hull PhD &amp; Julia R. Heiman PhD. Women’s Orgasm. <em>Annual Review of Sex Research</em> <strong>15,</strong> 173–257 (2004).</li>
+<li style="text-align:justify;">Berman, J. R. Physiology of female sexual function and dysfunction. <em>Int J Impot Res</em> <strong>17,</strong> S44–S51 (2005).</li>
+<li style="text-align:justify;">Schick, V. R., Rima, B. N. &amp; Calabrese, S. K. Evulvalution: The Portrayal of Women’s External Genitalia and Physique across Time and the Current Barbie Doll Ideals. <em>The Journal of Sex Research</em> <strong>48,</strong> 74–81 (2011).</li>
+<li style="text-align:justify;">Bramwell, R. Invisible labia: The representation of female external genitals in women’s magazines. <em>Sexual and Relationship Therapy</em> <strong>17,</strong> 187–190 (2002).</li>
+<li style="text-align:justify;">Ham, J. &amp; Senior, M. <em>Animal Acts: Configuring the Human in Western History</em>. (Routledge, 2014).</li>
+<li style="text-align:justify;">Wiesner-Hanks, M. The Wild and Hairy Gonzales Family. <em>Apparence(s)</em> (2014). at &lt;<a href="http://apparences.revues.org/1283&#038;gt" rel="nofollow">http://apparences.revues.org/1283&#038;gt</a>;</li>
+<li style="text-align:justify;">Toerien, M. &amp; Wilkinson, S. Gender and body hair: constructing the feminine woman. <em>Women’s Studies International Forum</em> <strong>26,</strong> 333–344 (2003).</li>
+</ol>
+<div id="atatags-370373-5ec0a56936345">
+        <script type="text/javascript">
+            __ATA.cmd.push(function() {
+                __ATA.initVideoSlot('atatags-370373-5ec0a56936345', {
+                    sectionId: '370373',
+                    format: 'inread'
+                });
+            });
+        </script>
+    </div>			<div id="atatags-26942-5ec0a56936463"></div>
+			
+			<script>
+				__ATA.cmd.push(function() {
+					__ATA.initDynamicSlot({
+						id: 'atatags-26942-5ec0a56936463',
+						location: 120,
+						formFactor: '001',
+						label: {
+							text: 'Publicités',
+						},
+						creative: {
+							reportAd: {
+								text: 'Report this Ad',
+							},
+							privacySettings: {
+								text: 'Paramètres de confidentialité',
+							}
+						}
+					});
+				});
+			</script><div id="jp-post-flair" class="sharedaddy sd-rating-enabled sd-like-enabled sd-sharing-enabled"><div class="sd-block sd-rating"><h3 class="sd-title">Évaluez ceci :</h3><div class="cs-rating pd-rating" id="pd_rating_holder_4277183_post_1695"></div></div><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Partagez :</h3><div class="sd-content"><ul><li class="share-print"><a rel="nofollow noopener noreferrer" data-shared="" class="share-print sd-button share-icon" href="https://antisexisme.net/2016/03/05/impuissance-06/#print" target="_blank" title="Cliquer pour imprimer"><span>Imprimer</span></a></li><li class="share-email"><a rel="nofollow noopener noreferrer" data-shared="" class="share-email sd-button share-icon" href="https://antisexisme.net/2016/03/05/impuissance-06/?share=email" target="_blank" title="Cliquez pour envoyer par e-mail à un ami"><span>E-mail</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-1695" class="share-facebook sd-button share-icon" href="https://antisexisme.net/2016/03/05/impuissance-06/?share=facebook" target="_blank" title="Cliquez pour partager sur Facebook"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-1695" class="share-twitter sd-button share-icon" href="https://antisexisme.net/2016/03/05/impuissance-06/?share=twitter" target="_blank" title="Cliquez pour partager sur Twitter"><span>Twitter</span></a></li><li class="share-reddit"><a rel="nofollow noopener noreferrer" data-shared="" class="share-reddit sd-button share-icon" href="https://antisexisme.net/2016/03/05/impuissance-06/?share=reddit" target="_blank" title="Cliquez pour partager sur Reddit"><span>Reddit</span></a></li><li class="share-skype"><a rel="nofollow noopener noreferrer" data-shared="sharing-skype-1695" class="share-skype sd-button share-icon" href="https://antisexisme.net/2016/03/05/impuissance-06/?share=skype" target="_blank" title="Cliquez pour partager sur Skype"><span>Skype</span></a></li><li class="share-linkedin"><a rel="nofollow noopener noreferrer" data-shared="sharing-linkedin-1695" class="share-linkedin sd-button share-icon" href="https://antisexisme.net/2016/03/05/impuissance-06/?share=linkedin" target="_blank" title="Cliquez pour partager sur LinkedIn"><span>LinkedIn</span></a></li><li class="share-tumblr"><a rel="nofollow noopener noreferrer" data-shared="" class="share-tumblr sd-button share-icon" href="https://antisexisme.net/2016/03/05/impuissance-06/?share=tumblr" target="_blank" title="Cliquez pour partager sur Tumblr"><span>Tumblr</span></a></li><li class="share-pinterest"><a rel="nofollow noopener noreferrer" data-shared="sharing-pinterest-1695" class="share-pinterest sd-button share-icon" href="https://antisexisme.net/2016/03/05/impuissance-06/?share=pinterest" target="_blank" title="Cliquez pour partager sur Pinterest"><span>Pinterest</span></a></li><li class="share-pocket"><a rel="nofollow noopener noreferrer" data-shared="" class="share-pocket sd-button share-icon" href="https://antisexisme.net/2016/03/05/impuissance-06/?share=pocket" target="_blank" title="Cliquez pour partager sur Pocket"><span>Pocket</span></a></li><li class="share-telegram"><a rel="nofollow noopener noreferrer" data-shared="" class="share-telegram sd-button share-icon" href="https://antisexisme.net/2016/03/05/impuissance-06/?share=telegram" target="_blank" title="Cliquez pour partager sur Telegram"><span>Telegram</span></a></li><li class="share-jetpack-whatsapp"><a rel="nofollow noopener noreferrer" data-shared="" class="share-jetpack-whatsapp sd-button share-icon" href="https://antisexisme.net/2016/03/05/impuissance-06/?share=jetpack-whatsapp" target="_blank" title="Cliquez pour partager sur WhatsApp"><span>WhatsApp</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-20930585-1695-5ec0a56939a5f' data-src='//widgets.wp.com/likes/index.html?ver=20190321#blog_id=20930585&amp;post_id=1695&amp;origin=antisexisme.wordpress.com&amp;obj_id=20930585-1695-5ec0a56939a5f&amp;domain=antisexisme.net' data-name='like-post-frame-20930585-1695-5ec0a56939a5f'><h3 class='sd-title'>WordPress:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>J&#039;aime</span></span> <span class="loading">chargement&hellip;</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div>
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	<h3 class="jp-relatedposts-headline"><em>Articles similaires</em></h3>
+</div></div>			</div><!-- .entry-content -->
+
+	<footer class="entry-meta">
+		Cette entrée, publiée dans <a href="https://antisexisme.net/category/limpuissance-comme-ideal-de-beaute/" rel="category tag">L’impuissance comme idéal de beauté</a>, est taguée <a href="https://antisexisme.net/tag/mythes-sur-le-viol/" rel="tag">mythes sur le viol</a>, <a href="https://antisexisme.net/tag/sexualite-des-femmes/" rel="tag">sexualité des femmes</a>. Bookmarquez ce <a href="https://antisexisme.net/2016/03/05/impuissance-06/" title="Permalien vers L’impuissance comme idéal de beauté des femmes – la répression des&nbsp;désirs" rel="bookmark">permalien</a>.
+			</footer><!-- .entry-meta -->
+</article><!-- #post-## -->
+
+				<nav role="navigation" id="nav-below" class="site-navigation post-navigation">
+		<h1 class="assistive-text screen-reader-text">Navigation des articles</h1>
+
+	
+		<div class="nav-previous"><a href="https://antisexisme.net/2016/02/21/impuissance-05/" rel="prev"><span class="meta-nav">&larr;</span> L’impuissance comme idéal de beauté des femmes – le&nbsp;sourire</a></div>		<div class="nav-next"><a href="https://antisexisme.net/2016/03/08/8-mars/" rel="next">8 mars 2016 <span class="meta-nav">&rarr;</span></a></div>
+	
+	</nav><!-- #nav-below -->
+	
+			
+<div id="comments" class="comments-area">
+
+			<h2 class="comments-title">
+			7 r&eacute;flexions sur &ldquo;<span>L’impuissance comme idéal de beauté des femmes – la répression des&nbsp;désirs</span>&rdquo;		</h2>
+
+		
+		<ol class="commentlist">
+				<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-3991">
+		<article id="comment-3991" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://2.gravatar.com/avatar/80f5f53d41af0817542d586e3817ebea?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn">Cha</cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2016/03/05/impuissance-06/#comment-3991"><time pubdate datetime="2016-03-05T20:08:01+01:00">
+						5 mars 2016 à 20 h 08 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_3991"></div><p>&laquo;&nbsp;la pénétration vaginale, ne provoque régulièrement un orgasme que chez une minorité de femmes (30-50%)&nbsp;&raquo; &gt; C&rsquo;est issu du rapport Hite c&rsquo;est bien ça ? Il faudrait que je me repenche dessus parce que là je suis étonnée (ça fait une bonne minorité quand même !). Très bon travail, agréable à lire sinon !</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2016/03/05/impuissance-06/?replytocom=3991#respond' data-commentid="3991" data-postid="1695" data-belowelement="comment-3991" data-respondelement="respond" aria-label='Répondre à Cha'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-antisexisme bypostauthor odd alt depth-2 highlander-comment" id="li-comment-3992">
+		<article id="comment-3992" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/c731be1005243beeefb57b3e2bc4b03c?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='https://antisexisme.wordpress.com' rel='external nofollow ugc' class='url'>antisexisme</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2016/03/05/impuissance-06/#comment-3992"><time pubdate datetime="2016-03-05T20:27:24+01:00">
+						5 mars 2016 à 20 h 27 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_3992"></div><p>Le rapport Hite avance le chiffre d&rsquo;environ 30%, mais j&rsquo;ai vu des études où ce chiffre allait jusqu&rsquo;à 50%. Je me rends compte que je n&rsquo;ai pas cité ma source pour mon ordre de grandeur (30-50%). Je me suis basée sur le livre d&rsquo;Elisabeth Lloyd, <em>The Case of the Female Orgasm: Bias in the Science of Evolution</em> (2005), qui répertorie toutes les analyses à ce sujet</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2016/03/05/impuissance-06/?replytocom=3992#respond' data-commentid="3992" data-postid="1695" data-belowelement="comment-3992" data-respondelement="respond" aria-label='Répondre à antisexisme'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-3994">
+		<article id="comment-3994" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/c422ca25f959793c718956165392df01?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn">Sarah</cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2016/03/05/impuissance-06/#comment-3994"><time pubdate datetime="2016-03-06T19:36:21+01:00">
+						6 mars 2016 à 19 h 36 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_3994"></div><p>Passionnant. L&rsquo;homme est sujet, la femme est objet.</p>
+<p>Notre société conditionne les femmes à considérer que le but le plus élevé de leur vie est d&rsquo;être objet du désir masculin. On voit à quel point le mannequinat est prestigieux, les concours de Miss font rêver les petits filles. Toute le presse &laquo;&nbsp;féminine&nbsp;&raquo; tourne uniquement autour de ce but.</p>
+<p>Dans le Deuxième Sexe, je ne sais plus à quel moment, Simone de Beauvoir observe que virilité et vitalité sont associées. Ainsi à chaque fois qu&rsquo;une femme fait preuve de vitalité, se comporte comme un être humain, on dit qu&rsquo;elle est &laquo;&nbsp;virile&nbsp;&raquo; ou masculine.</p>
+<p>Je lisais il y a peu un livre sur les Bourbons (rois de France) et l&rsquo;auteur observait que ces derniers étaient de gros mangeurs de gibier et des coureurs de jupons. Appétit sexuel et gourmandise étaient associés, de façon positive, vu qu&rsquo;on parle d&rsquo;hommes&#8230;Et ces appétits légitimaient davantage leurs statuts d&rsquo;hommes de pouvoir, de monarques.</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2016/03/05/impuissance-06/?replytocom=3994#respond' data-commentid="3994" data-postid="1695" data-belowelement="comment-3994" data-respondelement="respond" aria-label='Répondre à Sarah'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-3995">
+		<article id="comment-3995" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/07b0f7843ce13261236ca37f3ac36890?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn">rad</cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2016/03/05/impuissance-06/#comment-3995"><time pubdate datetime="2016-03-07T22:23:37+01:00">
+						7 mars 2016 à 22 h 23 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_3995"></div><p>On peut aussi rajouter qu&rsquo;il y a une énorme obsession patriarcale qui vise à retirer toute indépendance (y compris indépendance sexuelle) chez la femme: ainsi elles deviennent des individus qui doivent faire plaisir en performant des actes sexuels violents (et dont le plaisir vient de&#8230; se nuire, laisser les hommes nuire et la soumission aux désirs les plus sadiques) et suivant des normes fascistes de beauté (là encore, le plaisir proviendrait de la source de se convenir à des normes et des stéréotypes à travers un processus physiquement et psychologiquement difficile -y compris la stigmatisation par d&rsquo;autres femmes, en particulier celles qui estiment que toutes les femmes doivent s&rsquo;y soumettre sinon elles perdent de la &laquo;&nbsp;valeur&nbsp;&raquo;-), et donc elles deviennent dépendantes des fantasmes misogynes, crées par et pour les hommes. Aujourd&rsquo;hui, on confond souvent le véritable indépendantisme sexuel qui serait donc une sexualité non violente, non hétéro/pénis centré, non &laquo;&nbsp;sex doll&nbsp;&raquo; stylé,  pour le &laquo;&nbsp;choix&nbsp;&raquo; d&rsquo;y adhérer. Mais c&rsquo;est un autre débat.</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2016/03/05/impuissance-06/?replytocom=3995#respond' data-commentid="3995" data-postid="1695" data-belowelement="comment-3995" data-respondelement="respond" aria-label='Répondre à rad'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-4085">
+		<article id="comment-4085" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/03416debd735093c98ec3434c161a4e6?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn">Tchaf</cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2016/03/05/impuissance-06/#comment-4085"><time pubdate datetime="2016-03-29T16:17:27+02:00">
+						29 mars 2016 à 16 h 17 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_4085"></div><p>Sur Crumb, on pourra lire l&rsquo;interview de sa femme dans Vice, où l&rsquo;on apprend avec surprise que, comme par hasard, certaines critiques remontent à des désaccords de jeunesse:</p>
+<p><a href="http://www.vice.com/fr/read/aline-kominsky-a-besoin-de-plus-d-amour-v7n7/page/0" rel="nofollow ugc">http://www.vice.com/fr/read/aline-kominsky-a-besoin-de-plus-d-amour-v7n7/page/0</a></p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2016/03/05/impuissance-06/?replytocom=4085#respond' data-commentid="4085" data-postid="1695" data-belowelement="comment-4085" data-respondelement="respond" aria-label='Répondre à Tchaf'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='http://vaginconnaisseur.com/2017/02/20/linfantilisation-et-la-sexualisation-antisexisme/' rel='external nofollow ugc' class='url'>L’infantilisation et la sexualisation (antisexisme) &#8211; Le Vagin Connaisseur</a></p>
+	</li><!-- #comment-## -->
+	<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-5702">
+		<article id="comment-5702" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/f4388ff5e4d43db20949f7dd32be82c5?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='https://plus.google.com/113786828119398251045' rel='external nofollow ugc' class='url'>Gilberton</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2016/03/05/impuissance-06/#comment-5702"><time pubdate datetime="2018-11-06T22:24:52+01:00">
+						6 novembre 2018 à 22 h 24 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_5702"></div><p>Merci beaucoup pour cette série d&rsquo;articles très intéressants et édifiants, qui sont une excellente analyse de ces mécanismes du sexisme contemporain ! Je les pressentais depuis fort longtemps ! Et cela est venu me conforter par rapport à ce que je ressentais, au quotidien : les vêtements trop serrés, l&rsquo;obligation de sentir bon et d&rsquo;être séduisante même sans avoir envie de séduire, sous peine d&rsquo;être jugée comme moins féminine ! La dictature de la minceur, la pléthore de publicités pour les savons qui lavent le sexe féminin, les serviettes &laquo;&nbsp;hygiéniques&nbsp;&raquo;, les fuites urinaires, les crèmes &laquo;&nbsp;anti âge&nbsp;&raquo;&#8230; Nous n&rsquo;avons même pas le droit d&rsquo;être fière de notre maturité ! Les publicités ambiance &laquo;&nbsp;gibiers pour pédophiles&nbsp;&raquo; où des gamines de 12 à 16 ans posent en lingeries suggestives, maquillées pour avoir l&rsquo;air d&rsquo;être plus âgées ! D&rsquo;avoir lu vos articles a contribué à la réussite de ma libération personnelle ! Cela fait un an que j&rsquo;ai abandonné le port de soutiens gorge, cinq ans que j&rsquo;ai décidé de vivre un célibat sans enfant assumé, heureux et décomplexé. Depuis plus longtemps, j&rsquo;ai décidé de ne plus m&rsquo;arracher les poils de dessous de bras, de ne plus porter de chaussures à talons&#8230; Et depuis que j&rsquo;ai lu ces articles, j&rsquo;ose porter des vêtements larges, je ne me maquille plus tous les jours, je m&rsquo;autorise à être vraie, authentique, même dans mes relations avec autrui. Je suis entrain de réaliser une révolution personnelle ! Cela me permet d&rsquo;être carrément mieux dans ma peau et plus heureuse ! Grâce à vous, je me sens normale et saine, plus solide et déterminée ! Merci infiniment !</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2016/03/05/impuissance-06/?replytocom=5702#respond' data-commentid="5702" data-postid="1695" data-belowelement="comment-5702" data-respondelement="respond" aria-label='Répondre à Gilberton'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+		</ol><!-- .commentlist -->
+
+		
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Votre commentaire <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2016/03/05/impuissance-06/#respond" style="display:none;">Annuler la réponse.</a></small></h3><form action="https://antisexisme.net/wp-comments-post.php" method="post" id="commentform" class="comment-form"><input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="647d1c6fe3" /><input type="hidden" name="_wp_http_referer" value="/2016/03/05/impuissance-06/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Entrez votre commentaire...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Entrez votre commentaire..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+	<div id="comment-form-nascar">
+		<p>Entrez vos coordonnées ci-dessous ou cliquez sur une icône pour vous connecter:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" class="nascar-signin-link"
+                   title="Connexion avec Visiteur">
+									</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" class="nascar-signin-link"
+                   title="Connexion avec WordPress.com">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" class="nascar-signin-link"
+                   title="Connexion avec Twitter">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" class="nascar-signin-link"
+                   title="Connexion avec Facebook">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg>				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=retro&amp;forcedefault=y&amp;r=G" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">E-mail <span class="required">(obligatoire)</span> <span class="nopublish">(adresse strictement confidentielle)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Nom <span class="required">(obligatoire)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Site web</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url" value="" /></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=retro&amp;forcedefault=y&amp;r=G" alt="Logo WordPress.com" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+						<p class="comment-form-posting-as pa-wordpress">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte WordPress.com.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=retro&amp;forcedefault=y&amp;r=G" alt="Photo Google" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+						<p class="comment-form-posting-as pa-googleplus">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Google.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" x="0px" y="0px" viewBox="0 0 60 60" ><path fill="#519bf7" d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" /><path fill="#3db366" d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" /><path fill="#fdc600" d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" /><path fill="#f15b44" d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" /></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=retro&amp;forcedefault=y&amp;r=G" alt="Image Twitter" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+						<p class="comment-form-posting-as pa-twitter">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Twitter.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=retro&amp;forcedefault=y&amp;r=G" alt="Photo Facebook" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+						<p class="comment-form-posting-as pa-facebook">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Facebook.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Annuler</a></div>
+		<p>Connexion à %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Avertissez-moi par e-mail des nouveaux commentaires.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Avertissez-moi par e-mail des nouveaux articles.</label></p></div>
+
+
+
+
+<p class="form-submit"><input name="submit" type="submit" id="comment-submit" class="submit" value="Laisser un commentaire" /> <input type='hidden' name='comment_post_ID' value='1695' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="e453457dc8" /></p>
+<input type="hidden" name="genseq" value="1589683561" />
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="237"/></p></form>	</div><!-- #respond -->
+	<div style="clear: both"></div><p class="akismet_comment_form_privacy_notice">Ce site utilise Akismet pour réduire les indésirables. <a href="https://akismet.com/privacy/" target="_blank" rel="nofollow noopener">En savoir plus sur la façon dont les données de vos commentaires sont traitées</a>.</p>
+</div><!-- #comments .comments-area -->
+
+		
+		</div><!-- #content .site-content -->
+	</div><!-- #primary .content-area -->
+
+
+<div id="secondary" class="updateable widget-area" role="complementary">
+		<aside id="search-3" class="widget widget_search">	<form method="get" id="searchform" action="https://antisexisme.net/" role="search">
+		<label for="s" class="assistive-text screen-reader-text">Recherche</label>
+		<input type="text" class="field" name="s" value="" id="s" placeholder="Recherche &hellip;" />
+		<input type="submit" class="submit" name="submit" id="searchsubmit" value="Recherche" />
+	</form>
+</aside><aside id="media_image-2" class="widget widget_media_image"><h1 class="widget-title">Mon livre</h1><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="http://www.lespetitsmatins.fr/collections/en-finir-avec-la-culture-du-viol/" target="_blank" rel="noopener noreferrer"><img width="2850" height="4512" src="https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=2850" class="image wp-image-2721  attachment-2850x4512 size-2850x4512" alt="En finir avec la culture du viol" style="max-width: 100%; height: auto;" srcset="https://antisexisme.files.wordpress.com/2018/02/couv-grand.png 2850w, https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=95 95w, https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=189 189w, https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=768 768w, https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=647 647w" sizes="(max-width: 2850px) 100vw, 2850px" data-attachment-id="2721" data-permalink="https://antisexisme.net/couv-grand/" data-orig-file="https://antisexisme.files.wordpress.com/2018/02/couv-grand.png" data-orig-size="2850,4512" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="couv grand" data-image-description="" data-medium-file="https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=189" data-large-file="https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=647" /></a></aside><aside id="text-17" class="widget widget_text"><h1 class="widget-title">Pétition : Inceste, aucun consentement de 0 à 18 ans ! Aucune prescription !</h1>			<div class="textwidget"><p><a href="https://www.change.org/p/inceste-aucun-consentement-de-0-%C3%A0-18-ans-aucune-prescription" target="_blank" rel="noopener noreferrer"><img class="aligncenter wp-image-2896 size-full" style="border:0 solid #000000;" src="https://antisexisme.files.wordpress.com/2018/03/aivi-logositenew.png" alt="" width="211" height="68" /></a></p>
+<p><a href="https://www.change.org/p/inceste-aucun-consentement-de-0-%C3%A0-18-ans-aucune-prescription" target="_blank" rel="noopener noreferrer">Pétition à signer pour mieux défendre les victimes d&rsquo;inceste !</a></p>
+</div>
+		</aside>		<aside id="recent-posts-3" class="widget widget_recent_entries">		<h1 class="widget-title">Articles récents</h1>		<ul>
+											<li>
+					<a href="https://antisexisme.net/2019/07/25/enqueteepilation-analyse-multivariee-de-nos-resultats/">#EnquêteEpilation : analyse multivariée de nos&nbsp;résultats</a>
+									</li>
+											<li>
+					<a href="https://antisexisme.net/2019/06/02/enqueteepilation-les-premiers-resultats-de-notre-grande-enquete-sur-la-norme-du-glabre/">#EnquêteEpilation : les premiers résultats de notre grande enquête sur la norme du&nbsp;glabre</a>
+									</li>
+											<li>
+					<a href="https://antisexisme.net/2019/01/25/fevrier2019/">Trois rencontres publiques en février autour de mon livre ou du&nbsp;féminisme</a>
+									</li>
+											<li>
+					<a href="https://antisexisme.net/2018/04/22/viol-discipline/">Le viol comme outil&nbsp;disciplinaire</a>
+									</li>
+											<li>
+					<a href="https://antisexisme.net/2018/03/26/kleber/">Rencontre le 6 avril à Strasbourg à la librairie&nbsp;Kléber</a>
+									</li>
+					</ul>
+		</aside><aside id="text-16" class="widget widget_text"><h1 class="widget-title">Pour citer un article de ce blog</h1>			<div class="textwidget"><p><em>Articles écrits par "Antisexisme"</em> :<br />
+<span style="line-height:1.5;">Renard, Noémie (date de publication de l'article). “Titre de l'article”. Antisexisme.net. ISSN 2430-5812. Date de consultation. https://antisexisme.net/url-de-l-article</span></p>
+<p><em>Articles écrits par Blandine Mollard :</em><br />
+<span style="line-height:1.5;">Mollard, Blandine (date de publication de l'article). “Titre de l'article”. Antisexisme.net. ISSN 2430-5812. Date de consultation. https://antisexisme.net/url-de-l-article</span></p>
+</div>
+		</aside><aside id="custom_html-2" class="widget_text widget widget_custom_html"><h1 class="widget-title">Appel à don</h1><div class="textwidget custom-html-widget">Pour m'aider à maintenir le fonctionnement de ce blog (achat du nom de domaine et de ressources), vous pouvez faire un don. Merci à vous :)
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=UNZD3P7UNPW6C" target="_blank" rel="noopener noreferrer"><img src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_donate_LG.gif" alt="Buy Now Button" style="border:none;" /></a></div></aside><aside id="blog_subscription-3" class="widget widget_blog_subscription jetpack_subscription_widget"><h1 class="widget-title"><label for="subscribe-field">S&#039;inscrire par mail</label></h1>
+			<form
+				action="https://subscribe.wordpress.com"
+				method="post"
+				accept-charset="utf-8"
+				id=""
+			>
+									<p>Cliquez ici pour vous inscrire et recevoir des notifications des nouveaux posts par mail.</p>
+<p>Rejoignez 9&nbsp;319 autres abonnés</p>
+					<p>
+						<input
+							type="text"
+							name="email"
+							style="width: 95%; padding: 1px 10px"
+							placeholder="Entrez votre adresse e-mail"
+							value=""
+							id=""
+						/>
+					</p>
+				
+                <p>
+                    <input type="hidden" name="action" value="subscribe"/>
+                    <input type="hidden" name="blog_id" value="20930585"/>
+                    <input type="hidden" name="source" value="https://antisexisme.net/2016/03/05/impuissance-06/"/>
+                    <input type="hidden" name="sub-type" value="widget"/>
+                    <input type="hidden" name="redirect_fragment" value="blog_subscription-3"/>
+					<input type="hidden" id="_wpnonce" name="_wpnonce" value="9c53c40b3c" />                    <button type="submit"
+	                    		                	                >
+	                    Je m'inscris !                    </button>
+                </p>
+            </form>
+			
+</aside><aside id="archives-4" class="widget widget_archive"><h1 class="widget-title">Archives</h1>		<label class="screen-reader-text" for="archives-dropdown-4">Archives</label>
+		<select id="archives-dropdown-4" name="archive-dropdown">
+			
+			<option value="">Sélectionner un mois</option>
+				<option value='https://antisexisme.net/2019/07/'> juillet 2019 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2019/06/'> juin 2019 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2019/01/'> janvier 2019 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2018/04/'> avril 2018 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2018/03/'> mars 2018 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2018/02/'> février 2018 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2017/11/'> novembre 2017 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2017/10/'> octobre 2017 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2017/05/'> mai 2017 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2017/04/'> avril 2017 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2017/03/'> mars 2017 &nbsp;(3)</option>
+	<option value='https://antisexisme.net/2016/03/'> mars 2016 &nbsp;(4)</option>
+	<option value='https://antisexisme.net/2016/02/'> février 2016 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2016/01/'> janvier 2016 &nbsp;(3)</option>
+	<option value='https://antisexisme.net/2015/12/'> décembre 2015 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2015/10/'> octobre 2015 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2015/08/'> août 2015 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2015/02/'> février 2015 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2014/11/'> novembre 2014 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2014/05/'> mai 2014 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2014/03/'> mars 2014 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2014/01/'> janvier 2014 &nbsp;(3)</option>
+	<option value='https://antisexisme.net/2013/08/'> août 2013 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2013/06/'> juin 2013 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2013/02/'> février 2013 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2013/01/'> janvier 2013 &nbsp;(3)</option>
+	<option value='https://antisexisme.net/2012/12/'> décembre 2012 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2012/10/'> octobre 2012 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2012/09/'> septembre 2012 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2012/08/'> août 2012 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2012/07/'> juillet 2012 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2012/04/'> avril 2012 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2012/03/'> mars 2012 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2012/02/'> février 2012 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2012/01/'> janvier 2012 &nbsp;(3)</option>
+	<option value='https://antisexisme.net/2011/12/'> décembre 2011 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2011/10/'> octobre 2011 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2011/08/'> août 2011 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2011/05/'> mai 2011 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2011/04/'> avril 2011 &nbsp;(3)</option>
+	<option value='https://antisexisme.net/2011/03/'> mars 2011 &nbsp;(6)</option>
+
+		</select>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+	var dropdown = document.getElementById( "archives-dropdown-4" );
+	function onSelectChange() {
+		if ( dropdown.options[ dropdown.selectedIndex ].value !== '' ) {
+			document.location.href = this.options[ this.selectedIndex ].value;
+		}
+	}
+	dropdown.onchange = onSelectChange;
+})();
+/* ]]> */
+</script>
+
+		</aside><aside id="categories-3" class="widget widget_categories"><h1 class="widget-title">Catégories</h1>		<ul>
+				<li class="cat-item cat-item-5792121"><a href="https://antisexisme.net/category/a-lecole/">A l&#039;école</a>
+</li>
+	<li class="cat-item cat-item-116710868"><a href="https://antisexisme.net/category/attributs-du-pouvoir/">Attributs du pouvoir</a>
+</li>
+	<li class="cat-item cat-item-5722"><a href="https://antisexisme.net/category/autre/">Autre</a>
+</li>
+	<li class="cat-item cat-item-124656490"><a href="https://antisexisme.net/category/culture-du-viol/">Culture du viol</a>
+</li>
+	<li class="cat-item cat-item-18661666"><a href="https://antisexisme.net/category/en-politique/" title="L&#039;accès des femmes au pouvoir politique">En politique</a>
+</li>
+	<li class="cat-item cat-item-1259"><a href="https://antisexisme.net/category/genre/" title="Tout sur le genre">Genre</a>
+</li>
+	<li class="cat-item cat-item-595269358"><a href="https://antisexisme.net/category/interactions-sexuelles-a-coercition-graduelle/">Interactions sexuelles à coercition graduelle</a>
+</li>
+	<li class="cat-item cat-item-435629332"><a href="https://antisexisme.net/category/limpuissance-comme-ideal-de-beaute/">L’impuissance comme idéal de beauté</a>
+</li>
+	<li class="cat-item cat-item-35916"><a href="https://antisexisme.net/category/livres/" title="Livre sur le genre et le sexisme">Livres</a>
+</li>
+	<li class="cat-item cat-item-116710829"><a href="https://antisexisme.net/category/mythes-sur-le-viol-2/">Mythes sur le viol</a>
+</li>
+	<li class="cat-item cat-item-207933712"><a href="https://antisexisme.net/category/objectivation-sexuelle-2/">Objectivation sexuelle</a>
+</li>
+	<li class="cat-item cat-item-232196"><a href="https://antisexisme.net/category/sexualite/">Sexualité</a>
+</li>
+	<li class="cat-item cat-item-1149"><a href="https://antisexisme.net/category/videos/">Vidéos</a>
+</li>
+	<li class="cat-item cat-item-34956719"><a href="https://antisexisme.net/category/violence-2/">Violence</a>
+</li>
+		</ul>
+			</aside><aside id="wp_tag_cloud-3" class="widget wp_widget_tag_cloud"><h1 class="widget-title">Étiquettes</h1><div style="overflow:hidden"><a href="https://antisexisme.net/tag/8-mars/" class="tag-cloud-link tag-link-837345 tag-link-position-1" style="font-size: 15.636363636364pt;" aria-label="8 mars (5 éléments)">8 mars</a>
+<a href="https://antisexisme.net/tag/agriculture/" class="tag-cloud-link tag-link-14572 tag-link-position-2" style="font-size: 8pt;" aria-label="agriculture (1 élément)">agriculture</a>
+<a href="https://antisexisme.net/tag/andrea-dworkin/" class="tag-cloud-link tag-link-367452 tag-link-position-3" style="font-size: 14.363636363636pt;" aria-label="Andrea Dworkin (4 éléments)">Andrea Dworkin</a>
+<a href="https://antisexisme.net/tag/concepts-theoriques/" class="tag-cloud-link tag-link-14203136 tag-link-position-4" style="font-size: 17.545454545455pt;" aria-label="concepts théoriques (7 éléments)">concepts théoriques</a>
+<a href="https://antisexisme.net/tag/emploi/" class="tag-cloud-link tag-link-3407 tag-link-position-5" style="font-size: 12.772727272727pt;" aria-label="emploi (3 éléments)">emploi</a>
+<a href="https://antisexisme.net/tag/espace-et-mobilite/" class="tag-cloud-link tag-link-514045028 tag-link-position-6" style="font-size: 14.363636363636pt;" aria-label="espace et mobilité (4 éléments)">espace et mobilité</a>
+<a href="https://antisexisme.net/tag/excision/" class="tag-cloud-link tag-link-1152441 tag-link-position-7" style="font-size: 12.772727272727pt;" aria-label="excision (3 éléments)">excision</a>
+<a href="https://antisexisme.net/tag/genre-et-parole/" class="tag-cloud-link tag-link-515277567 tag-link-position-8" style="font-size: 10.863636363636pt;" aria-label="genre et parole (2 éléments)">genre et parole</a>
+<a href="https://antisexisme.net/tag/mythes-sur-le-viol/" class="tag-cloud-link tag-link-70652310 tag-link-position-9" style="font-size: 20.409090909091pt;" aria-label="mythes sur le viol (11 éléments)">mythes sur le viol</a>
+<a href="https://antisexisme.net/tag/psychotraumatismes/" class="tag-cloud-link tag-link-132437052 tag-link-position-10" style="font-size: 10.863636363636pt;" aria-label="psychotraumatismes (2 éléments)">psychotraumatismes</a>
+<a href="https://antisexisme.net/tag/sandra-bartky/" class="tag-cloud-link tag-link-3251659 tag-link-position-11" style="font-size: 10.863636363636pt;" aria-label="Sandra Bartky (2 éléments)">Sandra Bartky</a>
+<a href="https://antisexisme.net/tag/sexualite-des-femmes/" class="tag-cloud-link tag-link-16126893 tag-link-position-12" style="font-size: 15.636363636364pt;" aria-label="sexualité des femmes (5 éléments)">sexualité des femmes</a>
+<a href="https://antisexisme.net/tag/sociabilisation-genree/" class="tag-cloud-link tag-link-515262753 tag-link-position-13" style="font-size: 15.636363636364pt;" aria-label="sociabilisation genrée (5 éléments)">sociabilisation genrée</a>
+<a href="https://antisexisme.net/tag/stereotype/" class="tag-cloud-link tag-link-246647 tag-link-position-14" style="font-size: 10.863636363636pt;" aria-label="stéréotype (2 éléments)">stéréotype</a>
+<a href="https://antisexisme.net/tag/viol/" class="tag-cloud-link tag-link-1591361 tag-link-position-15" style="font-size: 22pt;" aria-label="viol (14 éléments)">viol</a></div></aside><aside id="recent-comments-3" class="widget widget_recent_comments"><h1 class="widget-title">Derniers commentaires</h1>				<table class="recentcommentsavatar" cellspacing="0" cellpadding="0" border="0">
+					<tr><td title="Maxence" class="recentcommentsavatartop" style="height:32px; width:32px;"><img alt='' src='https://2.gravatar.com/avatar/219b543d3f770fe1b7c3fab3e6c777af?s=32&#038;d=retro&#038;r=G' class='avatar avatar-32' height='32' width='32' /></td><td class="recentcommentstexttop" style="">Maxence dans <a href="https://antisexisme.net/2011/12/04/mythes-sur-les-viols-partie-1-quels-sont-ces-mythes-qui-y-adhere/#comment-7758">Mythes sur les viols. Partie 1&hellip;</a></td></tr><tr><td title="Maxence" class="recentcommentsavatarend" style="height:32px; width:32px;"><img alt='' src='https://2.gravatar.com/avatar/219b543d3f770fe1b7c3fab3e6c777af?s=32&#038;d=retro&#038;r=G' class='avatar avatar-32' height='32' width='32' /></td><td class="recentcommentstextend" style="">Maxence dans <a href="https://antisexisme.net/2011/12/04/mythes-sur-les-viols-partie-1-quels-sont-ces-mythes-qui-y-adhere/#comment-7757">Mythes sur les viols. Partie 1&hellip;</a></td></tr><tr><td title="Le pouvoir de l&rsquo;amour | Emma" class="recentcommentsavatarend" style="height:32px; width:32px;"><a href="http://emmaclit.com/2020/03/22/le-pouvoir-de-lamour/" rel="nofollow"><img alt='' src='https://emmaclitdotcom.files.wordpress.com/2017/10/cropped-avatar.png?w=32' class='avatar avatar-32' height='32' width='32' /></a></td><td class="recentcommentstextend" style=""><a href="http://emmaclit.com/2020/03/22/le-pouvoir-de-lamour/" rel="nofollow">Le pouvoir de l&hellip;</a> dans <a href="https://antisexisme.net/2016/02/21/impuissance-05/#comment-7699">L’impuissance comme idéal de b&hellip;</a></td></tr><tr><td title="Gilberton" class="recentcommentsavatarend" style="height:32px; width:32px;"><img alt='' src='https://0.gravatar.com/avatar/f4388ff5e4d43db20949f7dd32be82c5?s=32&#038;d=retro&#038;r=G' class='avatar avatar-32' height='32' width='32' /></td><td class="recentcommentstextend" style="">Gilberton dans <a href="https://antisexisme.net/2017/03/19/douleur-physique/#comment-7678">L’impuissance comme idéal de b&hellip;</a></td></tr><tr><td title="antisexisme" class="recentcommentsavatarend" style="height:32px; width:32px;"><a href="https://antisexisme.wordpress.com" rel="nofollow"><img alt='' src='https://0.gravatar.com/avatar/c731be1005243beeefb57b3e2bc4b03c?s=32&#038;d=retro&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></td><td class="recentcommentstextend" style=""><a href="https://antisexisme.wordpress.com" rel="nofollow">antisexisme</a> dans <a href="https://antisexisme.net/2017/03/19/douleur-physique/#comment-7673">L’impuissance comme idéal de b&hellip;</a></td></tr>				</table>
+				</aside><aside id="facebook-likebox-3" class="widget widget_facebook_likebox"><h1 class="widget-title"><a href="https://www.facebook.com/pages/Antisexisme-Sexisme-et-Science-Féminisme/233123106760072">Antisexisme sur Facebook</a></h1>		<div id="fb-root"></div>
+		<div class="fb-page" data-href="https://www.facebook.com/pages/Antisexisme-Sexisme-et-Science-Féminisme/233123106760072" data-width="180"  data-height="130" data-hide-cover="false" data-show-facepile="false" data-tabs="false" data-hide-cta="false" data-small-header="false">
+		<div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/pages/Antisexisme-Sexisme-et-Science-Féminisme/233123106760072"><a href="https://www.facebook.com/pages/Antisexisme-Sexisme-et-Science-Féminisme/233123106760072">Antisexisme sur Facebook</a></blockquote></div>
+		</div>
+		</aside><aside id="twitter_timeline-2" class="widget widget_twitter_timeline"><h1 class="widget-title">Suivez-moi sur Twitter</h1><a class="twitter-timeline" data-width="220" data-theme="light" data-border-color="#e8e8e8" data-tweet-limit="2" data-lang="FR" data-partner="jetpack" data-chrome="noheader nofooter noscrollbar transparent" href="https://twitter.com/@anti_sexism" href="https://twitter.com/@anti_sexism">Mes Tweets</a></aside><aside id="linkcat-137153" class="widget widget_links"><h1 class="widget-title">Autres sites</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://allodoxia.blog.lemonde.fr/" target="_blank">Allodoxia : observatoire critique de la vulgarisation</a></li>
+<li><a href="https://www.grainesdemane.fr" rel="friend" title="Site collaboratif sur l&rsquo;agriculture" target="_blank">Graines de Mane</a></li>
+<li><a href="http://nous-et-les-autres.blogspot.fr/" target="_blank">Nous et les autres</a></li>
+<li><a href="http://peuventilssouffrir.wordpress.com" target="_blank">Peuvent-ils souffrir ?</a></li>
+<li><a href="http://clementinevagne.wix.com/clementinevagne" title="Cinéaste &amp; réalisatrice" target="_blank">Site de Clémentine Vagne</a></li>
+<li><a href="http://webbbene.wordpress.com" rel="acquaintance met sibling" title="Funny french webcomics" target="_blank">Webbene</a></li>
+
+	</ul>
+</aside>
+<aside id="linkcat-515424537" class="widget widget_links"><h1 class="widget-title">Féminisme</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://www.50-50magazine.fr/" target="_blank">50/50 : le magazine de l’égalité femmes/hommes</a></li>
+<li><a href="http://www.avft.org/" target="_blank">Association européenne contre les Violences faites aux Femmes au Travail</a></li>
+<li><a href="http://cafaitgenre.wordpress.com/" title="je m’interroge, tu t’interroges, interrogez-vous" target="_blank">Ça fait genre</a></li>
+<li><a href="http://delphysyllepse.wordpress.com/" target="_blank">Blog de Christine Delphy</a></li>
+<li><a href="https://joellepalmieri.wordpress.com/" title="Féministe, antiraciste, antifasciste, post-colonialiste" target="_blank">Blog de Joelle Palmieri</a></li>
+<li><a href="http://www.breizhfemmes.fr/">Breizh Femmes</a></li>
+<li><a href="http://www.chathain.fr/" title="Une liste de livres autour du féminisme" target="_blank">Chathain</a></li>
+<li><a href="http://femcitations.wordpress.com/" title="Des citations de féministes" target="_blank">Citations féministes</a></li>
+<li><a href="http://www.cfcv.asso.fr/index.php" target="_blank">Collectif Féministe Contre le Viol</a></li>
+<li><a href="http://lacorrectionnalisationduviol.wordpress.com" target="_blank">Correctionnalisation du viol</a></li>
+<li><a href="http://decolereetdespoir.blogspot.fr/" target="_blank">De colère et d&#039;espoir</a></li>
+<li><a href="https://excursusblog.wordpress.com/" target="_blank">ex cursus</a></li>
+<li><a href="http://feministesentousgenres.blogs.nouvelobs.com/" title="entretiens et articles de chercheuses sur le genre et les sexualités" target="_blank">Féministes en tout genre</a></li>
+<li><a href="http://feminada.wordpress.com/" title="De tout et de rien sur le féminisme" target="_blank">Feminada</a></li>
+<li><a href="https://www.gazettedesfemmes.ca/" target="_blank">Gazette des femmes</a></li>
+<li><a href="http://hypathie.blogspot.com/" title="Blog féministe et anti-spéciste" target="_blank">Hypathie</a></li>
+<li><a href="http://www.ecoledugenre.com/" title="Un web documentaire pour décrypter comment les enfants apprennent à se comporter selon leur genre" target="_blank">L&#039;Ecole du genre</a></li>
+<li><a href="http://histoireparlesfemmes.wordpress.com/" title="Grandes Femmes de l’Histoire" target="_blank">L&#039;Histoire par les femmes</a></li>
+<li><a href="http://fondationdesfemmes.org/" target="_blank">La Fondation des Femmes</a></li>
+<li><a href="http://dikecourrier.wordpress.com/" title="Justice pour les femmes" target="_blank">Le courrier de Diké</a></li>
+<li><a href="http://lesaventuresdeuterpe.blogspot.com" title="A la recherche des femmes perdues dans l’espace-temps" target="_blank">Les aventures d&#039;Euterpe</a></li>
+<li><a href="http://www.lesnouvellesnews.fr/" title="Site d’actualités traitant notamment des rapports hommes-femmes" target="_blank">Les nouvelles news</a></li>
+<li><a href="http://lesquestionscomposent.fr/" title="Un blog avec notamment des analyses féministes très intéressantes" target="_blank">Les questions composent</a></li>
+<li><a href="http://blog.plafonddeverre.fr/" title="Les mécanismes du plafond de verre" target="_blank">Olympe et le plafond de verre</a></li>
+<li><a href="http://www.prostitutionetsociete.fr/" title="Site de la revue du Mouvement du Nid" target="_blank">Prostitution et Société</a></li>
+<li><a href="https://revolutionfeministe.wordpress.com/" target="_blank">Révolution féministe</a></li>
+<li><a href="https://ressourcesprostitution.wordpress.com/" target="_blank">Ressources prostitution</a></li>
+<li><a href="http://scenesdelavisquotidien.com/" title="En finir avec la masculinité" target="_blank">Scènes de l&#039;avis quotidien</a></li>
+<li><a href="http://sisyphe.org/" title="Site féministe d’information, d’analyse et d’opinion." target="_blank">Sisyphe</a></li>
+<li><a href="http://stopaudeni.com/" target="_blank">Stop au déni</a></li>
+<li><a href="https://tradfem.wordpress.com" target="_blank">Tradfem</a></li>
+<li><a href="https://womenandfictionblog.wordpress.com/" title="Ici on parle de : genre, littérature, cultures…" target="_blank">Women and fiction</a></li>
+
+	</ul>
+</aside>
+<aside id="jetpack_display_posts_widget-2" class="widget widget_jetpack_display_posts_widget"><h1 class="widget-title">Citations féministes</h1><div class="jetpack-display-remote-posts"><h4><a href="https://femcitations.wordpress.com/2016/06/23/bandage-des-pieds/" target="_blank" rel="noopener">Témoignage sur le bandage des pieds</a></h4>
+<h4><a href="https://femcitations.wordpress.com/2015/10/04/corps-esprit/" target="_blank" rel="noopener">Susan Bordo : à  propos du dualisme corps-esprit</a></h4>
+<h4><a href="https://femcitations.wordpress.com/2014/05/25/definition-du-monde-en-fonction-de-lexperience-des-hommes/" target="_blank" rel="noopener">Définition du monde en fonction de l&#8217;expérience des hommes</a></h4>
+<h4><a href="https://femcitations.wordpress.com/2014/03/20/prostitution/" target="_blank" rel="noopener">Le contrat sexuel</a></h4>
+<h4><a href="https://femcitations.wordpress.com/2014/02/26/le-contrat-sexuel/" target="_blank" rel="noopener">Le contrat sexuel</a></h4>
+</div><!-- .jetpack-display-remote-posts --></aside><aside id="custom_html-3" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><img height="1" width="1" style="display:none;" src="https://www.facebook.com/tr?id=1522418694446256&amp;ev=PageView&amp;noscript=1" />
+
+</div></aside>			<div id="atatags-286348-5ec0a5694a274"></div>
+			
+			<script>
+				__ATA.cmd.push(function() {
+					__ATA.initDynamicSlot({
+						id: 'atatags-286348-5ec0a5694a274',
+						location: 140,
+						formFactor: '003',
+						label: {
+							text: 'Publicités',
+						},
+						creative: {
+							reportAd: {
+								text: 'Report this Ad',
+							},
+							privacySettings: {
+								text: 'Paramètres de confidentialité',
+							}
+						}
+					});
+				});
+			</script></div><!-- #secondary .widget-area -->
+
+	</div><!-- #main .site-main -->
+
+	<footer id="colophon" class="site-footer" role="contentinfo">
+		<div class="site-info">
+						<a href="https://wordpress.com/?ref=footer_website" rel="nofollow">Créez un site Web ou un blog gratuitement sur WordPress.com.</a>
+			
+					</div><!-- .site-info -->
+	</footer><!-- #colophon .site-footer -->
+</div><!-- #page .hfeed .site -->
+
+<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202020y'></script>
+<script>
+var WPGroHo = {"my_hash":""};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-80f5f53d41af0817542d586e3817ebea">
+	</div>
+	<div class="grofile-hash-map-c731be1005243beeefb57b3e2bc4b03c">
+	</div>
+	<div class="grofile-hash-map-c422ca25f959793c718956165392df01">
+	</div>
+	<div class="grofile-hash-map-07b0f7843ce13261236ca37f3ac36890">
+	</div>
+	<div class="grofile-hash-map-03416debd735093c98ec3434c161a4e6">
+	</div>
+	<div class="grofile-hash-map-f4388ff5e4d43db20949f7dd32be82c5">
+	</div>
+	<div class="grofile-hash-map-219b543d3f770fe1b7c3fab3e6c777af">
+	</div>
+	</div>
+<script>
+var HighlanderComments = {"loggingInText":"Connexion\u2026","submittingText":"Publication d\u2019un Commentaire\u2026","postCommentText":"Laisser un commentaire","connectingToText":"Connexion \u00e0 %s","commentingAsText":"%1$s: Vous commentez \u00e0 l\u2019aide de votre compte %2$s.","logoutText":"Se d\u00e9connecter","loginText":"Se connecter","connectURL":"https:\/\/antisexisme.wordpress.com\/public.api\/connect\/?action=request&domain=antisexisme.net","logoutURL":"https:\/\/antisexisme.wordpress.com\/wp-login.php?action=logout&_wpnonce=f37b16d984","homeURL":"https:\/\/antisexisme.net\/","postID":"1695","gravDefault":"retro","enterACommentError":"Entrez un commentaire","enterEmailError":"Veuillez entrer votre adresse mail","invalidEmailError":"Adresse email invalide","enterAuthorError":"Veuillez entrer votre nom","gravatarFromEmail":"L\u2019image s\u2019affiche lorsque vous postez un commentaire. Cliquez pour personnaliser.","logInToExternalAccount":"Connectez-vous pour utiliser les informations li\u00e9es \u00e0 un de ces comptes:","change":"Changer","changeAccount":"Changer de compte","comment_registration":"","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1573483029j'></script>
+		<!-- CCPA [start] -->
+		<script type="text/javascript">
+			( function () {
+
+				var setupPrivacy = function() {
+
+					document.addEventListener( 'DOMContentLoaded', function() {
+
+						// Minimal Mozilla Cookie library
+						// https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie/Simple_document.cookie_framework
+						var cookieLib = window.cookieLib = {getItem:function(e){return e&&decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*"+encodeURIComponent(e).replace(/[\-\.\+\*]/g,"\\$&")+"\\s*\\=\\s*([^;]*).*$)|^.*$"),"$1"))||null},setItem:function(e,o,n,t,r,i){if(!e||/^(?:expires|max\-age|path|domain|secure)$/i.test(e))return!1;var c="";if(n)switch(n.constructor){case Number:c=n===1/0?"; expires=Fri, 31 Dec 9999 23:59:59 GMT":"; max-age="+n;break;case String:c="; expires="+n;break;case Date:c="; expires="+n.toUTCString()}return"rootDomain"!==r&&".rootDomain"!==r||(r=(".rootDomain"===r?".":"")+document.location.hostname.split(".").slice(-2).join(".")),document.cookie=encodeURIComponent(e)+"="+encodeURIComponent(o)+c+(r?"; domain="+r:"")+(t?"; path="+t:"")+(i?"; secure":""),!0}};
+
+						var setDefaultOptInCookie = function() {
+							var value = '1YNN';
+							var domain = '.wordpress.com' === location.hostname.slice( -14 ) ? '.rootDomain' : location.hostname;
+							cookieLib.setItem( 'usprivacy', value, 365 * 24 * 60 * 60, '/', domain );
+						};
+
+						var setCcpaAppliesCookie = function( value ) {
+							var domain = '.wordpress.com' === location.hostname.slice( -14 ) ? '.rootDomain' : location.hostname;
+							cookieLib.setItem( 'ccpa_applies', value, 24 * 60 * 60, '/', domain );
+						}
+
+						var maybeCallDoNotSellCallback = function() {
+							if ( 'function' === typeof window.doNotSellCallback ) {
+								return window.doNotSellCallback();
+							}
+
+							return false;
+						}
+
+						var usprivacyCookie = cookieLib.getItem( 'usprivacy' );
+
+						if ( null !== usprivacyCookie ) {
+							maybeCallDoNotSellCallback();
+							return;
+						}
+
+						var ccpaCookie = cookieLib.getItem( 'ccpa_applies' );
+
+						if ( null === ccpaCookie ) {
+
+							var request = new XMLHttpRequest();
+							request.open( 'GET', 'https://public-api.wordpress.com/geo/', true );
+
+							request.onreadystatechange = function () {
+								if ( 4 === this.readyState ) {
+									if ( 200 === this.status ) {
+
+										var data = JSON.parse( this.response );
+										var ccpa_applies = data['region'] && data['region'].toLowerCase() === 'california';
+
+										setCcpaAppliesCookie( ccpa_applies );
+
+										if ( ccpa_applies ) {
+											if ( maybeCallDoNotSellCallback() ) {
+												setDefaultOptInCookie();
+											}
+										}
+									} else {
+										setCcpaAppliesCookie( true );
+										if ( maybeCallDoNotSellCallback() ) {
+											setDefaultOptInCookie();
+										}
+									}
+								}
+							};
+
+							request.send();
+						} else {
+							if ( ccpaCookie === 'true' ) {
+								if ( maybeCallDoNotSellCallback() ) {
+									setDefaultOptInCookie();
+								}
+							}
+						}
+					} );
+				};
+
+				if ( window.defQueue && defQueue.isLOHP && defQueue.isLOHP === 2020 ) {
+					defQueue.items.push( setupPrivacy );
+				} else {
+					setupPrivacy();
+				}
+
+			} )();
+		</script>
+
+		<!-- CCPA [end] -->
+					<script type="text/javascript">
+			( function( $ ) {
+				$( document.body ).on( 'post-load', function () {
+					if ( typeof __ATA.insertInlineAds === 'function' ) {
+						__ATA.insertInlineAds();
+					}
+				} );
+			} )( jQuery );
+			</script>
+	<div id="carousel-reblog-box">
+		<form action="#" name="carousel-reblog">
+			<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Ajoutez votre grain de sel personnel... (facultatif)"></textarea>
+			<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Publier sur</label>
+			<select name="carousel-reblog-to-blog-id" id="carousel-reblog-to-blog-id">
+						</select>
+
+			<div class="submit">
+				<span class="canceltext"><a href="#" class="cancel">Annuler</a></span>
+				<input type="submit" name="carousel-reblog-submit" class="button" id="carousel-reblog-submit" value="Reblog Article" />
+				<input type="hidden" id="carousel-reblog-blog-id" value="20930585" />
+				<input type="hidden" id="carousel-reblog-blog-url" value="https://antisexisme.net" />
+				<input type="hidden" id="carousel-reblog-blog-title" value="Sexisme et Sciences humaines -  Féminisme" />
+				<input type="hidden" id="carousel-reblog-post-url" value="" />
+				<input type="hidden" id="carousel-reblog-post-title" value="" />
+			</div>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="9cf7ca1c98" /><input type="hidden" name="_wp_http_referer" value="/2016/03/05/impuissance-06/" />		</form>
+
+		<div class="arrow"></div>
+	</div>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/antisexisme.net\/2016\/03\/05\/impuissance-06\/":1695};
+	</script>
+					<div id="sharing_email" style="display: none;">
+		<form action="/2016/03/05/impuissance-06/" method="post">
+			<label for="target_email">Envoyer à l'adresse e-mail</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Votre nom</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Votre adresse e-mail</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="Ce champ est utilisé pour la validation du formulaire et ne doit pas être changé" />
+			
+			<div
+				class="g-recaptcha"
+				data-sitekey="6LcmyE0UAAAAALID28yVNg7pFCodGaArJzHitez_"
+				data-theme="light"
+				data-type="image"
+				data-tabindex="0"></div>
+			<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?hl=fr" async></script>
+			
+			<img style="float: right; display: none" class="loading" src="https://s0.wp.com/wp-content/mu-plugins/post-flair/sharing/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Envoyer un e-mail" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel" role="button">Annuler</a>
+
+			<div class="errors errors-1" style="display: none;">
+				L'article n'a pas été envoyé - Vérifiez vos adresses e-mail&nbsp;!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				La vérification e-mail a échoué, veuillez réessayer			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Impossible de partager les articles de votre blog par e-mail.			</div>
+		</form>
+	</div>
+		<div class="widget widget_eu_cookie_law_widget"><div
+	class="hide-on-button ads-active"
+	data-hide-timeout="30"
+	data-consent-expiration="180"
+	id="eu-cookie-law"
+>
+	<form method="post">
+		<input type="submit" value="Fermer et accepter" class="accept" />
+
+		Confidentialité &amp; Cookies : Ce site utilise des cookies. En continuant à utiliser ce site, vous acceptez leur utilisation.<br />
+Pour en savoir davantage, y compris comment contrôler les cookies, voir :
+		<a href="https://automattic.com/cookies" >
+			Politique relative aux cookies		</a>
+ </form>
+</div>
+</div><link rel='stylesheet' id='all-css-0-3' href='https://s0.wp.com/_static/??/wp-content/mu-plugins/carousel/jetpack-carousel.css,/wp-content/mu-plugins/widgets/wordpress-post-widget/style.css?m=1563361695j&cssminify=yes' type='text/css' media='all' />
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyFUEFSwzAM/BCOCKSQHpi+JdhqKkeR3chOCK+vC+mhwAwnabSr3ZVgicYGSSgJvILDmSzGj8rrA9xDMWgaUbXr8Q/UnzNO61Yqkplw+ZfmMcXODmZCpc9fqmM2kXNPosA0oEJZynjqxDFONzKJ5ewKeA1PmmBGcWG6QjHweiTmaiT5qX0TPmZmo5TQoKNE0m+WUD/W7evzy74BwUW/Ur5zsMPmUvpCLR/R77HZ7j2Mb/Wu3T+1TVM3/gLyqYDg'></script>
+<script type='text/javascript'>
+( 'fetch' in window ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?m=1573572739h&#038;ver=3.0.0"></scr' + 'ipt>' );( document.contains ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?m=1540208548h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?m=1585663916h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?m=1585663916h&#038;ver=3.6.4"></scr' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?m=1550600082h&#038;ver=3.0.12"></scr' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?m=1540208548h&#038;ver=2.0.2"></scr' + 'ipt>' );
+( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-url.min.7490158b.js?m=1588209800h&#038;ver=3.6.4"></scr' + 'ipt>' );
+( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-dom-rect.7e21c103.js?m=1588209800h&#038;ver=3.42.0"></scr' + 'ipt>' );
+</script>
+<script src='https://s0.wp.com/wp-includes/js/dist/vendor/lodash.min.js?m=1573572739h&#038;ver=4.17.15'></script>
+<script>
+window.lodash = _.noConflict();
+</script>
+<script>
+var jpfbembed = {"appid":"249643311490","locale":"fr_FR"};
+</script>
+<script>
+var actionbardata = {"siteID":"20930585","siteName":"Sexisme et Sciences humaines -  F\u00e9minisme","siteURL":"https:\/\/antisexisme.net","icon":"<img alt='' src='https:\/\/secure.gravatar.com\/blavatar\/e776828ff2f5e62ad07e68335ddca469?s=50&d=https%3A%2F%2Fs0.wp.com%2Fi%2Flogo%2Fwpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/misty-lake","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fantisexisme.net%2F2016%2F03%2F05%2Fimpuissance-06%2F&signup_flow=account&domain=antisexisme.net","themeURL":"","xhrURL":"https:\/\/antisexisme.net\/wp-admin\/admin-ajax.php","nonce":"08de5007a5","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"9c53c40b3c\" \/>","referer":"https:\/\/antisexisme.net\/2016\/03\/05\/impuissance-06\/","canFollow":"1","feedID":"13273473","statusMessage":"","customizeLink":"https:\/\/antisexisme.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fantisexisme.wordpress.com%2F2016%2F03%2F05%2Fimpuissance-06%2F","postID":"1695","shortlink":"https:\/\/wp.me\/p1pP05-rl","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/antisexisme.net\/1695","statsLink":"https:\/\/wordpress.com\/stats\/post\/1695\/antisexisme.net","i18n":{"view":"Afficher le site","follow":"Suivre","following":"Abonn\u00e9","edit":"Modifier","login":"Connexion","signup":"S'inscrire","customize":"Personnaliser","report":"Signaler ce contenu","themeInfo":"Obtenir le th\u00e8me: Misty Lake","shortlink":"Copier shortlink","copied":"Copi\u00e9","followedText":"Les nouveaux articles de ce site appara\u00eetront d\u00e9sormais dans votre <a href=\"https:\/\/wordpress.com\/\">Lecteur<\/a>","foldBar":"R\u00e9duire cette barre","unfoldBar":"\u00c9tendre cette barre","editSubs":"G\u00e9rer les abonnements","viewReader":"Voir le site dans le Lecteur","viewReadPost":"Voir l\u2019article dans le Lecteur","subscribe":"M\u2019inscrire","enterEmail":"Entrez votre adresse e-mail","followers":"Rejoignez 9&nbsp;319 autres abonn\u00e9s","alreadyUser":"Vous disposez d\u00e9j\u00e0 d\u02bcun compte WordPress ? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fantisexisme.net%2F2016%2F03%2F05%2Fimpuissance-06%2F&signup_flow=account&domain=antisexisme.net\">Connectez-vous maintenant.<\/a>","stats":"Statistiques"}};
+</script>
+<script>
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"fr","ajaxurl":"https:\/\/antisexisme.net\/wp-admin\/admin-ajax.php","nonce":"e1e93fd6ec","display_exif":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Commentaire","post_comment":"Laisser un commentaire","write_comment":"\u00c9crire un commentaire...","loading_comments":"Chargement des commentaires\u2026","download_original":"Afficher dans sa taille r\u00e9elle <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>.","no_comment_text":"Veuillez ajouter du contenu \u00e0 votre commentaire.","no_comment_email":"Merci de renseigner une adresse e-mail.","no_comment_author":"Merci de renseigner votre nom.","comment_post_error":"Une erreur s'est produite \u00e0 la publication de votre commentaire. Veuillez nous en excuser, et r\u00e9essayer dans quelques instants.","comment_approved":"Votre commentaire a \u00e9t\u00e9 approuv\u00e9.","comment_unapproved":"Votre commentaire est en attente de validation.","camera":"Appareil photo","aperture":"Ouverture","shutter_speed":"Vitesse d'obturation","focal_length":"Focale","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/antisexisme.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fantisexisme.net%2F2016%2F03%2F05%2Fimpuissance-06%2F","blog_id":"20930585","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">E-mail (requis)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Nom (requis)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Site web<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogu\u00e9","reblog_add_thoughts":"Ajoutez votre grain de sel personnel... (facultatif)","reblogging":"Reblogging...","post_reblog":"Relais d\u2019article","stats_query_args":"blog=20930585&v=wpcom&tz=2&user_id=0&subd=antisexisme","is_public":"1","reblog_enabled":""};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyVUu1OwzAMfCFSr6xA+YF4FJQmXnGbj5I4K3t7PI2OaZoq9ivOnc8+O4F5UiYGxsAwudJTyNAXuXaYemESQlttqg10hZwFqtsAFCx+V0N+gPvENnqVUNvDeoVdcU5lYlRoiSn06sRAvanbl+3zawMB5zxpM6rORTNmsJQZjE6xZHQnUO0J5+sW/IkeM0ylAy+Sg3J6RBgyZK+lqcdQFgkF44qVZGFN9EKxmJ/cofIUruv6ohb3M9keOQMWYeNIKD1mYPST04xX+EqdAfk4IXyIEdhpg52oFPoO7X9VPBMzJsXk0VHAFZ22MpXqdAKvs2gkUnGPKdFxBWfszgqcxEteExmmGI6ic3Rr/3n6W/klPnwVTIffo7rMutFr+R7LjtQCrPkbKXtktZU/fHqImLzkv/u3+ql9fWybpm6GH7u4NNM='></script>
+<script>
+<!--//--><![CDATA[//><!--
+PDRTJS_settings_4277183_post_1695={"id":4277183,"unique_id":"wp-post-1695","title":"L%E2%80%99impuissance%20comme%20id%C3%A9al%20de%20beaut%C3%A9%20des%20femmes%20%E2%80%93%20la%20r%C3%A9pression%20des%26nbsp%3Bd%C3%A9sirs","permalink":"https:\/\/antisexisme.net\/2016\/03\/05\/impuissance-06\/","item_id":"_post_1695"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_4277183_post_1695 == 'undefined' ){PDRTJS_4277183_post_1695 = new PDRTJS_RATING( PDRTJS_settings_4277183_post_1695 );}}PDRTJS_settings_5500324_comm_3991={"id":5500324,"unique_id":"wp-comment-3991","title":"%26quot%3Bla%20pntration%20vaginale%2C%20ne%20provoque%20rgulirement%20un%20orgasme%20que%20chez%20une%20minorit%20de%20femmes%20%2830-50%25%29%26quot%3B%20%26gt%3B%20C%26%23039%3Best%20issu%20du%20rapport%20Hite%20c%26%23039%3Best%20bien%20a%20%3F%20Il%20faudrait%20que%20je%20me%20repenche%20dessus%20parce%20que%20...","permalink":"https:\/\/antisexisme.net\/2016\/03\/05\/impuissance-06\/#comment-3991","item_id":"_comm_3991"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_3991 == 'undefined' ){PDRTJS_5500324_comm_3991 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_3991 );}}PDRTJS_settings_5500324_comm_3992={"id":5500324,"unique_id":"wp-comment-3992","title":"Le%20rapport%20Hite%20avance%20le%20chiffre%20d%26%23039%3Benviron%2030%25%2C%20mais%20j%26%23039%3Bai%20vu%20des%20tudes%20o%20ce%20chiffre%20allait%20jusqu%26%23039%3B%2050%25.%20Je%20me%20rends%20compte%20que%20je%20n%26%23039%3Bai%20pas%20cit%20ma%20source%20pour%20mon%20ordre%20de%20grandeur%20%2830-50%25%29.%20Je%20me...","permalink":"https:\/\/antisexisme.net\/2016\/03\/05\/impuissance-06\/#comment-3992","item_id":"_comm_3992"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_3992 == 'undefined' ){PDRTJS_5500324_comm_3992 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_3992 );}}PDRTJS_settings_5500324_comm_3994={"id":5500324,"unique_id":"wp-comment-3994","title":"Passionnant.%20L%26%23039%3Bhomme%20est%20sujet%2C%20la%20femme%20est%20objet.Notre%20socit%20conditionne%20les%20femmes%20%20considrer%20que%20le%20but%20le%20plus%20lev%20de%20leur%20vie%20est%20d%26%23039%3Btre%20objet%20du%20dsir%20masculin.%20On%20voit%20%20quel%20point%20le%20manneq...","permalink":"https:\/\/antisexisme.net\/2016\/03\/05\/impuissance-06\/#comment-3994","item_id":"_comm_3994"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_3994 == 'undefined' ){PDRTJS_5500324_comm_3994 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_3994 );}}PDRTJS_settings_5500324_comm_3995={"id":5500324,"unique_id":"wp-comment-3995","title":"On%20peut%20aussi%20rajouter%20qu%26%23039%3Bil%20y%20a%20une%20norme%20obsession%20patriarcale%20qui%20vise%20%20retirer%20toute%20indpendance%20%28y%20compris%20indpendance%20sexuelle%29%20chez%20la%20femme%3A%20ainsi%20elles%20deviennent%20des%20individus%20qui%20doive...","permalink":"https:\/\/antisexisme.net\/2016\/03\/05\/impuissance-06\/#comment-3995","item_id":"_comm_3995"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_3995 == 'undefined' ){PDRTJS_5500324_comm_3995 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_3995 );}}PDRTJS_settings_5500324_comm_4085={"id":5500324,"unique_id":"wp-comment-4085","title":"Sur%20Crumb%2C%20on%20pourra%20lire%20l%26%23039%3Binterview%20de%20sa%20femme%20dans%20Vice%2C%20o%20l%26%23039%3Bon%20apprend%20avec%20surprise%20que%2C%20comme%20par%20hasard%2C%20certaines%20critiques%20remontent%20%20des%20dsaccords%20de%20jeunesse%3Ahttp%3A%2F%2Fwww.vice.com%2Ffr%2Fre...","permalink":"https:\/\/antisexisme.net\/2016\/03\/05\/impuissance-06\/#comment-4085","item_id":"_comm_4085"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_4085 == 'undefined' ){PDRTJS_5500324_comm_4085 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_4085 );}}PDRTJS_settings_5500324_comm_5702={"id":5500324,"unique_id":"wp-comment-5702","title":"Merci%20beaucoup%20pour%20cette%20srie%20d%26%23039%3Barticles%20trs%20intressants%20et%20difiants%2C%20qui%20sont%20une%20excellente%20analyse%20de%20ces%20mcanismes%20du%20sexisme%20contemporain%20%21%20Je%20les%20pressentais%20depuis%20fort%20longtemps%20%21%20Et%20cel...","permalink":"https:\/\/antisexisme.net\/2016\/03\/05\/impuissance-06\/#comment-5702","item_id":"_comm_5702"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_5702 == 'undefined' ){PDRTJS_5500324_comm_5702 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_5702 );}}
+//--><!]]>
+</script>
+<script src='https://polldaddy.com/js/rating/rating.js?ver=wpcom'></script>
+<script>
+var sharing_js_options = {"lang":"fr","counts":"1","is_stats_active":"1"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/mu-plugins/post-flair/sharing/sharing.js?m=1564557884h'></script>
+<script type='text/javascript'>
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-skype', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomskype', 'menubar=1,resizable=1,width=305,height=665' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-linkedin', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomlinkedin', 'menubar=1,resizable=1,width=580,height=450' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-tumblr', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtumblr', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-pocket', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcompocket', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-telegram', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtelegram', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<iframe src='https://widgets.wp.com/likes/master.html?ver=20190321#ver=20190321&amp;lang=fr' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+		<div id='likes-other-gravatars'><div class="likes-text"><span>%d</span> blogueurs aiment cette page :</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+<script src="//stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'20930585','blog_tz':'2','user_lang':'fr','blog_lang':'fr','user_id':'0'}]);
+_stq.push(['view', {'blog':'20930585','v':'wpcom','tz':'2','user_id':'0','post':'1695','subd':'antisexisme'}]);
+_stq.push(['extra', {'crypt':'UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdWtpP0NsWnVkPS9sL0ViLndld3AyMWJHeTE5ZSxINVtddjVqRTBJV245LXpdQkUtbHJPVEZWamFZUy9XaVpCMlprM3ladDMxTDJfaDRCTCZkLlAvVyV2bmRVVE02b1hkJkpmenk4Uy1ya0NZeS0vTmFac3ppLkJVXXFUQy0xMSw/SEJ3TFJEVVstODN+P2lPfjJybnlFMy1oeG0veVg/Qk8zX1Q9fDF6MD9VWmolRyZ3dThUalg2TmdiX35aV042LDROV1YwWEJ2VD9kMXZ0MXh2ZFNqYkZbbW9yME9OcDR2alhUQVRZenFaRllbcn5uVEw/VWt1YXRuLCZpZTl+QVZbVTNPNU49NVhzQ2NuX1ZaaEo4aDAlbFlFbmlTWXZJaEFRN1hCP2JYQUI9bX54ZzlycGUweUhIS35IYmpfbU9KWixURGtIbDZqdF92fH53'}]);
+_stq.push([ 'clickTrackerInit', '20930585', '1695' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>

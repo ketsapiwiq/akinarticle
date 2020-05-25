@@ -1,0 +1,75 @@
+---
+title: "Prison ferme dans l’affaire Bagelstein : « Il fallait faire un exemple, punir des jeunes, marquer les esprits»"
+url: http://alter1fo.com/bagelstein-interview-etudiant-sexisme-soutien-103335
+keywords: jai,punir,esprits,fallait,quil,jugement,laffaire,tribunal,marquer,exemple,prison,jeunes,sébastien,rennes,faire,ferme,fils
+---
+---------------------
+
+#### ![intro](http://alter1fo.com/wp-content/uploads/2016/07/intro.jpg){.aligncenter .size-full .wp-image-103410 width="971" height="270"}
+
+---------------------
+
+**Bonjour et bienvenue dans le monde merveilleux de Bagelstein ! Cette enseigne qui multiplie les franchises à travers la France -- plus de 100 nouvelles ouvertures prévues en [2016](https://www.observatoiredelafranchise.fr/indiscretions-actualite/BAGEL-CORNER-la-franchise-bagel-corner-vise-les-30-unites-a-fin-2017-62708.htm) -- vend ses bagels à grands renforts de publicités souvent vulgaires et nauséabondes sur les femmes et les personnes homosexuelles. Un cynisme marketing érigé en stratégie que les fondateurs de la marque assument et revendiquent pleinement. Tandis qu'à Paris, la mairie dénonce ce marketing aux propos « [sexistes et homophobes](https://www.neonmag.fr/polemique-bagelstein-la-com-sexiste-et-homophobe-qui-ne-passe-pas-474011.html) », quatre étudiants venus faire les curieux sur ces textes affichés partout dans cette sandwicherie ont été condamnés à de la prison ferme par le tribunal correctionnel de Rennes suite à une altercation avec le gérant du magasin. Prison ferme pour « violences en réunion lors de manifestation sur la voie publique ». Prison ferme pour des jeunes hommes aux casiers judiciaires vierges. Prison ferme comme « ferme-ta-gueule, circulez-y-a-rien-à-voir ! ».**\
+**A la veille d'une conférence de presse organisée par le comité de soutien « 4 jeunes en prison », nous avons discuté avec Sébastien, le père d'A., un des jeunes incarcérés ayant écopé de la plus lourde peine (3 mois). L'homme que nous avons rencontré est combatif avec une volonté farouche de rétablir certaines vérités et de dénoncer le contexte dans lequel les sanctions ont été prises.**
+
+**Entre conviction et émotion. Interview.**
+
+[![\[08 Juin 2016\] - Un jour, une photo\... Bagels partout, justice nulle part !](https://c2.staticflickr.com/8/7524/27474354481_c1dc5a5153_b.jpg){width="1024" height="710"}](https://www.flickr.com/photos/alter1fo/27474354481/in/dateposted-public/ "[08 Juin 2016] - Un jour, une photo... Bagels partout, justice nulle part !")
+
+**► Alter1fo : Comment êtes-vous mis au courant de l'arrestation de votre fils ?**
+
+Sébastien (Père d'A.) : « Le 26 mai en fin de journée mon ex-femme m'informe par sms que mon fils est en garde à vue pour faits de violence. J'arrive à me renseigner et j'apprends que mon fils fait partie d'un des 4 jeunes impliqués dans l'agression d'un commerçant rennais. Je me rencarde auprès de la police et on me laisse croire que cela été très violent, raison de leur arrestation. A ce moment-là, j'hallucine, je ne peux y croire. Mon fils fait du théâtre et est apprécié de tout le monde, il ne supporte pas l'injustice depuis tout petit. Je passe alors une nuit difficile et compliquée... »
+
+**► Pour les 4 jeunes hommes, ce sera alors la comparution immédiate dès le lendemain.**
+
+Sébastien : « La connaissance que j'ai de par mes expériences professionnelles est qu'une comparution immédiate pouvait être une bonne chose dans cette situation. Il y a eu un emballement la veille, le traitement particulier de Ouest-France qui parlait d'activistes, la comparution immédiate aurait pu permettre de discerner le vrai du faux rapidement. Je décide dans un premier temps de ne pas aller au tribunal parce que je ne voulais pas marquer dans la mémoire de mon fils ma présence à son procès, ni marquer dans la mienne sa présence dans le box des accusés. Cela peut être traumatisant. Le jour du jugement, le 27 mai, mon ex-femme m'envoie un sms pour me dire que le procureur requiert 8 mois de prison dont 4 mois fermes et là, je suis de nouveau abasourdi. Habituellement dans ce genre d'affaires, les procureurs sont assez timorés car ils savent que le dossier reste fragile et que les juges ne suivent pas forcement leur réquisitoire. Je décide alors d'aller au tribunal, n'ayant aucun doute sur la tournure des choses, le Ministre de l'Intérieur avait promis la fermeté, nous y étions, et mon fils allait en faire les frais. »
+
+![OF1](http://alter1fo.com/wp-content/uploads/2016/07/OF1.jpg){.wp-image-103340 .size-full width="586" height="98"}
+
+**► Vous arrivez alors dans la salle d'audience. Qu'est-ce que vous découvrez à l'intérieur ? Comment est l'ambiance ?**
+
+Sébastien : « J'arrive au tribunal et j'ai l'impression d'assister à une pièce de théâtre : 4 jeunes au demeurant sympathiques sont dans le box, comme des criminels, une victime qui va bien, qui semble presque gênée de les voir tous les 4 ici pour si peu de choses, un juge dans une caricature du juge avec à ses côtés deux assesseures, j'ai l'impression d'assister au jugement de dangereux criminels. L'avocate de mon fils fait une plaidoirie brillante bien qu'elle ait été commise d'office, elle replace l'affaire dans la réalité, à savoir une simple action de curiosité pour une sandwicherie dont la communication défraye la chronique au niveau national, un patron qui s'énerve, une situation qui dégénère un peu. Le juge balaye ses arguments et affirme qu'il s'agit d'une action liée aux manifestations, nuisant aux commerçants du centre-ville qui en ont ras le bol, de manifestations qui usent tout le monde... J'avais l'impression d'entendre le procureur parler. »
+
+**► Le verdict tombe : prison ferme pour tout le monde...**
+
+Sébastien : « Le jugement est rendu, trois mois de prison ferme avec mandat de dépôt pour mon garçon. Une sévérité hallucinante. Je n'ai pu m'empêcher d'applaudir le juge tellement c'était ridicule, en criant « Bravo !», c'était physique, un réflexe non contrôlé, comme on applaudit un très bon acteur au théâtre. Je me suis fait sortir de la salle. J'étais très en colère, c'est impossible de ressentir autre chose. Humainement parlant, c'était très dur. Avant d'assister à l'audience j'étais même en train de me dire « j'espère qu'il ne va pas y avoir une relaxe, personne ne comprendrait, qu'il va y avoir un rappel à la loi ». En arrivant à l'audience j'ai compris ce qui se passait, il fallait faire un exemple, punir des jeunes, marquer les esprits. Il faut imaginer la violence du choc pour un parent. A. et ses copains sont restés calmes, ils ne semblaient presque pas surpris, moi je ne suis pas certain que j'aurais pu rester calme. Et encore, j'étais à ce moment loin de connaitre la vérité sur cette affaire. Ils sont partis dans la foulée, embarqués comme de dangereux criminels. Tout le monde a été choqué, même les avocats. C'était une ambiance bizarre, entre incompréhension et larmes... Et grande colère pour moi, car j'ai une certaine connaissance des fonctionnements de mon pays, et voir ces 4 jeunes partir en prison était aussi grotesque que choquant. »
+
+**► Comment expliquez-vous ce jugement plus que sévère de la part de Nicolas Léger, vice-président du tribunal et président de la juridiction interrégionale spécialisée ? Même le gérant de la sandwicherie semble abasourdi devant les proportions prises par cette affaire (voir ses propos dans les inrocks[\[\*\]](http://www.lesinrocks.com/2016/06/04/actualite/sexisme-dune-marque-a-envoye-etudiants-prison-11834586/)) ?**
+
+(**NDLR :** Pour rappel, Nicolas Léger fut le président du tribunal correctionnel de Rennes lors du procès des deux policiers poursuivis pour non-assistance à personne en danger suite à la mort par électrocution de deux adolescents à Clichy-Sous-Bois. Procès qui s'est terminé par une relaxe pénale définitive pour les policiers.)
+
+Sébastien : « Le procureur a instruit le dossier sous l'angle de « Violence en réunion dans le cadre d'une manifestation » et l'ensemble du jugement a été rendu sous cet axe-là, ce qui permet d'aggraver les peines. Sachant que Bernard Cazeneuve s'était déplacé à Rennes quelques temps auparavant, je pense que le procureur a fait plaisir au ministre et que le juge s'est fait aussi plaisir. Bref, c'était un contexte totalement pourri. »
+
+(**NDLR :** Lors de sa visite à Rennes le 15 mai, Bernard Cazeneuve avait déclaré : « Il y aura d'autres convocations devant les tribunaux. Je le dis, ici à Rennes la fermeté sera totale**[\[\*\]](http://www.lemonde.fr/societe/article/2016/05/15/a-rennes-cazeneuve-promet-la-fermete-du-gouvernement-face-aux-activistes-violents_4920015_3224.html) **»****)
+
+**► Vous diriez aussi que médiatiquement l'affaire a été biaisée ?**
+
+Sébastien : « Le traitement par Ouest-France a été lamentable. Il fallait communiquer de manière intelligente en disant simplement la vérité sur ce qu'il s'était vraiment passé. Non, mon fils et ses camarades ne sont ni des activistes ni des féministes et cela n'a rien à voir avec la manifestation contre la loi travail. Oui, il y a eu une altercation, mais très mineure contrairement à ce qui a été dit et écrit dans ce journal. C'est d'une triste banalité. Va-t-on en prison pour des faits aussi petits ? Chacun sait que non. Mais voilà, à force de montrer des images de dégradations et des photos de casses prononcer une peine de prison apparaît juste comme 'normale'. C'est ce qu'on appelle les biais cognitifs, les esprits sont préparés afin de ne pas risquer de soulèvement. »
+
+**\*\*\*\***
+
+**► Très vite, des manifestations de soutien ont lieu que ce soit dans la rue, sur Facebook ou à travers des communiqués comme [ici](http://www.4jeunesenprison.com/2016/06/09/communique-en-faveur-de-quentin-l-ufr-de-philosophie-de-rennes-2). Une [pétition](https://secure.avaaz.org/fr/petition/Le_president_de_la_republique_Nous_demandons_lamnistie_pour_nos_4_camarades/?wwyvZcb) a même déjà recueilli presque 8000 signatures. On doit se sentir moins seul du coup dans votre combat, non ?**
+
+Sébastien : « C'est énorme. Je peux à peine en parler tellement cela fait sens. Cet élan qui entoure cette cause-là est noble et je trouve qu'il y a une superbe énergie. Il y a comme une forme de communion qui donne du sens à beaucoup de chose. Je fais un parallèle avec le mouvement social Nuit Debout et malgré tout l'amateurisme qu'il y a derrière, c'est à dire que l'on se rend compte qu'avec peu de moyens, on peut faire beaucoup et qu'à plusieurs, on peut être puissant. Tu m'étonnes que cela ne plaise pas ! »
+
+**► Depuis le 27 mai, date du jugement, avez-vous revu votre fils ?**
+
+Sébastien : « Je l'ai vu hier pour la première fois (NDLR : interview réalisée le 23/06/2016). J'attendais dans un parloir où les deux côtés possèdent une porte, je ne savais pas de quel côté il allait arriver, puis j'ai d'abord vu une main qui me faisait signe. C'était lui. On s'est alors pris dans nos bras et j'ai eu besoin de lui dire que je l'aimais et que je ne le jugeais pas avant toute chose. Il va assez bien, il lit et écrit beaucoup. Lui n'a pas changé mais mon regard, oh que oui ! Je le vois dorénavant comme un homme avec une grande force et une grande dignité, force que je ne crois même pas posséder moi-même. Notre entrevue n'a pas duré longtemps... une heure qui est passée très vite, avec tant de choses à nous dire. Je ne voulais pas m'éterniser, car sa place n'est pas en prison, et ce n'est pas en prison qu'on devrait voir son fils lorsque ce dernier n'a rien fait qui justifie cela, mais je voulais dans le même temps rester près de lui le plus longtemps possible. En tout cas, on a de la chance qu'il le vive assez bien. Vous imaginez ce que cela peut créer pour un jeune de 19 ans d'être en prison pour de mauvaises raisons ? De savoir qu'il est privé de liberté parce que le pouvoir politique a voulu faire un exemple ? Vous imaginez comment cela peut être violent ? ».
+
+**► Demain vendredi 24 juin se tiendra une conférence de presse du comité de soutien qui vient de se créer. Pouvez-vous nous en parler ?**
+
+Sébastien : « Plusieurs personnes ont souhaité créer un comité de soutien aux quatre jeunes incarcérés. Il s'agit d'hommes et de femmes issus de la sphère privée et des acteurs associatifs, militants, certains engagés en politique. Ils n'acceptent pas qu'on en soit arrivé à mettre en prison à Rennes des jeunes pour ces raisons et se sont engagés pour faire valoir leur point de vue, sensibiliser le public à cette situation, et soutenir les 4 jeunes ainsi que leurs proches. J'approuve pleinement cette démarche engagée et citoyenne.
+
+Pour ce qui me concerne, avec d'autres personnes en France nous réfléchissons à la constitution d'un collectif qui va bien au-delà de la seule affaire Bagelstein. En effet, il existe ce même genre de problématique à Amiens, Toulouse, Lille, Nantes où l'État instrumentalise ses outils comme la justice par exemple pour museler l'expression citoyenne lorsque celle-ci représente un danger face à l'équilibre du système établi. Attention, nous ne sommes pas ici dans la théorie du complot : ce sont des situations qui existent, que nous connaissons. Globalement, ce collectif pourrait être national afin que la parole de nos jeunes et d'autres puisse être entendue pour ce qu'elle est vraiment et non plus bridée par certains pouvoirs. Je ne suis pas militant habitué des mouvements sociaux, mais là la coupe est pleine.
+
+Avant cette affaire je voyais les mouvements sociaux comme des perturbations pénibles, je comprenais les déploiements des forces de police, je comprenais presque qu'il y ait des manifestants/casseurs blessés. Après tout ils cassaient. Ils bloquaient tout et trop de choses. Depuis l'affaire Bagelstein et l'obligation dans laquelle j'ai été de faire mon enquête pour connaitre la réalité, je découvre des situations très inquiétantes. J'ai été choqué de ce que j'ai pu apprendre, de la manipulation de certains journaux. Nous recueillons des faits précis, souvent très éloignés de la réalité, montés en épingle pour satisfaire des stratégies politiques. Le point de départ est la situation de ces 4 jeunes, dont mon fils. Nous découvrons qu'ailleurs, en France, il peut aussi se passer la même chose. Ce n'est pas acceptable. Il est temps d'ouvrir les yeux avant que la situation ne s'aggrave plus encore. J'ai conscience désormais qu'en disant tout cela je prends un risque pour ma vie et ma liberté. Mais quel citoyen français ou européen serais-je si, maintenant que j'ai découvert ces réalités, je me taisais de peur de finir en prison ou d'être sanctionné par la justice, simplement pour avoir dit la vérité ?. »
+
+![Capture-3](http://alter1fo.com/wp-content/uploads/2016/07/Capture-3.jpg){.wp-image-103392 .size-full width="1081" height="401"}
+
+\*\*\*
+
+![](http://alter1fo.com/wp-content/uploads/2014/04/plusd1fo.jpg){.aligncenter width="542" height="163"}
+
+#### Comité de soutien [http://www.4jeunesenprison.com/](https://www.mediapart.fr/journal/france/100616/l-incarceration-nouvelle-politique-penale-anti-manifestants?onglet=full)
+
+ 

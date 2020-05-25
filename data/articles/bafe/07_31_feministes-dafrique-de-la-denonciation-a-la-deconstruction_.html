@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="https://afrofeminista.com/xmlrpc.php">
+
+<title>Féministes d&rsquo;Afrique : de la dénonciation à la déconstruction?</title>
+<script type="text/javascript">
+  WebFontConfig = {"google":{"families":["Alegreya:i:latin,latin-ext","Alegreya:r,i,b,bi:latin,latin-ext"]}};
+  (function() {
+    var wf = document.createElement('script');
+    wf.src = 'https://s0.wp.com/wp-content/plugins/custom-fonts/js/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+	})();
+</script><style id="jetpack-custom-fonts-css">.wf-active body, .wf-active button, .wf-active input, .wf-active select, .wf-active textarea{font-family:"Alegreya",serif}.wf-active h1, .wf-active h2, .wf-active h3, .wf-active h4, .wf-active h5, .wf-active h6{font-weight:400;font-family:"Alegreya",serif;font-style:italic}.wf-active h1{font-size:54.6px;font-style:italic;font-weight:400}.wf-active h2{font-size:33.8px;font-style:italic;font-weight:400}.wf-active h3{font-size:26px;font-style:italic;font-weight:400}.wf-active h4{font-size:20.8px;font-style:italic;font-weight:400}.wf-active h5{font-family:"Alegreya",serif;font-size:18.2px;font-style:italic;font-weight:400}.wf-active h6{font-family:"Alegreya",serif;font-size:15.6px;font-style:italic;font-weight:400}.wf-active .widget-title{font-size:18.2px;font-style:italic;font-weight:400}.wf-active .site-title{font-size:65px;font-style:italic;font-weight:400}.wf-active .site-description{font-family:"Alegreya",serif;font-size:18.2px;font-style:italic;font-weight:400}.wf-active .entry-category{font-size:18.2px;font-weight:400;font-style:italic}.wf-active .entry-title, .wf-active .page-title{font-size:39px;font-style:italic;font-weight:400}@media screen and (max-width: 782px){.wf-active h1{font-size:29.9px;font-style:italic;font-weight:400}}@media screen and (max-width: 782px){.wf-active h2{font-size:26px;font-style:italic;font-weight:400}}@media screen and (max-width: 782px){.wf-active h3{font-size:22.1px;font-style:italic;font-weight:400}}@media screen and (max-width: 782px){.wf-active h4{font-size:19.5px;font-style:italic;font-weight:400}}@media screen and (max-width: 782px){.wf-active h5{font-size:16.9px;font-style:italic;font-weight:400}}@media screen and (max-width: 782px){.wf-active h6{font-size:14.3px;font-style:italic;font-weight:400}}@media screen and (max-width: 782px){.wf-active .site-title{font-size:39px;font-style:italic;font-weight:400}}</style>
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9hZnJvZmVtaW5pc3RhLmNvbQ%3D%3D"
+		+ "&wpcomid=98365122"
+		+ "&time=1589683516";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//afrofeministadotcom.wordpress.com' />
+<link rel='dns-prefetch' href='//wordpress.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.pubmine.com' />
+<link rel='dns-prefetch' href='//x.bidswitch.net' />
+<link rel='dns-prefetch' href='//static.criteo.net' />
+<link rel='dns-prefetch' href='//ib.adnxs.com' />
+<link rel='dns-prefetch' href='//aax.amazon-adsystem.com' />
+<link rel='dns-prefetch' href='//bidder.criteo.com' />
+<link rel='dns-prefetch' href='//cas.criteo.com' />
+<link rel='dns-prefetch' href='//gum.criteo.com' />
+<link rel='dns-prefetch' href='//ads.pubmatic.com' />
+<link rel='dns-prefetch' href='//gads.pubmatic.com' />
+<link rel='dns-prefetch' href='//tpc.googlesyndication.com' />
+<link rel='dns-prefetch' href='//ad.doubleclick.net' />
+<link rel='dns-prefetch' href='//googleads.g.doubleclick.net' />
+<link rel='dns-prefetch' href='//www.googletagservices.com' />
+<link rel='dns-prefetch' href='//cdn.switchadhub.com' />
+<link rel='dns-prefetch' href='//delivery.g.switchadhub.com' />
+<link rel='dns-prefetch' href='//delivery.swid.switchadhub.com' />
+<link rel='dns-prefetch' href='//a.teads.tv' />
+<link rel='dns-prefetch' href='//prebid.media.net' />
+<link rel='dns-prefetch' href='//adserver-us.adtech.advertising.com' />
+<link rel='dns-prefetch' href='//fastlane.rubiconproject.com' />
+<link rel='dns-prefetch' href='//prebid-server.rubiconproject.com' />
+<link rel='dns-prefetch' href='//hb-api.omnitagjs.com' />
+<link rel='dns-prefetch' href='//mtrx.go.sonobi.com' />
+<link rel='dns-prefetch' href='//apex.go.sonobi.com' />
+<link rel='dns-prefetch' href='//u.openx.net' />
+<link rel="alternate" type="application/rss+xml" title=" &raquo; Flux" href="https://afrofeminista.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title=" &raquo; Flux des commentaires" href="https://afrofeminista.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title=" &raquo; Féministes d&rsquo;Afrique : de la dénonciation à la&nbsp;déconstruction? Flux des commentaires" href="https://afrofeminista.com/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s0.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.1"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s0.wp.com/_static/??-eJytk9tSwyAQhl9IQtNGTS8cnwWSLdJyGhbM5O0lIa2xzUTH9o5d9tvDD0s7RxprAphAdSRORSEN0s41VhPUUkF/ZRUN4hOdYVxZ8Q1a37IWqVCWM3UTOyvhQbEALXEWw5W1hil5AqRHCI41JzJaN+HnWBGTycGLdOOB1sWm2FAepWqHpkece+Z7iqFX8Ic0IzWrznobAxFetv9N4VmQRuAv+CEqRVAGINDKAZjkoOWmrF93L/uKGuhwzDgVaCWen2aQNLvJp4Tu4VUa5m1EUA+q4TxoGfUFXZemsVMrZbHdpefNHU1OcresWTyVkubpcv5r79qHHb5e8mvHwhChUykGCnQKW8PyznGe1EAkZ03CRwJX9yNRQ+q8GTQF/vRkVFJjg0w0Xg73/f7p6uDtwlS5aeoipyY2CljaxeWHmc0hwIDPLS4eB/Zdv5XP9X5bV1VZHb8ABVTJsQ==?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<link crossorigin="anonymous" rel='stylesheet' id='nucleare-fonts-css'  href='https://fonts.googleapis.com/css?family=Roboto%3A400%2C700%2C700italic%2C400italic%7CPlayfair+Display%3A400%2C400italic%2C700italic%2C700&#038;subset=latin%2Clatin-ext' media='all' />
+<link rel='stylesheet' id='all-css-2-1' href='https://s0.wp.com/_static/??-eJyVkMFOAzEMRH8IYxVKe0J8izf1BrdOHK0dLfx9Uy7ApdreZjx+Y8m4NkhWg2tgfHJhx9YnrD0p08KY3HEeOdDKboWfx+AJ/0ClQ9OepTqucsocjmENmvlQHt+6CeE+UrsIg9KKwaUpBT9QMFPiaTSAymWIr+2kWxJSKHwSAhmLG65mNlBLFGL1n4FZSZZ76MKTWh4y//z2196gj/K+e3s5Hl73u/3hfAV4G5rv?cssminify=yes' type='text/css' media='all' />
+<link rel='stylesheet' id='print-css-3-1' href='https://s0.wp.com/wp-content/mu-plugins/global-print/global-print.css?m=1465851035h&cssminify=yes' type='text/css' media='print' />
+<link rel='stylesheet' id='all-css-4-1' href='https://s0.wp.com/_static/??/wp-content/mu-plugins/actionbar/actionbar.css,/wp-content/themes/pub/nucleare/inc/style-wpcom.css?m=1560469195j&cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-6-1' href='https://s0.wp.com/_static/??-eJxti0EKgCAQAD+ULWGJHaK3mJgaqyut0fejQ4eo0zAwA2cRlnJ1uUI6RMHDx8xQiKtY0cQdOJg9Zv+wtcwN/F9MNhoUSJ7e8plqcMkxhB480mLwDuY0dYMepVJaqu0CZXY33g==?cssminify=yes' type='text/css' media='all' />
+<script>
+var related_posts_js_options = {"post_heading":"h4"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJx9jMEOwjAMQ3+IruzABgfEt4wtVKmatDSNpv39ggSXHZAsWbae7dfikOekC4iPprdC3b7WRTn5f4AjDHVq0BHyD54zN+D2YSk/MYFTgToF6+zolY8cqStJA7L4CsnOFleytEOy1YPu/WXsb+dxGK5xB1+BRFU='></script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://afrofeministadotcom.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s0.wp.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Middle Fingers Up!' href='https://afrofeminista.com/2016/07/22/middle-fingers-up/' />
+<link rel='next' title='&laquo;&nbsp;Oreo&nbsp;&raquo;de Fran Ross' href='https://afrofeminista.com/2016/12/16/litterature-oreode-fran-ross/' />
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://afrofeminista.com/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/" />
+<link rel='shortlink' href='https://wp.me/p6EJge-Mf' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fafrofeminista.com%2F2016%2F07%2F31%2Ffeministes-dafrique-de-la-denonciation-a-la-deconstruction%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fafrofeminista.com%2F2016%2F07%2F31%2Ffeministes-dafrique-de-la-denonciation-a-la-deconstruction%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Féministes d&rsquo;Afrique : de la dénonciation à la déconstruction?" />
+<meta property="og:url" content="https://afrofeminista.com/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/" />
+<meta property="og:description" content="&nbsp; Le féminisme en Afrique est un sujet de discussion qui déchaîne les,passions sur le continent et dans la diaspora. Comme j’en parlais dans un précédent article intitulé « Le féminisme a-t-il…" />
+<meta property="article:published_time" content="2016-07-30T23:55:01+00:00" />
+<meta property="article:modified_time" content="2017-01-15T17:24:13+00:00" />
+<meta property="og:image" content="https://afrofeministadotcom.files.wordpress.com/2016/07/mama_africa_by_olgasher-d38pz9k-5859.jpg" />
+<meta property="og:image:width" content="905" />
+<meta property="og:image:height" content="905" />
+<meta property="og:locale" content="fr_FR" />
+<meta name="twitter:site" content="@wordpressdotcom" />
+<meta name="twitter:text:title" content="Féministes d&rsquo;Afrique : de la dénonciation à la&nbsp;déconstruction?" />
+<meta name="twitter:image" content="https://afrofeministadotcom.files.wordpress.com/2016/07/african-feminism.jpg?w=640" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://s0.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="icon" type="image/x-icon" href="https://s0.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="apple-touch-icon" href="https://s0.wp.com/i/webclip.png" />
+<link rel='openid.server' href='https://afrofeminista.com/?openidserver=1' />
+<link rel='openid.delegate' href='https://afrofeminista.com/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://afrofeminista.com/osd.xml" title="" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="WordPress.com" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Problématiques de genre en Afrique et dans la diaspora." /><meta name="msapplication-task" content="name=Souscrire;action-uri=https://afrofeminista.com/feed/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Inscrivez-vous pour créer un blog gratuitement;action-uri=http://wordpress.com/signup/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Assistance WordPress.com;action-uri=http://support.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Forums WordPress.com;action-uri=http://forums.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="description" content="&nbsp; Le féminisme en Afrique est un sujet de discussion qui déchaîne les,passions sur le continent et dans la diaspora. Comme j’en parlais dans un précédent article intitulé « Le féminisme a-t-il sa raison d’être en Afrique subsaharienne ? » nombreux sont ceux qui considèrent que le féminisme est un instrument néocolonial contraire aux croyances religieuses&hellip;" />
+		<script type="text/javascript">
+
+			window.doNotSellCallback = function() {
+
+				var linkElements = [
+					'a[href="https://wordpress.com/?ref=footer_blog"]',
+					'a[href="https://wordpress.com/?ref=footer_website"]',
+					'a[href="https://wordpress.com/?ref=vertical_footer"]',
+					'a[href^="https://wordpress.com/?ref=footer_segment_"]',
+				].join(',');
+
+				var dnsLink = document.createElement( 'a' );
+				dnsLink.href = 'https://wordpress.com/advertising-program-optout';
+				dnsLink.classList.add( 'do-not-sell-link' );
+				dnsLink.rel = 'nofollow';
+				dnsLink.style.marginLeft = '0.5em';
+				dnsLink.textContent = 'Ne pas vendre mes informations personnelles.';
+
+				var creditLinks = document.querySelectorAll( linkElements );
+
+				if ( 0 === creditLinks.length ) {
+					return false;
+				}
+
+				Array.prototype.forEach.call( creditLinks, function( el ) {
+					el.insertAdjacentElement( 'afterend', dnsLink );
+				});
+
+				return true;
+			};
+
+		</script>
+				<script type="text/javascript">
+		function __ATA_CC() {var v = document.cookie.match('(^|;) ?personalized-ads-consent=([^;]*)(;|$)');return v ? 1 : 0;}
+		var __ATA_PP = { pt: 1, ht: 0, tn: 'nucleare', amp: false, siteid: 8982, blogid: 98365122, consent: __ATA_CC() };
+		var __ATA = __ATA || {};
+		__ATA.cmd = __ATA.cmd || [];
+		__ATA.criteo = __ATA.criteo || {};
+		__ATA.criteo.cmd = __ATA.criteo.cmd || [];
+		</script>
+		<script type="text/javascript">
+		(function(){var g=Date.now||function(){return+new Date};function h(a,b){a:{for(var c=a.length,d="string"==typeof a?a.split(""):a,e=0;e<c;e++)if(e in d&&b.call(void 0,d[e],e,a)){b=e;break a}b=-1}return 0>b?null:"string"==typeof a?a.charAt(b):a[b]};function k(a,b,c){c=null!=c?"="+encodeURIComponent(String(c)):"";if(b+=c){c=a.indexOf("#");0>c&&(c=a.length);var d=a.indexOf("?");if(0>d||d>c){d=c;var e=""}else e=a.substring(d+1,c);a=[a.substr(0,d),e,a.substr(c)];c=a[1];a[1]=b?c?c+"&"+b:b:c;a=a[0]+(a[1]?"?"+a[1]:"")+a[2]}return a};var l=0;function m(a,b){var c=document.createElement("script");c.src=a;c.onload=function(){b&&b(void 0)};c.onerror=function(){b("error")};a=document.getElementsByTagName("head");var d;a&&0!==a.length?d=a[0]:d=document.documentElement;d.appendChild(c)}function n(a){var b=void 0===b?document.cookie:b;return(b=h(b.split("; "),function(c){return-1!=c.indexOf(a+"=")}))?b.split("=")[1]:""}function p(a){return"string"==typeof a&&0<a.length}
+		function r(a,b,c){b=void 0===b?"":b;c=void 0===c?".":c;var d=[];Object.keys(a).forEach(function(e){var f=a[e],q=typeof f;"object"==q&&null!=f||"function"==q?d.push(r(f,b+e+c)):null!==f&&void 0!==f&&(e=encodeURIComponent(b+e),d.push(e+"="+encodeURIComponent(f)))});return d.filter(p).join("&")}function t(a,b){a||((window.__ATA||{}).config=b.c,m(b.url))}var u=Math.floor(1E13*Math.random()),v=window.__ATA||{};window.__ATA=v;v.rid=u;v.createdAt=g();var w=window.__ATA||{},x="s.pubmine.com";
+		w&&w.serverDomain&&(x=w.serverDomain);var y="//"+x+"/conf",z=window.top===window,A=window.__ATA_PP&&window.__ATA_PP.gdpr_applies,B="boolean"===typeof A?Number(A):null,C=window.__ATA_PP||null,D=z?document.referrer?document.referrer:null:null,E=z?window.location.href:document.referrer?document.referrer:null,F,G=n("__ATA_tuuid");F=G?G:null;var H=window.innerWidth+"x"+window.innerHeight,I=n("usprivacy"),J=r({gdpr:B,pp:C,rid:u,src:D,ref:E,tuuid:F,vp:H,us_privacy:I?I:null},"",".");
+		(function(a){var b=void 0===b?"cb":b;l++;var c="callback__"+g().toString(36)+"_"+l.toString(36);a=k(a,b,c);window[c]=function(d){t(void 0,d)};m(a,function(d){d&&t(d)})})(y+"?"+J);}).call(this);
+		</script><link rel="amphtml" href="https://afrofeminista.com/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/amp/"><style type="text/css" id="custom-colors-css">#wp-calendar>caption,.menu-toggle:focus,.menu-toggle:hover{color:#fff}.social-links .top-search{color:#fff}.widget.wp_widget_tag_cloud a,.more-link,.button,button,input[type="button"],input[type="reset"],input[type="submit"],#infinite-handle span{color:#fff}.social-links .top-search:hover,.button:hover,button:hover,input[type="button"]:hover,input[type="reset"]:hover,input[type="submit"]:hover,#infinite-handle span:hover,.button:focus,button:focus,input[type="button"]:focus,input[type="reset"]:focus,input[type="submit"]:focus,#infinite-handle span:focus,.button:active,button:active,input[type="button"]:active,input[type="reset"]:active,input[type="submit"]:active,#infinite-handle span:active{color:#fff}.widget,.widget a:hover,.widget a:focus,.widget a:active{color:#5e5e5e}.site-title a:hover,.site-title a:focus,.site-title a:active{color:#5e5e5e}.site-info,.site-description{color:#5e5e5e}body{background-color:#f0f0f0}.widget.wp_widget_tag_cloud a,.more-link,.button,button,input[type="button"],input[type="reset"],input[type="submit"],#infinite-handle span{background-color:#b65252}#wp-calendar>caption{background-color:#b65252}.social-links .top-search{background-color:#b65252}#wp-calendar tbody td#today,blockquote,.main-navigation div>ul>li>ul>li:first-child{border-color:#b65252}.main-navigation div>ul>li>ul::before{border-bottom-color:#b65252}.entry-featured-image,.menu-toggle:focus,.menu-toggle:hover{background-color:#b65252}.widget a,.site-info a,.site-title a{color:#a84646}.main-navigation a{color:#b54e4e}.social-links a:hover{color:#b54e4e}.entry-title a:hover,.entry-title a:focus,a{color:#b54e4e}</style>
+<script type="text/javascript">
+	window.google_analytics_uacct = "UA-52447-2";
+</script>
+
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-52447-2']);
+	_gaq.push(['_gat._anonymizeIp']);
+	_gaq.push(['_setDomainName', 'none']);
+	_gaq.push(['_setAllowLinker', true]);
+	_gaq.push(['_initData']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	})();
+</script>
+</head>
+
+<body class="post-template-default single single-post postid-2991 single-format-standard customizer-styles-applied highlander-enabled highlander-light">
+<div id="page" class="hfeed site">
+	<a class="skip-link screen-reader-text" href="#content">Aller au contenu principal</a>
+
+	<div class="navigation-bar clear">
+		<div class="navigation-block">
+			<nav id="site-navigation" class="main-navigation" role="navigation">
+				<button class="menu-toggle" aria-controls="menu" aria-expanded="false"><i class="fa fa-bars"></i><span class="screen-reader-text">Open Menu</span></button>
+				<div class="menu-menu-principal-container"><ul id="menu-menu-principal" class="menu"><li id="menu-item-2476" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-2476"><a href="https://afrofeminista.com/">ACCUEIL</a></li>
+<li id="menu-item-2477" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-2477"><a href="https://afrofeminista.com/a-propos/">A PROPOS</a></li>
+<li id="menu-item-2479" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-2479"><a href="https://afrofeminista.com/category/afrique/">AFRIQUE</a></li>
+<li id="menu-item-3675" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3675"><a href="https://afrofeminista.com/category/blackherstorymonth/">BLACKHERSTORYMONTH</a></li>
+<li id="menu-item-3122" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3122"><a href="https://afrofeminista.com/category/classement/">CLASSEMENT</a></li>
+<li id="menu-item-2480" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2480"><a href="https://afrofeminista.com/category/diaspora/">DIASPORA</a></li>
+<li id="menu-item-3123" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3123"><a href="https://afrofeminista.com/category/documentaire/">DOCUMENTAIRE</a></li>
+<li id="menu-item-2481" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2481"><a href="https://afrofeminista.com/category/histoire/">HISTOIRE</a></li>
+<li id="menu-item-3124" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3124"><a href="https://afrofeminista.com/category/interview/">INTERVIEW</a></li>
+<li id="menu-item-4215" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4215"><a href="https://afrofeminista.com/interventions/">MES CONFERENCES</a></li>
+<li id="menu-item-2469" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2469"><a href="https://afrofeminista.com/category/litterature/">LITTERATURE</a></li>
+<li id="menu-item-3959" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3959"><a href="https://afrofeminista.com/category/musique/">MUSIQUE</a></li>
+<li id="menu-item-4218" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4218"><a href="https://afrofeminista.com/presse/">ON PARLE DE MOI</a></li>
+<li id="menu-item-4224" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4224"><a href="https://afrofeminista.com/publications-contributions/">PUBLICATIONS</a></li>
+<li id="menu-item-2482" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2482"><a href="https://afrofeminista.com/category/reflexions/">REFLEXIONS</a></li>
+<li id="menu-item-2483" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2483"><a href="https://afrofeminista.com/category/sante/">SANTÉ</a></li>
+<li id="menu-item-4316" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-4316"><a href="https://afrofeminista.com/category/sexualite/">SEXUALITE</a></li>
+<li id="menu-item-3043" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-3043"><a href="https://afrofeminista.com/category/temoignages/">TEMOIGNAGES</a></li>
+<li id="menu-item-2478" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2478"><a href="https://afrofeminista.com/contact-2/">CONTACT</a></li>
+</ul></div>			</nav><!-- #site-navigation -->
+
+							<div class="social-links">
+					
+											<div class="open-search top-search"><i class="fa fa-search"><span class="screen-reader-text">Recherche</span></i></div>
+									</div>
+					</div>
+	</div>
+
+			<div class="search-full">
+			<div class="search-container">
+				<form role="search" method="get" class="search-form" action="https://afrofeminista.com/">
+				<label>
+					<span class="screen-reader-text">Rechercher&nbsp;:</span>
+					<input type="search" class="search-field" placeholder="Recherche&hellip;" value="" name="s" />
+				</label>
+				<input type="submit" class="search-submit" value="Rechercher" />
+			</form>				<span><a class="close-search"><i class="fa fa-close space-right"></i>Fermer</a></span>
+			</div>
+		</div>
+	
+	<header id="masthead" class="site-header" role="banner">
+		<div class="site-branding">
+							<a href="https://afrofeminista.com/" rel="home">
+					<img src="https://afrofeministadotcom.files.wordpress.com/2016/08/13682006_10154298386763116_1323275670_o-2.jpg" width="4372" height="959" alt="" class="custom-header">
+				</a>
+									<h1 class="site-title"><a href="https://afrofeminista.com/" rel="home"></a></h1>
+			<h2 class="site-description">Problématiques de genre en Afrique et dans la diaspora.</h2>
+		</div><!-- .site-branding -->
+	</header><!-- #masthead -->
+
+	<div id="content" class="site-content">
+
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+		
+			<article id="post-2991" class="post-2991 post type-post status-publish format-standard hentry category-afrique category-temoignages">
+		<header class="entry-header">
+		<div class="entry-category">
+			<span class="cat-links"><a href="https://afrofeminista.com/category/afrique/" rel="category tag">AFRIQUE</a>/<a href="https://afrofeminista.com/category/temoignages/" rel="category tag">TEMOIGNAGES</a></span>		</div><!-- .entry-meta -->
+		<h1 class="entry-title">Féministes d&rsquo;Afrique : de la dénonciation à la&nbsp;déconstruction?</h1>		<div class="entry-meta small-part">
+			<span class="posted-on"><i class="fa fa-clock-o space-left-right"></i><a href="https://afrofeminista.com/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/" rel="bookmark"><time class="entry-date published" datetime="2016-07-31T00:55:01+01:00">31 juillet 2016</time><time class="updated" datetime="2017-01-15T18:24:13+01:00">15 janvier 2017</time></a></span><span class="byline"> <i class="fa fa-user space-left-right"></i><span class="author vcard"><a class="url fn n" href="https://afrofeminista.com/author/ayeesha800/">Aïchatou O.</a></span></span><span class="comments-link"><i class="fa fa-comments-o space-left-right"></i><a href="https://afrofeminista.com/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/#comments">3 commentaires</a></span>		</div><!-- .entry-meta -->
+	</header><!-- .entry-header -->
+
+	<div class="entry-content">
+					<p>&nbsp;</p>
+<p><img data-attachment-id="2993" data-permalink="https://afrofeminista.com/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/mama_africa_by_olgasher-d38pz9k-5859/" data-orig-file="https://afrofeministadotcom.files.wordpress.com/2016/07/mama_africa_by_olgasher-d38pz9k-5859.jpg" data-orig-size="905,905" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="mama_africa_by_olgasher-d38pz9k-5859" data-image-description="" data-medium-file="https://afrofeministadotcom.files.wordpress.com/2016/07/mama_africa_by_olgasher-d38pz9k-5859.jpg?w=300" data-large-file="https://afrofeministadotcom.files.wordpress.com/2016/07/mama_africa_by_olgasher-d38pz9k-5859.jpg?w=809" class="alignnone  wp-image-2993" src="https://afrofeministadotcom.files.wordpress.com/2016/07/mama_africa_by_olgasher-d38pz9k-5859.jpg?w=578&#038;h=578" alt="mama_africa_by_olgasher-d38pz9k-5859" width="578" height="578" srcset="https://afrofeministadotcom.files.wordpress.com/2016/07/mama_africa_by_olgasher-d38pz9k-5859.jpg?w=578&amp;h=578 578w, https://afrofeministadotcom.files.wordpress.com/2016/07/mama_africa_by_olgasher-d38pz9k-5859.jpg?w=150&amp;h=150 150w, https://afrofeministadotcom.files.wordpress.com/2016/07/mama_africa_by_olgasher-d38pz9k-5859.jpg?w=300&amp;h=300 300w, https://afrofeministadotcom.files.wordpress.com/2016/07/mama_africa_by_olgasher-d38pz9k-5859.jpg?w=768&amp;h=768 768w, https://afrofeministadotcom.files.wordpress.com/2016/07/mama_africa_by_olgasher-d38pz9k-5859.jpg 905w" sizes="(max-width: 578px) 100vw, 578px" /></p>
+<p><em>Le féminisme en Afrique est un sujet de discussion qui déchaîne les,passions sur le continent et dans la diaspora. Comme j’en parlais dans un précédent article intitulé <a href="https://afrofeminista.com/2014/07/20/le-feminisme-a-t-il-sa-raison-detre-en-afrique-subsaharienne/">« Le féminisme a-t-il sa raison d’être en Afrique subsaharienne ? » </a>nombreux sont ceux qui considèrent que le féminisme est un instrument néocolonial contraire aux croyances religieuses et traditionnelles africaines, tandis que d’autres estiment que c’est une nécessité au regard des nombreuses oppressions et discriminations subies par les femmes africaines. </em><span id="more-2991"></span></p>
+<p><em>Dans ce débat, force est de constater que les voix les plus audibles sont souvent soit, celles des hommes africains qui considèrent que les femmes africaines n’ont pas besoin de s’émanciper et qu’elles s’accommodent parfaitement de leur sort, soit celles de féministes occidentales qui portent un regard maternaliste et misérabiliste sur les femmes africaines qu’elles veulent « sauver » de leur condition et tentent de leur imposer une vision universaliste du féminisme très éloignée des réalités des sociétés africaines.</em></p>
+<p><em>Quid des femmes africaines ? Parce que je pense qu’il est d’important que les principales concernées s’expriment sur un sujet qui les touchent directement et qu’il est primordial de changer la narration concernant la femme africaine, j’ai décidé de donner la parole à de jeunes féministes africaines afin de leur permettre de s’exprimer sur les défis féministes en Afrique. Qu’est-ce qu’être féministe en Afrique ? Comment la lutte pour les droits des femmes s’articule t-elle dans des sociétés qui sont profondément ancrées dans des traditions et coutumes qui oppressent et discriminent les femmes ? Comment les femmes d’Afrique peuvent arracher leur émancipation sans renier leur identité culturelle ? C’est à toutes ces questions que ces jeunes femmes ont répondu sans tabou et sans concession.</em></p>
+<p>Elles sont jeunes, africaines, bloggeuses, activistes…et féministes ! Dans un continent où le mot « féminisme » souffre d’une connotation péjorative, leur combat pour l’émancipation et l’égalité des droits pour les femmes n’est pas chose aisée. Mais face au constat alarmant des diverses discriminations subies par leurs compatriotes, le choix du féminisme s’est imposé à elles.</p>
+<p>En effet, malgré des avancées notables ces dernières années, les femmes africaines sont encore victimes de nombreuses oppressions qui entravent leur émancipation comme en témoigne Jama, 25 ans, chargée de la gestion des connaissances dans une organisation internationale en Gambie: <strong><em>« En raison des normes sociales, les femmes gambiennes n’ont pas encore atteint leur potentiel et ont très peu d’opportunités pour y arriver. La discrimination de genre et les violences faites aux femmes entravent leur émancipation et limitent les réussites que celles-ci pourraient accomplir peu importe d’ailleurs le secteur dans lequel elles choisissent de s’engager. Les femmes ont encore peu accès aux postes hautement qualifiés, leur représentation à l’Assemblée Nationale reste faible et les filles restent victimes de pratiques culturelles rétrogrades telles que le mariage précoce et les mutilations génitales féminines. Il y a encore un long chemin à parcourir pour changer les perceptions de genre au niveau des communautés, ce qui est la cause profonde de ces entraves à la liberté des femmes. Cependant, il y a eu des progrès récemment notamment l’interdiction et la criminalisation des mutilations génitales féminines en Gambie, qui a pour objectif de protéger des milliers de jeunes filles de cette pratique. Il est nécessaire d’œuvrer pour  l’abandon volontaire de cette pratique mais le dispositif législatif est déjà un pas dans la bonne direction. »</em></strong></p>
+<p>Cet état de fait n’est pas uniquement propre à la Gambie, comme l’explique  Dieretou, journaliste et activiste guinéenne de 23 ans en évoquant la position sociale inférieure des femmes de son pays : <strong><em>« Les femmes guinéennes sont toujours soumises au joug patriarcal. Dans ce contexte, elles sont paternalisées et de nombreuses décisions sont prises pour elles, pour leur « bien ». Même s’il ya des évolutions par rapport aux générations précédentes, les femmes de Guinée restent victimes de discriminations, notamment au niveau professionnel car nombreuses sont celles qui sont contraintes d’offrir leurs charmes afin d’avoir un emploi ou obtenir un avancement professionnel. Au-delà de ça, les femmes subissent de nombreuses inégalités sociales dans une société qui les considère comme des citoyennes de seconde zone. »</em></strong></p>
+<p>Néanmoins, il est important de rappeler que la femme africaine n’a pas toujours occupé la place peu avantageuse qui est la sienne aujourd’hui. Les sociétés africaines précoloniales étant matriarcales, elles accordaient une place importante aux femmes. L’introduction sur le continent africain de l’Islam et du Christianisme a profondément modifié cette place jadis occupée par les femmes comme tient à le rappeler Seynabou, 29 ans, activiste, doctorante en sociologie et gestionnaire de projets de développement dans une ONG,  de nationalité sénégalaise: « <strong><em>Au Sénégal, les femmes ont été reines souveraines, entrepreneures productives, citoyennes engagées et combattantes, épouses dévouées, mères aimantes. Déjà, dans la société traditionnelle, elles avaient la plupart des droits pour lesquels nous combattons aujourd’hui. Le combat des femmes sénégalaises est plus une réhabilitation, une restauration des droits de la femme qui a toujours occupé un une place centrale dans la société et joué un rôle capital dans les affaires politiques.</em></strong> »</p>
+<p>Force est de constater que cette période est révolue et que les femmes africaines sont victimes d’inégalités criantes à plusieurs niveaux. Devant cet état de fait, ces jeunes femmes ont fait le choix de l’activisme afin de porter haut et fort le combat pour l’émancipation de leurs concitoyennes, pour changer les mentalités et notamment la perception du rôle des femmes dans les sociétés africaines.</p>
+<p>C’est le cas de Josette, 29ans , cheffe de projet marketing digital et communication dans une start-up  parisienne et originaire de la Guinée, qui a décidé de s‘engager pour la cause des femmes et des enfants en Afrique et explique son choix: « <strong><em>Dans le cadre de mon mémoire de master en 2012, j’ai été surprise de constater que les femmes guinéennes étaient marginalisées à tous les niveaux : dans le domaine de l’éducation, dans l’accès aux soins de santé primaire, aux ressources essentielles, aux biens collectifs comme l’eau potable, accès limité à l’emploi formel. Des discriminations qui touchent également le droit à l’héritage, la prise de décision dans le ménage et la difficulté d’accès des agricultrices guinéennes aux crédits, aux facteurs de production et à une sécurité foncière au même titre que les hommes</em></strong><strong><em>.</em></strong> <strong><em>Je suis donc devenue bloggeuse et webactiviste pour dénoncer cette situation. Je ne compte pas m’arrêter là. Tout récemment, j’ai fondé une association qui s’appelle « Ednancy » pour le bien-être des enfants et des femmes. Le but de l’association étant d’informer, de sensibiliser sur les droits des femmes afin de contribuer à l’évolution des mentalités vers une société libérée des rapports de domination. Je serais amenée à effectuer des projets sur le terrain dans les mois à venir. »</em></strong></p>
+<p>Sa compatriote Dieretou a également décidé de s’engager pour les droits des femmes de son pays en fondant le collectif féministe  <strong><em>« Guinéenne du 21<sup>ème</sup> siècle »</em></strong> qui a pour but de donner une image nouvelle de la guinéenne moderne.  Le 8 mars dernier, ce collectif a mené une action sur les réseaux sociaux  en décidant de s’adresser aux jeunes hommes et femmes ainsi qu’aux adultes afin de les sonder sur leur idée de la guinéenne du 21<sup>ème</sup> siècle et la manière dont ils conçoivent la place de la femme dans la société. Selon Dieretou, cette action fut un succès en raison de son caractère novateur et inédit : <strong><em>« Notre objectif avec « Guinéenne du 21<sup>ème</sup> siècle était de bouleverser les mentalités et de changer la manière de fêter le 8 mars. Le mouvement fut un véritable succès car nous avons constaté que c’était un sujet dont les gens voulaient vraiment parler. Nous avions constaté la difficulté des institutions gouvernementales guinéennes pour aborder ces questions et pour s’adresser aux jeunes. Notre action a permis un déclic au niveau de la société guinéenne, de voir les failles des institutions pour lutter contres ces problèmes. Ce fut donc une réelle innovation en matière de communication en raison de l’utilisation des réseaux sociaux tels que Twitter et Facebook pour discuter des ces sujets et pour s’adresser aux gens. « Guinéenne du 21<sup>ème</sup> siècle » est une initiative pérenne et ponctuelle que nous souhaitons réitérer tous les 8 mars. »</em></strong></p>
+<p>De son côté, Kristelle, 16 ans, étudiante en commerce internationale au Cameroun, a également créé un mouvement pour discuter de féminisme en Afrique : <strong><em>« Pour sensibiliser les uns et les autres à la cause du droit des femmes, mes amies et moi avons créé le mouvement &laquo;&nbsp;So Feminist&nbsp;&raquo; avec le  hashtag #AfricaNeedsFeminism pour parler du féminisme et de son importance en Afrique.  Il y&rsquo;a plus de mauvaises que de bonnes réactions sur notre mouvement car très peu de personnes sont prêtes à voir le statut de la femme évoluer sur notre continent. » </em></strong></p>
+<p>Leur présence sur les réseaux sociaux est également une bonne manière pour ces jeunes femmes de sensibiliser un grand nombre de personnes à la cause des femmes africaines. Cependant, même si leur discours séduit une partie de la jeunesse africaine qui souhaite une société plus juste et plus égalitaire, elles subissent de nombreuses critiques virulentes  sur les réseaux sociaux quant à leur positionnement féministe. En effet, Kristelle avoue s’être déjà fait traitée de « pute » à plusieurs reprises sur Twitter en raison de ses prises de position tandis que Sakina, 20 ans, étudiante en marketing en Côte d’Ivoire fait preuve de pédagogie face à ses détracteurs : « <strong><em>Il faut admettre que certaines personnes comprennent le féminisme mais ne voient pas son utilité alors je raconte certains faits de mon quotidien et certaines histoires pour leur ouvrir les yeux sur la réalité. »</em></strong></p>
+<p>Josette  a également vécu des mésaventures sur les réseaux sociaux : «<strong><em> Quand j’exprime mon opinion sur les maux comme l’excision et les MGF, des commentaires insultants foisonnent à merveille. Pendant que certains de mes amis m’encouragent à continuer ce combat pour les femmes, d’autres me critiquent sévèrement. Pour ces derniers, je suis devenue trop « occidentalisée », trop « française » pour raconter que l’excision est un mal à éradiquer. Pour eux, la femme doit être excisée pour éviter des dérives sexuelles. Une femme de vertu est une femme excisée qu’ils disent. »</em></strong></p>
+<p><img data-attachment-id="3021" data-permalink="https://afrofeminista.com/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/african-feminism/" data-orig-file="https://afrofeministadotcom.files.wordpress.com/2016/07/african-feminism.jpg" data-orig-size="500,375" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="African-Feminism" data-image-description="" data-medium-file="https://afrofeministadotcom.files.wordpress.com/2016/07/african-feminism.jpg?w=300" data-large-file="https://afrofeministadotcom.files.wordpress.com/2016/07/african-feminism.jpg?w=500" class="alignnone  wp-image-3021" src="https://afrofeministadotcom.files.wordpress.com/2016/07/african-feminism.jpg?w=649&#038;h=487" alt="African-Feminism" width="649" height="487" srcset="https://afrofeministadotcom.files.wordpress.com/2016/07/african-feminism.jpg 500w, https://afrofeministadotcom.files.wordpress.com/2016/07/african-feminism.jpg?w=150&amp;h=113 150w, https://afrofeministadotcom.files.wordpress.com/2016/07/african-feminism.jpg?w=300&amp;h=225 300w" sizes="(max-width: 649px) 100vw, 649px" /></p>
+<p>Au niveau de la sphère privée, leur engagement féministe est plutôt bien perçu par leur entourage. Cependant, se revendiquer féministe peut faire l’objet d’incompréhension et de mises en garde comme l’explique Dieretou : «<strong><em> Ma famille me soutient énormément dans mon combat mais certaines personnes de mon entourage m’ont conseillé d’arrêter de m’exposer car n’étant pas mariée, je pouvais faire fuir les hommes. Ils considèrent qu’étant donné que je suis une femme, je suis amenée à me marier et que mes prises de position pourraient effrayer certains prétendants. Malgré tout, cela ne va pas m’arrêter et je compte bien continuer mon combat !</em></strong></p>
+<p>Seynabou, qui est également soutenue par sa famille, fait face également à une situation similaire : <strong><em>« Les amis me trouvent le plus souvent « féministe », rebelle, et le lie très souvent à ma condition de femme dans un ménage. Ils pensent même que c’est la cause principale de mon célibat « prolongé », selon eux. Ils me considèrent comme une femme trop autonome pour certains, et disent que je fais fuir les hommes parce que, disent-ils, trop forte, trop engagée. Par contre il y en a d’autres, et de plus en plus, qui m’encouragent et même m’accompagnent dans cet engagement. «</em></strong></p>
+<p>Comme je l’expliquais précédemment, l’image négative dont souffre le féminisme sur le continent africain explique cette opposition féroce à la lutte féministe et à tout ce qui en découle. Une grande partie de l’opinion publique  africaine est farouchement opposée au féminisme car elle considère qu’il est une remise en question de traditions et croyances séculaires. A ce propos, Sakina pense que cette résistance au féminisme résulte d’une mauvaise compréhension de ce mouvement : <strong><em>« C’est juste pour moi une façon de rejeter un concept qu’on se refuse de comprendre ou qui nous a été mal présenté. A-t-on refusé la démocratie parce qu’elle venait de l’Occident ? A-t-on rejeté la technologie ? Et toutes ces autres choses venues d’ailleurs ? Il faut chercher à savoir avant de juger. Et même si le féminisme vient d’ailleurs, là n’est pas la question selon moi. Pour moi, le problème c’est : le féminisme est-il nécessaire en Afrique ? Et la réponse est sans équivoque, oui. Sinon, toutes les petites filles auraient le droit d’aller à l’école. »</em></strong></p>
+<p>Josette abonde dans ce sens et s’opposent à ceux qui considèrent que le féminisme n’a pas sa place en Afrique et l’exprime en ces termes : <strong><em>« J’ose leur dire qu’ils ont tort!  Le féminisme n’est pas un concept importé de l’Occident. Certes, le terme « féminisme » est galvaudé voire étriqué. Ce pourquoi, certaines féministes africaines préfèrent être qualifiées de militantes pour le droit des femmes que féministes. En réalité, quand on se déplace d’un continent à un autre, on y voit des différentes conceptions du féminisme mais qui s’accordent parfaitement sur un point : la condition de la femme où qu’elle soit, devrait changer pour un monde meilleur.</em></strong></p>
+<p>En revanche, Dieretou considère qu’on ne peut nier l’influence de l’Occident sur les luttes féministes en Afrique : <strong><em>« Il faut être lucide, le féminisme que nos mamans, nos aînées,  pratiquaient était différent. Elles avaient une façon de résister différente, une résistance douce et différente de la nôtre. Notre génération a tendance à monter très vite au créneau pour dénoncer les injustices et les oppressions que nous subissons. Je dirais que le féminisme n’est pas importé d’Europe mais qu’il a changé, qu’il a muté au contact de l’Occident. Néanmoins, dire que le féminisme en Afrique a attendu l’Occident pour exister, c’est faux ! Mais il est vrai de dire qu’en Afrique le féminisme est en train de changer au contact de celui venu de l’Occident en raison notamment de la mondialisation. »</em></strong></p>
+<p>D’autre part, Seynabou estime que le féminisme a une portée universelle et qu’il a toute sa sa place en Afrique à condition qu’il ne soit pas une réplique du féminisme occidental : <strong><em>(…)Parler de féminisme, ne pose pas problème, en mon sens, tant que nous définissons ce que nous mettons dans ce concept au lieu de copier et plaquer. Le combat pour l’équité entre l’homme et la femme a sa place partout dans le monde et bien dans le continent africain. Il est, donc, important de souligner, que les femmes, ici, en Afrique se sont toujours battues pour l’équité des genres, la liberté des peuples, l’autonomie et la place des femmes. Nous aurions pu dire qu’elles ont été « féministes » bien avant la lettre, si elle est bien sûr considérée dans le sens de l’équité de genre. (…) Mon avis est que le féminisme pour caractériser les femmes qui revendiquent l’égalité avec les hommes et semblent vouloir leur ressembler n’a pas sa raison d’être sur le continent, ni ailleurs, d’ailleurs. Ma conception est que notre cohabitation doit être basée sur la complémentarité et l’équité puisque nous ne sommes pas pareils ni physiologiquement, ni physiquement, ni psychologiquement et n’avons donc pas les mêmes besoins. Par contre le « féminisme », un combat pour l’équité entre l’homme et la femme a bien sa place, je dirais même, devrait reprendre sa place dans ce continent où les femmes ont toujours su dire NON quand il le fallait. »</em></strong></p>
+<p>Elle poursuit en rappelant le rôle prépondérant des femmes dans les sociétés précoloniales, profondément modifié par des influences extérieures, la méconnaissance liée à cet héritage culturel et les luttes menées de tout temps par les femmes africaines pour leur émancipation : « <strong><em>Contrairement à ce que veulent nous faire penser les théories occidentales, la femme a toujours été sur un piédestal en Afrique noire traditionnelle. Elle a toujours été au centre des décisions politiques, sociales, économiques, culturelles, cultuelles. Elles sont gardiennes des traditions et des valeurs. La femme occupait, ainsi, traditionnellement, un rôle hautement sacré. Seulement au cours de l’évolution des sociétés, l’aliénation culturelle, savamment entretenue par l’Occident et l’Orient a fini, subrepticement, par susciter en nous une certaine méfiance, une méconnaissance voire une phobie de certaines de nos valeurs. »</em></strong></p>
+<p>Jama, quant à elle, considère que prétendre que le féminisme n’est pas occidental est un argument qui a pour but de déligitimer les luttes féministes : <strong><em>« C’est un argument fallacieux, une excuse de plus pour silencier les femmes. Le mot féminisme n’est pas populaire dans cette partie du monde mais les femmes africaines ont mené des luttes féminines pendant des siècles. Je citerais, par exemple, ma mère, ma grand-mère, mes tantes et d’autres femmes qui se sont levées, qui ont un fait un travail fantastique et ont brisé des barrières tout en se confrontant aux normes sociales. Le féminisme a toujours eu sa place en Afrique et ces histoires ne devraient pas être effacées. »</em></strong></p>
+<p><img data-attachment-id="2988" data-permalink="https://afrofeminista.com/femalefist/" data-orig-file="https://afrofeministadotcom.files.wordpress.com/2016/07/femalefist.jpg" data-orig-size="546,720" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="femalefist" data-image-description="" data-medium-file="https://afrofeministadotcom.files.wordpress.com/2016/07/femalefist.jpg?w=228" data-large-file="https://afrofeministadotcom.files.wordpress.com/2016/07/femalefist.jpg?w=546" class="alignnone size-full wp-image-2988" src="https://afrofeministadotcom.files.wordpress.com/2016/07/femalefist.jpg?w=809" alt="femalefist" srcset="https://afrofeministadotcom.files.wordpress.com/2016/07/femalefist.jpg 546w, https://afrofeministadotcom.files.wordpress.com/2016/07/femalefist.jpg?w=114 114w, https://afrofeministadotcom.files.wordpress.com/2016/07/femalefist.jpg?w=228 228w" sizes="(max-width: 546px) 100vw, 546px"   /></p>
+<p>Parmi qui les raisons qui expliquent la forte opposition au féminisme, la religion est régulièrement convoquée pour son « incompatibilité » avec le féminisme. A ce sujet, ces jeunes femmes sont toutes d’accord pour affirmer que leur activisme pour les droits des femmes n’est en rien incompatible avec leur foi. C’est le cas de Sakina, de confession musulmane, qui pense qu’il est tout à fait possible de concilier féminisme et islam : <strong><em>« Je finis toujours par trouver un terrain d’entente entre le féminisme et ma religion. Certaines personnes trouveraient cela contradictoire mais il vous suffit de connaître les vrais principes et recommandations de l’Islam pour voir à quel point la femme est élevée et respectée. C’est vraiment loin de ce que certains « musulmans » font subir à leurs femmes.  Si on connait aussi les femmes et les filles du Prophète, ainsi que toutes celles que l’on appelle les mères des croyantes, on comprend aussi que le féminisme (tel que je l’entends) n’est pas contradictoire à l’Islam. »</em></strong></p>
+<p>Seynabou, également de confession musulmane, explique la manière dont elle vit son engagement et sa pratique religieuse : « <strong><em>Je concilie mon engagement, mon identité de femme musulmane et africaine/sénégalaise en appliquant un principe que je retrouve chez le philosophe sénégalais Souleymane Bachir Diagne, qui, en parlant de la fidélité aux pères dit qu’elle n’est pas le fait d’agir de la même sorte qu’eux mais plutôt d’agir de telle sorte à obtenir le même résultat dans un contexte différent.</em></strong> » Elle poursuit en rajoutant que <strong><em>: « Il n’y a pas de contradiction entre le droit des femmes que je défends et ma religion. Je suis de confession musulmane et j’ai eu la chance d’apprendre ma religion et de connaitre la place de la femme dans cette religion. Ma compréhension de ma condition de femme mais d’Homme avant tout, m’a été apprise et j’ai moi-même eu à faire mon propre chemin dans cette voie. La religion étant aussi soumise à l’interprétation, il faut souligner que, certaines personnes clament toujours, quand on défend certaines positions, que l’on va à l’encontre de la religion. Mais, personnellement, j’ai toujours eu les arguments qu’il faut, opposables, tirés de la religion. »</em></strong></p>
+<p>Par contre, Josette a un regard très critique sur sa religion, le christianisme, même si elle considère qu’être féministe et chrétienne ne sont pas antinomiques : « <strong><em>A vrai dire, je trouve les textes bibliques très inégalitaires envers la femme. En effet, dans la Bible, la femme n’est jamais considérée comme l’égale de l’homme. Elle doit être soumise à l’homme. Ces passages bibliques me révoltent. Je choisis donc de passer outre. Je crois en Dieu et j’estime que la pratique de ma foi va au-delà de l’interprétation de la Bible. »</em></strong></p>
+<p>C’est également le point de vue de Stella, 30 ans, journaliste freelance et originaire du Burkina-Faso qui évoque certaines contradictions entre le christianisme et le féminisme : <strong><em>« Il y a bien évidemment des contradictions dans ce domaine, et c’est bien souvent là le nœud du problème. Le fait que la femme soit perçue comme un être inférieur est ancré dans les attitudes et les pratiques culturelles, dont la religion. Dans ce cas, il faut parfois savoir faire des concessions ou passer sur certains sujets dans certains lieux, pour éviter des foudres ou les débats houleux inutiles et sans fin. » </em></strong></p>
+<p>D’autre part, les croyances traditionnelles sont également convoquées afin de justifier cette position inférieure subie par les femmes. Cette situation est dénoncée par Kristelle : <strong><em>« </em></strong><strong><em>Aujourd&rsquo;hui encore, des jeunes femmes subissent le veuvage. Cette tradition bantoue consiste parfois pour la veuve à porter du noir pendant un an, à ne pas laver ses mains pendant au moins deux mois et à manger avec ces mains salessans couverts. La femme doit également se marier de force avec l&rsquo;ainé de sa belle-famille, être battue par les soeurs de son défunt mari, être rasée de force et rester chez elle pendant trois mois. Elle  ne sort absolument pas de sa maison et reste enfermée dans sa chambre pendant plusieurs semaines, elle doit également porter du bleu, être lavée par sa belle-mère ,etc&#8230; » </em></strong></p>
+<p><img data-attachment-id="2996" data-permalink="https://afrofeminista.com/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/9a3246b8529eb77dceac11c3bd1321fb/" data-orig-file="https://afrofeministadotcom.files.wordpress.com/2016/07/9a3246b8529eb77dceac11c3bd1321fb.jpg" data-orig-size="236,251" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="9a3246b8529eb77dceac11c3bd1321fb" data-image-description="" data-medium-file="https://afrofeministadotcom.files.wordpress.com/2016/07/9a3246b8529eb77dceac11c3bd1321fb.jpg?w=236" data-large-file="https://afrofeministadotcom.files.wordpress.com/2016/07/9a3246b8529eb77dceac11c3bd1321fb.jpg?w=236" class="alignnone  wp-image-2996" src="https://afrofeministadotcom.files.wordpress.com/2016/07/9a3246b8529eb77dceac11c3bd1321fb.jpg?w=548&#038;h=583" alt="9a3246b8529eb77dceac11c3bd1321fb" width="548" height="583" srcset="https://afrofeministadotcom.files.wordpress.com/2016/07/9a3246b8529eb77dceac11c3bd1321fb.jpg 236w, https://afrofeministadotcom.files.wordpress.com/2016/07/9a3246b8529eb77dceac11c3bd1321fb.jpg?w=141&amp;h=150 141w" sizes="(max-width: 548px) 100vw, 548px" /></p>
+<p>Nonobstant l’imputabilité des pratiques religieuses et traditionnelles ainsi que du  patriarcat et les normes qui en découlent sur la situation actuelle des femmes africaines,  Stella considère que les femmes doivent également prendre leur responsabilité afin de changer leur sort et faire preuve de volontarisme pour arracher leur émancipation : <strong><em>«La situation des femmes</em></strong><strong><em> n’est malheureusement pas entièrement imputable à l’action de l’homme, mais aussi au laisser aller et à la non combativité des femmes pour s’arracher les places qu’il leur faut pour faire entendre leur voix ou voir leurs capacités. Peu de femmes acceptent par exemple d’occuper des postes de responsabilité ou de s’engager en politique, avec pour résultat qu’elles ne sont pas assez présentes pour discuter des questions qui concernent leur vie, la gestion de leur présent et la prévenance pour leur avenir. »</em></strong></p>
+<p>Kristelle encourage également ses compatriotes à faire preuve de plus d’ambition : « <strong><em>Dans </em></strong><strong><em>les années à venir, j&rsquo;aimerai que les femmes de mon pays aient confiance en elles et soient conscientes de leurs droits. Qu&rsquo;elles développent une vraie solidarité et aient beaucoup plus d&rsquo;exigences vis-à-vis d’elles-mêmes. »</em></strong></p>
+<p>Jama abonde dans ce sens et exhorte les femmes à croire en elles et à prendre conscience de leur valeur : <strong><em>« Je souhaite que les femmes comprennent le pouvoir qu’elles détiennent et qu’elles s’affranchissent des limites qu’on leur impose. Je veux que les filles prennent conscience de leur valeur et qu’elles ne permettent à personne de les considérer comme des objets. Nous sommes bien plus que ce que l’on nous a fait croire et nous avons tant à offrir à nous-mêmes et au monde. Je souhaite réellement que de plus en plus de femmes comprennent cela et que la société changera afin de créer un environnement dans lequel nous pourrons prospérer en nous affranchissant des inégalités, de la discrimination et de la violence. »</em></strong></p>
+<p>En conclusion, au regard de la situation actuelle des femmes, le chemin à parcourir afin de changer les mentalités et déconstruire l’image dans laquelle certains ont enfermé les femmes africaines sera long, très long. Pour ce faire, il faudra procéder à une remise en question des croyances traditionnelles et coutumières, de l’interprétation des textes religieux et s’interroger sur la concordance entre l’infériorisation de la femme dans les sociétés actuelles contemporaines et la place de la femme dans les sociétés matriarcales précoloniales. En outre, il incombera également aux femmes de saisir elles-mêmes les armes de leur libération et de monter au front afin de réclamer les droits qui leur reviennent. A l’image de ces femmes que j’ai eu le privilège d’interroger et qui démontrent par leur engagement et leur combat, la nécessité de la lutte féministe en Afrique. Elles font partie de ces milliers de femmes africaines qui s’inscrivent en faux de l’image misérabiliste erronée que certains leur assignent et œuvrent dans la continuité de leurs aïeules qui mené de front cette lutte pendant des siècles.</p>
+<p>Grâce leur activisme et à leur visibilité sur les réseaux sociaux, elles sont les porte-voix des millions de femmes dont la parole a été confisquée ou qui ne disposent pas de moyens et de plateformes pour faire entendre les leurs. A ce titre, leur combat est noble et inspirant pour de nombreuses filles et femmes d’Afrique qui rêvent d’un monde meilleur pour elles, pour leurs filles et pour leurs petites- filles. Les mauvaises langues essaieront de qualifier cet engagement en faveur des femmes d’insignifiant et de le comparer à une goutte dans l’immense océan patriarcal. A cela, j’ai envie de rétorquer que ces petites gouttes à d’eau, les unes après les autres, formeront à force de détermination et  de pugnacité un océan plus immense d’égalité et de respect car comme le dit un proverbe chinois : <em>« A force de persévérance, n’importe qui peut parvenir à déplacer une montagne. »</em></p>
+<p><em> </em></p>
+<p><em>Je tiens à remercier Josette, Seynabou, Stella, Sakina, Jama et Dieretou pour leur disponibilité et surtout d’avoir accepté de répondre à mes (longues) questions. Leurs réponses, que je n’ai pas pu publier dans leur intégralité pour des raisons évidentes, m’ont énormément inspiré et motivé à poursuivre la mission que je me suis donné, à savoir lutter pour l’émancipation des femmes africaines. J’espère que leur témoignage sera une source d’inspiration pour de nombreuses jeunes femmes qui hésitent à s’affirmer, à revendiquer leurs droits et à clamer haut et fort qu’elles se réclament du féminisme. Comme je l’ai exprimé à de nombreuses reprises sur le blog, il nous appartient de reprendre cette parole qui nous a été confisquée afin de nous réapproprier nos vécus, nos expériences et changer la narration sur la femme noire. Il est donc de notre responsabilité de se lever et de poursuivre cette lutte difficile mais juste car elle s’inscrit, non pas dans une logique de division comme certains osent le croire, mais dans une perspective inclusive qui a pour dessin d’octroyer des droits fondamentaux à toutes.</em></p>
+<p><em>Vous pouvez suivre ces jeunes femmes talentueuses et engagées sur leurs blogs respectifs et sur Twitter : </em></p>
+<p><em>Jama : @TheJamaJack ;  <a href="https://linguerebi.wordpress.com">https://linguerebi.wordpress.com</a> ;</em></p>
+<p><em>Dieretou : @dieretou @guineennedu21esiecle ; <a href="http://www.dieretoudiallo.com">www.dieretoudiallo.com</a> ;</em></p>
+<p><em>Stella : @StellaClaudy ; <a href="http://www.stellatouchatout.com">www.stellatouchatout.com</a> ;</em></p>
+<p><em>Seynabou : @SySeynabou; <a href="http://www.zeynanjaay.wordpress.com" rel="nofollow">http://www.zeynanjaay.wordpress.com</a>;</em></p>
+<p><em>Sakina : @KNoham ; <a href="http://www.knoham.blogspot.com">www.knoham.blogspot.com</a> ;</em></p>
+<p><em>Josette : @niankoyej @AssoEdnancy ; </em><em><a href="http://www.loeildejosette.mondoblog.org">www.loeildejosette.mondoblog.org</a></em><em> ;</em></p>
+<p><em>Kristelle : @Kristelle_El</em></p>
+<div id="atatags-370373-5ec0a53cb3c53">
+        <script type="text/javascript">
+            __ATA.cmd.push(function() {
+                __ATA.initVideoSlot('atatags-370373-5ec0a53cb3c53', {
+                    sectionId: '370373',
+                    format: 'inread'
+                });
+            });
+        </script>
+    </div>			<div id="atatags-26942-5ec0a53cb3cd0"></div>
+			
+			<script>
+				__ATA.cmd.push(function() {
+					__ATA.initDynamicSlot({
+						id: 'atatags-26942-5ec0a53cb3cd0',
+						location: 120,
+						formFactor: '001',
+						label: {
+							text: 'Publicités',
+						},
+						creative: {
+							reportAd: {
+								text: 'Report this Ad',
+							},
+							privacySettings: {
+								text: 'Paramètres de confidentialité',
+							}
+						}
+					});
+				});
+			</script><div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Partager&nbsp;:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-2991" class="share-twitter sd-button share-icon" href="https://afrofeminista.com/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/?share=twitter" target="_blank" title="Cliquez pour partager sur Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-2991" class="share-facebook sd-button share-icon" href="https://afrofeminista.com/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/?share=facebook" target="_blank" title="Cliquez pour partager sur Facebook"><span>Facebook</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-98365122-2991-5ec0a53cb4a9d' data-src='//widgets.wp.com/likes/index.html?ver=20190321#blog_id=98365122&amp;post_id=2991&amp;origin=afrofeministadotcom.wordpress.com&amp;obj_id=98365122-2991-5ec0a53cb4a9d&amp;domain=afrofeminista.com' data-name='like-post-frame-98365122-2991-5ec0a53cb4a9d'><h3 class='sd-title'>WordPress:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>J&#039;aime</span></span> <span class="loading">chargement&hellip;</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div>
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	<h3 class="jp-relatedposts-headline"><em>Articles similaires</em></h3>
+</div></div>					</div><!-- .entry-content -->
+
+	<footer class="entry-footer">
+		<div class="entry-bottom small-part">
+					</div>
+	</footer><!-- .entry-footer -->
+</article><!-- #post-## -->
+
+				<nav class="navigation post-navigation" role="navigation">
+		<h1 class="screen-reader-text">Navigation des articles</h1>
+		<div class="nav-links">
+			<div class="nav-previous"><a href="https://afrofeminista.com/2016/07/22/middle-fingers-up/" rel="prev"><div class="the-navigation-arrow"><i class="fa prev-next fa-2x fa-angle-left"></i></div> <div class="meta-nav"><span class="small-part">Article précédent</span><div class="next-prev-name">Middle Fingers Up!</div></div></a></div><div class="nav-next"><a href="https://afrofeminista.com/2016/12/16/litterature-oreode-fran-ross/" rel="next"><div class="meta-nav"><span class="small-part">Article suivant</span><div class="next-prev-name">&laquo;&nbsp;Oreo&nbsp;&raquo;de Fran Ross</div></div> <div class="the-navigation-arrow"><i class="fa prev-next fa-2x fa-angle-right"></i></div></a></div>		</div><!-- .nav-links -->
+	</nav><!-- .navigation -->
+	
+			
+<div id="comments" class="comments-area">
+
+	
+			<h2 class="comments-title">
+			3 r&eacute;flexions sur &ldquo;<span>Féministes d&rsquo;Afrique : de la dénonciation à la&nbsp;déconstruction?</span>&rdquo;		</h2>
+
+		<ol class="comment-list">
+					<li id="comment-86" class="comment even thread-even depth-1 highlander-comment">
+			<article id="div-comment-86" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/dd4b42a1305ebf839ed2a1d0228c2381?s=50&#038;d=identicon&#038;r=G' class='avatar avatar-50' height='50' width='50' />						<b class="fn">Tiburce CHAFFA</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://afrofeminista.com/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/#comment-86">
+							<time datetime="2016-07-31T09:24:13+01:00">
+								31 juillet 2016 à 9 h 24 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Je suis Tiburce CHAFFA, Curator Global Shaper Cotonou. Une des problématiques sur lesquelles notre Hub est entrain de se pencher c&rsquo;est bien le Women Issues, avec le féminisme au centre. Par contre nous ne croyons pas que ce soit une affaire d&rsquo;hommes contre femmes. C&rsquo;est des problèmes de société et nous devons tous travailler ensemble pour 1. Démanteler cet héritage du système colonial 2 relever le niveau de la femme africaine et surtout lui permettre de mieux jouer le rôle qu&rsquo;elle a toujours joué, celui d&rsquo;être le backbone de nos communautés.<br />
+Shapers229@gmail point com.</p>
+<p id="comment-like-86" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://afrofeminista.com/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/?like_comment=86&#038;_wpnonce=42d260d18c" class="comment-like-link needs-login" rel="nofollow" data-blog="98365122"><span>J&#039;aime</span></a><span id="comment-like-count-86" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://afrofeminista.com/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/?replytocom=86#respond' data-commentid="86" data-postid="2991" data-belowelement="div-comment-86" data-respondelement="respond" aria-label='Répondre à Tiburce CHAFFA'><span class="reply-link">Répondre<i class="fa fa-reply space-left"></i></span></a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-88" class="comment odd alt thread-odd thread-alt depth-1 parent highlander-comment">
+			<article id="div-comment-88" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/567cdda23631d5f986901ad9d397da02?s=50&#038;d=identicon&#038;r=G' class='avatar avatar-50' height='50' width='50' />						<b class="fn">Solange</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://afrofeminista.com/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/#comment-88">
+							<time datetime="2016-08-07T22:10:06+01:00">
+								7 août 2016 à 22 h 10 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>hello miss , je viens de découvrir ton blog et j&rsquo;aime beaucoup ton univers , vraiment c&rsquo;est très intéressant ce que tu communique . Bonne chance pour la suite ! bisous</p>
+<p id="comment-like-88" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://afrofeminista.com/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/?like_comment=88&#038;_wpnonce=2c7d15e3fa" class="comment-like-link needs-login" rel="nofollow" data-blog="98365122"><span>J&#039;aime</span></a><span id="comment-like-count-88" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://afrofeminista.com/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/?replytocom=88#respond' data-commentid="88" data-postid="2991" data-belowelement="div-comment-88" data-respondelement="respond" aria-label='Répondre à Solange'><span class="reply-link">Répondre<i class="fa fa-reply space-left"></i></span></a></div>			</article><!-- .comment-body -->
+		<ul class="children">
+		<li id="comment-89" class="comment byuser comment-author-ayeesha800 bypostauthor even depth-2 highlander-comment">
+			<article id="div-comment-89" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/a22fb82c3c1aef271832e480a02d1e97?s=50&#038;d=identicon&#038;r=G' class='avatar avatar-50' height='50' width='50' />						<b class="fn"><a href='http://afrofeminista.com' rel='external nofollow ugc' class='url'>Aïchatou O.</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://afrofeminista.com/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/#comment-89">
+							<time datetime="2016-08-07T22:24:43+01:00">
+								7 août 2016 à 22 h 24 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Merci beaucoup Solange pour ton soutien!😃</p>
+<p id="comment-like-89" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://afrofeminista.com/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/?like_comment=89&#038;_wpnonce=933c88f60e" class="comment-like-link needs-login" rel="nofollow" data-blog="98365122"><span>J&#039;aime</span></a><span id="comment-like-count-89" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://afrofeminista.com/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/?replytocom=89#respond' data-commentid="89" data-postid="2991" data-belowelement="div-comment-89" data-respondelement="respond" aria-label='Répondre à Aïchatou O.'><span class="reply-link">Répondre<i class="fa fa-reply space-left"></i></span></a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		</ol><!-- .comment-list -->
+
+		
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Votre commentaire <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/#respond" style="display:none;">Annuler la réponse.</a></small></h3><form action="https://afrofeminista.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate><input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="647d1c6fe3" /><input type="hidden" name="_wp_http_referer" value="/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Entrez votre commentaire...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Entrez votre commentaire..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+	<div id="comment-form-nascar">
+		<p>Entrez vos coordonnées ci-dessous ou cliquez sur une icône pour vous connecter:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" class="nascar-signin-link"
+                   title="Connexion avec Visiteur">
+									</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" class="nascar-signin-link"
+                   title="Connexion avec WordPress.com">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" class="nascar-signin-link"
+                   title="Connexion avec Twitter">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" class="nascar-signin-link"
+                   title="Connexion avec Facebook">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg>				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">E-mail <span class="required">(obligatoire)</span> <span class="nopublish">(adresse strictement confidentielle)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Nom <span class="required">(obligatoire)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Site web</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url" value="" /></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Logo WordPress.com" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+						<p class="comment-form-posting-as pa-wordpress">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte WordPress.com.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Photo Google" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+						<p class="comment-form-posting-as pa-googleplus">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Google.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" x="0px" y="0px" viewBox="0 0 60 60" ><path fill="#519bf7" d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" /><path fill="#3db366" d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" /><path fill="#fdc600" d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" /><path fill="#f15b44" d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" /></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Image Twitter" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+						<p class="comment-form-posting-as pa-twitter">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Twitter.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Photo Facebook" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+						<p class="comment-form-posting-as pa-facebook">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Facebook.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Annuler</a></div>
+		<p>Connexion à %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Avertissez-moi par e-mail des nouveaux commentaires.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Avertissez-moi par e-mail des nouveaux articles.</label></p></div>
+
+
+
+
+<p class="form-submit"><input name="submit" type="submit" id="comment-submit" class="submit" value="Laisser un commentaire" /> <input type='hidden' name='comment_post_ID' value='2991' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="6effdbe863" /></p>
+<input type="hidden" name="genseq" value="1589683516" />
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="103"/></p></form>	</div><!-- #respond -->
+	<div style="clear: both"></div>
+</div><!-- #comments -->
+
+		
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+
+<div id="secondary" class="widget-area" role="complementary">
+	<aside id="wpcom_social_media_icons_widget-4" class="widget widget_wpcom_social_media_icons_widget"><h2 class="widget-title">FOLLOW ME</h2><ul><li><a href="https://www.facebook.com/Afrofeminista/" class="genericon genericon-facebook" target="_blank"><span class="screen-reader-text">Voir le profil de Afrofeminista sur Facebook</span></a></li><li><a href="https://twitter.com/Afrofeminista/" class="genericon genericon-twitter" target="_blank"><span class="screen-reader-text">Voir le profil de Afrofeminista sur Twitter</span></a></li><li><a href="https://www.instagram.com/afrofeminista/" class="genericon genericon-instagram" target="_blank"><span class="screen-reader-text">Voir le profil de afrofeminista sur Instagram</span></a></li></ul></aside><aside id="facebook-likebox-6" class="widget widget_facebook_likebox">		<div id="fb-root"></div>
+		<div class="fb-page" data-href="https://www.facebook.com/Afrofeminista" data-width="340"  data-height="432" data-hide-cover="false" data-show-facepile="true" data-tabs="false" data-hide-cta="false" data-small-header="false">
+		<div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/Afrofeminista"><a href="https://www.facebook.com/Afrofeminista"></a></blockquote></div>
+		</div>
+		</aside><aside id="twitter_timeline-6" class="widget widget_twitter_timeline"><h2 class="widget-title">Suivez-moi sur Twitter</h2><a class="twitter-timeline" data-height="400" data-theme="light" data-border-color="#e8e8e8" data-lang="FR" data-partner="jetpack" data-widget-id="639427327370338306" href="https://twitter.com/639427327370338306">Mes Tweets</a></aside><aside id="top-posts-3" class="widget widget_top-posts"><h2 class="widget-title">Articles Phares</h2><ul>				<li>
+					<a href="https://afrofeminista.com/2017/01/03/classement-le-top-10-des-femmes-noiresinspirantes-en-2016/" class="bump-view" data-bump-view="tp">Classement#2 : Les dix femmes noires qui m&#039;ont inspiré en 2016.</a>					</li>
+								<li>
+					<a href="https://afrofeminista.com/2015/10/15/chronique-lemancipation-des-femmes-et-la-lutte-de-liberation-de-lafrique-de-thomas-sankara/" class="bump-view" data-bump-view="tp">&quot;L&#039;émancipation des femmes et la lutte  libération de l&#039;Afrique&quot; de Thomas Sankara.</a>					</li>
+								<li>
+					<a href="https://afrofeminista.com/2017/02/12/blackhestorymonth6-chica-da-silva-lascension-sociale-dune-esclave-noire-bresilienne/" class="bump-view" data-bump-view="tp">BlackHERstorymonth#6 : Chica Da Silva, l&#039;ascension sociale d&#039;une esclave noire brésilienne.</a>					</li>
+								<li>
+					<a href="https://afrofeminista.com/2015/05/06/interview-de-dk-ange-fondatrice-du-mouvement-osez-le-foulard/" class="bump-view" data-bump-view="tp">Interview de Dk Ange, fondatrice du mouvement &quot;Osez le foulard&quot; : &quot;La confiance en soi est primordiale et je veux que les femmes noires s’acceptent et apprennent à s’aimer .&quot;</a>					</li>
+				</ul></aside>			<div id="atatags-286348-5ec0a53cb8bad"></div>
+			
+			<script>
+				__ATA.cmd.push(function() {
+					__ATA.initDynamicSlot({
+						id: 'atatags-286348-5ec0a53cb8bad',
+						location: 140,
+						formFactor: '003',
+						label: {
+							text: 'Publicités',
+						},
+						creative: {
+							reportAd: {
+								text: 'Report this Ad',
+							},
+							privacySettings: {
+								text: 'Paramètres de confidentialité',
+							}
+						}
+					});
+				});
+			</script></div><!-- #secondary -->
+
+	</div><!-- #content -->
+
+	<footer id="colophon" class="site-footer" role="contentinfo">
+
+		
+		<div class="site-info small-part">
+			<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Propulsé par WordPress.com.</a>
+			
+					</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+<a href="#top" class="to-top"><i class="fa fa-angle-up fa-lg"><span class="screen-reader-text">Revenir en haut</span></i></a>
+<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202020y'></script>
+<script>
+var WPGroHo = {"my_hash":""};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-dd4b42a1305ebf839ed2a1d0228c2381">
+	</div>
+	<div class="grofile-hash-map-567cdda23631d5f986901ad9d397da02">
+	</div>
+	<div class="grofile-hash-map-a22fb82c3c1aef271832e480a02d1e97">
+	</div>
+	</div>
+<script>
+var HighlanderComments = {"loggingInText":"Connexion\u2026","submittingText":"Publication d\u2019un Commentaire\u2026","postCommentText":"Laisser un commentaire","connectingToText":"Connexion \u00e0 %s","commentingAsText":"%1$s: Vous commentez \u00e0 l\u2019aide de votre compte %2$s.","logoutText":"Se d\u00e9connecter","loginText":"Se connecter","connectURL":"https:\/\/afrofeministadotcom.wordpress.com\/public.api\/connect\/?action=request&domain=afrofeminista.com","logoutURL":"https:\/\/afrofeministadotcom.wordpress.com\/wp-login.php?action=logout&_wpnonce=f37b16d984","homeURL":"https:\/\/afrofeminista.com\/","postID":"2991","gravDefault":"identicon","enterACommentError":"Entrez un commentaire","enterEmailError":"Veuillez entrer votre adresse mail","invalidEmailError":"Adresse email invalide","enterAuthorError":"Veuillez entrer votre nom","gravatarFromEmail":"L\u2019image s\u2019affiche lorsque vous postez un commentaire. Cliquez pour personnaliser.","logInToExternalAccount":"Connectez-vous pour utiliser les informations li\u00e9es \u00e0 un de ces comptes:","change":"Changer","changeAccount":"Changer de compte","comment_registration":"0","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1573483029j'></script>
+		<!-- CCPA [start] -->
+		<script type="text/javascript">
+			( function () {
+
+				var setupPrivacy = function() {
+
+					document.addEventListener( 'DOMContentLoaded', function() {
+
+						// Minimal Mozilla Cookie library
+						// https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie/Simple_document.cookie_framework
+						var cookieLib = window.cookieLib = {getItem:function(e){return e&&decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*"+encodeURIComponent(e).replace(/[\-\.\+\*]/g,"\\$&")+"\\s*\\=\\s*([^;]*).*$)|^.*$"),"$1"))||null},setItem:function(e,o,n,t,r,i){if(!e||/^(?:expires|max\-age|path|domain|secure)$/i.test(e))return!1;var c="";if(n)switch(n.constructor){case Number:c=n===1/0?"; expires=Fri, 31 Dec 9999 23:59:59 GMT":"; max-age="+n;break;case String:c="; expires="+n;break;case Date:c="; expires="+n.toUTCString()}return"rootDomain"!==r&&".rootDomain"!==r||(r=(".rootDomain"===r?".":"")+document.location.hostname.split(".").slice(-2).join(".")),document.cookie=encodeURIComponent(e)+"="+encodeURIComponent(o)+c+(r?"; domain="+r:"")+(t?"; path="+t:"")+(i?"; secure":""),!0}};
+
+						var setDefaultOptInCookie = function() {
+							var value = '1YNN';
+							var domain = '.wordpress.com' === location.hostname.slice( -14 ) ? '.rootDomain' : location.hostname;
+							cookieLib.setItem( 'usprivacy', value, 365 * 24 * 60 * 60, '/', domain );
+						};
+
+						var setCcpaAppliesCookie = function( value ) {
+							var domain = '.wordpress.com' === location.hostname.slice( -14 ) ? '.rootDomain' : location.hostname;
+							cookieLib.setItem( 'ccpa_applies', value, 24 * 60 * 60, '/', domain );
+						}
+
+						var maybeCallDoNotSellCallback = function() {
+							if ( 'function' === typeof window.doNotSellCallback ) {
+								return window.doNotSellCallback();
+							}
+
+							return false;
+						}
+
+						var usprivacyCookie = cookieLib.getItem( 'usprivacy' );
+
+						if ( null !== usprivacyCookie ) {
+							maybeCallDoNotSellCallback();
+							return;
+						}
+
+						var ccpaCookie = cookieLib.getItem( 'ccpa_applies' );
+
+						if ( null === ccpaCookie ) {
+
+							var request = new XMLHttpRequest();
+							request.open( 'GET', 'https://public-api.wordpress.com/geo/', true );
+
+							request.onreadystatechange = function () {
+								if ( 4 === this.readyState ) {
+									if ( 200 === this.status ) {
+
+										var data = JSON.parse( this.response );
+										var ccpa_applies = data['region'] && data['region'].toLowerCase() === 'california';
+
+										setCcpaAppliesCookie( ccpa_applies );
+
+										if ( ccpa_applies ) {
+											if ( maybeCallDoNotSellCallback() ) {
+												setDefaultOptInCookie();
+											}
+										}
+									} else {
+										setCcpaAppliesCookie( true );
+										if ( maybeCallDoNotSellCallback() ) {
+											setDefaultOptInCookie();
+										}
+									}
+								}
+							};
+
+							request.send();
+						} else {
+							if ( ccpaCookie === 'true' ) {
+								if ( maybeCallDoNotSellCallback() ) {
+									setDefaultOptInCookie();
+								}
+							}
+						}
+					} );
+				};
+
+				if ( window.defQueue && defQueue.isLOHP && defQueue.isLOHP === 2020 ) {
+					defQueue.items.push( setupPrivacy );
+				} else {
+					setupPrivacy();
+				}
+
+			} )();
+		</script>
+
+		<!-- CCPA [end] -->
+					<script type="text/javascript">
+			( function( $ ) {
+				$( document.body ).on( 'post-load', function () {
+					if ( typeof __ATA.insertInlineAds === 'function' ) {
+						__ATA.insertInlineAds();
+					}
+				} );
+			} )( jQuery );
+			</script>
+	<div id="carousel-reblog-box">
+		<form action="#" name="carousel-reblog">
+			<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Ajoutez votre grain de sel personnel... (facultatif)"></textarea>
+			<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Publier sur</label>
+			<select name="carousel-reblog-to-blog-id" id="carousel-reblog-to-blog-id">
+						</select>
+
+			<div class="submit">
+				<span class="canceltext"><a href="#" class="cancel">Annuler</a></span>
+				<input type="submit" name="carousel-reblog-submit" class="button" id="carousel-reblog-submit" value="Reblog Article" />
+				<input type="hidden" id="carousel-reblog-blog-id" value="98365122" />
+				<input type="hidden" id="carousel-reblog-blog-url" value="https://afrofeminista.com" />
+				<input type="hidden" id="carousel-reblog-blog-title" value="" />
+				<input type="hidden" id="carousel-reblog-post-url" value="" />
+				<input type="hidden" id="carousel-reblog-post-title" value="" />
+			</div>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="9cf7ca1c98" /><input type="hidden" name="_wp_http_referer" value="/2016/07/31/feministes-dafrique-de-la-denonciation-a-la-deconstruction/" />		</form>
+
+		<div class="arrow"></div>
+	</div>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/afrofeminista.com\/2016\/07\/31\/feministes-dafrique-de-la-denonciation-a-la-deconstruction\/":2991};
+	</script>
+				<div class="widget widget_eu_cookie_law_widget"><div
+	class="hide-on-button ads-active"
+	data-hide-timeout="30"
+	data-consent-expiration="180"
+	id="eu-cookie-law"
+>
+	<form method="post">
+		<input type="submit" value="Fermer et accepter" class="accept" />
+
+		Confidentialité &amp; Cookies : Ce site utilise des cookies. En continuant à utiliser ce site, vous acceptez leur utilisation.<br />
+Pour en savoir davantage, y compris comment contrôler les cookies, voir :
+		<a href="https://automattic.com/cookies" >
+			Politique relative aux cookies		</a>
+ </form>
+</div>
+</div><link rel='stylesheet' id='all-css-0-3' href='https://s0.wp.com/wp-content/mu-plugins/carousel/jetpack-carousel.css?m=1563361695h&cssminify=yes' type='text/css' media='all' />
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyFUEFSwzAM/BCOCKSQHpi+JdhqKkeR3chOCK+vC+mhwAwnabSr3ZVgicYGSSgJvILDmSzGj8rrA9xDMWgaUbXr8Q/UnzNO61Yqkplw+ZfmMcXODmZCpc9fqmM2kXNPosA0oEJZynjqxDFONzKJ5ewKeA1PmmBGcWG6QjHweiTmaiT5qX0TPmZmo5TQoKNE0m+WUD/W7evzy74BwUW/Ur5zsMPmUvpCLR/R77HZ7j2Mb/Wu3T+1TVM3/gLyqYDg'></script>
+<script type='text/javascript'>
+( 'fetch' in window ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?m=1573572739h&#038;ver=3.0.0"></scr' + 'ipt>' );( document.contains ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?m=1540208548h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?m=1585663916h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?m=1585663916h&#038;ver=3.6.4"></scr' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?m=1550600082h&#038;ver=3.0.12"></scr' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?m=1540208548h&#038;ver=2.0.2"></scr' + 'ipt>' );
+( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-url.min.7490158b.js?m=1588209800h&#038;ver=3.6.4"></scr' + 'ipt>' );
+( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-dom-rect.7e21c103.js?m=1588209800h&#038;ver=3.42.0"></scr' + 'ipt>' );
+</script>
+<script src='https://s0.wp.com/wp-includes/js/dist/vendor/lodash.min.js?m=1573572739h&#038;ver=4.17.15'></script>
+<script>
+window.lodash = _.noConflict();
+</script>
+<script>
+var comment_like_text = {"loading":"chargement\u2026"};
+</script>
+<script>
+var jpfbembed = {"appid":"249643311490","locale":"fr_FR"};
+</script>
+<script>
+var actionbardata = {"siteID":"98365122","siteName":"afrofeminista.com","siteURL":"https:\/\/afrofeminista.com","icon":"<img alt='' src='https:\/\/s0.wp.com\/i\/logo\/wpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/nucleare","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fafrofeminista.com%2F2016%2F07%2F31%2Ffeministes-dafrique-de-la-denonciation-a-la-deconstruction%2F&signup_flow=account&domain=afrofeminista.com","themeURL":"https:\/\/wordpress.com\/theme\/nucleare\/","xhrURL":"https:\/\/afrofeminista.com\/wp-admin\/admin-ajax.php","nonce":"08de5007a5","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"73bfce6a34\" \/>","referer":"https:\/\/afrofeminista.com\/2016\/07\/31\/feministes-dafrique-de-la-denonciation-a-la-deconstruction\/","canFollow":"1","feedID":"104960714","statusMessage":"","customizeLink":"https:\/\/afrofeministadotcom.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fafrofeministadotcom.wordpress.com%2F2016%2F07%2F31%2Ffeministes-dafrique-de-la-denonciation-a-la-deconstruction%2F","postID":"2991","shortlink":"https:\/\/wp.me\/p6EJge-Mf","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/afrofeminista.com\/2991","statsLink":"https:\/\/wordpress.com\/stats\/post\/2991\/afrofeminista.com","i18n":{"view":"Afficher le site","follow":"Suivre","following":"Abonn\u00e9","edit":"Modifier","login":"Connexion","signup":"S'inscrire","customize":"Personnaliser","report":"Signaler ce contenu","themeInfo":"Obtenir le th\u00e8me: Nucleare","shortlink":"Copier shortlink","copied":"Copi\u00e9","followedText":"Les nouveaux articles de ce site appara\u00eetront d\u00e9sormais dans votre <a href=\"https:\/\/wordpress.com\/\">Lecteur<\/a>","foldBar":"R\u00e9duire cette barre","unfoldBar":"\u00c9tendre cette barre","editSubs":"G\u00e9rer les abonnements","viewReader":"Voir le site dans le Lecteur","viewReadPost":"Voir l\u2019article dans le Lecteur","subscribe":"M\u2019inscrire","enterEmail":"Entrez votre adresse e-mail","followers":"Rejoignez 120 autres abonn\u00e9s","alreadyUser":"Vous disposez d\u00e9j\u00e0 d\u02bcun compte WordPress ? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fafrofeminista.com%2F2016%2F07%2F31%2Ffeministes-dafrique-de-la-denonciation-a-la-deconstruction%2F&signup_flow=account&domain=afrofeminista.com\">Connectez-vous maintenant.<\/a>","stats":"Statistiques"}};
+</script>
+<script>
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"fr","ajaxurl":"https:\/\/afrofeminista.com\/wp-admin\/admin-ajax.php","nonce":"e1e93fd6ec","display_exif":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Commentaire","post_comment":"Laisser un commentaire","write_comment":"\u00c9crire un commentaire...","loading_comments":"Chargement des commentaires\u2026","download_original":"Afficher dans sa taille r\u00e9elle <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>.","no_comment_text":"Veuillez ajouter du contenu \u00e0 votre commentaire.","no_comment_email":"Merci de renseigner une adresse e-mail.","no_comment_author":"Merci de renseigner votre nom.","comment_post_error":"Une erreur s'est produite \u00e0 la publication de votre commentaire. Veuillez nous en excuser, et r\u00e9essayer dans quelques instants.","comment_approved":"Votre commentaire a \u00e9t\u00e9 approuv\u00e9.","comment_unapproved":"Votre commentaire est en attente de validation.","camera":"Appareil photo","aperture":"Ouverture","shutter_speed":"Vitesse d'obturation","focal_length":"Focale","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/afrofeministadotcom.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fafrofeminista.com%2F2016%2F07%2F31%2Ffeministes-dafrique-de-la-denonciation-a-la-deconstruction%2F","blog_id":"98365122","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">E-mail (requis)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Nom (requis)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Site web<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogu\u00e9","reblog_add_thoughts":"Ajoutez votre grain de sel personnel... (facultatif)","reblogging":"Reblogging...","post_reblog":"Relais d\u2019article","stats_query_args":"blog=98365122&v=wpcom&tz=1&user_id=0&subd=afrofeministadotcom","is_public":"1","reblog_enabled":""};
+</script>
+<script>
+var sharing_js_options = {"lang":"fr","counts":"1","is_stats_active":"1"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyVU1ty2zAMvFAhWI3TKh+dHqVDkZACia8SpFXfPvQ4ch0no7G/CC6weCxIXCLo4DP5jNGWkb3gWOq1pzRWTyLsml2zw76wNcht55G9oX/NJN/wMbIJDhIpc9zOMBRrQTgTkOHMfoSzB9td2/18+vGyR0+LRKVn6G3Qs6BhyahVCkXInkE4MC23JVyBtYoOzlUILM8kOAla7lEWjvQI6QNwS8yv5GpYLD36oi2pqkflrPa94erAo8oc/J0EmTnWhvwMQ9BFYOCL1Oy1LeZj64miPTaOP6W/mnthM1IWpFK9YWYCqxbM5KJVmW7wjTwT5dPa8E9tBAelqa8sINeTuZeVF86ZEmR2VIfc2pYydSroVUKnpHKqBeFAKfFJggv2YIacai+fdn1N0qdlnUgX6yv9Jf6X/Bqf/hZKx/ejuY766kG+v/lVI1iBrf5mFkcZnurHPC8iJLcRH4NkGKzihPKqUv2Q61lJv92v9rl7+d7t9+1+egNrW5k6'></script>
+<script type='text/javascript'>
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<iframe src='https://widgets.wp.com/likes/master.html?ver=20190321#ver=20190321&amp;lang=fr' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+		<div id='likes-other-gravatars'><div class="likes-text"><span>%d</span> blogueurs aiment cette page :</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+<script src="//stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'98365122','blog_tz':'1','user_lang':'fr','blog_lang':'fr','user_id':'0'}]);
+_stq.push(['view', {'blog':'98365122','v':'wpcom','tz':'1','user_id':'0','post':'2991','subd':'afrofeministadotcom'}]);
+_stq.push(['extra', {'crypt':'UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdWtpP0NsWnVkPS9sL0ViLndld3AyMWJHeTE5ZSxINXlGd1cuY0Q1VHlOL1RHflhHW1p5cyZKXWx4eHp2aGFzRiZoM2NUMUpCRytsOThOamxQR19GVC9oLm15UE9QSE01cnJSVWMmdW1XaGhqNF9TXWV0LUMtSndHT2o1N2w2bkIrRUlMUkJvVV9YWCVtc2N3RkoyWkFuR28wT0tBRWlOc1M0bFErJnNmVEQmZlJyOW85fFVqUFV4YVFHeXViaWV5TW5PTUdicEhkQy1YaEgtZ1BYcm0zM0ZOXTduRmxLT0FbLFVNVFddP0RFQ3N1TiVpTW01QlliV3FNdUxZYS9SNV9sbUh3TUVpZU5kPWFTVVc2MXNuSjRyMENkK35jW2I9XXdRVmd+NEhqNkplbnlPM2x0fFo/P3BQ'}]);
+_stq.push([ 'clickTrackerInit', '98365122', '2991' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>

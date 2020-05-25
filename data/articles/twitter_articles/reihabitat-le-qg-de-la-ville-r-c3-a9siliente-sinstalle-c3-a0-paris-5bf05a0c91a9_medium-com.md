@@ -1,0 +1,30 @@
+---
+title: "Le QG de la ville résiliente s’installe à Paris"
+url: https://medium.com/@REIHabitat/le-qg-de-la-ville-r%C3%A9siliente-sinstalle-%C3%A0-paris-5bf05a0c91a9#.gcje9sdyz
+keywords: projet,ville,solidaire,paris,factory,vie,résiliente,sociale,sinstalle,wikivillage,qg,quartier,saintblaise
+---
+Le QG de la ville résiliente s'installe à Paris {#00e6 .graf .graf--h3 .graf-after--figure .graf--title name="00e6"}
+===============================================
+
+C'est officiel ! Nous sommes très heureux de vous annoncer que la Semaest a retenu notre projet de WikiVillage Factory, dans le quartier Saint-Blaise, à Paris. Pensé comme un village urbain de 5 étages (7 500 m²), ce nouveau concept d'équipement sera entièrement dédié à l'innovation dans la ville résiliente, à l'économie sociale et solidaire, et à l'agriculture urbaine. {#f8fa .graf .graf--h4 .graf-after--h3 .graf--subtitle name="f8fa"}
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+[![Go to the profile of REI Habitat](https://cdn-images-1.medium.com/fit/c/100/100/1*_t-Of_g5jE8w5xL9qxhg9w.png){.avatar-image .u-size50x50}](https://medium.com/@REIHabitat?source=post_header_lockup){.link .u-baseColor--link .avatar}[REI Habitat](https://medium.com/@REIHabitat){.ds-link .ds-link--styleSubtle .ui-captionStrong .u-inlineBlock .link .link--darken .link--darker}
+
+Jan 9, 2017
+
+Le WikiVillage Factory sera le QG français de la ville résiliente. Notre idée est la suivante : rassembler en un seul et même lieu des laboratoires de recherche, des espaces de résidence et de travail, des lieux de création artistique, des maisons partagées, un café social, des fermes urbaines indoors et outdoors, un fablab ouvert sur le quartier et crèche solidaire. Bref, fonder le premier cluster de référence dédié à la transition écologique et à l'innovation sociale et environnementale.
+
+Le WikiVillage Factory ouvrira ses portes en 2019 dans le quartier Saint-Blaise, dans l'Est parisien. Le quartier est l'un des plus denses de la capitale. Nous croyons en son énergie et son potentiel. Notre projet a été imaginé pour avoir l'impact le plus vertueux possible sur son environnement. Le WikiVillage Factory viendra soutenir la vitalité du tissu économique et associatif local, et pour apporter à Saint-Blaise un maximum de ces "nouvelles richesses" qui permettent d'envisager une vie en ville plus durable et plus résiliente.
+
+Différents espaces s'ouvriront à tous les publics, quel que soit leur âge ou leur niveau de revenus, et permettront de maximiser les relations entre habitants, créatifs, chercheurs et agriculteurs. Au programme : incubation d'entreprises de l'économie sociale et solidaire, nourriture fraîche produite localement et redistribuée dans le réseau AMAP, projets participatifs, multiplication des liens avec les écoles, collèges, commerces et artisans du quartier, crèche solidaire...
+
+> Mettre en réseau tous les acteurs qui œuvrent pour une ville plus résiliente. Multiplier les lieux d'échanges et de solidarité entre les habitants. Ne plus regarder les déchets comme des déchets, mais comme des ressources précieuses, réemployables à l'infini. Offrir à tous une alimentation saine, locale et durable, au coeur de la ville dense. Encourager les expérimentations. Enrichir un écosystème local de créateurs, d'associations, de commerçants, d'artistes et de riverains. Penser global, agir local : voici l'ambition du WikiVillage Factory.
+
+La barre environnementale du projet est fixée le plus haut possible. Objectif zéro carbone, énergie 100% renouvelable, production photovoltaïque locale. La moindre chute de chantier et le moindre déchet seront traités comme des ressources dans un circuit très court. Eaux grises, eaux de pluie, plastique, bois et papier seront réinjectés dans le WikiVillage Factory pour alimenter les potagers et les imprimantes 3D du fablab. Objectif zéro déchets tout au long de la vie du bâtiment, dès sa construction. La construction en structure bois, notre spécialité, permettra un chantier rapide, à faible nuisance, avec un matériau propre, renouvelable et produit en France.
+
+> Tout le projet repose sur une forte dose d'intelligence collective. Nous ne sommes pas seuls : une vingtaine de partenaires sont déjà à l'oeuvre pour faire du WikiVillage Factory une réussite, dont **l'Atelier d'Architecture Autogérée (AAA)**, concepteur du projet. Nous sommes déjà à l'oeuvre pour débuter les chantiers fin 2017.
+
+> REI s'est allié à la foncière responsable **ÉTIC** pour porter le projet. De nouveaux outils financiers permettront de concrétiser notre idée : la plate-forme **WiSeed** nous aidera à organiser une campagne de crowdfunding, et la banque **Triodos**, spécialiste de la banque éthique, participera au financement. Trois bureaux d'études nous assisterons pour réaliser le bâtiment le plus durable possible : **Etamine**, **Orégon** et **Qualiconsult.**
+
+> Et que serait un village sans ses villageois ? **Terre de Liens**, **Jardin de Cocagne** et **Champs des Possibles** viendront donner vie aux jardins et potagers du WikiVillage Factory. Le groupe **WALT** ouvrira le café "Institut de Bonté", **Crescendo** (du groupe SOS) animera la crèche solidaie, et **R-Urban** initiera une plate-forme RecycLab. Les makers d'**Ici Montreuil** disposeront de 2 500 m² pour leur nouveau fab-lab. **Le 6B** trouvera à Saint-Blaise son premier ancrage parisien. Le WikiVillage Factory sera également un lieu pour réfléchir, expérimenter, lancer des prototypes. Le célèbre **MIT** (Massachusetts Institute of Technology), **l'Université de Sheffield** (Grande-Bretagne), **l'Université de Technologie de Compiègne** et le think-tank **Labo ESS** sont étroitement associés au projet.

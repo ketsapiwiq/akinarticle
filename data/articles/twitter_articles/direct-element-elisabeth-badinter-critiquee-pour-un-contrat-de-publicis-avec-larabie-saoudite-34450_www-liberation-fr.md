@@ -1,0 +1,6 @@
+---
+title: "Elisabeth Badinter critiquée pour un contrat de Publicis avec l'Arabie Saoudite"
+url: http://www.liberation.fr/direct/element/elisabeth-badinter-critiquee-pour-un-contrat-de-publicis-avec-larabie-saoudite_34450/
+keywords: quartiers,badinter,critiquée,vote,saoudite,elisabeth,vient,révélation,dune,signer,société,rappelle,contrat,larabie,publicis,voile
+---
+«En l\'espace de dix ans, de nombreuses filles des quartiers se sont mises à porter le voile en France. Révélation divine ? Non, montée de la pression islamique». Ces mots sont ceux d\'Elisabeth Badinter, philosophe, féministe, et actionnaire principale de Publicis (que son père a créé). Or, selon le magazine [Challenges](http://www.challenges.fr/monde/moyen-orient/20160401.CHA7117/comment-l-arabie-saoudite-entend-redorer-son-image-en-france.html), la société de communication vient de signer un contrat lui donnant charge d\'une partie de la com\' de l\'Arabie Saoudite (pays qui, rappelle [Metronews](http://www.challenges.fr/monde/moyen-orient/20160401.CHA7117/comment-l-arabie-saoudite-entend-redorer-son-image-en-france.html), a accordé le droit de vote aux femmes en 2011). De quoi faire fleurir les critiques à l\'égard d\'une posture jugée, du coup, hypocrite\...

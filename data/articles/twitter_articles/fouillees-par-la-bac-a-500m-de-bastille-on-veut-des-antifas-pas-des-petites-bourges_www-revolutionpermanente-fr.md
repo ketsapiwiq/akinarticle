@@ -1,0 +1,16 @@
+---
+title: "Fouillées par la BAC à 500m de Bastille : « On veut des antifas, pas des petites bourges »"
+url: http://www.revolutionpermanente.fr/Fouillees-par-la-BAC-a-500m-de-Bastille-On-veut-des-antifas-pas-des-petites-bourges
+keywords: antifas,manifestation,violemment,cétait,pris,bastille,taper,train,fouillées,sacs,quon,petites,veut,bourges,cest,bac,500m,faire
+---
+*La manifestation en cours à Paris se déroule dans des conditions particulièrement répressives. Par delà le parcours scandaleux d'1,6 kilomètre autour du bassin de l'arsenal, des barrages filtrants avec contrôles des sacs ont été mis en place par la police, et tout élément de protection contre les gaz lacrymogènes a été confisqué aux manifestants. Certains ont été fouillés 3 fois de suite. Plusieurs dizaines d'interpellations ont eu lieu en amont de la manifestation, dont celle de photographes et journalistes reconnus dans les milieux militants comme Gaspard Glanz de Taranis News et Alexis Kraland. Des travailleurs ont été mis au sol et menottés. Leurs collègues exigeant leur libération ont été violemment gazés et matraqués, et 6 postiers ont été interpellés et sont actuellement au commissariat du 12e arrondissement, 80 avenue Daumesnil. Un rassemblement est appelé devant le commissariat pour exiger leur libération.*
+
+Correspondante
+
+J'étais avec une copine, on n'était même pas encore arrivées à la manifestation, on n'était pas loin du métro Saint-Paul. Il y avait des policiers qui rôdaient. Deux policiers de la BAC en civil se sont approchés de nous et on a eu droit à un contrôle d'identité. Ils ont complètement vidé nos sacs et fouillé nos affaires de fond en comble, révisé nos carnets de notes, et ils nous ont menacées. Ils nous ont dit avec mépris qu'on allait être interpelées, qu'on était des « rouges », des « communistes ». L'un d'eux était dans un état pas possible, avec des yeux furibonds, il nous a dit « nous ce qu'on veut c'est des antifas, pas des petites bourges ». Mon amie a été intimidée personnellement. Après avoir vu son adresse sur sa carte d'identité, ils lui ont dit « Tu habites dans le 9e arrondissement ? Moi aussi, on se retrouvera là-bas ». Et puis ils plaisantaient entre eux : « On décide à pile ou face si on les interpelle ? ». Ils ont pris nos identités et ont dit qu'ils nous avaient repérées et qu'ils nous retrouveraient à la fin de la manifestation. Ils soufflaient d'un air exaspéré : « Nous on en a marre de s'en prendre plein la gueule, de se faire taper. Aujourd'hui c'est tolérance zéro ». La BAC se faire taper, c'est le comble ! Ils étaient très agressifs.
+
+J'avais un rouge-à-lèvres dans mon sac, ça les a bien fait rire, c'était un prétexte de plus pour nous humilier. Ils ont pris le sérum physiologique, nos lunettes de protection, ils ont dit « aujourd'hui c'est totalement interdit, vous pouvez aller en prison pour ça ». C'était n'importe quoi. Et puis c'était physiquement intimidant, dès qu'on bougeait ils nous faisaient signe de rester figées contre le mur. Quand j'ai pris mon téléphone pour prévenir les copains qu'on était en train de se faire contrôler, ils me l'ont violemment arraché des mains en disant sur un ton moqueur et menaçant : « Elle est en train de dire à ses potes que les keufs la contrôle ». C'était vraiment pas agréable à vivre.
+
+\
+\
+\

@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="fr"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang="fr"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang="fr"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="fr"> <!--<![endif]-->
+<head>
+    <script>
+    (function(funcName, baseObj) {
+        "use strict";
+
+        funcName = funcName || "_loadScript";
+        baseObj = baseObj || window;
+
+        // add a script tag to the top of the page, with the src=source
+        // async attribute on true is the default behavior
+        // will add each attribute to the script tag of tag_attributes
+        // if callback is a function, will loop until it returns true
+        baseObj[funcName] = function(source, callback, async, tag_attributes) {
+            if(async === undefined){
+                async = true;
+            }
+            if(tag_attributes === undefined){
+                tag_attributes = {};
+            }
+            // console.info('_load: ', source, callback);
+            var _loader = [];
+            _loader.loops = 0;
+            var interval = setInterval(function() {
+                // console.info('_load: Loop', source);
+                if (!_loader.loaded) {
+                    var script = document.createElement('script');
+                    script.async = async;
+                    script.src = source;
+                    for (var property in tag_attributes) {
+                        script.setAttribute(property,tag_attributes[property]);
+                    }
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(script, s);
+                    _loader.loaded = true;
+                    // console.info('_loaded: ', source);
+                } else {
+                    var clear = true;
+                    // after 10 times, just stop trying
+                    if(_loader.loops < 11 && typeof(callback) == 'function'){
+                        clear = callback();
+                    }
+                    // console.info('_clear: ', clear, source);
+                    if (clear == true)
+                        clearInterval(interval);
+                }
+                _loader.loops ++;
+            }, 250);
+        }
+    })("_loadScript", window);
+</script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width">
+    <title>404 | Glamour</title>
+    <!-- Structured Data starts -->
+    <script type="application/ld+json">
+    {"@context":"http://schema.org","headline":"404","@type":"WebPage","url":"https://www.glamourparis.com/404","position":1}
+</script>
+
+    <!-- Structured Data ends -->
+
+        
+    <!-- Meta Information starts -->
+        <meta name="keywords" content="" />
+    <meta name="author" content="Glamour" />
+    <meta name="copyright" content="Glamour" />
+    <meta name="robots" content="max-snippet:300, max-image-preview:large, max-video-preview:30" />
+
+    <!-- Meta Information ends -->
+
+    <!-- Canonical starts -->
+    <link rel="canonical" href="https://www.glamourparis.com/404" />
+    <!-- Canonical ends -->
+
+    
+
+    <meta name="google-site-verification" content="kU52K6HsFBMm3b9coy8mXYFbRZo5FFZdKIH2l1lP_yw" />
+
+    <!-- Facebook tags starts -->
+        <meta property="fb:app_id" content="177808178899421" />
+    <meta property="fb:pages" content="299972228886" />
+
+    <!-- Facebook tags ends -->
+
+    <!-- Open graph starts -->
+        <meta property="og:title" content="404" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.glamourparis.com/404" />
+    <meta property="og:image" content="http://www.glamourparis.com/uploads/images/201619/aa/image_glamour_319.jpeg" />
+    <meta property="og:site_name" content="Glamour" />
+    <meta property="og:description" content="404" />
+    <!-- Open graph ends -->
+
+    <!-- Content properties starts -->
+    
+    <!-- Content properties ends -->
+
+    <!-- Twitter Cards Start -->
+        <meta name="twitter:widgets:csp" content="on" />
+    <meta name="twitter:creator" content="@GlamourParis" />
+    <meta name="twitter:site" content="@GlamourParis" />
+    <meta name="twitter:title" content="404" />
+    <meta name="twitter:image" content="http://www.glamourparis.com/uploads/images/201619/aa/image_glamour_319.jpeg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:description" content="" />
+    <!-- Twitter Cards Ends -->
+
+    <!-- Free tags from domain -->
+    <meta name="google-site-verification" content="8ZzAI-F8REoOniX8nrXWDKejW_EXASgTNhyCq4zT2X4" />
+    <!-- end Free tags from domain -->
+
+    <!-- Free HTML code from navigation -->
+    
+    <!-- end Free HTML code from navigation -->
+
+                                                            
+            <link type="text/css" href="/css/nav-50eeeb2f38.css" rel="stylesheet" />
+    
+    <link rel="preload" href="https://z.moatads.com/condenastheader559028685182/moatheader.js" as="script" crossorigin>
+    <link rel="preconnect" href="https://mb.moatads.com" crossorigin>
+
+    
+    <link rel="shortcut icon" href="/favicon.ico"/>
+            <link rel="icon" type="image/png" href="/favicon.png" sizes="16x16">
+            <link rel="icon" type="image/png" href="/favicon.png" sizes="32x32">
+            <link rel="icon" type="image/png" href="/favicon.png" sizes="64x64">
+            <link rel="icon" type="image/png" href="/favicon.png" sizes="96x96">
+            <link rel="icon" type="image/png" href="/favicon.png" sizes="196x196">
+        <link rel="apple-touch-icon" href="/apple_favicon.png">
+            <link rel="apple-touch-icon" sizes="114x114" href="/apple_favicon.png">
+            <link rel="apple-touch-icon" sizes="152x152" href="/apple_favicon.png">
+            <link rel="apple-touch-icon" sizes="167x167" href="/apple_favicon.png">
+            <link rel="apple-touch-icon" sizes="180x180" href="/apple_favicon.png">
+            <!-- OneTrust Cookies Consent Notice start -->
+    <script src="https://cdn.cookielaw.org/scripttemplates/otSDKStub.js"
+    type="text/javascript"
+    charset="UTF-8"
+    data-domain-script="ebccbd32-4df2-4a64-8015-c33cd2605a1e"></script>
+    <!-- OneTrust Cookies Consent Notice end -->
+    <script>
+    (function() {
+        var moatTimeout = 1000;
+        var timeoutId;
+        var adRequestMade = false;
+
+        function requestAds() {
+            if (adRequestMade) { return }
+            adRequestMade = true;
+            googletag.pubads().display();
+        }
+
+        window['moatYieldReady'] = function() {
+            clearTimeout(timeoutId);
+            window.moatPrebidApi.setMoatTargetingForAllSlots();
+            requestAds();
+        }
+
+        function onTimeout() {
+            window['moatYieldReady'] = false;
+            requestAds();
+        }
+
+        timeoutId = setTimeout(onTimeout, moatTimeout);
+    })();
+</script>
+
+    <script>
+    var customDimensions = {};
+            customDimensions.dimension6 = "error";
+            customDimensions.dimension10 = "1654";
+            customDimensions.dimension18 = "GLAM 404 | 698";
+    </script>
+
+
+     <!-- Google GPT -->
+        <script>
+    var googletag = googletag || {};
+    googletag.cmd = googletag.cmd || [];
+
+    window.aciliaDFP = window.aciliaDFP || {};
+    window.aciliaDFP.slots = window.aciliaDFP.slots || [];
+    window.aciliaDFP.sizes = window.aciliaDFP.sizes || [];
+    window.aciliaDFP.slotSizes = window.aciliaDFP.slotSizes || [];
+    window.aciliaDFP.targeting = window.aciliaDFP.targeting || [];
+
+        var pos_1_defaultList = [
+                    { resolution: "[0, 0]", slotSizes: "[[320, 50], [320, 100], [300, 100], [300, 50], [300, 250], [2,2]]"},
+                    { resolution: "[1024, 0]", slotSizes: "[[728, 90], [300, 250], [2,2]]"},
+                    { resolution: "[1080, 0]", slotSizes: "[[1000, 300], [1000, 250], [1000, 90], [970, 500], [970, 250], [970, 90], [728, 90], [2,2]]"},
+                    { resolution: "[1400, 0]", slotSizes: "[[1000, 300], [1000, 250], [1000, 90], [970, 500], [970, 250], [970, 90], [728, 90], [2,2]]"},
+            ];
+    window.aciliaDFP.sizes['pos_1_default'] = pos_1_defaultList;
+    var pos_2_defaultList = [
+                    { resolution: "[0, 0]", slotSizes: "[[320, 50], [320, 100], [300, 100], [300, 50], [300, 250], [320, 51], [320, 101], [300, 101], [300, 51], [300, 251]]"},
+                    { resolution: "[1024, 0]", slotSizes: "[[320, 50], [320, 100], [300, 100], [300, 50], [300, 250],[320, 51], [320, 101], [300, 101], [300, 51], [300, 251], [728,90], [728,91]]"},
+                    { resolution: "[1080, 0]", slotSizes: "[[320, 50], [320, 100], [300, 100], [300, 50], [300, 250],[320, 52], [320, 101], [300, 101], [300, 52], [300, 252], [300,600], [300,601]]"},
+                    { resolution: "[1400, 0]", slotSizes: "[[320, 50], [320, 100], [300, 100], [300, 50], [300, 250],[320, 52], [320, 101], [300, 101], [300, 52], [300, 252], [300,600], [300,601]]"},
+            ];
+    window.aciliaDFP.sizes['pos_2_default'] = pos_2_defaultList;
+    var pos_3_defaultList = [
+                    { resolution: "[0, 0]", slotSizes: "[[320, 50], [320, 100], [300, 100], [300, 50], [300, 250],[320, 52], [320, 102], [300, 102], [300, 52], [300, 252]]"},
+                    { resolution: "[1024, 0]", slotSizes: "[[320, 50], [320, 100], [300, 100], [300, 50], [300, 250],[320, 52], [320, 102], [300, 102], [300, 52], [300, 252],[300,600], [300,602]]"},
+                    { resolution: "[1080, 0]", slotSizes: "[[320, 50], [320, 100], [300, 100], [300, 50], [300, 250],[320, 52], [320, 102], [300, 102], [300, 52], [300, 252],[300,600], [300,602]]"},
+                    { resolution: "[1400, 0]", slotSizes: "[[320, 50], [320, 100], [300, 100], [300, 50], [300, 250],[320, 52], [320, 102], [300, 102], [300, 52], [300, 252],[300,600], [300,602]]"},
+            ];
+    window.aciliaDFP.sizes['pos_3_default'] = pos_3_defaultList;
+    var pos_4_defaultList = [
+                    { resolution: "[0, 0]", slotSizes: "[[320, 50], [320, 100], [300, 100], [300, 50], [300, 250],[320, 53], [320, 103], [300, 103], [300, 53], [300, 253]]"},
+                    { resolution: "[1024, 0]", slotSizes: "[[320, 50], [320, 100], [300, 100], [300, 50], [300, 250],[320, 53], [320, 103], [300, 103], [300, 53], [300, 253], [300,600], [300,603]]"},
+                    { resolution: "[1080, 0]", slotSizes: "[[320, 50], [320, 100], [300, 100], [300, 50], [300, 250],[320, 53], [320, 103], [300, 103], [300, 53], [300, 253], [300,600], [300,603]]"},
+                    { resolution: "[1400, 0]", slotSizes: "[[320, 50], [320, 100], [300, 100], [300, 50], [300, 250],[320, 53], [320, 103], [300, 103], [300, 53], [300, 253], [300,600], [300,603]]"},
+            ];
+    window.aciliaDFP.sizes['pos_4_default'] = pos_4_defaultList;
+    window.aciliaDFP.slotSizes[1] = 'pos_1_default';
+    window.aciliaDFP.slotSizes[2] = 'pos_2_default';
+    window.aciliaDFP.slotSizes[3] = 'pos_3_default';
+    window.aciliaDFP.slotSizes[4] = 'pos_4_default';
+
+
+        window.aciliaDFP.targeting['article-id'] = '1654';
+    window.aciliaDFP.targeting['content-language'] = 'fr';
+    window.aciliaDFP.targeting['content-subsection'] = '';
+    window.aciliaDFP.targeting['content-model'] = 'error';
+    window.aciliaDFP.targeting['content-keywords'] = [""];
+    window.aciliaDFP.targeting['site-name'] = 'Glamour';
+    window.aciliaDFP.targeting['market-name'] = 'France';
+
+
+        window.aciliaDFP.slots.push({ adUnitPath: "5574/FR-New-New-Glamour/divers/display-pos-1", position: 1, optDiv: "div-gpt-display-pos-1", sizes: [[1000,300], [1000,250], [1000,90], [970,500], [970,250], [728,90], [320,50], [320,100], [300,250], [300, 100], [300, 50], [2,2]] });
+    window.aciliaDFP.slots.push({ adUnitPath: "5574/FR-New-New-Glamour/divers/display-pos-33", position: 33, optDiv: "div-gpt-display-pos-33", sizes: [[3,3]] });
+    window.aciliaDFP.slots.push({ adUnitPath: "5574/FR-New-New-Glamour", position: "out-of-page", optDiv: "div-gpt-display-pos-out-of-page", sizes: "out-of-page" });
+
+</script>
+    <script>
+      console.log('DMP init Started');
+      !function(n,e,o,r,i){
+        if (!e) {
+          e = e || {},
+            window.permutive = e,
+            e.q = [],
+            e.config = i || {},
+            e.config.projectId = o,
+            e.config.apiKey = r,
+            e.config.environment = e.config.environment || "production";
+          for (var t = [
+            "addon",
+            "identify",
+            "track",
+            "trigger",
+            "query",
+            "segment",
+            "segments",
+            "ready",
+            "on",
+            "once",
+            "user",
+            "consent"
+          ], c = 0; c < t.length; c++) {
+            var f = t[c];
+            e[f] = function (n) {
+              return function () {
+                var o = Array.prototype.slice.call(arguments, 0);
+                e.q.push({functionName: n, arguments: o})
+              }
+            }(f)
+          }
+        }
+      }(
+        document,
+        window.permutive,
+        "bd1cec50-00d1-4ce9-9572-785857419a1e",
+        "18d7242e-eb10-47ff-90db-f700653f5d30",
+        { "consentRequired": true }
+      );
+      permutive.addon("web", { page: {}});
+      console.log('DMP init Finished');
+    </script>
+
+    <script async="async" src="https://cdn.permutive.com/bd1cec50-00d1-4ce9-9572-785857419a1e-web.js"></script>
+<script src="/js/dfp-82650527f9.js"></script>
+<script async="async" src="https://www.googletagservices.com/tag/js/gpt.js">
+    aDFP.init();
+</script>
+    <!-- end Google GPT -->
+
+    <!-- Google Tag Manager -->
+    <script>
+    var dataObject = {};
+    if (window.canonicalUrlGA) {
+        dataObject.page = window.canonicalUrlGA;
+    }
+    if (window.canonicalTitleGA) {
+        dataObject.title = window.canonicalTitleGA;
+    }
+    if (window.customDimensions) {
+        for (var key in window.customDimensions) {
+            dataObject[key] = window.customDimensions[key];
+        }
+    }
+
+    if (Object.keys(dataObject).length > 0) {
+        dataLayer = [dataObject];
+    }
+
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WSX46L');
+</script>
+    <!-- END Google Tag Manager -->
+
+    <!-- Meta pagination -->
+                        
+        
+        <!-- END Meta pagination -->
+
+        
+</head>
+<body id="" class="glamour">
+    <!-- Google Tag Manager -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WSX46L"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- END Google Tag Manager -->
+    <!-- DFP Out Of Page -->
+    <div class="aciliaDFP-slot" id="div-gpt-display-pos-out-of-page"
+        data-acilia-dfp="div-gpt-display-pos-out-of-page"
+        >
+</div>
+
+    <!-- END DFP Out Of Page -->
+    <div class="aciliaDFP-slot" id="div-gpt-display-pos-hab"
+        data-acilia-dfp="div-gpt-display-pos-hab"
+        >
+</div>
+
+        <div class="aciliaDFP-slot" id="div-gpt-display-pos-33"
+        data-acilia-dfp="div-gpt-display-pos-33"
+        >
+</div>
+
+    
+        
+            
+    
+            
+    
+        
+    
+                                
+    
+                                
+    
+                                
+    
+                                
+    
+                                
+
+                        
+                        
+<header id="header" data-component="header">
+    <div class="top_bar js-progress-bar">
+        <span class="top_color"></span>
+    </div>
+    <div class="wrapper_header js-wrapper-header">
+        <div class="wrapper_logo">
+            <a href="/"><svg
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    role="img"
+    id="glamour"
+    data-name="glamour"
+    aria-labelledby="logo_glam_title"
+    aria-describedby="logo_glam_desc"
+    viewBox="0 0 164.86 38.63">
+    <title id="logo_glam_title" lang="fr">Icône de Glamour</title>
+    <desc id="logo_glam_desc" lang="fr">Icône utilisée pour identifier la marque</desc>
+    <path d="M31.56.62h-7.5v37.1h14.6v-6.7h-7.2l.1-30.4m24.3 0h-7.8l-8.7 37.1h6.6l1.8-8.1h7.7l1.5 8.1h7.2zm-7.3 23.2l2.9-14 3 13.9z"/>
+    <path d="M63.66 37.72V.62h11.1l4.1 24.5 5.1-24.5h10.1v37.1h-7.4v-26.6l-6 26.6h-4.6l-6-26.6v26.6m48.1-18.6c0-18.5-9.7-19-11.6-19s-11.6.4-11.6 19c0 0-.9 20.6 11.6 19.4 12.5 1.1 11.6-19.4 11.6-19.4zm-8.4 8.8s-.5 4-3.1 4.1h-.1c-2.6-.1-3.1-4.1-3.1-4.1-.4-1.2-.2-14.8-.2-14.8.2-5.4 2.6-6.3 3.4-6.4.9.1 3.2 1 3.4 6.4 0-.1.1 13.6-.3 14.8zm21.1 4.2a3.43 3.43 0 0 0 3.6-4.1V.62h7.1v24.9s1.7 13.5-10.4 13.1h-1.2c-12.1.5-10.4-13.1-10.4-13.1V.62h7.1v27.4a3.43 3.43 0 0 0 3.6 4.1h.6zm28.7-10.3c6.4-4.5 4.9-10.9 4.9-10.9-.2-11.2-10.4-10.4-10.4-10.4h-10.8v37.1h7.2v-14.2h2.6l4.2 14.2h7.6zm-9-4.6V6.52s7.1-1.5 6.6 5.8c-.1 0 .5 5.9-6.6 4.9z"/>
+    <path d="M16.46 13.62h6s1.2-14.2-10.3-13.6c0 0-11.3-.4-12.1 17.3 0 0-1.5 20.6 10.4 21 0 0 6.1.5 8.3-4.7l1 4.1h3.1v-19.4h-11v5.7h4.4s1.1 8-4.4 7.8c0 0-4.3 1.5-4.5-12.6 0 0-.4-12.7 5.1-13 0 0 4.6 0 4 7.4z" class="test"/>
+</svg>
+</a>
+        </div>
+        <div class="wrapper_navigation js-wrapper-navigation">
+            <nav>
+                <ul>
+                                            <li>
+                            <a href="/louvrir" class=""
+                                                        >
+                                L’OUVRIR
+                            </a>
+                        </li>
+                                            <li>
+                            <a href="/cafaitplaisir" class=""
+                                                        >
+                                ÇA FAIT PLAISIR
+                            </a>
+                        </li>
+                                            <li>
+                            <a href="/necliquezpas" class=""
+                                                        >
+                                NE CLIQUEZ PAS
+                            </a>
+                        </li>
+                                            <li>
+                            <a href="/businessplan" class=""
+                                                        >
+                                BUSINESS PLAN
+                            </a>
+                        </li>
+                                            <li>
+                            <a href="/ciao" class=""
+                                                        >
+                                CIAO
+                            </a>
+                        </li>
+                                            <li>
+                            <a href="https://club.glamourparis.com" class="highlight"
+                                                            style="color: #6321cb"
+                                                        >
+                                GLAMOUR FAMILY
+                            </a>
+                        </li>
+                                            <li>
+                            <a href="https://abonnement.condenast.fr/glamour?utm_source=Glamour&amp;utm_medium=Header&amp;utm_campaign=Header+Glamour" class="highlight"
+                                                            style="color: #6321cb"
+                                                        >
+                                ABONNEMENTS
+                            </a>
+                        </li>
+                                    </ul>
+            </nav>
+        </div>
+        <div class="wrapper_social js-wrapper-social">
+            <button class="abonement js-abonement">SUIVEZ NOUS</button>
+            <div class="social hide js-social-options">
+                <div class="container_svg">
+                    <svg
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    role="img"
+    aria-labelledby="glam_logo_small_title"
+    aria-describedby="glam_logo_small_desc"
+    viewBox="7867.02 1358.97 21.77 36.43">
+    <style>.glam_logo_small_path{fill: #ffed00;}</style>
+    <title id="glam_logo_small_title" lang="fr">Icône de Glamour</title>
+    <desc id="glam_logo_small_desc" lang="fr">Icône utilisée pour voir le logotipe</desc>
+    <path d="M7878.43 1381.84h4.16s.98 7.67-4.16 7.34c0 0-4.09 1.47-4.25-12 0 0-.32-12.08 4.82-12.4 0 0 4.32.08 3.75 7.18h5.71s1.06-13.54-9.87-12.97c0 0-10.77-.33-11.5 16.4 0 0-1.48 19.59 9.87 20 0 0 5.79.48 7.91-4.5l.98 3.92h2.94v-18.36h-10.36z" class="glam_logo_small_path"/>
+</svg>                </div>
+                <ul class="social_links">
+                    <li><a target="_blank" class="glam-facebook" href="https://www.facebook.com/glamourparis"></a></li>
+                    <li><a target="_blank" class="glam-twitter" href="https://twitter.com/glamourparis"></a></li>
+                    <li><a target="_blank" class="glam-pinterest" href="https://fr.pinterest.com/glamourfrance"></a></li>
+                    <li><a target="_blank" class="glam-instagram" href="https://instagram.com/glamourparis/"></a></li>
+                    <li><a target="_blank" class="glam-youtube" href="https://www.youtube.com/channel/UCSnniCDEE-rapQ6zriW0LfQ"></a></li>
+                    <li><a target="_blank" class="glam-mail newsletter-modal js-newsletter-modal"></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="main_menu_button">
+            <button class="js-toggle-menu"><span>MENU</span></button>
+            <div class="text_menu"><p>MENU</p></div>
+        </div>
+        <div class="wrapper_menu">
+    <nav>
+        <ul>
+                            <li>
+                    <a href="/louvrir" class="">
+                        <span>L’OUVRIR</span>
+                                                    <figure><img src="https://www.glamourparis.com/uploads/images/thumbs/201810/86/menu_l_ouvrir_7194.jpeg_north_450x90_white.jpg" alt="" title=""/></figure>
+                                            </a>
+                </li>
+                            <li>
+                    <a href="/cafaitplaisir" class="">
+                        <span>ÇA FAIT PLAISIR</span>
+                                                    <figure><img src="https://www.glamourparis.com/uploads/images/thumbs/201810/c8/menu_ca_fait_plaisir_1580.jpeg_north_450x90_white.jpg" alt="" title=""/></figure>
+                                            </a>
+                </li>
+                            <li>
+                    <a href="/necliquezpas" class="">
+                        <span>NE CLIQUEZ PAS</span>
+                                                    <figure><img src="https://www.glamourparis.com/uploads/images/thumbs/201810/a8/menu_ne_cliquez_pas_9214.jpeg_north_450x90_white.jpg" alt="" title=""/></figure>
+                                            </a>
+                </li>
+                            <li>
+                    <a href="/businessplan" class="">
+                        <span>BUSINESS PLAN</span>
+                                                    <figure><img src="https://www.glamourparis.com/uploads/images/thumbs/201810/34/menu_business_plan_2101.jpeg_north_450x90_white.jpg" alt="" title=""/></figure>
+                                            </a>
+                </li>
+                            <li>
+                    <a href="/ciao" class="">
+                        <span>CIAO</span>
+                                                    <figure><img src="https://www.glamourparis.com/uploads/images/thumbs/201810/18/menu_ciao_5308.jpeg_north_450x90_white.jpg" alt="" title=""/></figure>
+                                            </a>
+                </li>
+                            <li>
+                    <a href="https://club.glamourparis.com" class="highlight">
+                        <span>GLAMOUR FAMILY</span>
+                                            </a>
+                </li>
+                            <li>
+                    <a href="https://abonnement.condenast.fr/glamour?utm_source=Glamour&amp;utm_medium=Header&amp;utm_campaign=Header+Glamour" class="highlight">
+                        <span>ABONNEMENTS</span>
+                                            </a>
+                </li>
+                    </ul>
+    </nav>
+    <div class="social">
+        <p>SUIVEZ NOUS</p>
+        <ul class="social_links">
+            <li><a target="_blank" class="glam-facebook" href="https://www.facebook.com/glamourparis"></a></li>
+            <li><a target="_blank" class="glam-twitter" href="https://twitter.com/glamourparis"></a></li>
+            <li><a target="_blank" class="glam-pinterest" href="https://fr.pinterest.com/glamourfrance"></a></li>
+            <li><a target="_blank" class="glam-instagram" href="https://instagram.com/glamourparis/"></a></li>
+            <li><a target="_blank" class="glam-youtube" href="https://www.youtube.com/channel/UCSnniCDEE-rapQ6zriW0LfQ"></a></li>
+            <li><a target="_blank" class="glam-mail newsletter-modal js-newsletter-modal"></a></li>
+        </ul>
+    </div>
+</div>
+<div class="wrapper_back"></div>
+    </div>
+</header>
+
+        
+    
+    
+    <div class="container-fluid main_nav page_404">
+        <div class="row nav_main_article">
+            <figure class="main_image">
+                <picture data-a-lazy class="cover_mobile">
+    <source media="(min-width: 1920px)" data-original-set="https://www.glamourparis.com/uploads/images/thumbs/201810/57/cover_error_mobile_9322.jpeg_north_414x736_transparent.jpg" width="414" height="736">
+    <source media="(min-width: 1280px)" data-original-set="https://www.glamourparis.com/uploads/images/thumbs/201810/57/cover_error_mobile_9322.jpeg_north_414x736_transparent.jpg" width="414" height="736">
+    <source media="(min-width: 1024px)" data-original-set="https://www.glamourparis.com/uploads/images/thumbs/201810/57/cover_error_mobile_9322.jpeg_north_414x736_transparent.jpg" width="414" height="736">
+    <source media="(max-width: 1023px)" data-original-set="https://www.glamourparis.com/uploads/images/thumbs/201810/57/cover_error_mobile_9322.jpeg_north_414x736_transparent.jpg" width="414" height="736">
+
+    <img data-original="https://www.glamourparis.com/uploads/images/thumbs/201810/57/cover_error_mobile_9322.jpeg_north_414x736_transparent.jpg" alt="" title="" width="414" height="736">
+</picture>
+
+                <picture data-a-lazy class="cover_desktop">
+    <source media="(min-width: 1920px)" data-original-set="https://www.glamourparis.com/uploads/images/thumbs/201810/3a/cover_error_desktop_5498.jpeg_north_1920x1080_transparent.jpg" width="1920" height="1080">
+    <source media="(min-width: 1280px)" data-original-set="https://www.glamourparis.com/uploads/images/thumbs/201810/3a/cover_error_desktop_5498.jpeg_north_1280x720_transparent.jpg" width="1280" height="720">
+    <source media="(min-width: 1024px)" data-original-set="https://www.glamourparis.com/uploads/images/thumbs/201810/3a/cover_error_desktop_5498.jpeg_north_1024x576_transparent.jpg" width="1024" height="576">
+    <source media="(max-width: 1023px)" data-original-set="https://www.glamourparis.com/uploads/images/thumbs/201810/3a/cover_error_desktop_5498.jpeg_north_414x736_transparent.jpg" width="414" height="736">
+
+    <img data-original="https://www.glamourparis.com/uploads/images/thumbs/201810/3a/cover_error_desktop_5498.jpeg_north_1920x1080_transparent.jpg" alt="" title="" width="1920" height="1080">
+</picture>
+
+            </figure>
+            <figure class="main_stamp"><picture data-a-lazy class="">
+    <source media="(min-width: 1920px)" data-original-set="https://www.glamourparis.com/uploads/images/thumbs/201810/f8/stamp_error_400_4528_north_408x201_transparent.png" width="408" height="201">
+    <source media="(min-width: 1280px)" data-original-set="https://www.glamourparis.com/uploads/images/thumbs/201810/f8/stamp_error_400_4528_north_272x134_transparent.png" width="272" height="134">
+    <source media="(min-width: 1024px)" data-original-set="https://www.glamourparis.com/uploads/images/thumbs/201810/f8/stamp_error_400_4528_north_236x116_transparent.png" width="236" height="116">
+    <source media="(max-width: 1023px)" data-original-set="https://www.glamourparis.com/uploads/images/thumbs/201810/f8/stamp_error_400_4528_north_236x116_transparent.png" width="236" height="116">
+
+    <img data-original="https://www.glamourparis.com/uploads/images/thumbs/201810/f8/stamp_error_400_4528_north_408x201_transparent.png" alt="" title="" width="408" height="201">
+</picture>
+</figure>
+            <figcaption class="col-13 col-lg-9 main_text">
+                <p class="title"><a href="/">OUTCH ÇA BUGUE, CLIQUE LÀ</a></p>
+                <div class="continue_reading bounce-small">
+                    <svg
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    role="img"
+    aria-labelledby="vote_bad_title"
+    aria-describedby="vote_bad_desc"
+    viewBox="6358.7 4454.07 20.89 33.43"
+    id="NotGlamButton">
+    <style>.vote_bad_path{fill:#ffffff}</style>
+    <title id="vote_bad_title" lang="fr">Icône de voter</title>
+    <desc id="vote_bad_desc" lang="fr">Icône utilisée pour voir valoriser le contenu</desc>
+    <path d="M6370.96 4476.5v8.5a2.78 2.78 0 0 0 2.94 2.5 3.04 3.04 0 0 0 2.9-2.92v-14.21l.56-.56a7.37 7.37 0 0 0 2.24-5.3 10.52 10.52 0 0 0-10.45-10.44 10.52 10.52 0 0 0-10.44 10.45v9.05a2.84 2.84 0 0 0 4.31 2.37 2.73 2.73 0 0 0 2.51 1.81 4.29 4.29 0 0 0 1.53-.28 2.93 2.93 0 0 0 1.4-2.5v-2.65l.28.14a6.3 6.3 0 0 0 2.23.41m-6.7 2.1v-4.19a1.4 1.4 0 0 1 1.4-1.39 2.87 2.87 0 0 0 1.4 2.37v3.2a1.32 1.32 0 0 1-1.4 1.4 1.32 1.32 0 0 1-1.4-1.4zm11.16 8.89v.57a1.58 1.58 0 0 1-1.53 1.67 1.63 1.63 0 0 1-1.53-1.26l.28-12.12a7.1 7.1 0 0 0 2.36-.97l.7-.42zm-15.33-19.33a9.05 9.05 0 1 1 18.1 0 6.37 6.37 0 0 1-1.8 4.32l-.84.83-1.39.98a5.38 5.38 0 0 1-5.01.55l-1.26-.41h-.14a2.65 2.65 0 0 1-.7-1.4 1.4 1.4 0 0 1 1.4-1.39 5.9 5.9 0 0 0 4.18-1.67l1.25-1.26a.67.67 0 0 0 0-.97.56.56 0 0 0-.56-.28.84.84 0 0 0-.56.14l-1.25 1.25a3.95 3.95 0 0 1-3.06 1.4 2.7 2.7 0 0 0-2.37 1.39h-.42a2.96 2.96 0 0 0-2.09.97 2.96 2.96 0 0 0-2.09-.97 2.35 2.35 0 0 0-1.39.42zm0 6.26a1.4 1.4 0 1 1 2.79 0v2.8a1.4 1.4 0 1 1-2.79 0z" class="vote_bad_path"/>
+    <path d="M6366.79 4476.64a3.29 3.29 0 0 0 4.18 0l.97.98a4.71 4.71 0 0 1-5.99 0l.84-.98-.42.56z" class="vote_bad_path"/>
+</svg>                </div>
+            </figcaption>
+        </div>
+        <div class="row banner_container"><div class="aciliaDFP-slot" id="div-gpt-display-pos-1"
+        data-acilia-dfp="div-gpt-display-pos-1"
+        >
+</div>
+</div>
+    </div>
+
+
+    
+                
+
+    
+            
+    
+            
+    
+            
+    
+            
+    
+            
+    
+            
+    
+            
+    
+            
+    
+            
+    
+            
+    
+
+    
+    
+    
+            
+    
+            
+    
+            
+    
+            
+    
+            
+    
+    
+    
+
+    
+            
+    
+            
+    
+            
+    
+            
+    
+            
+    
+            
+    
+            
+    
+            
+    
+
+                        
+                    
+                
+                    
+
+
+
+<footer id="footer" class="js-footer" data-component="footer">
+    <div class="top_footer">
+        <div class="abonnez_vouz_content">
+            <div class="abonnez_vouz_title">
+                <a href="https://abonnement.condenast.fr/glamour">
+                    <span>Abonnez-vous <svg
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    role="img"
+    aria-labelledby="arrow_down_title"
+    aria-describedby="arrow_down_desc"
+    viewBox="7353.25 9662.3 20 20.11">
+    <title id="arrow_down_title" lang="fr">Icône de visiteur</title>
+    <desc id="arrow_down_desc" lang="fr">Icône utilisée pour page visite</desc>
+    <path fill="#144cde" d="M7362.16 9681.94a1.52 1.52 0 0 0 2.2 0l8.4-8.5a1.56 1.56 0 1 0-2.2-2.21l-4.99 4.98c-.42.42-.73.27-.73-.31v-12.03a1.58 1.58 0 0 0-3.15 0v11.98c0 .58-.32.73-.74.31l-4.98-4.99a1.56 1.56 0 1 0-2.21 2.21z"/>
+</svg></span>
+                </a>
+            </div>
+            <div class="last_cover">
+                <a href="https://abonnement.condenast.fr/glamour">
+                                            <img src="https://www.glamourparis.com/uploads/images/thumbs/202008/da/cover_glamour_13_2229.jpeg_north_380x462_white.jpg" alt="" title=""/>
+                                    </a>
+            </div>
+        </div>
+        <div class="mid_footer_container">
+            <div class="mid_footer_content">
+                <div class="glam_links">
+                    <ul>
+                        <li class="arrow_links"><svg
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    role="img"
+    aria-labelledby="arrow_right_title"
+    aria-describedby="arrow_right_desc"
+    viewBox="11831.309 681.513 15.691 15.605"
+    fill="#6321cb">
+    <title id="arrow_right_title" lang="fr">icon arrow right</title>
+    <desc id="arrow_right_desc" lang="fr">icon arrow right</desc>
+    <path data-name="Tracé 149" d="M11846.632 690.167a1.188 1.188 0 0 0 0-1.721l-6.637-6.555a1.217 1.217 0 1 0-1.721 1.721l3.892 3.892c.328.328.2.574-.246.574h-9.382a1.229 1.229 0 1 0 0 2.458h9.341c.451 0 .574.246.246.574l-3.892 3.892a1.217 1.217 0 1 0 1.721 1.721z"/>
+</svg></li>
+                                                    <li><a href="/mode">MODE</a></li>
+                                                    <li><a href="/beaute">BEAUTÉ</a></li>
+                                                    <li><a href="/people">PEOPLE</a></li>
+                                                    <li><a href="/societe">SOCIÉTÉ</a></li>
+                                                    <li><a href="/lifestyle">LIFESTYLE</a></li>
+                                                    <li><a href="/amour-et-sexe">AMOUR &amp; SEXE</a></li>
+                                                    <li><a href="/culture">CULTURE</a></li>
+                                                    <li><a href="/video">VIDÉO</a></li>
+                                                    <li><a href="/planete">PLANÈTE</a></li>
+                                            </ul>
+                </div>
+                <div class="social_content">
+                    <div class="social_title">suivez-nous</div>
+                    <ul id="social_buttons">
+                        <li><a target="_blank" class="glam-facebook" href="https://www.facebook.com/glamourparis"></a></li>
+                        <li><a target="_blank" class="glam-twitter" href="https://twitter.com/glamourparis"></a></li>
+                        <li><a target="_blank" class="glam-pinterest" href="https://fr.pinterest.com/glamourfrance"></a></li>
+                        <li><a target="_blank" class="glam-instagram" href="https://instagram.com/glamourparis/"></a></li>
+                        <li><a target="_blank" class="glam-youtube" href="https://www.youtube.com/channel/UCSnniCDEE-rapQ6zriW0LfQ"></a></li>
+                        <li><a target="_blank" class="glam-mail newsletter-modal js-newsletter-modal"></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="brand_svg">
+                <svg
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    role="img"
+    id="glamour"
+    data-name="glamour"
+    aria-labelledby="logo_glam_title"
+    aria-describedby="logo_glam_desc"
+    viewBox="0 0 164.86 38.63">
+    <title id="logo_glam_title" lang="fr">Icône de Glamour</title>
+    <desc id="logo_glam_desc" lang="fr">Icône utilisée pour identifier la marque</desc>
+    <path d="M31.56.62h-7.5v37.1h14.6v-6.7h-7.2l.1-30.4m24.3 0h-7.8l-8.7 37.1h6.6l1.8-8.1h7.7l1.5 8.1h7.2zm-7.3 23.2l2.9-14 3 13.9z"/>
+    <path d="M63.66 37.72V.62h11.1l4.1 24.5 5.1-24.5h10.1v37.1h-7.4v-26.6l-6 26.6h-4.6l-6-26.6v26.6m48.1-18.6c0-18.5-9.7-19-11.6-19s-11.6.4-11.6 19c0 0-.9 20.6 11.6 19.4 12.5 1.1 11.6-19.4 11.6-19.4zm-8.4 8.8s-.5 4-3.1 4.1h-.1c-2.6-.1-3.1-4.1-3.1-4.1-.4-1.2-.2-14.8-.2-14.8.2-5.4 2.6-6.3 3.4-6.4.9.1 3.2 1 3.4 6.4 0-.1.1 13.6-.3 14.8zm21.1 4.2a3.43 3.43 0 0 0 3.6-4.1V.62h7.1v24.9s1.7 13.5-10.4 13.1h-1.2c-12.1.5-10.4-13.1-10.4-13.1V.62h7.1v27.4a3.43 3.43 0 0 0 3.6 4.1h.6zm28.7-10.3c6.4-4.5 4.9-10.9 4.9-10.9-.2-11.2-10.4-10.4-10.4-10.4h-10.8v37.1h7.2v-14.2h2.6l4.2 14.2h7.6zm-9-4.6V6.52s7.1-1.5 6.6 5.8c-.1 0 .5 5.9-6.6 4.9z"/>
+    <path d="M16.46 13.62h6s1.2-14.2-10.3-13.6c0 0-11.3-.4-12.1 17.3 0 0-1.5 20.6 10.4 21 0 0 6.1.5 8.3-4.7l1 4.1h3.1v-19.4h-11v5.7h4.4s1.1 8-4.4 7.8c0 0-4.3 1.5-4.5-12.6 0 0-.4-12.7 5.1-13 0 0 4.6 0 4 7.4z" class="test"/>
+</svg>            </div>
+        </div>
+    </div>
+    <div class="bottom_footer">
+        <ul class="glamour_links">
+                            <li><a href="https://abonnement.condenast.fr/glamour?utm_source=Glamour&amp;utm_medium=Footer&amp;utm_campaign=Footer+Glamour" target="_blank">Abonnements</a></li>
+                            <li><a href="/redaction" target="_blank">Contact</a></li>
+                            <li><a href="http://www.glamourpub.com/" target="_blank">Publicité</a></li>
+                            <li><a href="/mentions-legales" target="_blank">Mentions légales</a></li>
+                            <li><a href="/politique-de-confidentialite" target="_blank">Politique de confidentialité</a></li>
+                            <li><a href="/gestion-cookies" target="_blank">Cookies</a></li>
+                            <li><a href="http://www.clubcondenast.fr/S-inscrire.html?wpid=1826&amp;ayn_origine=SITEGLAMOUR" target="_blank"> Devenez panéliste</a></li>
+                            <li><a href="/dossiers/A" target="_blank">Index</a></li>
+                        <li>
+                <button id="ot-sdk-btn" class="ot-sdk-show-settings"> Cookie Settings</button>
+            </li>
+        </ul>
+        <ul class="glamour_links">
+            <li>
+                <a href="http://www.condenastinternational.com/" target="_blank">CONDÉ NAST INTERNATIONAL</a>
+            </li>
+        </ul>
+        <div class="glam_sites">
+            <span class="dropdown js-toggle-sites">
+                                    Condé Nast France <div class="svg_arrow"><svg
+    version="1.1"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    role="img"
+    aria-labelledby="arrow_down_title"
+    aria-describedby="arrow_down_desc"
+    viewBox="7353.25 9662.3 20 20.11">
+    <title id="arrow_down_title" lang="fr">Icône de visiteur</title>
+    <desc id="arrow_down_desc" lang="fr">Icône utilisée pour page visite</desc>
+    <path fill="#144cde" d="M7362.16 9681.94a1.52 1.52 0 0 0 2.2 0l8.4-8.5a1.56 1.56 0 1 0-2.2-2.21l-4.99 4.98c-.42.42-.73.27-.73-.31v-12.03a1.58 1.58 0 0 0-3.15 0v11.98c0 .58-.32.73-.74.31l-4.98-4.99a1.56 1.56 0 1 0-2.21 2.21z"/>
+</svg></div>
+                            </span>
+            <ul class="sites_selector">
+                                    <li><a href="https://admagazine.fr" target="_blank">AD</a></li>
+                                    <li><a href="https://www.gqmagazine.fr" target="_blank">GQ</a></li>
+                                    <li><a href="https://www.vanityfair.fr" target="_blank">Vanity Fair</a></li>
+                                    <li><a href="https://www.vogue.fr" target="_blank">Vogue</a></li>
+                            </ul>
+        </div>
+    </div>
+</footer>
+        
+<div id="newsletter-modal" data-component="newsletter-form">
+    <div class="form_inscription js-form-inscription">
+        <span class="glam-close js-close-form"></span>
+        <div class="newsletter-logo">
+            <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="19008.258 35.642 347.742 171.487"
+    role="img"
+    aria-labelledby="newsletter_logo_title"
+    aria-describedby="newsletter_logo_desc">
+    <defs>
+      <style>
+        .cls-1{fill:#144cde}
+      </style>
+    </defs>
+    <g id="Groupe_249" data-name="Groupe 249" transform="translate(18239 -488)">
+      <g id="STAMP" transform="translate(769.258 523.642)">
+        <path id="Tracé_21" data-name="Tracé 21" class="cls-1" d="M0 0v171.487h347.742V0zm4.6 166.883V4.6h338.538v162.448z"/>
+        <path id="Tracé_22" data-name="Tracé 22" class="cls-1" d="M130.9 98.823L122.84 51.8h-21.046v67.247L86.832 51.8H71.871L55.1 122.993h12.5l3.453-15.62h14.8l2.8 15.62h25.32V71.859l11.509 51.134h8.714l11.509-50.969v50.969h14.14V51.8h-19.4zm-58.2-2.466l5.59-26.8 5.755 26.8z" transform="translate(35.494 33.368)"/>
+        <path id="Tracé_23" data-name="Tracé 23" class="cls-1" d="M208.526 91.928a15.187 15.187 0 0 0 6.577-7.892 20.864 20.864 0 0 0 2.137-9.372v-1.151a30.263 30.263 0 0 0-.822-6.741c-3.124-16.277-19.4-14.962-19.4-14.962H176.3V123h13.811V95.709h4.932L203.1 123h14.633l-10.194-30.415c.329-.164.661-.493.987-.657zm-18.415-8.385V63.155s13.482-2.96 12.5 11.016c-.004.164 1.311 11.509-12.5 9.371z" transform="translate(113.567 33.358)"/>
+        <path id="Tracé_24" data-name="Tracé 24" class="cls-1" d="M202.273 54.773a.923.923 0 0 0 .658-.986c0-.987-.986-.987-1.315-.987H200.3v3.782h.493v-1.809h.658c.658 0 .822.164.822.822a3.584 3.584 0 0 0 .164.987h.493a2.8 2.8 0 0 1-.164-1.151c0-.331-.166-.494-.493-.658zm-.658-.164h-.822v-1.151h.822c.329 0 .822 0 .822.658 0 .493-.493.493-.822.493z" transform="translate(129.027 34.012)"/>
+        <path id="Tracé_25" data-name="Tracé 25" class="cls-1" d="M202.517 51.9a3.617 3.617 0 1 0 3.617 3.617 3.545 3.545 0 0 0-3.617-3.617zm0 6.741a3.124 3.124 0 1 1 3.124-3.124 3.234 3.234 0 0 1-3.124 3.124z" transform="translate(128.125 33.432)"/>
+        <path id="Tracé_26" data-name="Tracé 26" class="cls-1" d="M142.208 51.205c-3.617-.164-22.2.658-22.2 36.336 0 0-1.809 39.46 22.2 37.158 23.84 2.3 22.2-37.158 22.2-37.158-.008-35.514-18.747-36.336-22.2-36.336zm6.083 53.271s-.986 7.728-5.919 7.892h-.329c-4.932-.164-5.919-7.892-5.919-7.892-.658-2.3-.493-28.444-.493-28.444.493-10.358 4.933-12 6.577-12.167h-.164c1.644.164 6.083 1.809 6.577 12.167.164 0 .329 26.142-.329 28.444z" transform="translate(77.288 32.976)"/>
+        <path id="Tracé_27" data-name="Tracé 27" class="cls-1" d="M32 97.151h8.385s1.973 15.455-8.385 14.8c0 0-8.221 2.959-8.55-24.169 0 0-.658-24.334 9.7-24.991 0 0 8.714.164 7.563 14.469h11.513s2.137-27.293-19.894-26.142c0 0-21.7-.658-23.183 33.048 0 0-2.96 39.46 19.894 40.282 0 0 11.674.986 15.948-9.043l1.973 7.892h5.919V86.3H32z" transform="translate(5.813 32.903)"/>
+        <path id="Tracé_28" data-name="Tracé 28" class="cls-1" d="M51.5 51.8H37.2v71.193h27.951v-12.825H51.5z" transform="translate(23.963 33.368)"/>
+        <path id="Tracé_29" data-name="Tracé 29" class="cls-1" d="M190.918 51.9h-13.647v52.613s1.315 7.4-6.906 7.892h-1.151c-8.221-.493-6.905-7.892-6.905-7.892V51.9h-13.646v47.845s-3.288 25.978 19.895 24.991h2.3c23.183.822 19.894-24.991 19.894-24.991V51.9z" transform="translate(95.661 33.432)"/>
+        <path id="Tracé_37" data-name="Tracé 37" class="cls-1" d="M254.739 9.9H9.1v58.7h245.639zM10.909 66.788V11.709H252.93v54.915H10.909z" transform="translate(5.862 6.377)"/>
+        <path id="Tracé_38" data-name="Tracé 38" class="cls-1" d="M179.177 18.9L172.6 49.482h7.563l6.412-30.582z" transform="translate(111.184 12.175)"/>
+        <path id="Tracé_39" data-name="Tracé 39" class="cls-1" d="M196.42 25.406a9.772 9.772 0 0 1 6.248 2.631l4.439-6.083s-2.467-3.454-9.043-3.454c-6.083 0-11.674 3.782-12.825 9.372-1.973 9.372 11.838 9.372 11.016 12.989-.329 1.809-2.137 2.466-3.782 2.466-3.782 0-6.577-3.124-6.577-3.124l-5.1 5.755s3.124 4.439 10.194 4.439c6.906 0 11.674-4.439 12.825-9.536 2.137-9.7-11.838-9.043-11.016-12.825.168-1.808 1.976-2.63 3.621-2.63z" transform="translate(116.466 11.917)"/>
+        <path id="Tracé_40" data-name="Tracé 40" class="cls-1" d="M228.4 9.9h-66.1v58.7h66.1zm-64.127 56.888V11.709h62.478v54.915h-62.478z" transform="translate(104.549 6.377)"/>
+      </g>
+      <text id="NEWSLETTER" transform="translate(788 549)" stroke="transparent" font-size="36" font-family="MuseoSans-900,Museo Sans" font-weight="900" letter-spacing="-.005em" fill="#144cde">
+        <tspan x="0" y="34">NEWSLETTER</tspan>
+      </text>
+    </g>
+</svg>
+        </div>
+        <div id="inscription-newsletter-glam"></div>
+        <p class="champs_obligatoires">* champs obligatoires</p>
+    </div>
+</div>
+
+
+    <script type="text/javascript" src="/js/app-d409f0a258.js"></script>
+
+    <!-- Anti iframe tag -->
+    <script>
+    if( window.parent.length !== 0 && window.parent.location.hostname !== window.location.hostname) {
+        window.top.location.replace(document.location.href);
+    }
+</script>
+    <!-- End Anti iframe tag -->
+
+    
+    </body>
+</html>

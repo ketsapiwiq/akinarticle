@@ -1,0 +1,26 @@
+---
+title: "1975 : les quinze theses sur l’autogestion du parti socialiste"
+url: http://www.autogestion.asso.fr/?p=1392
+keywords: nationale,programme,ps,juin,socialiste,21,1975,theses,parti,convention,lautogestion
+---
+[![](https://autogestion.asso.fr/app/uploads/2012/03/QUINZE-THESES-POUR-LAUTOGESTION-199x300.jpg "QUINZE THESES POUR L'AUTOGESTION"){.alignleft .size-medium .wp-image-1397 width="126" height="190"}](https://autogestion.asso.fr/app/uploads/2012/03/QUINZE-THESES-POUR-LAUTOGESTION.jpg)[« Quinze thèses sur l'autogestion »](https://autogestion.asso.fr/app/uploads/2012/03/15-th%C3%A8ses-sur-lautogestion-Le-Poing-et-la-Rose-mai-1975-coll.-FJJ-CAS.pdf) c'est le texte présenté à la convention nationale du Parti socialiste qui se réunit les 21 et 22 juin 1975.  En y consacrant une convention, le Parti socialiste élève au rang de principe l'autogestion, l'officialisant ainsi comme un des aspects de son identité, le distinguant à la fois du passé de la SFIO comme de son partenaire/concurrent, le Parti communiste, qui n'adoptera l'autogestion qu'à son XXIIIème congrès en 1979... après la rupture de l'union de la gauche.
+
+Dès 1971, au sein du nouveau Parti socialiste dont François Mitterand prend la tête, le courant animé par Jean-Pierre Chevènement, le CERES, se voit chargé de la rédaction du programme. Il défend alors une perspective d'autogestion. François Mitterand, n'acceptera pourtant pas qu'y figure en préambule le texte intitulé « l'ordinateur et l'autogestion ». C'est dans la partie consacrée à « la démocratie économique » du programme de gouvernement du Paris socialiste (Changer la vie, Flammarion, 1972), que sont citées les « expériences d'autogestion » au sein du secteur public étendu et renforcé. Il s'agit de l'extension du pouvoir des travailleurs pour la désignation des conseils d'administration, élire la maîtrise et les cadres, l'organisation du travail, la gestion du personnel, l'élaboration et l'approbation des contrats de production dans le cadre du Plan. Dans La Rose au poing, François Mitterand considère que la réalisation d'expériences autogestionnaires, avec les autres mesures, constituent des mesures irréversibles, il ne serait « pas plus aisé de retourner à la société capitaliste qu'il n'était imaginable après Louis XIII de reconstituer la société féodale ». Dans Le vieux, la crise, le neuf, (Flammarion 1975), Jean-Pierre Chevènement développe largement la troisième partie (« le neuf ») à « deux ou trois choses que je sais de l'autogestion ».
+
+C'est après l'entrée au Parti socialiste en 1974 d'une minorité du PSU, conduite par Michel Rocard, qui entraîne également dans « les Assises du socialisme » de nombreux cadres et militants de la CFDT que se prépare la conférence nationale pour l'autogestion. Il s'agit pour le Parti socialiste, engagé par l'union de la gauche dans une coopération concurrentielle avec le PCF, de se doter d'une doctrine qui l'en distingue tout en épousant les aspirations issues de Mai 1968. De fait, Gilles Martinet qui rédige les thèses, bénéficie pour l'occasion d'une alliance de fait entre CERES et proches de Rocard. Pour Eric Melchior (Le PS,du projet au pouvoir, Editions de l'Atelier, 1993) malgré ses confusions, les thèses ont une cohérence qui les distinguent tant du Programme commun de gouvernement que de celui que Mitterand avait défendu aux présidentielles de 1974.  La huitième thèse pensait le programme commun comme première période de transition au socialisme, la dixième thèse dénonçant la vision « bourgeoise » d'un Etat au dessus des  classes et refusant d'utiliser l'appareil d'Etat « tel que l'ont constitué les classes dirigeantes ». Il ne s'agit pas de détruire l'Etat certes, mais ce n'était pas placer, comme le défendait le futur président Mitterrand, l'Etat au centre du processus du changement. La douzième thèse adoptait la problématique du contrôle ouvrier et la quinzième dessine un processus de transformation sociale « où l'étatisme semblait laisser la place à la dynamique sociale » (Eric Melchior).
+
+A (re)lire avec intérêt.
+
+[Sur le site de la Fondation Jean-Jaurès :](http://www.jean-jaures.org/Publications/Dossiers-d-actualite/Juin-1975-le-Parti-socialiste-et-l-autogestion)
+
+-   Débats de la convention nationale du PS sur l'autogestion, 21 juin 197, matin : [débats de la convention nationale du PS sur l\\'autogestion -- 21 juin 1975 (matin) (pdf -- 215,00 ko)](http://www.jean-jaures.org/content/download/14119/136063/file/d%C3%A9bats%20de%20la%20convention%20nationale%20du%20PS%20sur%20l%5C%27autogestion%20-%2021%20juin%201975%20%28matin%29.pdf)
+
+&nbsp;
+
+-   Débats de la convention nationale du PS sur l'autogestion, 21 juin 1975, après-midi : [débats de la convention nationale du PS sur l\\'autogestion -- 21 juin 1975 (ap-midi) (pdf -- 402,43 ko)](http://www.jean-jaures.org/content/download/14118/136054/file/d%C3%A9bats%20de%20la%20convention%20nationale%20du%20PS%20sur%20l%5C%27autogestion%20-%2021%20juin%201975%20%28ap-midi%29.pdf)
+
+&nbsp;
+
+-   Débats de la convention nationale du PS sur l'autogestion, 22 juin 1975 : [débats de la convention nationale du PS sur l\\'autogestion -- 22 juin 1975 (pdf -- 130,26 ko)](http://www.jean-jaures.org/content/download/14120/136072/file/d%C3%A9bats%20de%20la%20convention%20nationale%20du%20PS%20sur%20l%5C%27autogestion%20-%2022%20juin%201975.pdf)
+
+ 

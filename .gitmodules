@@ -1,0 +1,3 @@
+[submodule "knowledge"]
+	path = knowledge
+	url = https://framagit.org/ketsapiwiq/knowledge/

@@ -1,0 +1,20 @@
+---
+title: "Pourquoi le gouvernement protège-t-il les multinationales ?"
+url: http://piketty.blog.lemonde.fr/2015/12/03/pourquoi-le-gouvernement-protege-t-il-les-multinationales/#.VmFY6RrDQZY.twitter
+keywords: risque,députés,public,gouvernement,reporting,pays,décembre,multinationales,financière,protègetil,informations
+---
+En pleine COP 21, alors que la planète entière est réunie à Paris pour tenter de s'accorder sur des principes de solidarité et de responsabilité, le gouvernement français va-t-il prendre la défense de l'opacité financière et des stratégies d'optimisation fiscale des multinationales? C'est malheureusement ce qui se profile.
+
+Un vote important va en effet avoir lieu ce vendredi 4 décembre à l'Assemblée nationale, dans le cadre du projet de loi de finances rectificative. Les députés doivent se prononcer sur un amendement qui introduit un reporting public pays par pays pour les entreprises multinationales. En clair, il s'agit de rendre public un certain nombre d'informations sur les activités des multinationales dans les différents pays où elles opèrent : chiffre d'affaire, effectifs employés, masse salariale, profits réalisés, montant des impôts payés (ou pas), etc. La liste des informations obligatoirement rendues publiques mériterait d'ailleurs d'être élargie, par exemple à la structure des rémunérations versées.
+
+Les députés de la commission des finances se sont prononcés en faveur de cet amendement mercredi 25 novembre. Mais il s'agit désormais de transformer l'essai et ce n'est pas gagné, car le gouvernement est farouchement opposé à ce que ces informations soient rendues publiques. Il souhaite s'en tenir à la proposition minimaliste défendue par le lobby des multinationales et par l'OCDE, selon laquelle ces informations seraient transmises uniquement aux administrations fiscales.
+
+L'argument selon lequel il faudrait préserver le secret des affaires sur les activités réalisées par Google en Irlande ou Total au Congo n'est pourtant guère convaincant. On ne trahit aucun brevet, aucun secret légitime, en imposant le reporting pays par pays. De telles informations sont au contraire indispensables pour que les acteurs de la société civile puissent se mobiliser pour constater année après année les progrès réalisés -- ou non -- en matière de transparence financière et de justice fiscale.
+
+L'autre argument, avancé par le gouvernement, est que l'on ne peut prendre le risque de pénaliser les seules multinationales françaises. Là encore, cela ne tient pas. Les eurodéputés ont voté en juillet dernier le principe du reporting public pays par pays, ouvrant la voie à l'adoption d'une directive européenne ambitieuse sur la question. Si la position conservatrice du gouvernement est suivie, alors la France risque d'envoyer un signal très négatif à l'Union européenne, alors même qu'elle aime se présenter comme un leader sur ces questions de transparence, et de bloquer ainsi toute législation européenne ambitieuse. Espérons que les députés tiennent bon et se prononcent pour cet amendement.
+
+Post scriptum (5 décembre). Malgré l'opposition réitérée du gouvernement, l'amendement sur le reporting public pays par pays a finalement été adoptée le 4 décembre par une courte majorité (moins de 20 députés présents). Il sera examiné la semaine prochaine au Sénat (qui pourrait bien le supprimer ou l'édulcorer), avant de revenir devant l'Assemblée (avec le risque que les lobbies se mobilisent pour le faire annuler en seconde lecture). A suivre donc.
+
+Post scriptum (16 décembre). Patatras! Dans la nuit du 15 au 16 décembre, le gouvernement a contraint ses députés à revoter et à annuler cette mesure. Il sera donc impossible d'accéder à ces informations. L'opacité financière a encore de beaux jours devant elle. [Voir ici.](http://piketty.blog.lemonde.fr/2015/12/16/le-gouvernement-au-secours-de-lopacite-financiere/)
+
+[Signaler ce contenu comme inapproprié](http://www.contact-moderation.com/abuse.asp?origine=LM&language=FR&content_id=blog-2734667)

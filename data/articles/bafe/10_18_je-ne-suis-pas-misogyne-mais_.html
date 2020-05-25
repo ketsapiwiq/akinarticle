@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<!--[if IE 9]>
+<html class="ie9 lt-ie10" lang="fr-FR"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="fr-FR"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="https://pouletrotique.com/xmlrpc.php">
+
+	<title>« Je ne suis pas misogyne, mais… » &#8211; Poulet Rotique</title>
+<meta name="google-site-verification" content="_4co0uCV25Zc7Hwag9udnqi5KkHwM2UN93nziFGHZkI" />
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9wb3VsZXRyb3RpcXVlLmNvbQ%3D%3D"
+		+ "&wpcomid=9466585"
+		+ "&time=1589683794";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//pouletrotique.wordpress.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel="alternate" type="application/rss+xml" title="Poulet Rotique &raquo; Flux" href="https://pouletrotique.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Poulet Rotique &raquo; Flux des commentaires" href="https://pouletrotique.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Poulet Rotique &raquo; « Je ne suis pas misogyne, mais…&nbsp;» Flux des commentaires" href="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s0.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.1"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s0.wp.com/_static/??-eJytU9FuwjAM/KGlptBt5WHiW9LWlEDSRHFC1b+f2xQ0AerQxqOdO599dqB3orZdwC6AicLp2KqOwKOWARvhLIWbKKuJ3uAxTasTEhwxOFmfxBTdwS/YNnJYoW/5xSOU2SpbQRWVbqDSdqJXXvoBKAwanygzsX6oy8HGIFqvmr+W8DKorqVf6PuotSAVUGCjRsJsB+SrvPzcfGwL6LCnqeIs0CgK45RtsjSlxVlh/3KVWnobCfWLNJxHo6K5Upetqe3cSp6tN7ze1NGcFP+2NZmnuWiaLtW/zS4d7Hh6nDdOhhFhWEqiRsOwJVrvmCOqit0gEhdPwoGJzxz8wqXOT3tvH3SQBC47gIM6I0gi5C/KUNgzTMgeyZp7Wx9xrwvYma/8vdyuy6LIi+M342SDvQ==?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<link crossorigin="anonymous" rel='stylesheet' id='hive-fonts-css'  href='https://fonts.googleapis.com/css?family=Droid+Serif%3A400%2C700%2C400italic%7CPlayfair+Display%3A400%2C700%2C900%2C400italic%2C700italic%2C900italic&#038;subset=latin%2Clatin-ext' media='all' />
+<link rel='stylesheet' id='all-css-2-1' href='https://s0.wp.com/_static/??-eJyFjEEOwjAMBD+EMZVopR4Qb0mCG4W6cZS4avk96Qm4hNuMtLO4JXASlaLiskLi1YdYcAsPT1pQJUGSUqnoi+nsSjlhO5mMIysyA4e5wv6/9CTA4owGiT8CE5uQW2kmy+IreqyrL21Fxh3n1uQPHfP7cuv64XIdxm7sn2//hGlI?cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-4-1' href='https://s0.wp.com/_static/??-eJxti0EKgCAQAD+ULWGJHaK3mJgaqyut0fejQ4eo0zAwA2cRlnJ1uUI6RMHDx8xQiKtY0cQdOJg9Zv+wtcwN/F9MNhoUSJ7e8plqcMkxhB480mLwDuY0dYMepVJaqu0CZXY33g==?cssminify=yes' type='text/css' media='all' />
+<script>
+var related_posts_js_options = {"post_heading":"h4"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJx9jMEOwjAMQ3+IruzABgfEt4wtVKmatDSNpv39ggSXHZAsWbae7dfikOekC4iPprdC3b7WRTn5f4AjDHVq0BHyD54zN+D2YSk/MYFTgToF6+zolY8cqStJA7L4CsnOFleytEOy1YPu/WXsb+dxGK5xB1+BRFU='></script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://pouletrotique.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s0.wp.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Docteure Duchesne : sorcière en&nbsp;gynécologie' href='https://pouletrotique.com/2015/09/23/docteure-duchesne-sorciere-en-gynecologie/' />
+<link rel='next' title='Pubs sexistes du jour, bonjour !&nbsp;#17' href='https://pouletrotique.com/2015/10/20/pubs-sexistes-du-jour-bonjour-17/' />
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/" />
+<link rel='shortlink' href='https://wp.me/pDIGR-11f' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fpouletrotique.com%2F2015%2F10%2F18%2Fje-ne-suis-pas-misogyne-mais%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fpouletrotique.com%2F2015%2F10%2F18%2Fje-ne-suis-pas-misogyne-mais%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="« Je ne suis pas misogyne, mais… »" />
+<meta property="og:url" content="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/" />
+<meta property="og:description" content="Quand une phrase commence par «&nbsp;je ne suis pas misogyne, mais…&nbsp;», on peut être à peu près sûr que la suite sera foireuse. Et bien sûr, misogyne." />
+<meta property="article:published_time" content="2015-10-18T15:00:53+00:00" />
+<meta property="article:modified_time" content="2015-10-20T08:56:02+00:00" />
+<meta property="og:site_name" content="Poulet Rotique" />
+<meta property="og:image" content="https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-17-16-31.png" />
+<meta property="og:image:width" content="926" />
+<meta property="og:image:height" content="646" />
+<meta property="og:locale" content="fr_FR" />
+<meta name="twitter:creator" content="@Clarence_ER" />
+<meta name="twitter:site" content="@Clarence_ER" />
+<meta name="twitter:text:title" content="« Je ne suis pas misogyne, mais…&nbsp;»" />
+<meta name="twitter:image" content="https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-17-16-31.png?w=640" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/3434a0ca681ba76c16640cf7c420d171?s=32" sizes="16x16" />
+<link rel="icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/3434a0ca681ba76c16640cf7c420d171?s=32" sizes="16x16" />
+<link rel="apple-touch-icon" href="https://secure.gravatar.com/blavatar/3434a0ca681ba76c16640cf7c420d171?s=114" />
+<link rel='openid.server' href='https://pouletrotique.com/?openidserver=1' />
+<link rel='openid.delegate' href='https://pouletrotique.com/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://pouletrotique.com/osd.xml" title="Poulet Rotique" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<style type="text/css">
+.widget_twitter li {
+	word-wrap: break-word;
+}
+</style>
+		<script type="text/javascript">
+		function __ATA_CC() {var v = document.cookie.match('(^|;) ?personalized-ads-consent=([^;]*)(;|$)');return v ? 1 : 0;}
+		var __ATA_PP = { pt: 1, ht: 0, tn: 'hive', amp: false, siteid: 8982, blogid: 9466585, consent: __ATA_CC() };
+		</script>
+		<script type="text/javascript">
+		!function(t){var n={};function e(r){if(n[r])return n[r].exports;var o=n[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,e),o.l=!0,o.exports}e.m=t,e.c=n,e.d=function(t,n,r){e.o(t,n)||Object.defineProperty(t,n,{enumerable:!0,get:r})},e.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},e.t=function(t,n){if(1&n&&(t=e(t)),8&n)return t;if(4&n&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(e.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&n&&"string"!=typeof t)for(var o in t)e.d(r,o,function(n){return t[n]}.bind(null,o));return r},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,n){return Object.prototype.hasOwnProperty.call(t,n)},e.p="https://c0.pubmine.com/2.6.01584004761084/",e(e.s=184)}({0:function(t,n){t.exports=function(t,n,e){return n in t?Object.defineProperty(t,n,{value:e,enumerable:!0,configurable:!0,writable:!0}):t[n]=e,t}},1:function(t,n){t.exports=function(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}},10:function(t,n,e){"use strict";var r=e(50),o=e(17),i=e(23);t.exports=function(t,n,e){if(!r(t))return e;if(!o(n))return e;try{var u=n.split(".").reduce((function(t,n){return t[n]}),t);return i(u)?e:u}catch(t){return e}}},12:function(t,n){function e(n){return"function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?t.exports=e=function(t){return typeof t}:t.exports=e=function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},e(n)}t.exports=e},14:function(t,n,e){"use strict";t.exports=function(t){return"function"==typeof t}},15:function(t,n,e){"use strict";t.exports=function(){}},17:function(t,n,e){"use strict";t.exports=function(t){return"string"==typeof t}},184:function(t,n,e){"use strict";e.r(n);var r=e(0),o=e.n(r),i=e(12),u=e.n(i),c=e(32),f=e.n(c),s=e(15),a=e.n(s),p=e(37),l=e.n(p),d=e(52),v=e(53),m=e(28);function y(t,n){var e=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);n&&(r=r.filter((function(n){return Object.getOwnPropertyDescriptor(t,n).enumerable}))),e.push.apply(e,r)}return e}function b(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},n={};"object"===u()(window.__ATA_PP)&&null!==window.__ATA_PP&&(n=window.__ATA_PP);var e=function(t){for(var n=1;n<arguments.length;n++){var e=null!=arguments[n]?arguments[n]:{};n%2?y(Object(e),!0).forEach((function(n){o()(t,n,e[n])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(e)):y(Object(e)).forEach((function(n){Object.defineProperty(t,n,Object.getOwnPropertyDescriptor(e,n))}))}return t}({r:(new Date).getTime()},n,{},Object(d.a)(t),{ref:window.top!==window?document.referrer:window.location.href,us_privacy:Object(v.a)()}),r=l()("//s.pubmine.com/mhead.js",e);f()(r,a.a)}Object(m.b)()?Object(m.a)().then(b,b):b()},2:function(t,n){function e(t,n){for(var e=0;e<n.length;e++){var r=n[e];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}t.exports=function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}},21:function(t,n,e){"use strict";t.exports=function(t){return"string"==typeof t&&t.length>0}},23:function(t,n,e){"use strict";t.exports=function(t){return void 0===t}},24:function(t,n,e){"use strict";t.exports=function(t,n){return t.indexOf(n)>-1}},28:function(t,n,e){"use strict";e.d(n,"a",(function(){return p})),e.d(n,"b",(function(){return l}));var r=e(38),o=e.n(r),i=e(10),u=e.n(i),c=e(14),f=e.n(c),s=e(4);function a(t){var n=Date.now();return function(t){return new o.a((function(n,e){var r;window.setTimeout((function(){clearTimeout(r),e&&e("cmp ping timeout")}),t),function t(){window.__cmp?window.__cmp("ping",null,(function(o,i){i&&o.cmpLoaded?n():i?r=window.setTimeout(t,50):e&&e("cmp ping returned error with data: ".concat(JSON.stringify(o)))})):e&&e("CMP is not defined")}()}))}(t).then((function(){var e=Date.now()-n,r=t-e;return new o.a((function(t,n){window.__cmp?(window.__cmp("getConsentData",null,(function(e,r){r?t(e):n&&n("cmp getConsentData returned error with data: ".concat(JSON.stringify(e)))})),setTimeout((function(){n&&n("cmp getConsentData timeout")}),r)):n&&n("CMP is not defined")}))}))}function p(){return a(arguments.length>0&&void 0!==arguments[0]?arguments[0]:500).catch((function(t){return s.a.error(t),"boolean"==typeof(n=u()(window,"__ATA_PP.gdpr_applies"))?{gdprApplies:n}:{};var n}))}function l(){return f()(window.__cmp)}},29:function(t,n,e){"use strict";t.exports=function(t,n){for(var e=0,r=t.length;e<r;e++){var o=t[e];if(n(o,e))return o}return null}},30:function(t,n,e){"use strict";var r=e(29),o=e(24);t.exports=function(t,n){void 0===n&&(n=document.cookie);var e=n.split("; "),i=r(e,(function(n){return o(n,t+"=")}));return i?i.split("=")[1]:""}},32:function(t,n,e){"use strict";var r=e(15),o=e(14);t.exports=function(t,n,e){var i,u,c=document.createElement("script"),f=n instanceof HTMLElement&&n;if(i=o(n)?n:o(e)?e:r,c.src=t,c.onload=function(){i(void 0)},c.onerror=function(){i("error")},f)u=f;else{var s=document.getElementsByTagName("head");u=s&&0!==s.length?s[0]:document.documentElement}u.appendChild(c)}},37:function(t,n,e){"use strict";var r=e(24),o=e(89);t.exports=function(t,n){var e=o(n);return 0===e.length?t:t+(r(t,"?")?"&":"?")+e}},38:function(t,n,e){"use strict";var r,o=e(51),i=e(14);!function(t){t.REJECTED="rejected",t.RESOLVED="resolved",t.PENDING="pending"}(r||(r={}));var u=function(){function t(t,n){var e=this;this.status=r.PENDING,this.emitter=new o,this.onFulfilled=function(t){e.status===r.PENDING&&(e.status=r.RESOLVED,e.emitter.emit(r.RESOLVED,[t]))},this.onRejected=function(t){e.status===r.PENDING&&(e.status=r.REJECTED,e.emitter.emit(r.REJECTED,[t]))};var i=function(){return t(e.onFulfilled,e.onRejected)};n?i():setTimeout(i,0)}return t.resolve=function(n){return new t((function(t){t(n)}))},t.reject=function(n){return new t((function(t,e){e(n)}))},t.prototype.then=function(n,e){var o=this;return new t((function(u,c){o.emitter.on(r.RESOLVED,(function(e){if(i(n)){var r=n(e);r instanceof t?r.then(u,c):u(r)}else u(e)})),o.emitter.on(r.REJECTED,(function(n){if(i(e)){var r=e(n);r instanceof t?r.then(u,c):u(r)}else c(n)}))}),!0)},t.prototype.catch=function(n){var e=this;return new t((function(o){i(n)&&e.emitter.on(r.REJECTED,(function(e){var r=n(e);r instanceof t?r.then(o):o(r)})),e.emitter.on(r.RESOLVED,o)}),!0)},t}();t.exports=u},4:function(t,n,e){"use strict";var r=e(1),o=e.n(r),i=e(2),u=e.n(i),c=e(0),f=e.n(c),s=function(){function t(){o()(this,t)}return u()(t,null,[{key:"configure",value:function(n){t.config=n}},{key:"error",value:function(t){function n(n,e){return t.apply(this,arguments)}return n.toString=function(){return t.toString()},n}((function(t,n){this.config&&this.config.onError?this.config.onError(t,n):window.console&&console.log(t,n)}))}]),t}();f()(s,"config",void 0),n.a=s},50:function(t,n,e){"use strict";t.exports=function(t){var n=typeof t;return"object"===n&&null!=t||"function"===n}},51:function(t,n,e){"use strict";var r=function(){function t(){this.events={}}return t.prototype.on=function(t,n){if(this.events[t]){if(-1!==(e=this.events[t]).indexOf(n))throw new Error('This handler has already been subcribed for "'+t+'" event');e.push(n)}else{var e;(e=[]).push(n),this.events[t]=e}},t.prototype.off=function(t,n){var e=this.events[t],r=e.indexOf(n);-1!==r&&e.splice(r,1)},t.prototype.emit=function(t,n){void 0===n&&(n=[]);var e=this.events[t];e&&e.map((function(t){n?t.apply(void 0,n):t()}))},t}();t.exports=r},52:function(t,n,e){"use strict";e.d(n,"a",(function(){return i}));var r=e(17),o=e.n(r);function i(t){var n=t.gdprApplies,e=t.consentData;return{gdpr:"boolean"==typeof n?Number(n):void 0,gdpr_consent:o()(e)?e:void 0}}},53:function(t,n,e){"use strict";e.d(n,"a",(function(){return f}));var r=e(30),o=e.n(r),i=e(21),u=e.n(i),c="usprivacy";function f(){var t=o()(c);return u()(t)?t:null}},62:function(t,n,e){"use strict";t.exports=function(t){return null===t}},89:function(t,n,e){"use strict";var r=e(62),o=e(23);t.exports=function(t){var n=Object.keys(t),e=[];return n.forEach((function(n){var i=t[n];r(i)||o(i)||e.push(n+"="+encodeURIComponent(t[n]))})),e.join("&")}}});
+		</script><meta name="application-name" content="Poulet Rotique" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Par Clarence Edgard-Rosa" /><meta name="msapplication-task" content="name=Souscrire;action-uri=https://pouletrotique.com/feed/;icon-uri=https://secure.gravatar.com/blavatar/3434a0ca681ba76c16640cf7c420d171?s=16" /><meta name="msapplication-task" content="name=Inscrivez-vous pour créer un blog gratuitement;action-uri=http://wordpress.com/signup/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Assistance WordPress.com;action-uri=http://support.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Forums WordPress.com;action-uri=http://forums.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="description" content="Quand une phrase commence par «&nbsp;je ne suis pas misogyne, mais…&nbsp;», on peut être à peu près sûr que la suite sera foireuse. Et bien sûr, misogyne. C’est ce qu’a prouvé le rappeur T.I. dans une interview au cours de laquelle il s’est exprimé sur la candidature de Hillary Clinton à la présidentielle américaine. «&nbsp;Je&hellip;" />
+			<!-- Site Logo: hide header text -->
+			<style type="text/css">
+			.site-title, .site-description-text {
+				position: absolute;
+				clip: rect(1px, 1px, 1px, 1px);
+			}
+			</style>
+			<link rel="amphtml" href="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/amp/">
+	<!--[if !IE]><!-->
+	<script>
+		if (/*@cc_on!@*/false) {
+			document.documentElement.className += ' ie10';
+		}
+	</script>
+	<!--<![endif]-->
+</head>
+
+<body class="post-template-default single single-post postid-3921 single-format-standard customizer-styles-applied has_sidebar has-site-logo highlander-enabled highlander-dark">
+<div id="page" class="hfeed site">
+
+	<a class="skip-link screen-reader-text" href="#content">Aller au contenu principal</a>
+
+	<header id="masthead" class="site-header" role="banner">
+
+		<div class="container">
+			<div class="site-branding">
+				<a href="https://pouletrotique.com/" class="site-logo-link" rel="home" itemprop="url"><img width="1360" height="340" src="https://pouletrotique.files.wordpress.com/2014/11/pr1bis-header.jpg?w=1360" class="site-logo attachment-hive-site-logo" alt="" data-size="hive-site-logo" itemprop="logo" srcset="https://pouletrotique.files.wordpress.com/2014/11/pr1bis-header.jpg?w=1360 1360w, https://pouletrotique.files.wordpress.com/2014/11/pr1bis-header.jpg?w=2720 2720w, https://pouletrotique.files.wordpress.com/2014/11/pr1bis-header.jpg?w=150 150w, https://pouletrotique.files.wordpress.com/2014/11/pr1bis-header.jpg?w=300 300w, https://pouletrotique.files.wordpress.com/2014/11/pr1bis-header.jpg?w=768 768w, https://pouletrotique.files.wordpress.com/2014/11/pr1bis-header.jpg?w=1024 1024w" sizes="(max-width: 1360px) 100vw, 1360px" data-attachment-id="2453" data-permalink="https://pouletrotique.com/pr1bis-header/" data-orig-file="https://pouletrotique.files.wordpress.com/2014/11/pr1bis-header.jpg" data-orig-size="4167,1042" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="pouletrotique_header" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2014/11/pr1bis-header.jpg?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2014/11/pr1bis-header.jpg?w=940" /></a>
+				<h1 class="site-title site-title--medium">
+					<a href="https://pouletrotique.com/" rel="home">
+						Poulet Rotique					</a>
+				</h1>
+
+				<div class="site-description">
+					<span class="site-description-text">Par Clarence Edgard-Rosa</span>
+				</div>
+			</div>
+
+			<nav id="site-navigation" class="main-navigation" role="navigation">
+				<h5 class="screen-reader-text">Navigation principale</h5>
+							</nav><!-- #site-navigation -->
+		</div>
+
+	</header><!-- #masthead -->
+
+	<div id="content" class="site-content">
+
+		<div class="container">
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+			
+<article id="post-3921" class="post-3921 post type-post status-publish format-standard has-post-thumbnail hentry category-la-bagarre tag-femme tag-hillary-clinton tag-je-ne-suis-pas-misogyne-mais tag-misogynie tag-pouvoir tag-sexisme tag-t-i ">
+	
+	<header class="entry-header">
+
+		<div class="entry-meta">
+			<span class="posted-by"> <span class="author vcard">
+					<a class="url fn n" href="https://pouletrotique.com/author/pouletrotique/">Clarence Edgard-Rosa
+					</a>
+				</span></span>
+<span class="posted-on"><a href="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/" rel="bookmark"><time class="entry-date published" datetime="2015-10-18T17:00:53+02:00">18 octobre 2015</time></a></span>				<span class="cat-links">
+					<a href="https://pouletrotique.com/category/la-bagarre/" rel="category tag">La bagarre</a>				</span>
+					</div>
+		<h1 class="entry-title">&laquo;&nbsp;Je ne suis pas misogyne, mais&hellip;&nbsp;&raquo;
+</h1>
+	</header><!-- .entry-header -->
+
+			<div class="entry-featured  entry-thumbnail">
+			<img width="926" height="646" src="https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-17-16-31.png?w=926" class="attachment-hive-single-image size-hive-single-image wp-post-image" alt="" srcset="https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-17-16-31.png 926w, https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-17-16-31.png?w=150 150w, https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-17-16-31.png?w=300 300w, https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-17-16-31.png?w=768 768w" sizes="(max-width: 926px) 100vw, 926px" data-attachment-id="3951" data-permalink="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/capture-decran-2015-10-18-a-17-16-31/" data-orig-file="https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-17-16-31.png" data-orig-size="926,646" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-17-16-31.png?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-17-16-31.png?w=926" />					</div>
+	
+		<div class="entry-content" data-first_letter="Q">
+		<p>Quand une phrase commence par «&nbsp;<em>je ne suis pas misogyne, mais…</em>&nbsp;», on peut être à peu près sûr que la suite sera foireuse. Et bien sûr, misogyne.<span id="more-3921"></span> C’est ce qu’a prouvé le rappeur T.I. dans une interview au cours de laquelle il s’est exprimé sur la candidature de Hillary Clinton à la présidentielle américaine.</p>
+<p><em>«&nbsp;Je ne suis pas misogyne, mais je ne peux pas élire une femme comme leader du monde libre </em>[ça veut dire les Etats-Unis, dans un langage légèrement dépassé idéologiquement]<em>. Pour n’importe quel poste, je pense qu’une femme peut assurer. Mais présidente ? Je sais que les femmes prennent des décisions irréfléchies sur le coup de l’émotion &#8211; elles prennent des décisions très permanentes, définitives &#8211; et ensuite, c’est comme si ça n’était pas arrivé, ou elles n’y étaient pour rien. </em>[…]<em> Le monde n’est pas encore prêt. Je crois qu’on pourrait élire le monstre du Lochness président avant d’élire une femme.&nbsp;»&nbsp;</em></p>
+<p>Depuis, le rappeur s’est excusé dans un tweet. Faut croire qu’il s’était exprimé de manière irréfléchie sous le coup de l’émotion… De manière suffisamment permanente et définitive pour qu’il ait besoin de se laver de ses conneries en public. Une vraie&nbsp;bonne femme !</p>
+<p>Qu’est ce qui pose problème de manière aussi viscérale dans le fait qu’une femme puisse gouverner ? Deux ressorts s’opposent en duel : le premier consiste à mettre en avant ses caractéristiques toutes féminines, le second veut qu’au contraire une femme de pouvoir soit trop masculine pour être honnête. Quoi qu&rsquo;il en soit, ça ne va jamais.</p>
+<table style="border:0;height:392px;" width="526">
+<tbody>
+<tr>
+<td><span class="alignnone"><img data-attachment-id="3922" data-permalink="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/2014-01-18-hillarycov-thumb/" data-orig-file="https://pouletrotique.files.wordpress.com/2015/10/2014-01-18-hillarycov-thumb.jpg" data-orig-size="428,570" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="2014-01-18-hillarycov-thumb" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2015/10/2014-01-18-hillarycov-thumb.jpg?w=225" data-large-file="https://pouletrotique.files.wordpress.com/2015/10/2014-01-18-hillarycov-thumb.jpg?w=428" class="alignnone wp-image-3922 size-medium" src="https://pouletrotique.files.wordpress.com/2015/10/2014-01-18-hillarycov-thumb.jpg?w=225&#038;h=300" alt="2014-01-18-hillarycov-thumb" width="225" height="300" srcset="https://pouletrotique.files.wordpress.com/2015/10/2014-01-18-hillarycov-thumb.jpg?w=225&amp;h=300 225w, https://pouletrotique.files.wordpress.com/2015/10/2014-01-18-hillarycov-thumb.jpg?w=113&amp;h=150 113w, https://pouletrotique.files.wordpress.com/2015/10/2014-01-18-hillarycov-thumb.jpg 428w" sizes="(max-width: 225px) 100vw, 225px"></span></td>
+<td>
+<h3>Ambitieuse<br />
+= <em><strong>Ecrasante</strong></em></h3>
+<p>Cette une du <em>Time</em> ouvre&nbsp;douloureusement&nbsp;les hostilités&nbsp;: Hillary Clinton y&nbsp;écrase &#8211; littéralement &#8211; non pas ses adversaires mais les hommes.&nbsp;La fameuse menace de la chaussure à talon&#8230;</td>
+</tr>
+<tr>
+<td>
+<h3><span class="alignnone"><img data-attachment-id="3923" data-permalink="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/hillary-clinton-nypost/" data-orig-file="https://pouletrotique.files.wordpress.com/2015/10/hillary-clinton-nypost.jpg" data-orig-size="700,758" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="hillary-clinton-nypost" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2015/10/hillary-clinton-nypost.jpg?w=277" data-large-file="https://pouletrotique.files.wordpress.com/2015/10/hillary-clinton-nypost.jpg?w=700" class="alignnone wp-image-3923" src="https://pouletrotique.files.wordpress.com/2015/10/hillary-clinton-nypost.jpg?w=225&#038;h=244" alt="hillary-clinton-nypost" width="225" height="244" srcset="https://pouletrotique.files.wordpress.com/2015/10/hillary-clinton-nypost.jpg?w=225&amp;h=244 225w, https://pouletrotique.files.wordpress.com/2015/10/hillary-clinton-nypost.jpg?w=450&amp;h=488 450w, https://pouletrotique.files.wordpress.com/2015/10/hillary-clinton-nypost.jpg?w=139&amp;h=150 139w, https://pouletrotique.files.wordpress.com/2015/10/hillary-clinton-nypost.jpg?w=277&amp;h=300 277w" sizes="(max-width: 225px) 100vw, 225px"></span></h3>
+</td>
+<td>
+<h3>Ferme<br />
+=&nbsp;<em><strong>Colérique</strong></em></h3>
+<p>Quand Hillary Clinton s&rsquo;exprime&nbsp;avec fermeté, on en conclue assez vite qu&rsquo;elle&nbsp;&laquo;&nbsp;<em>explose de rage</em>&laquo;&nbsp;. Et bien sûr, qui flippe ? Bill, tout amoindri par son effroyable épouse.</td>
+</tr>
+<tr>
+<td>
+<h3><span class="alignnone"><img data-attachment-id="3933" data-permalink="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/capture-decran-2015-10-18-a-11-46-17/" data-orig-file="https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-11-46-17.png" data-orig-size="312,600" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-11-46-17.png?w=156" data-large-file="https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-11-46-17.png?w=312" class="alignnone wp-image-3933" src="https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-11-46-17.png?w=225&#038;h=433" alt="" width="225" height="433" srcset="https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-11-46-17.png?w=225&amp;h=433 225w, https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-11-46-17.png?w=78&amp;h=150 78w, https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-11-46-17.png?w=156&amp;h=300 156w, https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-11-46-17.png 312w" sizes="(max-width: 225px) 100vw, 225px"></span></h3>
+</td>
+<td>
+<h3>Puissante<br />
+= <em><strong>Castratrice</strong></em></h3>
+<p><em>Urban Outfitters</em> a sorti un casse-noix à l&rsquo;effigie de Clinton, histoire d&rsquo;aller au bout de la grosse blague selon laquelle&nbsp;elle émascule les hommes. Sous une pluie de critiques, la marque s&rsquo;est rendue compte qu&rsquo;elle avait merdé, mais plusieurs petits malins ont ressorti un produit quasi-identique en moins de deux.</td>
+</tr>
+<tr>
+<td>
+<h3><span class="alignnone"><img data-attachment-id="3937" data-permalink="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/capture-decran-2015-10-18-a-13-44-24/" data-orig-file="https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-13-44-24.png" data-orig-size="447,367" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-13-44-24.png?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-13-44-24.png?w=447" class="alignnone wp-image-3937" src="https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-13-44-24.png?w=225&#038;h=185" alt="" width="225" height="185" srcset="https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-13-44-24.png?w=225&amp;h=185 225w, https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-13-44-24.png?w=150&amp;h=123 150w, https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-13-44-24.png?w=300&amp;h=246 300w, https://pouletrotique.files.wordpress.com/2015/10/capture-d_c3a9cran-2015-10-18-c3a0-13-44-24.png 447w" sizes="(max-width: 225px) 100vw, 225px"></span></h3>
+</td>
+<td>
+<h3>Cocu<br />
+= <em><strong>Suspecte</strong></em></h3>
+<p>&laquo;&nbsp;<em>Si Hillary Clinton ne peut pas satisfaire son mari, qu&rsquo;est ce qui lui fait penser qu&rsquo;elle pourra satisfaire l&rsquo;Amérique ?</em>&nbsp;&raquo;&nbsp;Donald Trump aurait-il balancé une telle stupidité à propos de son adversaire, si c&rsquo;était&nbsp;un homme ?</td>
+</tr>
+<tr>
+<td>&nbsp;<span class="alignnone"><img data-attachment-id="3924" data-permalink="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/hillary-clinton-sexist-media/" data-orig-file="https://pouletrotique.files.wordpress.com/2015/10/hillary-clinton-sexist-media.jpg" data-orig-size="371,500" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="hillary-clinton-sexist-media" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2015/10/hillary-clinton-sexist-media.jpg?w=223" data-large-file="https://pouletrotique.files.wordpress.com/2015/10/hillary-clinton-sexist-media.jpg?w=371" class="alignnone wp-image-3924" src="https://pouletrotique.files.wordpress.com/2015/10/hillary-clinton-sexist-media.jpg?w=225&#038;h=303" alt="hillary-clinton-sexist-media" width="225" height="303" srcset="https://pouletrotique.files.wordpress.com/2015/10/hillary-clinton-sexist-media.jpg?w=225&amp;h=303 225w, https://pouletrotique.files.wordpress.com/2015/10/hillary-clinton-sexist-media.jpg?w=111&amp;h=150 111w, https://pouletrotique.files.wordpress.com/2015/10/hillary-clinton-sexist-media.jpg 371w" sizes="(max-width: 225px) 100vw, 225px"></span></td>
+<td>
+<h3>Douée de parole<br />
+= <strong><em>Hystérique</em></strong></h3>
+<p>Plutôt que de s&rsquo;attaquer à ses idées, il est beaucoup plus simple de montrer Hillary Clinton comme une parfaite cinglée. &laquo;&nbsp;<em>Les voix dans sa tête</em>&laquo;&nbsp;, titre le journal. &laquo;&nbsp;<em>Le psychodrame fatal</em>&laquo;&nbsp;, attaque-t-il encore. C&rsquo;est bien, ça permet d&rsquo;éviter tout débat de fond.</td>
+</tr>
+<tr>
+<td>
+<h3><span class="alignnone"><img data-attachment-id="3942" data-permalink="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/hillary_pins1/" data-orig-file="https://pouletrotique.files.wordpress.com/2015/10/hillary_pins1.jpg" data-orig-size="750,500" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;1&quot;}" data-image-title="hillary_pins1" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2015/10/hillary_pins1.jpg?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2015/10/hillary_pins1.jpg?w=750" class="alignnone wp-image-3942" src="https://pouletrotique.files.wordpress.com/2015/10/hillary_pins1.jpg?w=225&#038;h=150" alt="hillary_pins1" width="225" height="150" srcset="https://pouletrotique.files.wordpress.com/2015/10/hillary_pins1.jpg?w=225&amp;h=150 225w, https://pouletrotique.files.wordpress.com/2015/10/hillary_pins1.jpg?w=450&amp;h=300 450w, https://pouletrotique.files.wordpress.com/2015/10/hillary_pins1.jpg?w=150&amp;h=100 150w, https://pouletrotique.files.wordpress.com/2015/10/hillary_pins1.jpg?w=300&amp;h=200 300w" sizes="(max-width: 225px) 100vw, 225px"></span></h3>
+</td>
+<td>
+<h3>Femme<br />
+= <em><strong>Bout de viande&nbsp;</strong></em></h3>
+<p>&laquo;&nbsp;<em>Deux&nbsp;grosses cuisses,&nbsp;une petite poitrine, aile gauche.</em>&nbsp;&raquo; Et quand on a déjà utilisé toutes les solutions précédemment énoncées, quoi de&nbsp;plus efficace pour discréditer une candidate à la présidentielle que de la comparer à un morceau de poulet ?</td>
+</tr>
+</tbody>
+</table>
+<p>Si Hillary Clinton n&rsquo;a pas encore eu droit à un élégant <a href="http://www.liberation.fr/politiques/2006/11/18/qui-sont-les-vrais-ennemis-de-segolene-royal-l-histoire-a-deja-repondu_5490" target="_blank">&laquo;&nbsp;<em>qui va garder les enfants ?</em>&laquo;&nbsp;</a>, c&rsquo;est probablement qu&rsquo;on lui reproche déjà d&rsquo;être trop vieille pour être présidente. On aura un tout petit peu avancé au moment où on aura compris que voter pour une femme parce qu&rsquo;elle est une femme n&rsquo;est pas plus un acte féministe que de&nbsp;débattre sur&nbsp;sa coupe de cheveux plutôt que son programme.</p>
+<div class="jetpack-video-wrapper">
+<div class="embed-funnyordie"><iframe src="//www.funnyordie.com/embed/6fa42cb5ed" width="940" height="568" frameborder="0" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></p>
+<div style="text-align:left;font-size:x-small;margin-top:0;width:940px;"><a href="http://www.funnyordie.com/videos/6fa42cb5ed/questions-about-hillary-s-candidacy" title="from missi pyle, Don Colliver">Hillary Clinton Is Running For President</a> from <a href="http://www.funnyordie.com/missipyle">missi pyle</a></div>
+</div>
+</div>
+<div id="jp-post-flair" class="sharedaddy sharedaddy-dark sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon sd-sharing"><h3 class="sd-title">Partager :</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-3921" class="share-twitter sd-button share-icon no-text" href="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/?share=twitter" target="_blank" title="Cliquez pour partager sur Twitter"><span></span><span class="sharing-screen-reader-text">Cliquez pour partager sur Twitter(ouvre dans une nouvelle fenêtre)</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-3921" class="share-facebook sd-button share-icon no-text" href="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/?share=facebook" target="_blank" title="Cliquez pour partager sur Facebook"><span></span><span class="sharing-screen-reader-text">Cliquez pour partager sur Facebook(ouvre dans une nouvelle fenêtre)</span></a></li><li class="share-tumblr"><a rel="nofollow noopener noreferrer" data-shared="" class="share-tumblr sd-button share-icon no-text" href="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/?share=tumblr" target="_blank" title="Cliquez pour partager sur Tumblr"><span></span><span class="sharing-screen-reader-text">Cliquez pour partager sur Tumblr(ouvre dans une nouvelle fenêtre)</span></a></li><li class="share-pocket"><a rel="nofollow noopener noreferrer" data-shared="" class="share-pocket sd-button share-icon no-text" href="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/?share=pocket" target="_blank" title="Cliquez pour partager sur Pocket"><span></span><span class="sharing-screen-reader-text">Cliquez pour partager sur Pocket(ouvre dans une nouvelle fenêtre)</span></a></li><li class="share-email"><a rel="nofollow noopener noreferrer" data-shared="" class="share-email sd-button share-icon no-text" href="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/?share=email" target="_blank" title="Cliquez pour envoyer par e-mail à un ami"><span></span><span class="sharing-screen-reader-text">Cliquez pour envoyer par e-mail à un ami(ouvre dans une nouvelle fenêtre)</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-9466585-3921-5ec0a65218051' data-src='//widgets.wp.com/likes/index.html?ver=20190321#blog_id=9466585&amp;post_id=3921&amp;origin=pouletrotique.wordpress.com&amp;obj_id=9466585-3921-5ec0a65218051&amp;domain=pouletrotique.com' data-name='like-post-frame-9466585-3921-5ec0a65218051'><h3 class='sd-title'>WordPress:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>J&#039;aime</span></span> <span class="loading">chargement&hellip;</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div>
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	<h3 class="jp-relatedposts-headline"><em>Articles similaires</em></h3>
+</div></div>	</div><!-- .entry-content -->
+
+	
+	<footer class="entry-footer">
+		Publié dans <a href="https://pouletrotique.com/category/la-bagarre/" rel="category tag">La bagarre</a> et tagué <a href="https://pouletrotique.com/tag/femme/" rel="tag">femme</a>, <a href="https://pouletrotique.com/tag/hillary-clinton/" rel="tag">hillary clinton</a>, <a href="https://pouletrotique.com/tag/je-ne-suis-pas-misogyne-mais/" rel="tag">je ne suis pas misogyne mais</a>, <a href="https://pouletrotique.com/tag/misogynie/" rel="tag">misogynie</a>, <a href="https://pouletrotique.com/tag/pouvoir/" rel="tag">pouvoir</a>, <a href="https://pouletrotique.com/tag/sexisme/" rel="tag">sexisme</a>, <a href="https://pouletrotique.com/tag/t-i/" rel="tag">t.i.</a>. Ajoutez <a href="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/" rel="bookmark">ce permalien</a> à vos favoris.	</footer><!-- .entry-footer -->
+
+</article><!-- #post-## --><aside>
+	<div id="comments" class="comments-area  ">
+		<div class="comments-area-title">
+			<h2 class="comments-title"><span class="comment-number  comment-number--dark  total">9</span>commentaires</h2>
+			<a class="comments_add-comment" href="#reply-title">Ajoutez le vôtre</a>		</div>
+		
+			<ol class="commentlist">
+				<li class="comment even thread-even depth-1 highlander-comment">
+	<article id="comment-2010" class="comment-article  media">
+		<span class="comment-number">1</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://2.gravatar.com/avatar/e0cfb776475f1dbea9257efe5de8dad1?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Tamarara12</span>				<time class="comment__time" datetime="2015-10-18T18:21:50+02:00">
+					<a href="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/#comment-2010" class="comment__timestamp">le 18 octobre 2015 à 18:21 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/?replytocom=2010#respond' data-commentid="2010" data-postid="3921" data-belowelement="comment-2010" data-respondelement="respond" aria-label='Répondre à Tamarara12'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>C&rsquo;est drôle, parce que ce rappeur, ce qu&rsquo;il a oublié ou ce qu&rsquo;il ne sait surement pas, c&rsquo;est que le fameux monstre du Loch Ness s&rsquo;appelerai Nessie&#8230;. Or, jusqu&rsquo;à preuve du contraire, ce monstre est donc considéré comme une femelle&#8230; Soit il ne le savait pas auquel cas il est dépourvu de culture et n&rsquo;a donc pas son mot à dire quant à savoir qui mérite la tâche de président, ce qui m&rsquo;a franchement traversé l&rsquo;esprit, soit il le savait, et&#8230; Ah non, ça ne tient pas, il ne savait pas :)</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+<ul class="children">
+<li class="comment odd alt depth-2 highlander-comment">
+	<article id="comment-3134" class="comment-article  media">
+		<span class="comment-number">2</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://1.gravatar.com/avatar/1bed63fc4ef624780f87438e9a83ad66?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Jean-Michel</span>				<time class="comment__time" datetime="2017-12-07T14:57:16+02:00">
+					<a href="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/#comment-3134" class="comment__timestamp">le 7 décembre 2017 à 14:57 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/?replytocom=3134#respond' data-commentid="3134" data-postid="3921" data-belowelement="comment-3134" data-respondelement="respond" aria-label='Répondre à Jean-Michel'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Nessie, donc forcément femelle ? Ha bon ? Pourquoi ? Moi je n&rsquo;ai rien trouvé corroborant cette affirmation. Apparemment vous vous basez sur le nom &laquo;&nbsp;Nessie&nbsp;&raquo; ce qui n&rsquo;a aucun sens. Jamie est un prénom masculin chez les anglo-saxons, malgré la fin en &laquo;&nbsp;ie&nbsp;&raquo;. Mais je suppose que si ça sonne girly c&rsquo;est pour une femme, hein ?<br />
+Et cette information (fausse jusqu&rsquo;à preuve du contraire) suffirait à prouver que ce monsieur (que je ne connais pas) est &laquo;&nbsp;dépourvu de culture&nbsp;&raquo; ? Un peu rapide, non ?<br />
+Très beau raisonnement bien bas de gamme. </p>
+<p>Enfin,<br />
+*sûrement<br />
+*s&rsquo;appellerait<br />
+*or/donc</p>
+<p>En parlant de culture&#8230;</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment even thread-odd thread-alt depth-1 highlander-comment">
+	<article id="comment-2011" class="comment-article  media">
+		<span class="comment-number">3</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://1.gravatar.com/avatar/4376ff28413c82152647e39820c53ae6?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Marco</span>				<time class="comment__time" datetime="2015-10-18T18:39:12+02:00">
+					<a href="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/#comment-2011" class="comment__timestamp">le 18 octobre 2015 à 18:39 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/?replytocom=2011#respond' data-commentid="2011" data-postid="3921" data-belowelement="comment-2011" data-respondelement="respond" aria-label='Répondre à Marco'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>J&rsquo;adore l&rsquo;argument &laquo;&nbsp;le monde n&rsquo;est pas encore prêt&nbsp;&raquo;. C&rsquo;est l&rsquo;argument massue des réacs de tout poil. On y a eu droit pour le mariage pour tous, pour le vote des femmes, sans doute pour le divorce.<br />
+D&rsquo;ailleurs j&rsquo;irai même jusqu&rsquo;à dire que c&rsquo;est à ça qu&rsquo;on reconnait un bon réac. Il s&rsquo;est trompé sur à peu près tout dans l&rsquo;histoire. Il a passé sa vie à se battre pour des combats perdu d&rsquo;avance. Il a été chronologiquement contre l&rsquo;abolition de la monarchie, contre l&rsquo;abolition de l&rsquo;esclavage, contre le votre des femmes, contre la décolonisation, contre la pilule, contre l&rsquo;avortement, contre l&rsquo;abolition de la peine de mort, contre le mariage pour tous. Soyez sur qu&rsquo;il sera contre l&rsquo;adoption par des couples gay, Qu&rsquo;il vous dira que c&rsquo;est trop tôt pour avoir une femme présidente. Qu&rsquo;il sera contre la thérapie génique. Qu&rsquo;il sera contre le passage à 32h. La liste serait trop longue pour continuer.<br />
+Au moins je sais pourquoi je ne suis pas de droite. Être de droite, c&rsquo;est un peu vivre avec un siècle de retard. Le problème c&rsquo;est que ça leur prend un siècle pour rattraper ce retard.</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+<ul class="children">
+<li class="comment odd alt depth-2 highlander-comment">
+	<article id="comment-2014" class="comment-article  media">
+		<span class="comment-number">4</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://1.gravatar.com/avatar/7ec8139b29e738da42f38a06d8dee55f?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Clarence Edgard-Rosa</span>				<time class="comment__time" datetime="2015-10-19T08:21:45+02:00">
+					<a href="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/#comment-2014" class="comment__timestamp">le 19 octobre 2015 à 08:21 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/?replytocom=2014#respond' data-commentid="2014" data-postid="3921" data-belowelement="comment-2014" data-respondelement="respond" aria-label='Répondre à Clarence Edgard-Rosa'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>J&rsquo;adore moi aussi l&rsquo;argument massue &laquo;&nbsp;le monde n&rsquo;est pas encore prêt&nbsp;&raquo;. D&rsquo;ailleurs quand on cherche des chiffres sur le sujet, on tombe sur un sondage montrant que deux tiers des américains sont prêts à élire une femme présidente&#8230; Sauf qu&rsquo;on ne leur a pas vraiment demandé si ils étaient prêts, mais si ils estimaient que les Etats-Unis l&rsquo;étaient. (<a href="http://www.huffingtonpost.com/2015/03/27/americans-want-female-president_n_6954148.html" rel="nofollow">Ici sur le Huff Post</a>) </p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+<li class="comment even depth-2 highlander-comment">
+	<article id="comment-2303" class="comment-article  media">
+		<span class="comment-number">5</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://1.gravatar.com/avatar/d74336735b0da8d8cf14499ff3a8af5b?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Ryad</span>				<time class="comment__time" datetime="2016-01-15T14:19:06+02:00">
+					<a href="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/#comment-2303" class="comment__timestamp">le 15 janvier 2016 à 14:19 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/?replytocom=2303#respond' data-commentid="2303" data-postid="3921" data-belowelement="comment-2303" data-respondelement="respond" aria-label='Répondre à Ryad'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>le monde n&rsquo;est surtout pas près a affronté autant de stupidité.<br />
+3 ans en tant que secrétaire d&rsquo;état (je rappel que son premier discours était de donner la priorité a la paix au moyen orients) ils ont alimenté DAECH en arme lancé de fausse accusation contre Bachar en l&rsquo;accusant de gaser son peuple (aujourd&rsquo;hui une étude du MIT montre que c&rsquo;était &laquo;&nbsp;&nbsp;&raquo;les rebelles&nbsp;&raquo;&nbsp;&raquo; c&rsquo;est à dire DAECH qui l&rsquo;a fait) je pense en toute légitimité que n&rsquo;importe qui aurait mieux fait</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-burpfr odd alt thread-even depth-1 highlander-comment">
+	<article id="comment-2012" class="comment-article  media">
+		<span class="comment-number">6</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://2.gravatar.com/avatar/b34a33f98fc0ca3c922078f84aa238d4?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name"><a href='http://cui.burp.fr/' rel='external nofollow ugc' class='url'>Comme une image</a></span>				<time class="comment__time" datetime="2015-10-18T22:12:21+02:00">
+					<a href="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/#comment-2012" class="comment__timestamp">le 18 octobre 2015 à 22:12 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/?replytocom=2012#respond' data-commentid="2012" data-postid="3921" data-belowelement="comment-2012" data-respondelement="respond" aria-label='Répondre à Comme une image'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Je ne suis pas misogyne, mais cet article m&rsquo;a fait sourire.</p>
+<p>Moi, j&rsquo;aurais bien aimé avoir <a href="http://cui.burp.fr/2011/10/13/une-page-de-publicite/" rel="nofollow">une femme présidente</a>.<br />
+Snif.</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-1fst even thread-odd thread-alt depth-1 highlander-comment">
+	<article id="comment-2056" class="comment-article  media">
+		<span class="comment-number">7</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://1.gravatar.com/avatar/a53e26693a0a3cd708fede46058ef83c?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name"><a href='http://thepremieretime.wordpress.com' rel='external nofollow ugc' class='url'>1fst</a></span>				<time class="comment__time" datetime="2015-11-03T13:42:11+02:00">
+					<a href="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/#comment-2056" class="comment__timestamp">le 3 novembre 2015 à 13:42 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/?replytocom=2056#respond' data-commentid="2056" data-postid="3921" data-belowelement="comment-2056" data-respondelement="respond" aria-label='Répondre à 1fst'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Super article ! La mysogynie&#8230; ça vend !</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-even depth-1 highlander-comment">
+	<article id="comment-2057" class="comment-article  media">
+		<span class="comment-number">8</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://0.gravatar.com/avatar/ff2b9e0192552f6fa0225709ac09e727?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Jean</span>				<time class="comment__time" datetime="2015-11-03T23:12:21+02:00">
+					<a href="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/#comment-2057" class="comment__timestamp">le 3 novembre 2015 à 23:12 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/?replytocom=2057#respond' data-commentid="2057" data-postid="3921" data-belowelement="comment-2057" data-respondelement="respond" aria-label='Répondre à Jean'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<div class="jetpack-video-wrapper"><span class="embed-youtube" style="text-align:center; display: block;"><iframe class='youtube-player' width='940' height='529' src='https://www.youtube.com/embed/pTodKbPkD_I?version=3&#038;rel=1&#038;fs=1&#038;autohide=2&#038;showsearch=0&#038;showinfo=1&#038;iv_load_policy=1&#038;wmode=transparent' allowfullscreen='true' style='border:0;'></iframe></span></div>
+<p>Je ne suis pas misogyne mais&#8230;.</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+<li class="comment even thread-odd thread-alt depth-1 highlander-comment">
+	<article id="comment-2080" class="comment-article  media">
+		<span class="comment-number">9</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://1.gravatar.com/avatar/40f0ef7a0b34f2f56a52f97339b6f53a?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Youpi</span>				<time class="comment__time" datetime="2015-11-20T20:35:32+02:00">
+					<a href="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/#comment-2080" class="comment__timestamp">le 20 novembre 2015 à 20:35 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/?replytocom=2080#respond' data-commentid="2080" data-postid="3921" data-belowelement="comment-2080" data-respondelement="respond" aria-label='Répondre à Youpi'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>&laquo;&nbsp;Donald Trump aurait-il balancé une telle stupidité&nbsp;&raquo;<br />
+Donald Trump balance rarement autre chose que des stupidités. :D</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+			</ol><!-- .commentlist -->
+
+			
+	</div>
+	<!-- #comments .comments-area -->
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Commenter <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2015/10/18/je-ne-suis-pas-misogyne-mais/#respond" style="display:none;">Annuler la réponse.</a></small></h3><form action="https://pouletrotique.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate><input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="647d1c6fe3" /><input type="hidden" name="_wp_http_referer" value="/2015/10/18/je-ne-suis-pas-misogyne-mais/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Entrez votre commentaire...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Entrez votre commentaire..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+	<div id="comment-form-nascar">
+		<p>Entrez vos coordonnées ci-dessous ou cliquez sur une icône pour vous connecter:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" class="nascar-signin-link"
+                   title="Connexion avec Visiteur">
+									</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" class="nascar-signin-link"
+                   title="Connexion avec WordPress.com">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#FFF" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" class="nascar-signin-link"
+                   title="Connexion avec Twitter">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#FFF" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" class="nascar-signin-link"
+                   title="Connexion avec Facebook">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#FFF" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg>				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://s0.wp.com/i/mu.gif" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">E-mail <span class="required">(obligatoire)</span> <span class="nopublish">(adresse strictement confidentielle)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Nom <span class="required">(obligatoire)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Site web</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url" value="" /></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://s0.wp.com/i/mu.gif" alt="Logo WordPress.com" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+						<p class="comment-form-posting-as pa-wordpress">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte WordPress.com.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#FFF" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://s0.wp.com/i/mu.gif" alt="Photo Google" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+						<p class="comment-form-posting-as pa-googleplus">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Google.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" x="0px" y="0px" viewBox="0 0 60 60" ><path fill="#FFF" d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" /><path fill="#FFF" d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" /><path fill="#FFF" d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" /><path fill="#FFF" d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" /></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://s0.wp.com/i/mu.gif" alt="Image Twitter" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+						<p class="comment-form-posting-as pa-twitter">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Twitter.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#FFF" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://s0.wp.com/i/mu.gif" alt="Photo Facebook" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+						<p class="comment-form-posting-as pa-facebook">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Facebook.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#FFF" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Annuler</a></div>
+		<p>Connexion à %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Avertissez-moi par e-mail des nouveaux commentaires.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Avertissez-moi par e-mail des nouveaux articles.</label></p></div>
+
+
+
+
+<p class="form-submit"><input name="submit" type="submit" id="comment-submit" class="submit" value="Laisser un commentaire" /> <input type='hidden' name='comment_post_ID' value='3921' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="ff16359536" /></p>
+<input type="hidden" name="genseq" value="1589683794" />
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="120"/></p></form>	</div><!-- #respond -->
+	<div style="clear: both"></div><p class="akismet_comment_form_privacy_notice">Ce site utilise Akismet pour réduire les indésirables. <a href="https://akismet.com/privacy/" target="_blank" rel="nofollow noopener">En savoir plus sur la façon dont les données de vos commentaires sont traitées</a>.</p>
+</aside>
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+
+<div id="secondary" class="sidebar  sidebar--main" role="complementary">
+	<aside id="media_image-24" class="widget widget_media_image"><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://pouletrotique.com/a-propos-2-2/"><img width="259" height="172" src="https://pouletrotique.files.wordpress.com/2014/11/capture-d_c3a9cran-2014-11-06-c3a0-14-54-22.png?w=259" class="image wp-image-2466 alignnone attachment-259x172 size-259x172" alt="" style="max-width: 100%; height: auto;" srcset="https://pouletrotique.files.wordpress.com/2014/11/capture-d_c3a9cran-2014-11-06-c3a0-14-54-22.png?w=259 259w, https://pouletrotique.files.wordpress.com/2014/11/capture-d_c3a9cran-2014-11-06-c3a0-14-54-22.png?w=518 518w, https://pouletrotique.files.wordpress.com/2014/11/capture-d_c3a9cran-2014-11-06-c3a0-14-54-22.png?w=150 150w, https://pouletrotique.files.wordpress.com/2014/11/capture-d_c3a9cran-2014-11-06-c3a0-14-54-22.png?w=300 300w" sizes="(max-width: 259px) 100vw, 259px" data-attachment-id="2466" data-permalink="https://pouletrotique.com/capture-decran-2014-11-06-a-14-54-22/" data-orig-file="https://pouletrotique.files.wordpress.com/2014/11/capture-d_c3a9cran-2014-11-06-c3a0-14-54-22.png" data-orig-size="1029,685" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2014/11/capture-d_c3a9cran-2014-11-06-c3a0-14-54-22.png?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2014/11/capture-d_c3a9cran-2014-11-06-c3a0-14-54-22.png?w=940" /></a></aside><aside id="media_image-26" class="widget widget_media_image"><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://www.interforum.fr/Affiliations/accueil.do?refLivre=9782755624908&#038;refEditeur=48"><img width="500" height="361" src="https://pouletrotique.files.wordpress.com/2016/10/capture-d_c3a9cran-2016-10-19-c3a0-10-03-36.png" class="image wp-image-4647 alignnone attachment-full size-full" alt="" style="max-width: 100%; height: auto;" srcset="https://pouletrotique.files.wordpress.com/2016/10/capture-d_c3a9cran-2016-10-19-c3a0-10-03-36.png 500w, https://pouletrotique.files.wordpress.com/2016/10/capture-d_c3a9cran-2016-10-19-c3a0-10-03-36.png?w=150&amp;h=108 150w, https://pouletrotique.files.wordpress.com/2016/10/capture-d_c3a9cran-2016-10-19-c3a0-10-03-36.png?w=300&amp;h=217 300w" sizes="(max-width: 500px) 100vw, 500px" data-attachment-id="4647" data-permalink="https://pouletrotique.com/2018/04/26/les_gros_mots/capture-decran-2016-10-19-a-10-03-36/" data-orig-file="https://pouletrotique.files.wordpress.com/2016/10/capture-d_c3a9cran-2016-10-19-c3a0-10-03-36.png" data-orig-size="500,361" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2016/10/capture-d_c3a9cran-2016-10-19-c3a0-10-03-36.png?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2016/10/capture-d_c3a9cran-2016-10-19-c3a0-10-03-36.png?w=500" /></a></aside><aside id="media_image-3" class="widget widget_media_image"><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://pouletrotique.com/category/les-nouvelles/"><img width="259" height="173" src="https://pouletrotique.files.wordpress.com/2014/11/prbis.jpg?w=259" class="image wp-image-2463 alignnone attachment-259x173 size-259x173" alt="" style="max-width: 100%; height: auto;" srcset="https://pouletrotique.files.wordpress.com/2014/11/prbis.jpg?w=259 259w, https://pouletrotique.files.wordpress.com/2014/11/prbis.jpg?w=518 518w, https://pouletrotique.files.wordpress.com/2014/11/prbis.jpg?w=150 150w, https://pouletrotique.files.wordpress.com/2014/11/prbis.jpg?w=300 300w" sizes="(max-width: 259px) 100vw, 259px" data-attachment-id="2463" data-permalink="https://pouletrotique.com/prbis/" data-orig-file="https://pouletrotique.files.wordpress.com/2014/11/prbis.jpg" data-orig-size="1250,834" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="PRbis-" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2014/11/prbis.jpg?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2014/11/prbis.jpg?w=940" /></a></aside><aside id="media_image-8" class="widget widget_media_image"><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://pouletrotique.com/category/le-courrier-du-cul/"><img width="259" height="207" src="https://pouletrotique.files.wordpress.com/2014/11/prbis-2.jpg?w=259" class="image wp-image-2457 alignnone attachment-259x207 size-259x207" alt="" style="max-width: 100%; height: auto;" srcset="https://pouletrotique.files.wordpress.com/2014/11/prbis-2.jpg?w=259 259w, https://pouletrotique.files.wordpress.com/2014/11/prbis-2.jpg?w=518 518w, https://pouletrotique.files.wordpress.com/2014/11/prbis-2.jpg?w=150 150w, https://pouletrotique.files.wordpress.com/2014/11/prbis-2.jpg?w=300 300w" sizes="(max-width: 259px) 100vw, 259px" data-attachment-id="2457" data-permalink="https://pouletrotique.com/prbis-2/" data-orig-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-2.jpg" data-orig-size="1250,1001" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="PRbis-2" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-2.jpg?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-2.jpg?w=940" /></a></aside><aside id="media_image-6" class="widget widget_media_image"><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://pouletrotique.wordpress.com/category/les-humeurs/"><img width="259" height="173" src="https://pouletrotique.files.wordpress.com/2014/11/prbis-3.jpg?w=259" class="image wp-image-2456 alignnone attachment-259x173 size-259x173" alt="" style="max-width: 100%; height: auto;" srcset="https://pouletrotique.files.wordpress.com/2014/11/prbis-3.jpg?w=259 259w, https://pouletrotique.files.wordpress.com/2014/11/prbis-3.jpg?w=518 518w, https://pouletrotique.files.wordpress.com/2014/11/prbis-3.jpg?w=150 150w, https://pouletrotique.files.wordpress.com/2014/11/prbis-3.jpg?w=300 300w" sizes="(max-width: 259px) 100vw, 259px" data-attachment-id="2456" data-permalink="https://pouletrotique.com/prbis-3/" data-orig-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-3.jpg" data-orig-size="1250,834" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="PRbis-3" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-3.jpg?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-3.jpg?w=940" /></a></aside><aside id="media_image-4" class="widget widget_media_image"><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://pouletrotique.wordpress.com/category/la-bagarre/"><img width="259" height="173" src="https://pouletrotique.files.wordpress.com/2014/11/prbis-4.jpg?w=259" class="image wp-image-2461 alignnone attachment-259x173 size-259x173" alt="" style="max-width: 100%; height: auto;" srcset="https://pouletrotique.files.wordpress.com/2014/11/prbis-4.jpg?w=259 259w, https://pouletrotique.files.wordpress.com/2014/11/prbis-4.jpg?w=518 518w, https://pouletrotique.files.wordpress.com/2014/11/prbis-4.jpg?w=150 150w, https://pouletrotique.files.wordpress.com/2014/11/prbis-4.jpg?w=300 300w" sizes="(max-width: 259px) 100vw, 259px" data-attachment-id="2461" data-permalink="https://pouletrotique.com/prbis-4/" data-orig-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-4.jpg" data-orig-size="1250,834" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="PRbis-4" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-4.jpg?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-4.jpg?w=940" /></a></aside><aside id="media_image-7" class="widget widget_media_image"><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://pouletrotique.wordpress.com/category/la-reclame/"><img width="259" height="173" src="https://pouletrotique.files.wordpress.com/2014/11/prbis-5.jpg?w=259" class="image wp-image-2462 alignnone attachment-259x173 size-259x173" alt="" style="max-width: 100%; height: auto;" srcset="https://pouletrotique.files.wordpress.com/2014/11/prbis-5.jpg?w=259 259w, https://pouletrotique.files.wordpress.com/2014/11/prbis-5.jpg?w=518 518w, https://pouletrotique.files.wordpress.com/2014/11/prbis-5.jpg?w=150 150w, https://pouletrotique.files.wordpress.com/2014/11/prbis-5.jpg?w=300 300w" sizes="(max-width: 259px) 100vw, 259px" data-attachment-id="2462" data-permalink="https://pouletrotique.com/prbis-5/" data-orig-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-5.jpg" data-orig-size="1250,834" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="PRbis-5" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-5.jpg?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-5.jpg?w=940" /></a></aside><aside id="media_image-25" class="widget widget_media_image"><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://pouletrotique.com/category/labecedaire-du-feminisme/"><img width="259" height="207" src="https://pouletrotique.files.wordpress.com/2015/02/pr-abc-v2.jpeg?w=259" class="image wp-image-2838  attachment-259x207 size-259x207" alt="" style="max-width: 100%; height: auto;" srcset="https://pouletrotique.files.wordpress.com/2015/02/pr-abc-v2.jpeg?w=259 259w, https://pouletrotique.files.wordpress.com/2015/02/pr-abc-v2.jpeg?w=518 518w, https://pouletrotique.files.wordpress.com/2015/02/pr-abc-v2.jpeg?w=150 150w, https://pouletrotique.files.wordpress.com/2015/02/pr-abc-v2.jpeg?w=300 300w" sizes="(max-width: 259px) 100vw, 259px" data-attachment-id="2838" data-permalink="https://pouletrotique.com/pr-abc-v2/" data-orig-file="https://pouletrotique.files.wordpress.com/2015/02/pr-abc-v2.jpeg" data-orig-size="1199,960" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2015/02/pr-abc-v2.jpeg?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2015/02/pr-abc-v2.jpeg?w=940" /></a></aside><aside id="search-5" class="widget widget_search"><form role="search" method="get" class="search-form" action="https://pouletrotique.com/">
+				<label>
+					<span class="screen-reader-text">Rechercher&nbsp;:</span>
+					<input type="search" class="search-field" placeholder="Recherche&hellip;" value="" name="s" />
+				</label>
+				<input type="submit" class="search-submit" value="Rechercher" />
+			</form></aside><aside id="top-posts-3" class="widget widget_top-posts"><h1 class="widget-title">Les plus lus</h1><ul class='widgets-list-layout no-grav'>
+					<li>
+						<a href="https://pouletrotique.com/2017/12/18/pubs-sexistes-palmares-2017-de-lelegance/" title="Pubs sexistes : palmarès 2017 de l’élégance" class="bump-view" data-bump-view="tp">
+								<img width="40" height="40" src="https://pouletrotique.files.wordpress.com/2017/12/rencontres-d-arles-2016-demandez-le-programmem318389.jpg?resize=40%2C40" alt="Pubs sexistes : palmarès 2017 de l’élégance" data-pin-nopin="true" class="widgets-list-layout-blavatar"/>
+							</a>
+							<div class="widgets-list-layout-links">
+								<a href="https://pouletrotique.com/2017/12/18/pubs-sexistes-palmares-2017-de-lelegance/" title="Pubs sexistes : palmarès 2017 de l’élégance" class="bump-view" data-bump-view="tp">Pubs sexistes : palmarès 2017 de l’élégance</a>
+							</div>
+													</li>
+										<li>
+						<a href="https://pouletrotique.com/2018/06/04/education-sexuelle-le-cours-de-rattrapage-du-dr-kpote/" title="Education sexuelle: le cours de rattrapage du Dr Kpote" class="bump-view" data-bump-view="tp">
+								<img width="40" height="40" src="https://pouletrotique.files.wordpress.com/2018/06/capture-d_c3a9cran-2018-06-04-c3a0-17-21-45.png?resize=40%2C40" alt="Education sexuelle: le cours de rattrapage du Dr Kpote" data-pin-nopin="true" class="widgets-list-layout-blavatar"/>
+							</a>
+							<div class="widgets-list-layout-links">
+								<a href="https://pouletrotique.com/2018/06/04/education-sexuelle-le-cours-de-rattrapage-du-dr-kpote/" title="Education sexuelle: le cours de rattrapage du Dr Kpote" class="bump-view" data-bump-view="tp">Education sexuelle: le cours de rattrapage du Dr Kpote</a>
+							</div>
+													</li>
+										<li>
+						<a href="https://pouletrotique.com/2016/11/29/pubs-sexistes-palmares-2016-de-lelegance/" title="Pubs sexistes : palmarès 2016 de l&#039;élégance" class="bump-view" data-bump-view="tp">
+								<img width="40" height="40" src="https://pouletrotique.files.wordpress.com/2016/11/capture-d_c3a9cran-2016-11-29-c3a0-12-21-31.png?resize=40%2C40" alt="Pubs sexistes : palmarès 2016 de l&#039;élégance" data-pin-nopin="true" class="widgets-list-layout-blavatar"/>
+							</a>
+							<div class="widgets-list-layout-links">
+								<a href="https://pouletrotique.com/2016/11/29/pubs-sexistes-palmares-2016-de-lelegance/" title="Pubs sexistes : palmarès 2016 de l&#039;élégance" class="bump-view" data-bump-view="tp">Pubs sexistes : palmarès 2016 de l&#039;élégance</a>
+							</div>
+													</li>
+										<li>
+						<a href="https://pouletrotique.com/2018/04/07/ni-muse-ni-objet/" title="Ni muse, ni objet" class="bump-view" data-bump-view="tp">
+								<img width="40" height="40" src="https://pouletrotique.files.wordpress.com/2018/04/capture-d_c3a9cran-2018-04-07-c3a0-18-10-10.png?resize=40%2C40" alt="Ni muse, ni objet" data-pin-nopin="true" class="widgets-list-layout-blavatar"/>
+							</a>
+							<div class="widgets-list-layout-links">
+								<a href="https://pouletrotique.com/2018/04/07/ni-muse-ni-objet/" title="Ni muse, ni objet" class="bump-view" data-bump-view="tp">Ni muse, ni objet</a>
+							</div>
+													</li>
+										<li>
+						<a href="https://pouletrotique.com/2016/09/15/pas-de-ble-pour-legalite-vraiment/" title="Pas de blé pour l&#039;égalité. Vraiment ?" class="bump-view" data-bump-view="tp">
+								<img width="40" height="40" src="https://pouletrotique.files.wordpress.com/2016/09/capture-d_c3a9cran-2016-09-15-c3a0-14-53-47.png?resize=40%2C40" alt="Pas de blé pour l&#039;égalité. Vraiment ?" data-pin-nopin="true" class="widgets-list-layout-blavatar"/>
+							</a>
+							<div class="widgets-list-layout-links">
+								<a href="https://pouletrotique.com/2016/09/15/pas-de-ble-pour-legalite-vraiment/" title="Pas de blé pour l&#039;égalité. Vraiment ?" class="bump-view" data-bump-view="tp">Pas de blé pour l&#039;égalité. Vraiment ?</a>
+							</div>
+													</li>
+										<li>
+						<a href="https://pouletrotique.com/2017/08/19/la-vierge-emoustillee/" title="La vierge émoustillée" class="bump-view" data-bump-view="tp">
+								<img width="40" height="40" src="https://pouletrotique.files.wordpress.com/2017/06/capture-d_c3a9cran-2017-06-14-c3a0-12-02-22.png?resize=40%2C40" alt="La vierge émoustillée" data-pin-nopin="true" class="widgets-list-layout-blavatar"/>
+							</a>
+							<div class="widgets-list-layout-links">
+								<a href="https://pouletrotique.com/2017/08/19/la-vierge-emoustillee/" title="La vierge émoustillée" class="bump-view" data-bump-view="tp">La vierge émoustillée</a>
+							</div>
+													</li>
+					</ul>
+</aside><aside id="twitter-3" class="widget widget_twitter"><h1 class="widget-title"><a href='http://twitter.com/Clarence_ER'>Twitter</a></h1><ul class='tweets'>
+			<li>
+				@<a href='http://twitter.com/ThelmaLouiseRCP'>ThelmaLouiseRCP</a> Merci pour l’invitation ! _				<a href="http://twitter.com/Clarence_ER/statuses/1261343564581265408" class="timesince">1&nbsp;day&nbsp;ago</a>
+			</li>
+
+			
+			<li>
+				RT @<a href='http://twitter.com/ThelmaLouiseRCP'>ThelmaLouiseRCP</a>: Nouveau <a href='http://twitter.com/search?q=%23podcast'>#podcast</a> confiné à destination de vos petites oreilles et de votre petit cœur 🔥🎈
+
+On parle sexualité, couple,… _				<a href="http://twitter.com/Clarence_ER/statuses/1261343492300779521" class="timesince">1&nbsp;day&nbsp;ago</a>
+			</li>
+
+			
+			<li>
+				@<a href='http://twitter.com/jmdu91290'>jmdu91290</a> @<a href='http://twitter.com/AnneCMailfert'>AnneCMailfert</a> Oui, cardiologue pour une échographie du cœur de mon bébé. _				<a href="http://twitter.com/Clarence_ER/statuses/1260905509055614976" class="timesince">2&nbsp;days&nbsp;ago</a>
+			</li>
+
+			
+			<li>
+				@<a href='http://twitter.com/AnneCMailfert'>AnneCMailfert</a> Souvenir de mon écho avec un cardiologue à qui j’avais dit que je ne voulais pas connaître le sexe :… <a href="https://twitter.com/i/web/status/1260867224816046083"> twitter.com/i/web/status/1…</a> _				<a href="http://twitter.com/Clarence_ER/statuses/1260867224816046083" class="timesince">2&nbsp;days&nbsp;ago</a>
+			</li>
+
+			
+			<li>
+				@<a href='http://twitter.com/Cecile_AF'>Cecile_AF</a> @<a href='http://twitter.com/TutoConquerir'>TutoConquerir</a> @<a href='http://twitter.com/ClemBodoc'>ClemBodoc</a> Merci !! _				<a href="http://twitter.com/Clarence_ER/statuses/1256219870443823104" class="timesince">2&nbsp;weeks&nbsp;ago</a>
+			</li>
+
+			</ul><a href="http://twitter.com/Clarence_ER"  class='twitter-follow-button' data-show-count='false' data-link-color='#8c888c' data-text-color='#3d3e40'>Follow @Clarence_ER</a></aside><aside id="facebook-likebox-5" class="widget widget_facebook_likebox"><h1 class="widget-title"><a href="https://www.facebook.com/PouletRotique">Facebook</a></h1>		<div id="fb-root"></div>
+		<div class="fb-page" data-href="https://www.facebook.com/PouletRotique" data-width="300"  data-height="300" data-hide-cover="false" data-show-facepile="true" data-tabs="false" data-hide-cta="false" data-small-header="false">
+		<div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/PouletRotique"><a href="https://www.facebook.com/PouletRotique">Facebook</a></blockquote></div>
+		</div>
+		</aside><aside id="blog_subscription-3" class="widget widget_blog_subscription jetpack_subscription_widget"><h1 class="widget-title"><label for="subscribe-field">S&#039;abonner</label></h1>
+			<form
+				action="https://subscribe.wordpress.com"
+				method="post"
+				accept-charset="utf-8"
+				id=""
+			>
+									<p>Cliquez pour vous abonner à Poulet Rotique et être notifié-e des nouveaux articles par mail.</p>
+					<p>
+						<input
+							type="text"
+							name="email"
+							style="width: 95%; padding: 1px 10px"
+							placeholder="Entrez votre adresse e-mail"
+							value=""
+							id=""
+						/>
+					</p>
+				
+                <p>
+                    <input type="hidden" name="action" value="subscribe"/>
+                    <input type="hidden" name="blog_id" value="9466585"/>
+                    <input type="hidden" name="source" value="https://pouletrotique.com/2015/10/18/je-ne-suis-pas-misogyne-mais/"/>
+                    <input type="hidden" name="sub-type" value="widget"/>
+                    <input type="hidden" name="redirect_fragment" value="blog_subscription-3"/>
+					<input type="hidden" id="_wpnonce" name="_wpnonce" value="d1fbc6a47f" />                    <button type="submit"
+	                    		                	                >
+	                    Suivre                    </button>
+                </p>
+            </form>
+			
+</aside><aside id="linkcat-1356" class="widget widget_links"><h1 class="widget-title">Blogroll</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://martiennes.wordpress.com" target="_blank">Les Martiennes</a></li>
+<li><a href="http://cafaitgenre.org">Ca fait genre</a></li>
+<li><a href="http://hypathie.blogspot.com/" target="_blank">Hypathie</a></li>
+<li><a href="http://payetashnek.tumblr.com/">Paye ta shnek</a></li>
+<li><a href="http://www.crepegeorgette.com">Crêpe Georgette</a></li>
+<li><a href="http://salutcamaradesexiste.tumblr.com">Salut camarade sexiste</a></li>
+<li><a href="http://m-e-u-f-s.tumblr.com">Meufs</a></li>
+<li><a href="http://blog.plafonddeverre.fr/" target="_blank">Olympe et le plafond de verre</a></li>
+<li><a href="http://www.gqmagazine.fr/sexactu">Sexactu</a></li>
+<li><a href="http://cabinetsdecuriosites.fr">Le cabinet de curiosité féminine</a></li>
+<li><a href="http://www.toutalego.com">Tout à l&#039;ego</a></li>
+<li><a href="http://blogs.lexpress.fr/sexpress/" target="_blank">Sexpress</a></li>
+<li><a href="http://lemauvaisgenre.wordpress.com/" target="_blank">Le mauvais genre</a></li>
+<li><a href="http://sexes.blogs.liberation.fr/" target="_blank">Les 400 culs</a></li>
+<li><a href="http://www.theholyculotte.com">The Holy Culotte</a></li>
+<li><a href="http://projetcrocodiles.tumblr.com">Projet Crocodiles</a></li>
+
+	</ul>
+</aside>
+</div><!-- #secondary --></div><!-- .container -->
+
+</div><!-- #content -->
+
+<footer id="colophon" class="site-footer" role="contentinfo">
+	<div class="container">
+		<div class="grid">
+			<div class="grid__item  site-info">
+				
+				
+							</div><!-- .site-info -->
+
+			<div class="grid__item  footer-navigation">
+				<nav><h5 class="screen-reader-text">Navigation du pied de page</h5><ul id="menu-credits" class="nav  nav--footer"><li id="menu-item-3257" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3257"><a href="http://blank">Les propos tenus sur ce site n’engagent que son auteure, Clarence Edgard-Rosa. Exception faite des citations, la reproduction du contenu de ce site est interdite.</a></li>
+<li id="menu-item-4790" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4790"><a href="https://pouletrotique.com/a-propos-2-2/">A propos</a></li>
+<li id="menu-item-4791" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4791"><a href="https://pouletrotique.com/contact-2-2/">Contact</a></li>
+</ul></nav>			</div>
+		</div>
+	</div><!-- .site-footer .container -->
+</footer><!-- #colophon -->
+</div><!-- #page -->
+
+	<div class="toolbar">
+		<div class="toolbar__head">
+			<nav id="social-navigation" class="toolbar-navigation" role="navigation">
+				<h5 class="screen-reader-text">Navigation Secondaire</h5>
+				<ul id="menu-social" class="nav  nav--social  nav--toolbar"><li id="menu-item-2174" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2174"><a href="https://www.facebook.com/Gaze.Zine">Facebook</a></li>
+<li id="menu-item-2175" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2175"><a href="http://twitter.com/Clarence_ER">Twitter</a></li>
+<li id="menu-item-2176" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2176"><a href="https://pouletrotique.com/feed">Feed</a></li>
+</ul>					<ul class="nav  nav--toolbar">
+						<li class="nav__item--search"><a href="#">Recherche</a></li>
+					</ul>
+							</nav>
+			<!-- #social-navigation -->
+		</div>
+		<div class="toolbar__body">
+						<nav class="navigation post-navigation" role="navigation">
+				<h1 class="screen-reader-text">Navigation des articles</h1>
+
+				<div class="nav-links">
+					<div class="nav-home"><a href="https://pouletrotique.com"><i class="fa fa-th-large"></i></a></div><div class="nav-previous"><a href="https://pouletrotique.com/2015/09/23/docteure-duchesne-sorciere-en-gynecologie/" rel="prev"><i class="fa fa-long-arrow-left prev-arrow"></i><span>Docteure Duchesne : sorcière en&nbsp;gynécologie</span></a></div><div class="nav-next"><a href="https://pouletrotique.com/2015/10/20/pubs-sexistes-du-jour-bonjour-17/" rel="next"><span>Pubs sexistes du jour, bonjour !&nbsp;#17</span><i class="fa fa-long-arrow-right next-arrow"></i></a></div>				</div>
+				<!-- .nav-links -->
+			</nav><!-- .navigation -->
+				</div>
+	</div>
+	<div class="overlay--search">
+		<div class="overlay__wrapper">
+			<form role="search" method="get" class="search-form" action="https://pouletrotique.com/">
+				<label>
+					<span class="screen-reader-text">Rechercher&nbsp;:</span>
+					<input type="search" class="search-field" placeholder="Recherche&hellip;" value="" name="s" />
+				</label>
+				<input type="submit" class="search-submit" value="Rechercher" />
+			</form>			<p>Commencez à taper votre recherche ci-dessous et appuyez sur Entrée pour chercher. Appuyez sur Esc pour annuler.</p>
+		</div>
+		<b class="overlay__close"></b>
+	</div>
+<!--  -->
+	<div style="display:none">
+	<div class="grofile-hash-map-e0cfb776475f1dbea9257efe5de8dad1">
+	</div>
+	<div class="grofile-hash-map-1bed63fc4ef624780f87438e9a83ad66">
+	</div>
+	<div class="grofile-hash-map-4376ff28413c82152647e39820c53ae6">
+	</div>
+	<div class="grofile-hash-map-7ec8139b29e738da42f38a06d8dee55f">
+	</div>
+	<div class="grofile-hash-map-d74336735b0da8d8cf14499ff3a8af5b">
+	</div>
+	<div class="grofile-hash-map-b34a33f98fc0ca3c922078f84aa238d4">
+	</div>
+	<div class="grofile-hash-map-a53e26693a0a3cd708fede46058ef83c">
+	</div>
+	<div class="grofile-hash-map-ff2b9e0192552f6fa0225709ac09e727">
+	</div>
+	<div class="grofile-hash-map-40f0ef7a0b34f2f56a52f97339b6f53a">
+	</div>
+	</div>
+<script>
+var HighlanderComments = {"loggingInText":"Connexion\u2026","submittingText":"Publication d\u2019un Commentaire\u2026","postCommentText":"Laisser un commentaire","connectingToText":"Connexion \u00e0 %s","commentingAsText":"%1$s: Vous commentez \u00e0 l\u2019aide de votre compte %2$s.","logoutText":"Se d\u00e9connecter","loginText":"Se connecter","connectURL":"https:\/\/pouletrotique.wordpress.com\/public.api\/connect\/?action=request&domain=pouletrotique.com","logoutURL":"https:\/\/pouletrotique.wordpress.com\/wp-login.php?action=logout&_wpnonce=f37b16d984","homeURL":"https:\/\/pouletrotique.com\/","postID":"3921","gravDefault":"blank","enterACommentError":"Entrez un commentaire","enterEmailError":"Veuillez entrer votre adresse mail","invalidEmailError":"Adresse email invalide","enterAuthorError":"Veuillez entrer votre nom","gravatarFromEmail":"L\u2019image s\u2019affiche lorsque vous postez un commentaire. Cliquez pour personnaliser.","logInToExternalAccount":"Connectez-vous pour utiliser les informations li\u00e9es \u00e0 un de ces comptes:","change":"Changer","changeAccount":"Changer de compte","comment_registration":"","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1573483029j'></script>
+
+	<div id="carousel-reblog-box">
+		<form action="#" name="carousel-reblog">
+			<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Ajoutez votre grain de sel personnel... (facultatif)"></textarea>
+			<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Publier sur</label>
+			<select name="carousel-reblog-to-blog-id" id="carousel-reblog-to-blog-id">
+						</select>
+
+			<div class="submit">
+				<span class="canceltext"><a href="#" class="cancel">Annuler</a></span>
+				<input type="submit" name="carousel-reblog-submit" class="button" id="carousel-reblog-submit" value="Reblog Article" />
+				<input type="hidden" id="carousel-reblog-blog-id" value="9466585" />
+				<input type="hidden" id="carousel-reblog-blog-url" value="https://pouletrotique.com" />
+				<input type="hidden" id="carousel-reblog-blog-title" value="Poulet Rotique" />
+				<input type="hidden" id="carousel-reblog-post-url" value="" />
+				<input type="hidden" id="carousel-reblog-post-title" value="" />
+			</div>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="9cf7ca1c98" /><input type="hidden" name="_wp_http_referer" value="/2015/10/18/je-ne-suis-pas-misogyne-mais/" />		</form>
+
+		<div class="arrow"></div>
+	</div>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/pouletrotique.com\/2015\/10\/18\/je-ne-suis-pas-misogyne-mais\/":3921};
+	</script>
+					<div id="sharing_email" style="display: none;">
+		<form action="/2015/10/18/je-ne-suis-pas-misogyne-mais/" method="post">
+			<label for="target_email">Envoyer à l'adresse e-mail</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Votre nom</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Votre adresse e-mail</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="Ce champ est utilisé pour la validation du formulaire et ne doit pas être changé" />
+			
+			<div
+				class="g-recaptcha"
+				data-sitekey="6LcmyE0UAAAAALID28yVNg7pFCodGaArJzHitez_"
+				data-theme="light"
+				data-type="image"
+				data-tabindex="0"></div>
+			<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?hl=fr" async></script>
+			
+			<img style="float: right; display: none" class="loading" src="https://s0.wp.com/wp-content/mu-plugins/post-flair/sharing/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Envoyer un e-mail" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel" role="button">Annuler</a>
+
+			<div class="errors errors-1" style="display: none;">
+				L'article n'a pas été envoyé - Vérifiez vos adresses e-mail&nbsp;!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				La vérification e-mail a échoué, veuillez réessayer			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Impossible de partager les articles de votre blog par e-mail.			</div>
+		</form>
+	</div>
+<script src='https://platform.twitter.com/widgets.js?ver=20111117'></script>
+<div class="widget widget_eu_cookie_law_widget"><div
+	class="hide-on-button"
+	data-hide-timeout="30"
+	data-consent-expiration="180"
+	id="eu-cookie-law"
+>
+	<form method="post">
+		<input type="submit" value="Fermer et accepter" class="accept" />
+
+		Confidentialité &amp; Cookies : Ce site utilise des cookies. En continuant à utiliser ce site, vous acceptez leur utilisation.<br />
+Pour en savoir davantage, y compris comment contrôler les cookies, voir :
+		<a href="https://automattic.com/cookies" >
+			Politique relative aux cookies		</a>
+ </form>
+</div>
+</div><link rel='stylesheet' id='all-css-0-3' href='https://s0.wp.com/_static/??-eJxty0sKgCAQANALNQ0iCi2is4gNofnDUbt+tGjn9sHDp4DNqVFqGDuU0C+XGCtxyYndIBjupDyR1TIvOO/W1NyZAnpqxdgbfvjSEXehtJRa6E35F6ZZMAg=?cssminify=yes' type='text/css' media='all' />
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyFUEFSwzAM/BCOCKSQHpi+JdhqKkeR3chOCK+vC+mhwAwnabSr3ZVgicYGSSgJvILDmSzGj8rrA9xDMWgaUbXr8Q/UnzNO61Yqkplw+ZfmMcXODmZCpc9fqmM2kXNPosA0oEJZynjqxDFONzKJ5ewKeA1PmmBGcWG6QjHweiTmaiT5qX0TPmZmo5TQoKNE0m+WUD/W7evzy74BwUW/Ur5zsMPmUvpCLR/R77HZ7j2Mb/Wu3T+1TVM3/gLyqYDg'></script>
+<script type='text/javascript'>
+( 'fetch' in window ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?m=1573572739h&#038;ver=3.0.0"></scr' + 'ipt>' );( document.contains ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?m=1540208548h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?m=1585663916h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?m=1585663916h&#038;ver=3.6.4"></scr' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?m=1550600082h&#038;ver=3.0.12"></scr' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?m=1540208548h&#038;ver=2.0.2"></scr' + 'ipt>' );
+( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-url.min.7490158b.js?m=1588209800h&#038;ver=3.6.4"></scr' + 'ipt>' );
+( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-dom-rect.7e21c103.js?m=1588209800h&#038;ver=3.42.0"></scr' + 'ipt>' );
+</script>
+<script src='https://s0.wp.com/wp-includes/js/dist/vendor/lodash.min.js?m=1573572739h&#038;ver=4.17.15'></script>
+<script>
+window.lodash = _.noConflict();
+</script>
+<script>
+var jpfbembed = {"appid":"249643311490","locale":"fr_FR"};
+</script>
+<script>
+var actionbardata = {"siteID":"9466585","siteName":"Poulet Rotique","siteURL":"https:\/\/pouletrotique.com","icon":"<img alt='' src='https:\/\/secure.gravatar.com\/blavatar\/3434a0ca681ba76c16640cf7c420d171?s=50&d=https%3A%2F%2Fs0.wp.com%2Fi%2Flogo%2Fwpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"premium\/hive","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fpouletrotique.com%2F2015%2F10%2F18%2Fje-ne-suis-pas-misogyne-mais%2F&signup_flow=account&domain=pouletrotique.com","themeURL":"","xhrURL":"https:\/\/pouletrotique.com\/wp-admin\/admin-ajax.php","nonce":"08de5007a5","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"d1fbc6a47f\" \/>","referer":"https:\/\/pouletrotique.com\/2015\/10\/18\/je-ne-suis-pas-misogyne-mais\/","canFollow":"1","feedID":"4156087","statusMessage":"","customizeLink":"https:\/\/pouletrotique.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fpouletrotique.wordpress.com%2F2015%2F10%2F18%2Fje-ne-suis-pas-misogyne-mais%2F","postID":"3921","shortlink":"https:\/\/wp.me\/pDIGR-11f","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/pouletrotique.com\/3921","statsLink":"https:\/\/wordpress.com\/stats\/post\/3921\/pouletrotique.com","i18n":{"view":"Afficher le site","follow":"Suivre","following":"Abonn\u00e9","edit":"Modifier","login":"Connexion","signup":"S'inscrire","customize":"Personnaliser","report":"Signaler ce contenu","themeInfo":"Obtenir le th\u00e8me: Hive","shortlink":"Copier shortlink","copied":"Copi\u00e9","followedText":"Les nouveaux articles de ce site appara\u00eetront d\u00e9sormais dans votre <a href=\"https:\/\/wordpress.com\/\">Lecteur<\/a>","foldBar":"R\u00e9duire cette barre","unfoldBar":"\u00c9tendre cette barre","editSubs":"G\u00e9rer les abonnements","viewReader":"Voir le site dans le Lecteur","viewReadPost":"Voir l\u2019article dans le Lecteur","subscribe":"M\u2019inscrire","enterEmail":"Entrez votre adresse e-mail","followers":"Rejoignez 1&nbsp;116 autres abonn\u00e9s","alreadyUser":"Vous disposez d\u00e9j\u00e0 d\u02bcun compte WordPress ? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fpouletrotique.com%2F2015%2F10%2F18%2Fje-ne-suis-pas-misogyne-mais%2F&signup_flow=account&domain=pouletrotique.com\">Connectez-vous maintenant.<\/a>","stats":"Statistiques"}};
+</script>
+<script>
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"fr","ajaxurl":"https:\/\/pouletrotique.com\/wp-admin\/admin-ajax.php","nonce":"e1e93fd6ec","display_exif":"0","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Commentaire","post_comment":"Laisser un commentaire","write_comment":"\u00c9crire un commentaire...","loading_comments":"Chargement des commentaires\u2026","download_original":"Afficher dans sa taille r\u00e9elle <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>.","no_comment_text":"Veuillez ajouter du contenu \u00e0 votre commentaire.","no_comment_email":"Merci de renseigner une adresse e-mail.","no_comment_author":"Merci de renseigner votre nom.","comment_post_error":"Une erreur s'est produite \u00e0 la publication de votre commentaire. Veuillez nous en excuser, et r\u00e9essayer dans quelques instants.","comment_approved":"Votre commentaire a \u00e9t\u00e9 approuv\u00e9.","comment_unapproved":"Votre commentaire est en attente de validation.","camera":"Appareil photo","aperture":"Ouverture","shutter_speed":"Vitesse d'obturation","focal_length":"Focale","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/pouletrotique.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fpouletrotique.com%2F2015%2F10%2F18%2Fje-ne-suis-pas-misogyne-mais%2F","blog_id":"9466585","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">E-mail (requis)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Nom (requis)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Site web<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogu\u00e9","reblog_add_thoughts":"Ajoutez votre grain de sel personnel... (facultatif)","reblogging":"Reblogging...","post_reblog":"Relais d\u2019article","stats_query_args":"blog=9466585&v=wpcom&tz=2&user_id=0&subd=pouletrotique","is_public":"1","reblog_enabled":""};
+</script>
+<script>
+var sharing_js_options = {"lang":"fr","counts":"1","is_stats_active":"1"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyVU9tugzAM/aEFl5Vt9GHa875iCsQFQy4sTuj69wtDVJXKkHhKYvv4co4Dl0HUzga0AQYdG7IMTUzPCn2TPB6hzA7ZAapIWgHlpQWyCn+yjp9gH1g5IzxKdd3OcI5aC6aAAhUFso2YPZAf8vLt+HoqwOKFB1n3otKu7hkUcYBaehcZ9WwUI+FlKUG21lEhQ8dARjbI2kmFKjNk12KMZGf99d69dBlaNClo8GgoGmhpRJDMGB6T70J23xFTxdaN6D//APvwI6apKVz3oYxcJ6B2xiR0kmvQqzSYKBa9OgyTFvCVEsBZ1lg51ws01SMFdyipUlZRST+RHdCnm5hm9zS1cLPtzBB86oS3QHUgZyfQ7bYR7ZEHZzlxltZJoVux/LdCPKzbZ50Xue+jVuovK71wLBbD1oQ9scEgjunfzZI4bzbiB8dBnLUkD9xKn/7bcibQh3nPX8rTc1kUedH9AmomjgQ='></script>
+<script type='text/javascript'>
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-tumblr', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtumblr', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-pocket', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcompocket', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<iframe src='https://widgets.wp.com/likes/master.html?ver=20190321#ver=20190321&amp;lang=fr' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+		<div id='likes-other-gravatars'><div class="likes-text"><span>%d</span> blogueurs aiment cette page :</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+<script src="//stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'9466585','blog_tz':'2','user_lang':'fr','blog_lang':'fr','user_id':'0'}]);
+_stq.push(['view', {'blog':'9466585','v':'wpcom','tz':'2','user_id':'0','post':'3921','subd':'pouletrotique'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1hV3xrb2xUT3JBbjREZWgvK29XZW1Bbl82dys4Zj9tVXI0M0drUj1wLTgsNzdteT9DUTdrMjVlLV9zaTllS209VW1LblY0MkNfayxVSkhBOFFkOH5CQXU5VGROaHFpR3ZmSHMsRz9fbmJIT1RTSSV0XUdjaE9OVl13SjlSdV9xaHlwSXhoUk1Hdl9YSnIzXzEyeTFLUk13Mjk/Wmh6bFgrK1FDbz1Ob3kyc3p5UkN1RjUmMXx+NUdCP0N4cVlLVGJyaC5Ofmx3b1BtMU4wP2g1T1dpeDlLVHFnVDd0ckxiTHlPN1FdVHdwRzZbUUlPSWJ4Ny4xOU00VmwwTnp6U3FQRkIzUWRPUFhyXUtYcENHflpteEtJUXRsV3JZXU0uLHxfOC09QzFFd1JSN351YiZjRXJ2LmxGJnpxLWR5Nk1kUnBHMXdjLVFIcEx2W1hobE12akM2PUt3'}]);
+_stq.push([ 'clickTrackerInit', '9466585', '3921' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>

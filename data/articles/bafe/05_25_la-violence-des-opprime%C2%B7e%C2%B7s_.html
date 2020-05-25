@@ -1,0 +1,1819 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La violence des opprimé·e·s | Emma</title>
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="https://emmaclit.com/xmlrpc.php">
+
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9lbW1hY2xpdC5jb20%3D"
+		+ "&wpcomid=110271071"
+		+ "&time=1589683660";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//emmaclitdotcom.wordpress.com' />
+<link rel='dns-prefetch' href='//wordpress.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel="alternate" type="application/rss+xml" title="Emma &raquo; Flux" href="https://emmaclit.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Emma &raquo; Flux des commentaires" href="https://emmaclit.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Emma &raquo; La violence des&nbsp;opprimé·e·s Flux des commentaires" href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s0.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.1"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s0.wp.com/_static/??-eJytk9FWwyAMhl9IyrpV7S48PgvQrGODwiFg7dublm7q3KketzsI+fKHH8J7z5TrInSR28S8Sa3ukPdeOcvQagPDxa5QiA/8Omb0EZAfIHqhjmza/Ug/5baJthJCSycBeF2sihWXSZuGS+MmXAYRBo5xMPCHMhP1RV0MLkXWBt38t0QQUXct/oLvkjEMdQQGjR6B2Q5ersr6efO0rXgHPU4VZ4FGYxxvSakOI+Ywe9PQ311FieASgrmThg9gdbJndNka5eZWymK9oefNHc1BdrOt2TxDRfPtcv3L6NKHHb8exa0XccywJCXAgKW0JazXTQuRcDytWYT3ZWSaISnJQER2sjHuSWtxpIgau8nDNAl+i2RU885FTTSeF7cNzHy0C+6KEblp7pPkHjpUNCZq//kTXu1L+Vhv13VVldXhA9dkoQk=?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<link crossorigin="anonymous" rel='stylesheet' id='penscratch-fonts-css'  href='https://fonts.googleapis.com/css?family=Roboto+Slab%3A300%2C400%2C700&#038;subset=latin%2Clatin-ext' media='all' />
+<link rel='stylesheet' id='all-css-2-1' href='https://s0.wp.com/_static/??-eJx9jUsOwkAMQy9ESAtlwQJxlmkapkHz0yRVxe0psClCdGfLfjbOBSgn42QYJyhh8pIUPSeusgR/5J5Ud7hibeTIimXqsXBSqs5oREmEao/AMBfK8YdaPc4yeDZFzSQuQORBHHxu3wtbrOcMIZMzyenLwC04qVto5T5kv0iPS2tlX9A1XtrToWua7twe70/pHHAW?cssminify=yes' type='text/css' media='all' />
+<link rel='stylesheet' id='print-css-3-1' href='https://s0.wp.com/wp-content/mu-plugins/global-print/global-print.css?m=1465851035h&cssminify=yes' type='text/css' media='print' />
+<link rel='stylesheet' id='all-css-4-1' href='https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?m=1560469195h&cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-6-1' href='https://s0.wp.com/_static/??-eJxti0EKgCAQAD+ULWGJHaK3mJgaqyut0fejQ4eo0zAwA2cRlnJ1uUI6RMHDx8xQiKtY0cQdOJg9Zv+wtcwN/F9MNhoUSJ7e8plqcMkxhB480mLwDuY0dYMepVJaqu0CZXY33g==?cssminify=yes' type='text/css' media='all' />
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJzTLy/QzcxLzilNSS3WzwKiwtLUokoopZdVrKOPT4FubmZ6UWJJql5uZh5McXJ+XklqXglIbW5+UmZOqm5pcWpRYjpQDGhQWj5QnX2uraGpqYWxqZmZqXEWALkfL7E='></script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://emmaclitdotcom.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s0.wp.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Parce qu&rsquo;on est tellement de&nbsp;gauuuuche' href='https://emmaclit.com/2016/05/21/parce-quon-est-tellement-de-gauuuuche/' />
+<link rel='next' title='Je ne vois pas d&rsquo;autre&nbsp;explication.' href='https://emmaclit.com/2016/06/03/je-ne-vois-pas-dautre-explication/' />
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/" />
+<link rel='shortlink' href='https://wp.me/p7sGxF-3u' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Femmaclit.com%2F2016%2F05%2F25%2Fla-violence-des-opprime%25c2%25b7e%25c2%25b7s%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Femmaclit.com%2F2016%2F05%2F25%2Fla-violence-des-opprime%25c2%25b7e%25c2%25b7s%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="La violence des opprimé·e·s" />
+<meta property="og:url" content="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/" />
+<meta property="og:description" content="Voir l&rsquo;article pour en savoir plus." />
+<meta property="article:published_time" content="2016-05-25T17:24:00+00:00" />
+<meta property="article:modified_time" content="2017-02-21T15:12:00+00:00" />
+<meta property="og:site_name" content="Emma" />
+<meta property="og:image" content="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite10small.png" />
+<meta property="og:image:width" content="1000" />
+<meta property="og:image:height" content="900" />
+<meta property="og:locale" content="fr_FR" />
+<meta name="twitter:site" content="@wordpressdotcom" />
+<meta name="twitter:text:title" content="La violence des&nbsp;opprimé·e·s" />
+<meta name="twitter:image" content="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite14small.png?w=640" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:description" content="Voir l&rsquo;article pour en savoir plus." />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="search" type="application/opensearchdescription+xml" href="https://emmaclit.com/osd.xml" title="Emma" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="Emma" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Politique, trucs pour réfléchir et intermèdes ludiques" /><meta name="msapplication-task" content="name=Souscrire;action-uri=https://emmaclit.com/feed/;icon-uri=https://emmaclitdotcom.files.wordpress.com/2017/10/cropped-avatar.png?w=16" /><meta name="msapplication-task" content="name=Inscrivez-vous pour créer un blog gratuitement;action-uri=http://wordpress.com/signup/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Assistance WordPress.com;action-uri=http://support.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Forums WordPress.com;action-uri=http://forums.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><link rel="amphtml" href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/amp/"><link rel="icon" href="https://emmaclitdotcom.files.wordpress.com/2017/10/cropped-avatar.png?w=32" sizes="32x32" />
+<link rel="icon" href="https://emmaclitdotcom.files.wordpress.com/2017/10/cropped-avatar.png?w=192" sizes="192x192" />
+<link rel="apple-touch-icon" href="https://emmaclitdotcom.files.wordpress.com/2017/10/cropped-avatar.png?w=180" />
+<meta name="msapplication-TileImage" content="https://emmaclitdotcom.files.wordpress.com/2017/10/cropped-avatar.png?w=270" />
+		<link rel="stylesheet" id="custom-css-css" type="text/css" href="https://s0.wp.com/?custom-css=1&#038;csblog=7sGxF&#038;cscache=6&#038;csrev=7" />
+		</head>
+
+<body class="post-template-default single single-post postid-216 single-format-standard customizer-styles-applied has-site-logo highlander-enabled highlander-light">
+<div id="page" class="hfeed site">
+	<a class="skip-link screen-reader-text" href="#content">Aller au contenu principal</a>
+	<header id="masthead" class="site-header" role="banner">
+		<div class="site-branding">
+			<a href="https://emmaclit.com/" class="site-logo-link" rel="home" itemprop="url"><img width="300" height="300" src="https://emmaclitdotcom.files.wordpress.com/2017/10/cropped-avatar.png?w=300" class="site-logo attachment-penscratch-site-logo" alt="" data-size="penscratch-site-logo" itemprop="logo" srcset="https://emmaclitdotcom.files.wordpress.com/2017/10/cropped-avatar.png?w=300 300w, https://emmaclitdotcom.files.wordpress.com/2017/10/cropped-avatar.png?w=600 600w, https://emmaclitdotcom.files.wordpress.com/2017/10/cropped-avatar.png?w=150 150w" sizes="(max-width: 300px) 100vw, 300px" data-attachment-id="1175" data-permalink="https://emmaclit.com/cropped-avatar/" data-orig-file="https://emmaclitdotcom.files.wordpress.com/2017/10/cropped-avatar.png" data-orig-size="1222,1222" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="cropped-avatar" data-image-description="" data-medium-file="https://emmaclitdotcom.files.wordpress.com/2017/10/cropped-avatar.png?w=300" data-large-file="https://emmaclitdotcom.files.wordpress.com/2017/10/cropped-avatar.png?w=656" /></a>			<h1 class="site-title"><a href="https://emmaclit.com/" rel="home">Emma</a></h1>
+			<h2 class="site-description">Politique, trucs pour réfléchir et intermèdes ludiques</h2>
+		</div>
+
+		<nav id="site-navigation" class="main-navigation" role="navigation">
+			<button class="menu-toggle">Menu</button>
+			<div class="menu-reseaux-sociaux-container"><ul id="menu-reseaux-sociaux" class="menu"><li id="menu-item-121" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-121"><a href="https://emmaclit.com/">Accueil</a></li>
+<li id="menu-item-120" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-120"><a href="https://emmaclit.com/a-propos/">À propos</a></li>
+<li id="menu-item-1455" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home menu-item-1455"><a href="https://emmaclit.com/mes-parutions/">Boutique</a></li>
+<li id="menu-item-1602" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1602"><a href="https://emmaclit.com/mon-tedx/">Mes conférences</a></li>
+<li id="menu-item-973" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-973"><a href="https://emmaclit.com/contact/">Contact</a></li>
+<li id="menu-item-1391" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1391"><a href="https://emmaclit.com/f-a-q/">F.A.Q</a></li>
+<li id="menu-item-581" class="menu-en menu-item menu-item-type-custom menu-item-object-custom menu-item-581"><a href="http://english.emmaclit.com">EN</a></li>
+</ul></div>		</nav><!-- #site-navigation -->
+	</header><!-- #masthead -->
+
+	<div id="content" class="site-content">
+		
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+		
+			
+<article id="post-216" class="post-216 post type-post status-publish format-standard hentry category-antiracisme-et-violences-policieres category-feminisme">
+	<header class="entry-header">
+		<h1 class="entry-title">La violence des&nbsp;opprimé·e·s</h1>
+		<div class="entry-meta">
+						<span class="posted-on"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/" rel="bookmark"><time class="entry-date published" datetime="2016-05-25T18:24:00+01:00">25 mai 2016</time><time class="updated" datetime="2017-02-21T16:12:00+01:00">21 février 2017</time></a></span><span class="byline"><span class="sep"> ~ </span><span class="author vcard"><a class="url fn n" href="https://emmaclit.com/author/emmafnc/">Emma</a></span></span>					</div><!-- .entry-meta -->
+	</header><!-- .entry-header -->
+
+	<div class="entry-content">
+		<p><img data-attachment-id="218" data-permalink="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/aggressivite0small/" data-orig-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite0small.png" data-orig-size="1000,900" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="aggressivite0small" data-image-description="" data-medium-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite0small.png?w=300" data-large-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite0small.png?w=656" class="alignnone size-full wp-image-218" src="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite0small.png?w=656" alt="aggressivite0small" srcset="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite0small.png?w=656 656w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite0small.png?w=150 150w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite0small.png?w=300 300w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite0small.png?w=768 768w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite0small.png 1000w" sizes="(max-width: 656px) 100vw, 656px"   /><img data-attachment-id="219" data-permalink="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/aggressivite1small/" data-orig-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite1small.png" data-orig-size="1000,900" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="aggressivite1small" data-image-description="" data-medium-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite1small.png?w=300" data-large-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite1small.png?w=656" class="alignnone size-full wp-image-219" src="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite1small.png?w=656" alt="aggressivite1small" srcset="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite1small.png?w=656 656w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite1small.png?w=150 150w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite1small.png?w=300 300w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite1small.png?w=768 768w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite1small.png 1000w" sizes="(max-width: 656px) 100vw, 656px"   /><img data-attachment-id="220" data-permalink="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/aggressivite2small/" data-orig-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite2small.png" data-orig-size="1000,900" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="aggressivite2small" data-image-description="" data-medium-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite2small.png?w=300" data-large-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite2small.png?w=656" class="alignnone size-full wp-image-220" src="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite2small.png?w=656" alt="aggressivite2small" srcset="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite2small.png?w=656 656w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite2small.png?w=150 150w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite2small.png?w=300 300w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite2small.png?w=768 768w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite2small.png 1000w" sizes="(max-width: 656px) 100vw, 656px"   /><img data-attachment-id="221" data-permalink="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/aggressivite3small/" data-orig-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite3small.png" data-orig-size="1000,900" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="aggressivite3small" data-image-description="" data-medium-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite3small.png?w=300" data-large-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite3small.png?w=656" class="alignnone size-full wp-image-221" src="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite3small.png?w=656" alt="aggressivite3small" srcset="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite3small.png?w=656 656w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite3small.png?w=150 150w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite3small.png?w=300 300w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite3small.png?w=768 768w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite3small.png 1000w" sizes="(max-width: 656px) 100vw, 656px"   /><img data-attachment-id="222" data-permalink="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/aggressivite4small/" data-orig-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite4small.png" data-orig-size="1000,900" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="aggressivite4small" data-image-description="" data-medium-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite4small.png?w=300" data-large-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite4small.png?w=656" class="alignnone size-full wp-image-222" src="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite4small.png?w=656" alt="aggressivite4small" srcset="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite4small.png?w=656 656w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite4small.png?w=150 150w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite4small.png?w=300 300w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite4small.png?w=768 768w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite4small.png 1000w" sizes="(max-width: 656px) 100vw, 656px"   /><img data-attachment-id="223" data-permalink="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/aggressivite5small/" data-orig-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite5small.png" data-orig-size="1000,900" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="aggressivite5small" data-image-description="" data-medium-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite5small.png?w=300" data-large-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite5small.png?w=656" class="alignnone size-full wp-image-223" src="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite5small.png?w=656" alt="aggressivite5small" srcset="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite5small.png?w=656 656w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite5small.png?w=150 150w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite5small.png?w=300 300w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite5small.png?w=768 768w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite5small.png 1000w" sizes="(max-width: 656px) 100vw, 656px"   /><img data-attachment-id="224" data-permalink="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/aggressivite6small/" data-orig-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite6small.png" data-orig-size="1000,900" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="aggressivite6small" data-image-description="" data-medium-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite6small.png?w=300" data-large-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite6small.png?w=656" class="alignnone size-full wp-image-224" src="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite6small.png?w=656" alt="aggressivite6small" srcset="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite6small.png?w=656 656w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite6small.png?w=150 150w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite6small.png?w=300 300w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite6small.png?w=768 768w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite6small.png 1000w" sizes="(max-width: 656px) 100vw, 656px"   /><img data-attachment-id="225" data-permalink="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/aggressivite7small/" data-orig-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite7small.png" data-orig-size="1000,900" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="aggressivite7small" data-image-description="" data-medium-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite7small.png?w=300" data-large-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite7small.png?w=656" class="alignnone size-full wp-image-225" src="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite7small.png?w=656" alt="aggressivite7small" srcset="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite7small.png?w=656 656w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite7small.png?w=150 150w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite7small.png?w=300 300w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite7small.png?w=768 768w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite7small.png 1000w" sizes="(max-width: 656px) 100vw, 656px"   /><img data-attachment-id="226" data-permalink="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/aggressivite8small/" data-orig-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite8small.png" data-orig-size="1000,900" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="aggressivite8small" data-image-description="" data-medium-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite8small.png?w=300" data-large-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite8small.png?w=656" class="alignnone size-full wp-image-226" src="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite8small.png?w=656" alt="aggressivite8small" srcset="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite8small.png?w=656 656w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite8small.png?w=150 150w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite8small.png?w=300 300w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite8small.png?w=768 768w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite8small.png 1000w" sizes="(max-width: 656px) 100vw, 656px"   /><img data-attachment-id="227" data-permalink="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/aggressivite9small/" data-orig-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite9small.png" data-orig-size="1000,900" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="aggressivite9small" data-image-description="" data-medium-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite9small.png?w=300" data-large-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite9small.png?w=656" class="alignnone size-full wp-image-227" src="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite9small.png?w=656" alt="aggressivite9small" srcset="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite9small.png?w=656 656w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite9small.png?w=150 150w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite9small.png?w=300 300w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite9small.png?w=768 768w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite9small.png 1000w" sizes="(max-width: 656px) 100vw, 656px"   /><img data-attachment-id="228" data-permalink="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/aggressivite10small/" data-orig-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite10small.png" data-orig-size="1000,900" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="aggressivite10small" data-image-description="" data-medium-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite10small.png?w=300" data-large-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite10small.png?w=656" class="alignnone size-full wp-image-228" src="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite10small.png?w=656" alt="aggressivite10small" srcset="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite10small.png?w=656 656w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite10small.png?w=150 150w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite10small.png?w=300 300w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite10small.png?w=768 768w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite10small.png 1000w" sizes="(max-width: 656px) 100vw, 656px"   /><img data-attachment-id="229" data-permalink="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/aggressivite11small/" data-orig-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite11small.png" data-orig-size="1000,900" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="aggressivite11small" data-image-description="" data-medium-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite11small.png?w=300" data-large-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite11small.png?w=656" class="alignnone size-full wp-image-229" src="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite11small.png?w=656" alt="aggressivite11small" srcset="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite11small.png?w=656 656w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite11small.png?w=150 150w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite11small.png?w=300 300w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite11small.png?w=768 768w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite11small.png 1000w" sizes="(max-width: 656px) 100vw, 656px"   /><img data-attachment-id="230" data-permalink="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/aggressivite12small/" data-orig-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite12small.png" data-orig-size="1000,900" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="aggressivite12small" data-image-description="" data-medium-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite12small.png?w=300" data-large-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite12small.png?w=656" class="alignnone size-full wp-image-230" src="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite12small.png?w=656" alt="aggressivite12small" srcset="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite12small.png?w=656 656w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite12small.png?w=150 150w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite12small.png?w=300 300w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite12small.png?w=768 768w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite12small.png 1000w" sizes="(max-width: 656px) 100vw, 656px"   /><img data-attachment-id="231" data-permalink="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/aggressivite13small/" data-orig-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite13small.png" data-orig-size="1000,900" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="aggressivite13small" data-image-description="" data-medium-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite13small.png?w=300" data-large-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite13small.png?w=656" class="alignnone size-full wp-image-231" src="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite13small.png?w=656" alt="aggressivite13small" srcset="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite13small.png?w=656 656w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite13small.png?w=150 150w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite13small.png?w=300 300w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite13small.png?w=768 768w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite13small.png 1000w" sizes="(max-width: 656px) 100vw, 656px"   /><img data-attachment-id="232" data-permalink="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/aggressivite14small/" data-orig-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite14small.png" data-orig-size="1000,900" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="aggressivite14small" data-image-description="" data-medium-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite14small.png?w=300" data-large-file="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite14small.png?w=656" class="alignnone size-full wp-image-232" src="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite14small.png?w=656" alt="aggressivite14small" srcset="https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite14small.png?w=656 656w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite14small.png?w=150 150w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite14small.png?w=300 300w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite14small.png?w=768 768w, https://emmaclitdotcom.files.wordpress.com/2016/05/aggressivite14small.png 1000w" sizes="(max-width: 656px) 100vw, 656px"   /></p>
+<div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Partager&nbsp;:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-216" class="share-twitter sd-button share-icon" href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?share=twitter" target="_blank" title="Cliquez pour partager sur Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-216" class="share-facebook sd-button share-icon" href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?share=facebook" target="_blank" title="Cliquez pour partager sur Facebook"><span>Facebook</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-110271071-216-5ec0a5cc7d122' data-src='//widgets.wp.com/likes/index.html?ver=20190321#blog_id=110271071&amp;post_id=216&amp;origin=emmaclitdotcom.wordpress.com&amp;obj_id=110271071-216-5ec0a5cc7d122&amp;domain=emmaclit.com' data-name='like-post-frame-110271071-216-5ec0a5cc7d122'><h3 class='sd-title'>WordPress:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>J&#039;aime</span></span> <span class="loading">chargement&hellip;</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div></div>			</div><!-- .entry-content -->
+
+	<footer class="entry-footer">
+				<span class="cat-links">
+			Posté dans <a href="https://emmaclit.com/category/antiracisme-et-violences-policieres/" rel="category tag">Antiracisme et violences policières</a>, <a href="https://emmaclit.com/category/feminisme/" rel="category tag">Féminisme</a>		</span>
+					</footer><!-- .entry-footer -->
+</article><!-- #post-## -->
+
+				<nav class="navigation post-navigation" role="navigation">
+		<h1 class="screen-reader-text">Navigation des articles</h1>
+		<div class="nav-links">
+			<div class="nav-previous"><a href="https://emmaclit.com/2016/05/21/parce-quon-est-tellement-de-gauuuuche/" rel="prev"><span class="meta-nav">&lt; Previous</span> Parce qu&rsquo;on est tellement de&nbsp;gauuuuche</a></div><div class="nav-next"><a href="https://emmaclit.com/2016/06/03/je-ne-vois-pas-dautre-explication/" rel="next"><span class="meta-nav">Suivant &gt;</span> Je ne vois pas d&rsquo;autre&nbsp;explication.</a></div>		</div><!-- .nav-links -->
+	</nav><!-- .navigation -->
+	
+			
+<div id="comments" class="comments-area">
+
+	
+			<h2 class="comments-title">
+			40 r&eacute;flexions sur &ldquo;<span>La violence des&nbsp;opprimé·e·s</span>&rdquo;		</h2>
+
+		
+		<ol class="comment-list">
+					<li id="comment-3" class="comment byuser comment-author-gavroche46 even thread-even depth-1 parent highlander-comment">
+			<article id="div-comment-3" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/d736d18ae316cda5eb0fb97c77e3fa66?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn"><a href='https://cafemusique.wordpress.com/' rel='external nofollow ugc' class='url'>Gavroche</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-3">
+							<time datetime="2016-05-26T11:05:23+01:00">
+								26 mai 2016 à 11 h 05 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>« Il y a trois sortes de violence. La première, mère de toutes les autres, est la violence institutionnelle, celle qui légalise et perpétue les dominations, les oppressions et les exploitations, celle qui écrase et lamine des millions d’hommes dans ses rouages silencieux et bien huilés.<br />
+La seconde est la violence révolutionnaire, qui naît de la volonté d’abolir la première.<br />
+La troisième est la violence répressive, qui a pour objet d’étouffer la seconde en se faisant l’auxiliaire et la complice de la première violence, celle qui engendre toutes les autres.<br />
+Il n’y a pas de pire hypocrisie de n’appeler violence que la seconde, en feignant d’oublier la première, qui la fait naître, et la troisième qui la tue. »</p>
+<p>Dom Helder Camarra, archevêque de Recife</p>
+<p id="comment-like-3" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=3&#038;_wpnonce=99d2181ed0" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-3" class="comment-like-feedback">Aimé par <a href="#" class="view-likers" data-like-count="1">1 personne</a></span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=3#respond' data-commentid="3" data-postid="216" data-belowelement="div-comment-3" data-respondelement="respond" aria-label='Répondre à Gavroche'>Réponse</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-4079" class="comment odd alt depth-2 highlander-comment">
+			<article id="div-comment-4079" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/7c10076bb3f34586bc28bf2c58b49c29?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn"><a href='http://gravatar.com/strandbee' rel='external nofollow ugc' class='url'>strand</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-4079">
+							<time datetime="2018-05-06T04:54:36+01:00">
+								6 mai 2018 à 4 h 54 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Les tribunaux sont pleins de gens qui ont tentés de se défendre d&rsquo;oppressions auxquels ils ne comprennent rien mais qu&rsquo;ils ressentent si violemment que leur réaction les entraine au-delà de la colère dîtes légitime, celle qui est donc autorisées implicitement par l&rsquo;ensemble de la société! </p>
+<p>Ne pas répondre aux violences oppressives par une surenchère est un sacerdoce, un long travail de reprise en main de ses émotions et de contrôle de soi : obligatoire sinon c&rsquo;est l&rsquo;asile ou la prison. </p>
+<p>Voilà donc les réponses &laquo;&nbsp;normales&nbsp;&raquo; de notre société&#8230;</p>
+<p>Faut pas s&rsquo;étonner que certains mettent le feu! </p>
+<p>En tout cas, très beau travail de bédéiste, simple et efficace! Bravo!</p>
+<p id="comment-like-4079" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=4079&#038;_wpnonce=59b38859f6" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-4079" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=4079#respond' data-commentid="4079" data-postid="216" data-belowelement="div-comment-4079" data-respondelement="respond" aria-label='Répondre à strand'>Réponse</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-4" class="comment byuser comment-author-topometallo even thread-odd thread-alt depth-1 highlander-comment">
+			<article id="div-comment-4" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/c6ca6670d1db057a8aa237249b91fd6d?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn"><a href='http://topometallo.wordpress.com' rel='external nofollow ugc' class='url'>topometallo</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-4">
+							<time datetime="2016-05-27T11:01:21+01:00">
+								27 mai 2016 à 11 h 01 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>J&rsquo;aimeirais &laquo;&nbsp;voler&nbsp;&raquo; ce post et le traduire dans mon blog italien&#8230; mais savez-vous? La part la plus difficile ce serait traduire le titre sans perdre l&rsquo;effet &laquo;&nbsp;ni M ni F&nbsp;&raquo; du mot &laquo;&nbsp;effacé.e.s&nbsp;&raquo; 🙂</p>
+<p id="comment-like-4" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=4&#038;_wpnonce=d44339d5cf" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-4" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=4#respond' data-commentid="4" data-postid="216" data-belowelement="div-comment-4" data-respondelement="respond" aria-label='Répondre à topometallo'>Réponse</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-5" class="pingback odd alt thread-even depth-1 highlander-comment">
+			<div class="comment-body">
+				Ping: <a href='https://n.survol.fr/n/de-la-violence-legitime' rel='external nofollow ugc' class='url'>De la violence légitime &#8211; Carnet de notes</a> 			</div>
+		</li><!-- #comment-## -->
+		<li id="comment-7" class="comment even thread-odd thread-alt depth-1 parent highlander-comment">
+			<article id="div-comment-7" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/e42344c5012a4bc8c225ac11700443af?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn">mARC</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-7">
+							<time datetime="2016-05-28T16:59:09+01:00">
+								28 mai 2016 à 16 h 59 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Et donc concernant ton boulot, t&rsquo;as :<br />
+1) démisssioné ?<br />
+2) imposé un système matriarcale après avoir brûlé des ordinateurs et insulté des mecs ?<br />
+3) trouvé une solution par le dialogue et l&rsquo;approbation d&rsquo;une majorité ?</p>
+<p id="comment-like-7" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=7&#038;_wpnonce=cab653c5fa" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-7" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=7#respond' data-commentid="7" data-postid="216" data-belowelement="div-comment-7" data-respondelement="respond" aria-label='Répondre à mARC'>Réponse</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-10" class="comment byuser comment-author-emmafnc bypostauthor odd alt depth-2 parent highlander-comment">
+			<article id="div-comment-10" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/e970e9d9191e6888f76f23fb4c0be856?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn"><a href='http://comprendreetagir.wordpress.com' rel='external nofollow ugc' class='url'>EmmaClit</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-10">
+							<time datetime="2016-05-29T10:59:09+01:00">
+								29 mai 2016 à 10 h 59 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Réponse 1</p>
+<p id="comment-like-10" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=10&#038;_wpnonce=c70ab08d1c" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-10" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=10#respond' data-commentid="10" data-postid="216" data-belowelement="div-comment-10" data-respondelement="respond" aria-label='Répondre à EmmaClit'>Réponse</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-18" class="comment byuser comment-author-topometallo even depth-3 highlander-comment">
+			<article id="div-comment-18" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/c6ca6670d1db057a8aa237249b91fd6d?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn"><a href='http://topometallo.wordpress.com' rel='external nofollow ugc' class='url'>topometallo</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-18">
+							<time datetime="2016-05-30T09:06:56+01:00">
+								30 mai 2016 à 9 h 06 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>j&rsquo;espère que ça était pour ton choix et pas celui d&rsquo;autre</p>
+<p id="comment-like-18" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=18&#038;_wpnonce=bfa0222cb2" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-18" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-8" class="comment odd alt thread-even depth-1 parent highlander-comment">
+			<article id="div-comment-8" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/3220a6dbf54069ead824661aa47dd5b3?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn">Hicham Benouatia</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-8">
+							<time datetime="2016-05-28T17:04:10+01:00">
+								28 mai 2016 à 17 h 04 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Donc si des employés réagissent mal au fait qu&rsquo;une personne ( qui n&rsquo;est pas leur supérieur hiérarchique)  leur donne des ordres c&rsquo;est qu&rsquo;il sont des dominants qui s&rsquo;entendent pour l&rsquo;oppression? Et c&rsquo;est pas la contremaître qui fait le sale boulot qui est dans l&rsquo;oppression? Ohlala quelle confusion, c&rsquo;est très grave, il va falloir réviser ses catégories de la domination&#8230;<br />
+Les femmes et les précaires sont les plus choisit pour ces sales boulots car dans des situations plus fragiles sur le marché de l&#8217;emploi, subissant l&rsquo;oppression structural du fait de faire un sale boulot qui vise à contraindre les employés dans un management toujours plus oppressifs. Et ils ont raison de ne pas se faire écraser comme ça par une capo&rsquo; venant de l&rsquo;extérieur.<br />
+Leur stratégie machiste grossière pour répondre comme ils peuvent à l&rsquo;oppression est bien sûr à critiquer. Mais c&rsquo;est extrêmement grave de voir que vous n&rsquo;arrivez même pas à comprendre pourquoi ils réagissent ainsi. Simplement car votre haine de l&rsquo;homme et votre sentiment de supériorité vous donne l&rsquo;impression que vous avez raison puisqu&rsquo;eux ont tort. Vous avez tous tort dans cette affaire.<br />
+Et venant des catégories et quartiers en révoltes, voir la bourgeoise blanche essayer de comparer son oppression (qu&rsquo;elle même provoque en se soumettant aux pires lois du salariat) avec celle des vrai dominés dans touts les points de vue de la hiérarchie sociale, c&rsquo;est tout simplement insultants.<br />
+Récupération politique, confusionnisme sur la domination, mal honnêteté intellectuelle, style artistique merdique&#8230;vous êtes clairement l&rsquo;avant garde.<br />
+Oseriez vous dire qu&rsquo;un boulanger de province est dominant face à Christine Lagarde? Que Rachida Dati est une dominé à qui il faut donner un soutient moral et symbolique? Que les intellectuels et universitaire relativement bien payés de Paris 8 et compagnie souffrent de la domination que leur fait subir les pêcheurs bretons?</p>
+<p>&laquo;&nbsp;Partout c&rsquo;est l&rsquo;apartheid, ya ceux qui vivent le confort et ceux qui vivent au bled&nbsp;&raquo;<br />
+Voilà la vrai domination. La vrai injustice. La vrai douleur.<br />
+Les sur-diplomés, soutenues par des milliers de personnes, qui vivent au chaud en France à la Sihame Assbague sont les idiots utiles du capital, en plus de faire le lit des extrêmes et le jeux du fn.</p>
+<p id="comment-like-8" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=8&#038;_wpnonce=019e629c4a" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-8" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=8#respond' data-commentid="8" data-postid="216" data-belowelement="div-comment-8" data-respondelement="respond" aria-label='Répondre à Hicham Benouatia'>Réponse</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-9" class="comment byuser comment-author-emmafnc bypostauthor even depth-2 parent highlander-comment">
+			<article id="div-comment-9" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/e970e9d9191e6888f76f23fb4c0be856?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn"><a href='http://comprendreetagir.wordpress.com' rel='external nofollow ugc' class='url'>EmmaClit</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-9">
+							<time datetime="2016-05-29T10:58:47+01:00">
+								29 mai 2016 à 10 h 58 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Je ne leur donnais pas d&rsquo;ordres je planifiais simplement la livraison des corrections de leurs bugs. Mon boulot c&rsquo;était d&rsquo;organiser ça pour que d&rsquo;autres équipes de ma boîte sachent quand leurs problèmes seront résolus pour qu&rsquo;ils puissent avancer. C&rsquo;est un truc récurrent en informatique, les développeurs ne veulent pas corriger leurs bugs ça les fait chier. Et tout moyen est bon pour y échapper.<br />
+D&rsquo;autre part on ne parle pas de gens précaires mais d&rsquo;ingénieurs. Je ne nie pas qu&rsquo;il y a aussi de nombreux abus dans notre milieu, j&rsquo;en ai été moi-même victime, mais les gens mécontents peuvent assez facilement démissionner, le rapport de force n&rsquo;est pas le même.<br />
+Pour finir, j&rsquo;ajouterais que si leur but était de se rebeller contre l&rsquo;oppresseur ils le feraient contre leurs supérieurs hiérarchiques mâles, pas contre une meuf qui essaie juste de faire tourner les équipes.<br />
+Après, s&rsquo;il vous semble acceptable de faire rester une meuf enceinte debout pour écouter sa musique ou de se moquer du peu de tenues qu&rsquo;elle peut encore porter, bah je sais pas quoi dire de plus.</p>
+<p id="comment-like-9" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=9&#038;_wpnonce=5fbf909a0e" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-9" class="comment-like-feedback">Aimé par <a href="#" class="view-likers" data-like-count="2">2 personnes</a></span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=9#respond' data-commentid="9" data-postid="216" data-belowelement="div-comment-9" data-respondelement="respond" aria-label='Répondre à EmmaClit'>Réponse</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-11" class="comment odd alt depth-3 parent highlander-comment">
+			<article id="div-comment-11" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/3220a6dbf54069ead824661aa47dd5b3?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn">Hicham</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-11">
+							<time datetime="2016-05-29T19:17:02+01:00">
+								29 mai 2016 à 19 h 17 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Merci d&rsquo;avoir pris le temps de répondre avec politesse, malgré mon ton pas très correct (je vous prie de bien vouloir m&rsquo;en excuser).<br />
+L&rsquo;explication plus précise de la situation me permet de mieux comprendre votre point de vue, que je partage finalement avec vous. En effet, vous n&rsquo;étiez pas spécialement là pour les soumettre, et en effet, ils sont loin d&rsquo;être précaires. J&rsquo;ai travaillé dans ce milieux et il est vrai qu&rsquo;ils ont beaucoup de difficulté à accepter la critique et à corriger leurs erreurs, surtout quand ils travaillent dans des structures hiérarchiques. Il y a chez les informaticiens une relative défiance de la gente féminine, surtout dans un cas, comme celui que vous avez décrit. Cependant, &laquo;&nbsp;faire tourner l&rsquo;équipe&nbsp;&raquo; est une violence managériale, mais pour le coup difficilement dépassable.<br />
+Dans ce cas, amha, ils cherchent à se rebeller à moindre coup, comme des enfants mal élevés qui donnent des coups de pied au premier qui passe pour canaliser leur frustration. Celle ci, s&rsquo;exprime par l&rsquo;inconscient en répétant des schémas de domination qu&rsquo;ils ont intégré, ici le patriarcat. Rien n&rsquo;excuse leur comportement, mais contrairement à Valls je pense que essayer de comprendre n&rsquo;est pas la même chose qu&rsquo;excuser. Il est bien évidemment parfaitement inacceptable que de laisser une femme enceinte debout pour faire son durs à cuire. Le problème ici semble être l&rsquo;éducation de l&rsquo;individu en question.<br />
+Je vous prie donc de ne pas mal prendre mon commentaire précédent, très maladroit, j&rsquo;essaye sans délicatesse de mettre en lumière des incompréhensions. Ou des oppositions, je réitère mon point de vue sur la hiérarchisation des dominations. Après, je vous attaque sur cela, mais c&rsquo;est par imposition de problématique, c&rsquo;est pas très honnête. Et puis c&rsquo;est votre blog&#8230;</p>
+<p id="comment-like-11" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=11&#038;_wpnonce=543f1b2c56" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-11" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-17" class="comment byuser comment-author-emmafnc bypostauthor even depth-3 highlander-comment">
+			<article id="div-comment-17" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/e970e9d9191e6888f76f23fb4c0be856?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn"><a href='http://comprendreetagir.wordpress.com' rel='external nofollow ugc' class='url'>EmmaClit</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-17">
+							<time datetime="2016-05-30T06:55:24+01:00">
+								30 mai 2016 à 6 h 55 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Merci 🙂 Oui après il est clair que mes interventions les dérangeait dans le cours normal de leurs activités, ce que j&rsquo;essayais de mettre en lumière c&rsquo;est juste le fait que je n&rsquo;aurais pas été traitée de cette façon si homme, mais l&rsquo;exemple n&rsquo;était pas le mieux choisi car leur statut d&#8217;employé en faisait également des subalternes.<br />
+On pourrait aussi longuement parler de l&rsquo;organisation de cette boîte qui obligeait des employés sans relation hiérarchique à s&rsquo;opposer à la force de leur caractère, tout était fait pour que ce genre de rapports se développent.</p>
+<p id="comment-like-17" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=17&#038;_wpnonce=ff9dc772fe" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-17" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-14" class="comment odd alt depth-3 parent highlander-comment">
+			<article id="div-comment-14" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/99b3ff1cac5a993b0ab6d3a2859b46b0?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn">UnNoir</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-14">
+							<time datetime="2016-05-29T22:17:37+01:00">
+								29 mai 2016 à 22 h 17 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>&laquo;&nbsp;j’en ai été moi-même victime les gens mécontents peuvent assez facilement démissionner&nbsp;&raquo; </p>
+<p>ça c&rsquo;est une sacrée bonne réponse de blancHE bourgeoisE privilégiéE : la démission c&rsquo;est bon pour tous, surtout pour les autres. On voit a qui on a affaire&#8230;</p>
+<p id="comment-like-14" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=14&#038;_wpnonce=7f89f2db87" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-14" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-15" class="comment byuser comment-author-emmafnc bypostauthor even depth-3 highlander-comment">
+			<article id="div-comment-15" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/e970e9d9191e6888f76f23fb4c0be856?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn"><a href='http://comprendreetagir.wordpress.com' rel='external nofollow ugc' class='url'>EmmaClit</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-15">
+							<time datetime="2016-05-30T06:49:11+01:00">
+								30 mai 2016 à 6 h 49 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Oui en effet je suis une blanche bourgeoise privilégiée j&rsquo;en suis consciente et je n&rsquo;en fais pas mystère.<br />
+Quand je parle de démissionner, je ne parle que de mon milieu où c&rsquo;est encore une possibilité. Après je sais aussi qu&rsquo;on n&rsquo;en a pas toujours la force quand on est dans une situation difficile.<br />
+J&rsquo;ai moi-même démissionné de cette boîte après 4 ans de harcèlement sexiste et sexuel de la part de mon supérieur direct, mais j&rsquo;ai mis le temps avant d&rsquo;en trouver le courage. C&rsquo;est pas toujours facile.</p>
+<p id="comment-like-15" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=15&#038;_wpnonce=fa74a772d8" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-15" class="comment-like-feedback">Aimé par <a href="#" class="view-likers" data-like-count="2">2 personnes</a></span></p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-13" class="comment odd alt thread-odd thread-alt depth-1 parent highlander-comment">
+			<article id="div-comment-13" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/99b3ff1cac5a993b0ab6d3a2859b46b0?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn">UnNoir</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-13">
+							<time datetime="2016-05-29T22:13:14+01:00">
+								29 mai 2016 à 22 h 13 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Il faut voir ce que l&rsquo;on désigne comme &laquo;&nbsp;opprimé&nbsp;&raquo;. Je suis noir et quand je vois des manifestantEs &laquo;&nbsp;oppriméEs&nbsp;&raquo; blancHEs chercher à brûler vivant un policier noir, je ne me sens pas en sécurité. L&rsquo;oppression ne justifie pas le harcèlement physique et violent, des mois durant, de policierEs de toutes origines lors de manifestations où des blancs bourgeois urbains privilégiés et leur pote muni d&rsquo;iPhone vont mettre en scène leur agression par des CRS blancHEs ou de couleur en vue d&rsquo;attiser la haine donc des forces de polices souvent bien plus prolétaires et opprimées que les manifestantEs urbains qui les poussent à bout.</p>
+<p id="comment-like-13" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=13&#038;_wpnonce=5f0d0d8248" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-13" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=13#respond' data-commentid="13" data-postid="216" data-belowelement="div-comment-13" data-respondelement="respond" aria-label='Répondre à UnNoir'>Réponse</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-16" class="comment byuser comment-author-emmafnc bypostauthor even depth-2 highlander-comment">
+			<article id="div-comment-16" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/e970e9d9191e6888f76f23fb4c0be856?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn"><a href='http://comprendreetagir.wordpress.com' rel='external nofollow ugc' class='url'>EmmaClit</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-16">
+							<time datetime="2016-05-30T06:51:31+01:00">
+								30 mai 2016 à 6 h 51 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Je ne pense pas que les CRS soient plus précaires que les manifestant·e·s.<br />
+Concernant la voiture je ne pense pas que le but ait été de brûler vivant·e·s les occupant·e·s, et je ne pense pas non plus que ça ait été fait parce qu&rsquo;une des personnes était racisée, même si on peut toujours avoir un doute.</p>
+<p id="comment-like-16" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=16&#038;_wpnonce=e56666d8df" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-16" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=16#respond' data-commentid="16" data-postid="216" data-belowelement="div-comment-16" data-respondelement="respond" aria-label='Répondre à EmmaClit'>Réponse</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-32" class="comment byuser comment-author-gavroche46 odd alt depth-2 highlander-comment">
+			<article id="div-comment-32" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/d736d18ae316cda5eb0fb97c77e3fa66?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn">Gavroche</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-32">
+							<time datetime="2016-07-05T10:55:55+01:00">
+								5 juillet 2016 à 10 h 55 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Non, les manifestants n&rsquo;ont pas &laquo;&nbsp;cherché à brûler vivant un policier noir&nbsp;&raquo;.<br />
+Lequel a d&rsquo;ailleurs dégainé son flingue avant de la remballer. Le fait qu&rsquo;il soit noir n&rsquo;a rien à voir là-dedans. Il est surtout et avant tout un flic. </p>
+<p>Par ailleurs, les gens descendus dans la rue n&rsquo;étaient pas des privilégiés (vous devez trop lire le Figaro ou Valeurs actuelles) mais des &laquo;&nbsp;gens de toutes origines&nbsp;&raquo; pour reprendre votre terminologie, des pauvres dans leur grande majorité, des jeunes, des vieux, bref des gens qui ne voulaient pas de cette loi inepte qui va précariser encore un peu plus les français. </p>
+<p>Pour tout dire, votre commentaire, c&rsquo;est un peu la charité qui se fout de l&rsquo;hôpital, parce que les noirs, c&rsquo;est plutôt par ces mêmes flics qu&rsquo;ils se font tuer ! </p>
+<p>Vous êtes flic ?</p>
+<p id="comment-like-32" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=32&#038;_wpnonce=5545eeea21" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-32" class="comment-like-feedback">Aimé par <a href="#" class="view-likers" data-like-count="1">1 personne</a></span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=32#respond' data-commentid="32" data-postid="216" data-belowelement="div-comment-32" data-respondelement="respond" aria-label='Répondre à Gavroche'>Réponse</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-34" class="comment even thread-even depth-1 parent highlander-comment">
+			<article id="div-comment-34" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://i2.wp.com/pbs.twimg.com/profile_images/740582451664261120/GV-DNFeX_normal.jpg?resize=60%2C60' class='avatar avatar-60' height='60' width='60' />						<b class="fn"><a href='http://twitter.com/CaptainAkiba' rel='external nofollow ugc' class='url'>SuperBulle (@CaptainAkiba)</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-34">
+							<time datetime="2016-07-05T21:06:49+01:00">
+								5 juillet 2016 à 21 h 06 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Je ne suis pas vraiment d&rsquo;accord avec cet article. Pour moi brûler des voitures dans le cas des manifestants ou des bâtiments publics dans le cas des suffragettes (fréquentées aussi et aujourd&rsquo;hui en majorité par des femmes), ça n&rsquo;est pas justifiable.<br />
+Pour ce qui est des gens dans les cités qui brûlent des voitures suite au meurtre d&rsquo;un de leurs potes par des policiers, là je veux bien comprendre, car on parle de deuil, de violence policière. Je n&rsquo;approuve pas bien sûr, mais je comprends la tristesse de ces gens.</p>
+<p>Il y a d&rsquo;autres façons de faire bouger les choses hein&#8230; aller faire la guerre avec des crs et brûler des voitures de policiers, c&rsquo;est être vraiment con.<br />
+Sans rancune, j&rsquo;aime bien votre blog 🙂</p>
+<p id="comment-like-34" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=34&#038;_wpnonce=9a46c7acc7" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-34" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=34#respond' data-commentid="34" data-postid="216" data-belowelement="div-comment-34" data-respondelement="respond" aria-label='Répondre à SuperBulle (@CaptainAkiba)'>Réponse</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-51" class="comment byuser comment-author-emmafnc bypostauthor odd alt depth-2 parent highlander-comment">
+			<article id="div-comment-51" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/e970e9d9191e6888f76f23fb4c0be856?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn"><a href='http://comprendreetagir.wordpress.com' rel='external nofollow ugc' class='url'>EmmaClit</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-51">
+							<time datetime="2016-07-10T10:26:13+01:00">
+								10 juillet 2016 à 10 h 26 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Et tu coup toi tu fais quoi par exemple ?</p>
+<p id="comment-like-51" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=51&#038;_wpnonce=8ef84859d7" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-51" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=51#respond' data-commentid="51" data-postid="216" data-belowelement="div-comment-51" data-respondelement="respond" aria-label='Répondre à EmmaClit'>Réponse</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-72" class="comment byuser comment-author-gavroche46 even depth-3 highlander-comment">
+			<article id="div-comment-72" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/d736d18ae316cda5eb0fb97c77e3fa66?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn">Gavroche</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-72">
+							<time datetime="2016-07-13T10:37:30+01:00">
+								13 juillet 2016 à 10 h 37 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>De la différence entre : </p>
+<p>&#8211; Ce qui n&rsquo;est pô bien : brûler une bagnole ou casser une vitre (ayons une pensée pour les familles des vitrines &#8230;)</p>
+<p>&#8211; Ce qui est &laquo;&nbsp;normal&nbsp;&raquo; : les gens jetés sur le carreau après trente ans de bons et loyaux services dans les entreprises (pour délocaliser à Pétaouchnock), les petits paysans qui se suicident parce qu&rsquo;ils préfèrent encore ça que crever à petit feu, les migrants qu&rsquo;on laisse crever devant la forteresse Europe&#8230; </p>
+<p>On fait quoi ? </p>
+<p>Rien. </p>
+<p>On attend que ça se fasse tout seul ?<br />
+On demande gentiment ?<br />
+On va voter ? </p>
+<p>;;; Nan, je rigole, là.</p>
+<p id="comment-like-72" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=72&#038;_wpnonce=74569a0a21" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-72" class="comment-like-feedback">Aimé par <a href="#" class="view-likers" data-like-count="1">1 personne</a></span></p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-137" class="comment odd alt depth-3 highlander-comment">
+			<article id="div-comment-137" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://i2.wp.com/pbs.twimg.com/profile_images/789071898311266305/zsxSSd8j_normal.jpg?resize=60%2C60' class='avatar avatar-60' height='60' width='60' />						<b class="fn"><a href='http://twitter.com/CaptainAkiba' rel='external nofollow ugc' class='url'>SuperBulle (@CaptainAkiba)</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-137">
+							<time datetime="2016-10-27T12:32:24+01:00">
+								27 octobre 2016 à 12 h 32 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Excuse-moi, je n&rsquo;avais pas pensé que tu répondrais du coup j&rsquo;ai énormément de retard !<br />
+Ben je manifesterais, je ferais des pétitions, je tenterais d&rsquo;informer les gens (sur youtube par exemple : le mouvement &laquo;&nbsp;on vaut mieux que ça&nbsp;&raquo; a déclenché beaucoup de prises de consciences), j&rsquo;essayerais d&rsquo;attirer l&rsquo;attention des médias en contactant des journalistes.<br />
+Mais brûler des voitures (au passage les voitures brûlées ne sont pas toujours des voitures de luxe, parfois ce sont les voitures de personnes précaires qui en ont besoin pour aller bosser, idem pour les vitres cassées&#8230; les petits commerçants ne sont pas tous de riches bijoutiers) par exemple, à quoi cela sert ? A part s&rsquo;attirer les foudres de téléspectateurs qui, la plupart du temps, cherchent pas plus loin que ce qu&rsquo;ils voient à la télé ?<br />
+Voilà, en fait je pense qu&rsquo;on devrait réfléchir à ce qui est le plus efficace.<br />
+PS : encore une fois quand il s&rsquo;agit d&rsquo;une réaction face à un meurtre, je comprends la colère qui pousse les gens à brûler des voitures ou autre, là je ne reprocherais cela à personne. Je parle ici des manifs en général, pas des manifs en réaction aux meurtres résultant des bavures.</p>
+<p>@Gavroche, où tu vois que je trouve ça normal ? Evidemment que la violence &laquo;&nbsp;structurelle&nbsp;&raquo; est pire.<br />
+Et dire &laquo;&nbsp;casser une vitre, ayons une pensée pour les familles de vitrines&nbsp;&raquo;, je veux pas t&rsquo;offenser ou quoi mais c&rsquo;est de la mauvaise foi : tu oublies que les commerçants sont parfois très précaires et n&rsquo;ont pas besoin d&rsquo;avoir en plus une vitre à réparer, ça coûte cher. Et puis c&rsquo;est pas comme s&rsquo;il y avait que &laquo;&nbsp;une vitre&nbsp;&raquo; cassée.</p>
+<p id="comment-like-137" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=137&#038;_wpnonce=2cea1985dc" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-137" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-69" class="comment even thread-odd thread-alt depth-1 parent highlander-comment">
+			<article id="div-comment-69" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/07b0f7843ce13261236ca37f3ac36890?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn">lllllm</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-69">
+							<time datetime="2016-07-12T17:20:06+01:00">
+								12 juillet 2016 à 17 h 20 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>D&rsquo;accord avec l&rsquo;article sauf l&rsquo;exemple de la voiture brûlée : si je ne m&rsquo;abuse elle appartenait à un ouvrier qui a payé des années pour l&rsquo;obtenir. On pourrait justifier les vols et la destruction d&rsquo;objets de luxes, y compris des pauvres comme l&rsquo;exemple de la voiture de luxe, tout ça pourquoi? Pour se défouler sur un objet.</p>
+<p>Pas sûre d&rsquo;en saisir l&rsquo;utilité d&rsquo;autant qu&rsquo;ils ne rembourseront jamais ces biens détruits. </p>
+<p>Évidemment si ça appartient à des riches, là je suis d&rsquo;accord, on s&rsquo;en branle de leur ressenti.</p>
+<p id="comment-like-69" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=69&#038;_wpnonce=0471b4046f" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-69" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=69#respond' data-commentid="69" data-postid="216" data-belowelement="div-comment-69" data-respondelement="respond" aria-label='Répondre à lllllm'>Réponse</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-70" class="comment byuser comment-author-emmafnc bypostauthor odd alt depth-2 highlander-comment">
+			<article id="div-comment-70" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/e970e9d9191e6888f76f23fb4c0be856?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn"><a href='http://comprendreetagir.wordpress.com' rel='external nofollow ugc' class='url'>EmmaClit</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-70">
+							<time datetime="2016-07-12T17:28:08+01:00">
+								12 juillet 2016 à 17 h 28 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>J&rsquo;aimerais bien savoir combien &laquo;&nbsp;d&rsquo;ouvriers&nbsp;&raquo; peuvent se payer de genre de voiture &#8230; mais ça illustre bien mon propos : il y a eu de nombreuses séquences focalisées sur la souffrance de ce pauvre homme qui aurait économisé tous ses deniers pour se payer la voiture. Rien sur pourquoi les militants sont dans la rue.<br />
+Mon but c&rsquo;est pas de dire si la violence des opprimé·e·s est une bonne ou mauvaise stratégie. C&rsquo;est juste de dire que c&rsquo;est toujours de celle là qu&rsquo;on parle (comme tu le fais dans ton commentaire 😉 )</p>
+<p id="comment-like-70" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=70&#038;_wpnonce=7d21919f7c" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-70" class="comment-like-feedback">Aimé par <a href="#" class="view-likers" data-like-count="1">1 personne</a></span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=70#respond' data-commentid="70" data-postid="216" data-belowelement="div-comment-70" data-respondelement="respond" aria-label='Répondre à EmmaClit'>Réponse</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-132" class="comment even thread-even depth-1 parent highlander-comment">
+			<article id="div-comment-132" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/25ffde18cd25fe393eb42694725c8eae?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn">anna2</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-132">
+							<time datetime="2016-10-21T16:50:00+01:00">
+								21 octobre 2016 à 16 h 50 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Cet article est vraiment génial, merci à son auteure! Je ne savais pas que les suffragettes se faisaient violer et que la police fermait les yeux! C&rsquo;est vraiment monstrueux. Il est d&rsquo;ailleurs intéressant que ça n&rsquo;ait pas été évoqué dans un film qui visait pourtant à légitimer leur combat (Les suffragettes, 2015).<br />
+Et cette notion d&rsquo;oppression structurelle est parfaitement expliquée par cet article!<br />
+Merci pour cette lecture éclairante 🙂</p>
+<p id="comment-like-132" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=132&#038;_wpnonce=405e17a2a7" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-132" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=132#respond' data-commentid="132" data-postid="216" data-belowelement="div-comment-132" data-respondelement="respond" aria-label='Répondre à anna2'>Réponse</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-133" class="comment byuser comment-author-emmafnc bypostauthor odd alt depth-2 highlander-comment">
+			<article id="div-comment-133" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/e970e9d9191e6888f76f23fb4c0be856?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn"><a href='http://comprendreetagir.wordpress.com' rel='external nofollow ugc' class='url'>EmmaClit</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-133">
+							<time datetime="2016-10-24T06:56:02+01:00">
+								24 octobre 2016 à 6 h 56 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Merci à toi !</p>
+<p id="comment-like-133" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=133&#038;_wpnonce=0e15578864" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-133" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=133#respond' data-commentid="133" data-postid="216" data-belowelement="div-comment-133" data-respondelement="respond" aria-label='Répondre à EmmaClit'>Réponse</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-234" class="comment even thread-odd thread-alt depth-1 parent highlander-comment">
+			<article id="div-comment-234" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/f3b971a8cc2d57eeb86cb71ec96fc162?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn">Julie</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-234">
+							<time datetime="2016-11-17T15:59:10+01:00">
+								17 novembre 2016 à 15 h 59 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Merci pour ce post ! Je suis encore une fois super déçue et étonnée de voir de tels commentaires alors que tu ne mérites que du soutien.</p>
+<p id="comment-like-234" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=234&#038;_wpnonce=c7d9a11ab9" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-234" class="comment-like-feedback">Aimé par <a href="#" class="view-likers" data-like-count="1">1 personne</a></span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=234#respond' data-commentid="234" data-postid="216" data-belowelement="div-comment-234" data-respondelement="respond" aria-label='Répondre à Julie'>Réponse</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-236" class="comment byuser comment-author-emmafnc bypostauthor odd alt depth-2 highlander-comment">
+			<article id="div-comment-236" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/e970e9d9191e6888f76f23fb4c0be856?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn"><a href='http://comprendreetagir.wordpress.com' rel='external nofollow ugc' class='url'>Emma</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-236">
+							<time datetime="2016-11-17T16:49:39+01:00">
+								17 novembre 2016 à 16 h 49 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Franchement, j&rsquo;en ai beaucoup grâce à des petits messages comme le tien 🙂</p>
+<p id="comment-like-236" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=236&#038;_wpnonce=2b54dd8e1f" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-236" class="comment-like-feedback">Aimé par <a href="#" class="view-likers" data-like-count="1">1 personne</a></span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=236#respond' data-commentid="236" data-postid="216" data-belowelement="div-comment-236" data-respondelement="respond" aria-label='Répondre à Emma'>Réponse</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-906" class="pingback even thread-even depth-1 highlander-comment">
+			<div class="comment-body">
+				Ping: <a href='https://feminazgulencolere.wordpress.com/2017/05/17/injonction-a-la-pedagogie-tone-policing/' rel='external nofollow ugc' class='url'>Injonction à la pédagogie &amp; tone policing &#8211; Feminazgul en colère</a> 			</div>
+		</li><!-- #comment-## -->
+		<li id="comment-1587" class="comment odd alt thread-odd thread-alt depth-1 parent highlander-comment">
+			<article id="div-comment-1587" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/23dd6f9d5ecd20fcf8abe6a1e031d119?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn">Cy</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-1587">
+							<time datetime="2017-07-19T10:01:20+01:00">
+								19 juillet 2017 à 10 h 01 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Je suis actuellement dans le cas typique malheureusement de la femme à qui l&rsquo;on donne le poste de responsable sans &laquo;&nbsp;pouvoir&nbsp;&raquo; hiérarchique (et sans le salaire bien sûr).<br />
+Et l&rsquo;un de mes collègues a été encore plus loin que les vôtres. J&rsquo;étais enceinte de 5 mois quand il a percé un de mes pneus de voiture. Oui oui. Tout ça parce que justement je n&rsquo;ai jamais cédé au gaslighting, il a mit la barre un peu plus haut pour me faire peter un câble.<br />
+C&rsquo;est aussi à partir de ce jour que plus aucun de mes hiérarchiques masculins (qui m&rsquo;offraient tout leur soutien hein) ne s&rsquo;est déplacés sur le site de travail (ils téléphonaient pourtant tous les jours au commissariat pour vérifier qu&rsquo;il n&rsquo;y avait pas de preuve, pratique d&rsquo;avoir des copains policiers).<br />
+Par contre je ne suis pas d&rsquo;accord avec la fin de la BD. L&rsquo;arrachage de chemise, les violences dans les manifs et les cités qui brûlent, la violence n&rsquo;est pas la solution. Leur colère est souvent justifiée mais elle doit être canalisée vers la justice et non pas la loi du talion.</p>
+<p id="comment-like-1587" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=1587&#038;_wpnonce=25f5d05202" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-1587" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=1587#respond' data-commentid="1587" data-postid="216" data-belowelement="div-comment-1587" data-respondelement="respond" aria-label='Répondre à Cy'>Réponse</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-1605" class="comment byuser comment-author-emmafnc bypostauthor even depth-2 highlander-comment">
+			<article id="div-comment-1605" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/e970e9d9191e6888f76f23fb4c0be856?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn"><a href='http://emmaclit.com' rel='external nofollow ugc' class='url'>Emma</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-1605">
+							<time datetime="2017-07-20T13:38:32+01:00">
+								20 juillet 2017 à 13 h 38 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Je n&rsquo;ai pas dit que c&rsquo;était la solution mais que c&rsquo;est la seule forme de violence qui est désapprouvée. Les gens qui ont le pouvoir ont le monopole de la violence dite &laquo;&nbsp;légitime&nbsp;&raquo; car la grille de lecture de l&rsquo;imaginaire collectif présente ces violences comme justes, méritées, voire pas violentes 🙂<br />
+QUant à la justice &#8230; elle aussi favorise les dominants.</p>
+<p id="comment-like-1605" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=1605&#038;_wpnonce=d1de4257f1" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-1605" class="comment-like-feedback">Aimé par <a href="#" class="view-likers" data-like-count="1">1 personne</a></span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=1605#respond' data-commentid="1605" data-postid="216" data-belowelement="div-comment-1605" data-respondelement="respond" aria-label='Répondre à Emma'>Réponse</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-2335" class="comment byuser comment-author-ferreroandco odd alt thread-even depth-1 highlander-comment">
+			<article id="div-comment-2335" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/c94b20560018daaaa9d6a5890970bec3?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn">ferreroandco</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-2335">
+							<time datetime="2017-10-06T18:12:16+01:00">
+								6 octobre 2017 à 18 h 12 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Excellent comme d&rsquo;habitude.<br />
+ Je rajouterais qu&rsquo;il se passe la même chose pour les militants antispecistes  / animalistes. Par exemple l&rsquo;association 269 Libération Animale est en permance condamnée pour ces actions directes prétendues violentes, en même temps que la souffrance et la violence des vraies victimes du spécisme (les animaux) est totalement invisibilisée et niée. C&rsquo;est encore plus flagrant dans la mesure oû dans ce cas  là les militants ne sont pas les victimes mais seulement leur voix, leurs représentants.</p>
+<p id="comment-like-2335" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=2335&#038;_wpnonce=67950b87e1" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-2335" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=2335#respond' data-commentid="2335" data-postid="216" data-belowelement="div-comment-2335" data-respondelement="respond" aria-label='Répondre à ferreroandco'>Réponse</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-2359" class="comment even thread-odd thread-alt depth-1 highlander-comment">
+			<article id="div-comment-2359" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/6dfcd8a258e5eb4cbf57cf9f343d1cdd?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn">Ma</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-2359">
+							<time datetime="2017-10-09T07:39:24+01:00">
+								9 octobre 2017 à 7 h 39 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Merci Emma. Et bravo pour ta patience, ta psychologie et ta diplomatie.<br />
+En ce qui concerne la violence, elle n&rsquo;est pas toujours ce qui solutionne un problème, ok. Mais parfois, elle est nécessaire. Parfois, on est face à un problème qui ne se résoudra pas sans violence. Parce que c&rsquo;est la seule chose que l&rsquo;oppresseur percevra, la seule chose qui le fera agir autrement. Les gens qu&rsquo;on asservi par la terreur par exemple, ont parfois une extrême violence comme seule issue. La dernière fois qu&rsquo;un homme m&rsquo;a agressée, s&rsquo;il n&rsquo;avait pas vu dans mes yeux cette fameuse violence, s&rsquo;il n&rsquo;avait pas vu que j&rsquo;étais capable de le tuer et que je n&rsquo;hésiterai pas à le faire, j&rsquo;aurais été victime une fois de plus. Quand la police vous dissuade de porter plainte pour viol parce que vous allez vous en prendre plein la gueule c&rsquo;est violent. Quand votre mari vous demande comme on peut violer sa femme puisque c&rsquo;est sa femme c&rsquo;est violent. Quand Toute une vie on est asservie parce que née femme, asservie par tous et toutes, y compris soi-même bien sûr, c&rsquo;est violent. Je pense avoir été assez humiliée et brisée pour pouvoir tuer quelqu&rsquo;un, un agresseur, froidement et sans le moindre regret. C&rsquo;est violent? Je ne pense pas. Et je pense que &laquo;&nbsp;il existe d&rsquo;autres solutions&nbsp;&raquo; ça n&rsquo;existe pas quand on est passé par tout et que c&rsquo;est la seule qui reste pour survivre: être violent. Dans les cas dont je parle, la violence est la seule issue. Chacun-e a ses limites, on ne peut pas hiérarchiser ce qui justifie qu&rsquo;on utilise la violence ou non pour se défendre. Essayez de faire de la psychologie avec un mur. Le mur ne comprendra pas autre chose qu&rsquo;un coup de masse.</p>
+<p id="comment-like-2359" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=2359&#038;_wpnonce=d36fbf4d56" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-2359" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=2359#respond' data-commentid="2359" data-postid="216" data-belowelement="div-comment-2359" data-respondelement="respond" aria-label='Répondre à Ma'>Réponse</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-2360" class="comment odd alt thread-even depth-1 highlander-comment">
+			<article id="div-comment-2360" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/6dfcd8a258e5eb4cbf57cf9f343d1cdd?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn">Ma</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-2360">
+							<time datetime="2017-10-09T07:58:33+01:00">
+								9 octobre 2017 à 7 h 58 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>&laquo;&nbsp;Il y a un moment où il faut sortir les couteaux.<br />
+C’est juste un fait. Purement technique.<br />
+Il est hors de question que l’oppresseur aille comprendre de lui-même qu’il opprime, puisque ça ne le fait pas souffrir : mettez-vous à sa place.<br />
+Ce n’est pas son chemin.<br />
+Le lui expliquer est sans utilité.<br />
+L’oppresseur n’entend pas ce que dit son opprimé comme un langage mais comme un bruit. C’est dans la définition de l’oppression.<br />
+En particulier les « plaintes » de l’opprimé sont sans effet, car naturelles. Pour l’oppresseur il n’y a pas d’oppression, forcément, mais un fait de nature.<br />
+Aussi est-il vain de se poser comme victime : on ne fait par là qu’entériner un fait de nature, que s’inscrire dans le décor planté par l’oppresseur.<br />
+L’oppresseur qui fait le louable effort d’écouter (libéral intellectuel) n’entend pas mieux.<br />
+Car même lorsque les mots sont communs, les connotations sont radicalement différentes. C’est ainsi que de nombreux mots ont pour l’oppresseur une connotation-jouissance, et pour l’opprimé une connotation-souffrance. Ou : divertissement-corvée. Ou : loisir-travail. Etc. Allez donc causer sur ces bases.<br />
+C’est ainsi que la générale réaction de l’oppresseur qui a « écouté » son opprimé est en gros : mais de quoi diable se plaint-il ? Tout ça, c’est épatant.<br />
+Au niveau de l’explication, c’est tout à fait sans espoir. Quand l’opprimé se rend compte de ça, il sort les couteaux. Là on comprend qu’il y a quelque chose qui ne va pas. Pas avant.<br />
+Le couteau est la seule façon de se définir comme opprimé. La seule communication audible.<br />
+Peu importent le caractère, la personnalité, les mobiles actuels de l’opprimé.<br />
+C’est le premier pas réel hors du cercle.<br />
+C’est nécessaire.&nbsp;&raquo; Christiane Rochefort</p>
+<p id="comment-like-2360" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=2360&#038;_wpnonce=531dddf2af" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-2360" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=2360#respond' data-commentid="2360" data-postid="216" data-belowelement="div-comment-2360" data-respondelement="respond" aria-label='Répondre à Ma'>Réponse</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-2436" class="comment even thread-odd thread-alt depth-1 parent highlander-comment">
+			<article id="div-comment-2436" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/422ef0387a88d525f740719e4bab6f6a?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn">Lynn</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-2436">
+							<time datetime="2017-10-16T02:58:04+01:00">
+								16 octobre 2017 à 2 h 58 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>J admire le sang froid avec léquel tu réponds aux commentaires. &#8230;  c est tres classe et pas donné à tout le monde , merci pour cette lecture</p>
+<p id="comment-like-2436" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=2436&#038;_wpnonce=03a574993a" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-2436" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=2436#respond' data-commentid="2436" data-postid="216" data-belowelement="div-comment-2436" data-respondelement="respond" aria-label='Répondre à Lynn'>Réponse</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-2455" class="comment byuser comment-author-emmafnc bypostauthor odd alt depth-2 highlander-comment">
+			<article id="div-comment-2455" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/e970e9d9191e6888f76f23fb4c0be856?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn"><a href='http://emmaclit.com' rel='external nofollow ugc' class='url'>Emma</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-2455">
+							<time datetime="2017-10-19T10:58:34+01:00">
+								19 octobre 2017 à 10 h 58 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Merci 🙂</p>
+<p id="comment-like-2455" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=2455&#038;_wpnonce=44c0b2778d" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-2455" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=2455#respond' data-commentid="2455" data-postid="216" data-belowelement="div-comment-2455" data-respondelement="respond" aria-label='Répondre à Emma'>Réponse</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-2446" class="comment byuser comment-author-celiaromand even thread-even depth-1 parent highlander-comment">
+			<article id="div-comment-2446" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/51af3508fcd730846d46ad3ffdfe4558?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn"><a href='http://blogdeparents@wordpress.com' rel='external nofollow ugc' class='url'>Parents Paranges</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-2446">
+							<time datetime="2017-10-18T09:25:25+01:00">
+								18 octobre 2017 à 9 h 25 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Encore une fois, j&rsquo;ai comme un sentiment désagréable après la lecture de cet article. </p>
+<p>j&rsquo;espere (malheureusement) que la persécution ne se limitait pas à ces quelques réflexions. Je peux comprendre la persécution au travail, mais pour moi ça n&rsquo;est pas ça. Mon curseur accepte certainement beaucoup plus de choses que le votre, ou alors je m&rsquo;en fou tout simplement ! </p>
+<p>Votre collègue trouve votre robe moche, et alors ?<br />
+S&rsquo;il avait été une femme, ça serait mieux passé peut être ? Il/elle aurait eu le droit de donner son avis ? </p>
+<p>les hommes ne sont pas des femmes. Nous sommes très différents, mais on peut se comprendre et s&rsquo;aimer quand même </p>
+<p>Quant au commentaire qui dit que les riches on s&rsquo;en fou, ça m&rsquo;écœure. Je ne suis pas riche, mais je ne suis pas pauvre, et j&rsquo;ai tout le temps l&rsquo;impression de devoir m&rsquo;en excuser !<br />
+J&rsquo;ai la chance d&rsquo;avoir un travail qui me permet de vivre décemment sans pour autant vivre dans le luxe et l&rsquo;exubérance. Je suis consciente de ma chance.<br />
+Mais je n&rsquo;ai pas les moyens de me re payer une bagnole qu&rsquo;on aurait cramé.pas plus que je n&rsquo;ai les moyens de me prémunir contre le viol, le harcèlement au travail ou dans la rue. </p>
+<p>C&rsquo;est là que je rejoins vos dessins, car effectivement certaines choses doivent changer, pour autant, je ne pense pas que la violence, qu&rsquo;elle soit écrite, dessinée ou actée n&rsquo;est jamais une solution</p>
+<p id="comment-like-2446" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=2446&#038;_wpnonce=e7475b237a" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-2446" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=2446#respond' data-commentid="2446" data-postid="216" data-belowelement="div-comment-2446" data-respondelement="respond" aria-label='Répondre à Parents Paranges'>Réponse</a></div>			</article><!-- .comment-body -->
+		<ol class="children">
+		<li id="comment-3899" class="comment odd alt depth-2 highlander-comment">
+			<article id="div-comment-3899" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/ea1e53f6968072044a96343af47e03d8?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn"><a href='http://gravatar.com/christiantwo' rel='external nofollow ugc' class='url'>christian</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-3899">
+							<time datetime="2018-04-02T21:47:46+01:00">
+								2 avril 2018 à 21 h 47 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Bien sûr Emma vous avez raison sur toute la ligne et je vous dit bravo pour votre combat.<br />
+En plus de la solidarité entre dominants,il y a aussi la solidarité de beaucoup de dominés avec les dominants:Comme ceux qui admirent les rois et reines,les footballeurs,les stars riches comme Johnny ,qui sont contre les grèves,qui sont contre les immigrés,contre les roms,contre l&rsquo;émancipation de la femme,les ouvriers avec leurs patrons,les journalistes et les médias avec les politiciens garant de l&rsquo;ordre établi,les parents qui dominent et insultes leurs enfants&#8230;&#8230;<br />
+Il ne faut pas rester dans une situation de victime et rejoindre le camp des gagnants,c&rsquo;est bien parti pour vous,je vous souhaite de réussir le plus vite possible</p>
+<p id="comment-like-3899" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=3899&#038;_wpnonce=58c86657f6" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-3899" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=3899#respond' data-commentid="3899" data-postid="216" data-belowelement="div-comment-3899" data-respondelement="respond" aria-label='Répondre à christian'>Réponse</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ol><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-3209" class="comment even thread-odd thread-alt depth-1 highlander-comment">
+			<article id="div-comment-3209" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/6fb6bd4cc7435bf228df9b6c60744eeb?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn">Margot</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-3209">
+							<time datetime="2017-12-22T12:52:20+01:00">
+								22 décembre 2017 à 12 h 52 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>bonjour,<br />
+une petite réaction sur la question que vous posez à la toute dernière bulle : il me semble que les groupes opprimés ont toujours dû agir en dehors du cadre légal pour obtenir ce qu&rsquo;ils revendiquaient. cela rejoint un peu la question de la désobéissance civique, ou des cas où l&rsquo;éthique se différencie de la morale &#8211; la morale étant la façon dont l&rsquo;éthique est comprise, interprétée et finalement réduite par les humains. Pas facile de savoir ce qui est éthique, donc juste dans les façons de se révolter contre l&rsquo;oppression.</p>
+<p id="comment-like-3209" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=3209&#038;_wpnonce=14d852d83c" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-3209" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=3209#respond' data-commentid="3209" data-postid="216" data-belowelement="div-comment-3209" data-respondelement="respond" aria-label='Répondre à Margot'>Réponse</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-3225" class="comment odd alt thread-even depth-1 highlander-comment">
+			<article id="div-comment-3225" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/d13efcb191124f338c57ee13852ea10a?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn">Marine</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-3225">
+							<time datetime="2017-12-23T22:37:27+01:00">
+								23 décembre 2017 à 22 h 37 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Ben moi je comprends tout à fait, qu&rsquo;on explose et qu&rsquo;on ait recours à des actions pas forcément heureuses mais compréhensibles et parfois, nécessaires pour se faire entendre. </p>
+<p>Parce que, contrairement à ce que prétendent beaucoup de gens, les moyens d&rsquo;expression plus acceptables en société ont été souvent épuisés avant d&rsquo;en arriver là. Et la violence &laquo;&nbsp;normale&nbsp;&raquo; qui est imposée par les dominants pendant tout ce temps fait le lit de ce résultat, point. S&rsquo;étonner ensuite, c&rsquo;est se foutre du monde.</p>
+<p>Ce qui pose problème est de savoir si chaque violence, sous prétexte d&rsquo;un ras le bol, est vraiment une revendication ; car il y a de &laquo;&nbsp;vrais&nbsp;&raquo; casseurs qui s&rsquo;incrustent dans les manifs et foutent la merde. Parce que, dans la cité où j&rsquo;habitais, quand les voitures ont été brûlées soit disant par solidarité avec les autres, les auteurs n&rsquo;étaient pas vraiment concernés et étaient régulièrement adeptes de la chose. Et qui trinquait? Des voisins qui n&rsquo;avaient rien demandé et qui ont eu le malheur d&rsquo;avoir garé leur voiture là. Histoire de bien invalider toute action.</p>
+<p>Enfin, je lis tous vos dessins et je suis surprise des réactions parfois : pourquoi y a t-il toujours des gens (hommes) pour venir contester les exemples de sexisme comme celui que vous donnez? Quand vont-ils comprendre qu&rsquo;ils imposent une deuxième violence en légitimant la première et en impliquant que c&rsquo;est votre faute??! Pourquoi les hommes se sentent-ils toujours obligés d&rsquo;être solidaires d&rsquo;autres hommes, même s&rsquo;ils n&rsquo;ont pas les mêmes comportements?<br />
+Vraiment, ça me dépasse&#8230;</p>
+<p id="comment-like-3225" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=3225&#038;_wpnonce=8854d41150" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-3225" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=3225#respond' data-commentid="3225" data-postid="216" data-belowelement="div-comment-3225" data-respondelement="respond" aria-label='Répondre à Marine'>Réponse</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-3765" class="comment even thread-odd thread-alt depth-1 highlander-comment">
+			<article id="div-comment-3765" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/de9afb7c2df3ac5a364451fb409724a5?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn">Mathieu</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-3765">
+							<time datetime="2018-03-19T10:39:12+01:00">
+								19 mars 2018 à 10 h 39 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Merci pour cette petite BD, j´avais écrit un petit article qui parlait du traitement médiatique de la violence: <a href="https://gazettedebout.fr/2017/02/27/traitement-mediatique-de-violence/" rel="nofollow ugc">https://gazettedebout.fr/2017/02/27/traitement-mediatique-de-violence/</a></p>
+<p id="comment-like-3765" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=3765&#038;_wpnonce=954ac39184" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-3765" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=3765#respond' data-commentid="3765" data-postid="216" data-belowelement="div-comment-3765" data-respondelement="respond" aria-label='Répondre à Mathieu'>Réponse</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-8074" class="comment byuser comment-author-lepiratezen odd alt thread-even depth-1 highlander-comment">
+			<article id="div-comment-8074" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/238aa1a7459245aaf06a7e1daecf1575?s=60&#038;d=identicon&#038;r=G' class='avatar avatar-60' height='60' width='60' />						<b class="fn">Cap'tain zen</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/#comment-8074">
+							<time datetime="2019-10-02T17:21:45+01:00">
+								2 octobre 2019 à 17 h 21 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>C&rsquo;est pour cela que les actions anti-pouvoir qui semble le mieux marcher sont les actions non-violentes comme le pronait Gandhi. L&rsquo;opinion public défendra plus facilement les non-violents victimes de violence policière.</p>
+<p>Le souci c&rsquo;est que la police d&rsquo;aujourd&rsquo;hui qui connait bien son boulot de suppôt du pouvoir fait exprès d&rsquo;attiser la colère des manifestants (du gaslighting en somme) en laissant passer les casseurs (quand ce ne sont pas des policiers déguisés comme le faisait déjà remarquer Coluche). en acculant les manifestants dans des rues bloquées (que fait un animal acculé ?), en tapant/tirant sur des manifestants sans raison apparente&#8230;<br />
+Bref le pouvoir sait comment maîtriser l&rsquo;opinion publique bien mieux que le manifestant moyen.</p>
+<p id="comment-like-8074" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?like_comment=8074&#038;_wpnonce=7150e1ec2b" class="comment-like-link needs-login" rel="nofollow" data-blog="110271071"><span>J&#039;aime</span></a><span id="comment-like-count-8074" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://emmaclit.com/2016/05/25/la-violence-des-opprime%c2%b7e%c2%b7s/?replytocom=8074#respond' data-commentid="8074" data-postid="216" data-belowelement="div-comment-8074" data-respondelement="respond" aria-label='Répondre à Cap&#039;tain zen'>Réponse</a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		</ol><!-- .comment-list -->
+
+		
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Les commentaires insultants, méprisants et/ou paternalistes seront modérés ! Merci ;) <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2016/05/25/la-violence-des-opprime%C2%B7e%C2%B7s/#respond" style="display:none;">Annuler la réponse.</a></small></h3><form action="https://emmaclit.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate><input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="647d1c6fe3" /><input type="hidden" name="_wp_http_referer" value="/2016/05/25/la-violence-des-opprime%C2%B7e%C2%B7s/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Entrez votre commentaire...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Entrez votre commentaire..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+	<div id="comment-form-nascar">
+		<p>Entrez vos coordonnées ci-dessous ou cliquez sur une icône pour vous connecter:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" class="nascar-signin-link"
+                   title="Connexion avec Visiteur">
+									</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" class="nascar-signin-link"
+                   title="Connexion avec WordPress.com">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" class="nascar-signin-link"
+                   title="Connexion avec Twitter">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" class="nascar-signin-link"
+                   title="Connexion avec Facebook">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg>				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">E-mail <span class="required">(obligatoire)</span> <span class="nopublish">(adresse strictement confidentielle)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Nom <span class="required">(obligatoire)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Site web</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url" value="" /></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Logo WordPress.com" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+						<p class="comment-form-posting-as pa-wordpress">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte WordPress.com.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Photo Google" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+						<p class="comment-form-posting-as pa-googleplus">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Google.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" x="0px" y="0px" viewBox="0 0 60 60" ><path fill="#519bf7" d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" /><path fill="#3db366" d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" /><path fill="#fdc600" d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" /><path fill="#f15b44" d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" /></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Image Twitter" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+						<p class="comment-form-posting-as pa-twitter">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Twitter.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Photo Facebook" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+						<p class="comment-form-posting-as pa-facebook">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Facebook.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Annuler</a></div>
+		<p>Connexion à %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Avertissez-moi par e-mail des nouveaux commentaires.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Avertissez-moi par e-mail des nouveaux articles.</label></p></div>
+
+
+
+
+<p class="form-submit"><input name="submit" type="submit" id="comment-submit" class="submit" value="Laisser un commentaire" /> <input type='hidden' name='comment_post_ID' value='216' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="b9931d921e" /></p>
+<input type="hidden" name="genseq" value="1589683660" />
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="185"/></p></form>	</div><!-- #respond -->
+	<div style="clear: both"></div>
+</div><!-- #comments -->
+
+		
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+	<div id="secondary" class="widget-area" role="complementary">
+		<aside id="text-3" class="widget widget_text"><h1 class="widget-title">Pour me soutenir</h1>			<div class="textwidget"><p><a href="https://fr.tipeee.com/emmaclit">https://fr.tipeee.com/emmaclit</a></p>
+</div>
+		</aside><aside id="wpcom_social_media_icons_widget-2" class="widget widget_wpcom_social_media_icons_widget"><h1 class="widget-title">Social</h1><ul><li><a href="https://www.facebook.com/EmmaFnc/" class="genericon genericon-facebook" target="_blank"><span class="screen-reader-text">Voir le profil de EmmaFnc sur Facebook</span></a></li><li><a href="https://twitter.com/KerriganNuNue/" class="genericon genericon-twitter" target="_blank"><span class="screen-reader-text">Voir le profil de KerriganNuNue sur Twitter</span></a></li><li><a href="https://www.instagram.com/emma_clit/" class="genericon genericon-instagram" target="_blank"><span class="screen-reader-text">Voir le profil de emma_clit sur Instagram</span></a></li></ul></aside><aside id="categories-2" class="widget widget_categories"><h1 class="widget-title">Mes histoires</h1>		<ul>
+				<li class="cat-item cat-item-26167"><a href="https://emmaclit.com/category/actualite/">Actualité</a>
+</li>
+	<li class="cat-item cat-item-2780080"><a href="https://emmaclit.com/category/anticapitalisme/">Anticapitalisme</a>
+</li>
+	<li class="cat-item cat-item-485842840"><a href="https://emmaclit.com/category/antiracisme-et-violences-policieres/">Antiracisme et violences policières</a>
+</li>
+	<li class="cat-item cat-item-67793"><a href="https://emmaclit.com/category/feminisme/">Féminisme</a>
+</li>
+	<li class="cat-item cat-item-485842872"><a href="https://emmaclit.com/category/intermedes-ludiques/">Intermèdes ludiques</a>
+</li>
+	<li class="cat-item cat-item-446945"><a href="https://emmaclit.com/category/le-saviez-vous/">Le saviez-vous ?</a>
+</li>
+	<li class="cat-item cat-item-6325"><a href="https://emmaclit.com/category/non-classe/">Non classé</a>
+</li>
+		</ul>
+			</aside><aside id="rss_links-2" class="widget widget_rss_links"><h1 class="widget-title">RSS</h1><p class="size-small"><a class="feed-image-link" href="https://emmaclit.com/feed/" title="S&rsquo;abonner à Articles"><img src="https://emmaclit.com/i/rss/red-small.png" alt="RSS Feed" /></a></p>
+</aside><aside id="search-2" class="widget widget_search"><form role="search" method="get" class="search-form" action="https://emmaclit.com/">
+				<label>
+					<span class="screen-reader-text">Rechercher&nbsp;:</span>
+					<input type="search" class="search-field" placeholder="Recherche&hellip;" value="" name="s" />
+				</label>
+				<input type="submit" class="search-submit" value="Rechercher" />
+			</form></aside><aside id="linkcat-485842883" class="widget widget_links"><h1 class="widget-title">Blogs BD</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://koudavbine.blogspot.com">Koudavbine</a></li>
+<li><a href="http://www.mirionmalle.com/">Mirion Malle</a></li>
+<li><a href="https://reconnaitrans.tumblr.com/">Reconnaitrans</a></li>
+<li><a href="http://toutva-mieux.blogspot.fr/">Tout va mieux</a></li>
+
+	</ul>
+</aside>
+<aside id="linkcat-485842884" class="widget widget_links"><h1 class="widget-title">Blogs engagés</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://www.crepegeorgette.com/">Crêpe Georgette</a></li>
+<li><a href="http://www.1336.fr/th%C3%A9s.html" title="Thé issu de l’usine Gémenos, reprise pour éviter la fermeture par ses ouvrièr·es après une lutte acharnée de 1336 jours">Du thé engagé</a></li>
+<li><a href="https://cafaitgenre.org/">Genre</a></li>
+<li><a href="http://www.girlsandgeeks.com/">Girls and Geeks</a></li>
+<li><a href="http://www.klaire.fr/">Klaire</a></li>
+<li><a href="https://www.youtube.com/channel/UCdnLGVqAi5QIQ2SunCsEsDA">La chaîne Youtube de Cy</a></li>
+<li><a href="http://lmsi.net/">Les mots sont importants</a></li>
+<li><a href="https://mwasicollectif.com">MWASI</a></li>
+<li><a href="http://www.sud-aka.com/home">Sud Aka</a></li>
+
+	</ul>
+</aside>
+<aside id="archives-2" class="widget widget_archive"><h1 class="widget-title">Old posts</h1>		<ul>
+				<li><a href='https://emmaclit.com/2020/04/'>avril 2020</a></li>
+	<li><a href='https://emmaclit.com/2020/03/'>mars 2020</a></li>
+	<li><a href='https://emmaclit.com/2020/01/'>janvier 2020</a></li>
+	<li><a href='https://emmaclit.com/2019/11/'>novembre 2019</a></li>
+	<li><a href='https://emmaclit.com/2019/10/'>octobre 2019</a></li>
+	<li><a href='https://emmaclit.com/2019/09/'>septembre 2019</a></li>
+	<li><a href='https://emmaclit.com/2019/06/'>juin 2019</a></li>
+	<li><a href='https://emmaclit.com/2019/04/'>avril 2019</a></li>
+	<li><a href='https://emmaclit.com/2019/03/'>mars 2019</a></li>
+	<li><a href='https://emmaclit.com/2019/01/'>janvier 2019</a></li>
+	<li><a href='https://emmaclit.com/2018/12/'>décembre 2018</a></li>
+	<li><a href='https://emmaclit.com/2018/11/'>novembre 2018</a></li>
+	<li><a href='https://emmaclit.com/2018/10/'>octobre 2018</a></li>
+	<li><a href='https://emmaclit.com/2018/09/'>septembre 2018</a></li>
+	<li><a href='https://emmaclit.com/2018/07/'>juillet 2018</a></li>
+	<li><a href='https://emmaclit.com/2018/06/'>juin 2018</a></li>
+	<li><a href='https://emmaclit.com/2018/05/'>mai 2018</a></li>
+	<li><a href='https://emmaclit.com/2018/03/'>mars 2018</a></li>
+	<li><a href='https://emmaclit.com/2018/01/'>janvier 2018</a></li>
+	<li><a href='https://emmaclit.com/2017/12/'>décembre 2017</a></li>
+	<li><a href='https://emmaclit.com/2017/11/'>novembre 2017</a></li>
+	<li><a href='https://emmaclit.com/2017/10/'>octobre 2017</a></li>
+	<li><a href='https://emmaclit.com/2017/09/'>septembre 2017</a></li>
+	<li><a href='https://emmaclit.com/2017/07/'>juillet 2017</a></li>
+	<li><a href='https://emmaclit.com/2017/06/'>juin 2017</a></li>
+	<li><a href='https://emmaclit.com/2017/05/'>mai 2017</a></li>
+	<li><a href='https://emmaclit.com/2017/04/'>avril 2017</a></li>
+	<li><a href='https://emmaclit.com/2017/03/'>mars 2017</a></li>
+	<li><a href='https://emmaclit.com/2017/02/'>février 2017</a></li>
+	<li><a href='https://emmaclit.com/2017/01/'>janvier 2017</a></li>
+	<li><a href='https://emmaclit.com/2016/12/'>décembre 2016</a></li>
+	<li><a href='https://emmaclit.com/2016/11/'>novembre 2016</a></li>
+	<li><a href='https://emmaclit.com/2016/10/'>octobre 2016</a></li>
+	<li><a href='https://emmaclit.com/2016/09/'>septembre 2016</a></li>
+	<li><a href='https://emmaclit.com/2016/08/'>août 2016</a></li>
+	<li><a href='https://emmaclit.com/2016/07/'>juillet 2016</a></li>
+	<li><a href='https://emmaclit.com/2016/06/'>juin 2016</a></li>
+	<li><a href='https://emmaclit.com/2016/05/'>mai 2016</a></li>
+	<li><a href='https://emmaclit.com/2016/04/'>avril 2016</a></li>
+		</ul>
+			</aside>	</div><!-- #secondary -->
+
+	</div><!-- #content -->
+
+	<footer id="colophon" class="site-footer" role="contentinfo">
+		<div class="site-info">
+			<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Propulsé par WordPress.com.</a>
+			
+					</div><!-- .site-info -->
+			</footer><!-- #colophon -->
+</div><!-- #page -->
+
+<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202020y'></script>
+<script>
+var WPGroHo = {"my_hash":""};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-d736d18ae316cda5eb0fb97c77e3fa66">
+	</div>
+	<div class="grofile-hash-map-7c10076bb3f34586bc28bf2c58b49c29">
+	</div>
+	<div class="grofile-hash-map-c6ca6670d1db057a8aa237249b91fd6d">
+	</div>
+	<div class="grofile-hash-map-e42344c5012a4bc8c225ac11700443af">
+	</div>
+	<div class="grofile-hash-map-e970e9d9191e6888f76f23fb4c0be856">
+	</div>
+	<div class="grofile-hash-map-3220a6dbf54069ead824661aa47dd5b3">
+	</div>
+	<div class="grofile-hash-map-99b3ff1cac5a993b0ab6d3a2859b46b0">
+	</div>
+	<div class="grofile-hash-map-6462868df19fb0cbc30bbde97cef6f4c">
+	</div>
+	<div class="grofile-hash-map-07b0f7843ce13261236ca37f3ac36890">
+	</div>
+	<div class="grofile-hash-map-25ffde18cd25fe393eb42694725c8eae">
+	</div>
+	<div class="grofile-hash-map-f3b971a8cc2d57eeb86cb71ec96fc162">
+	</div>
+	<div class="grofile-hash-map-23dd6f9d5ecd20fcf8abe6a1e031d119">
+	</div>
+	<div class="grofile-hash-map-c94b20560018daaaa9d6a5890970bec3">
+	</div>
+	<div class="grofile-hash-map-6dfcd8a258e5eb4cbf57cf9f343d1cdd">
+	</div>
+	<div class="grofile-hash-map-422ef0387a88d525f740719e4bab6f6a">
+	</div>
+	<div class="grofile-hash-map-51af3508fcd730846d46ad3ffdfe4558">
+	</div>
+	<div class="grofile-hash-map-ea1e53f6968072044a96343af47e03d8">
+	</div>
+	<div class="grofile-hash-map-6fb6bd4cc7435bf228df9b6c60744eeb">
+	</div>
+	<div class="grofile-hash-map-d13efcb191124f338c57ee13852ea10a">
+	</div>
+	<div class="grofile-hash-map-de9afb7c2df3ac5a364451fb409724a5">
+	</div>
+	<div class="grofile-hash-map-238aa1a7459245aaf06a7e1daecf1575">
+	</div>
+	</div>
+<script>
+var HighlanderComments = {"loggingInText":"Connexion\u2026","submittingText":"Publication d\u2019un Commentaire\u2026","postCommentText":"Laisser un commentaire","connectingToText":"Connexion \u00e0 %s","commentingAsText":"%1$s: Vous commentez \u00e0 l\u2019aide de votre compte %2$s.","logoutText":"Se d\u00e9connecter","loginText":"Se connecter","connectURL":"https:\/\/emmaclitdotcom.wordpress.com\/public.api\/connect\/?action=request&domain=emmaclit.com","logoutURL":"https:\/\/emmaclitdotcom.wordpress.com\/wp-login.php?action=logout&_wpnonce=f37b16d984","homeURL":"https:\/\/emmaclit.com\/","postID":"216","gravDefault":"identicon","enterACommentError":"Entrez un commentaire","enterEmailError":"Veuillez entrer votre adresse mail","invalidEmailError":"Adresse email invalide","enterAuthorError":"Veuillez entrer votre nom","gravatarFromEmail":"L\u2019image s\u2019affiche lorsque vous postez un commentaire. Cliquez pour personnaliser.","logInToExternalAccount":"Connectez-vous pour utiliser les informations li\u00e9es \u00e0 un de ces comptes:","change":"Changer","changeAccount":"Changer de compte","comment_registration":"","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1573483029j'></script>
+
+	<div id="carousel-reblog-box">
+		<form action="#" name="carousel-reblog">
+			<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Ajoutez votre grain de sel personnel... (facultatif)"></textarea>
+			<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Publier sur</label>
+			<select name="carousel-reblog-to-blog-id" id="carousel-reblog-to-blog-id">
+						</select>
+
+			<div class="submit">
+				<span class="canceltext"><a href="#" class="cancel">Annuler</a></span>
+				<input type="submit" name="carousel-reblog-submit" class="button" id="carousel-reblog-submit" value="Reblog Article" />
+				<input type="hidden" id="carousel-reblog-blog-id" value="110271071" />
+				<input type="hidden" id="carousel-reblog-blog-url" value="https://emmaclit.com" />
+				<input type="hidden" id="carousel-reblog-blog-title" value="Emma" />
+				<input type="hidden" id="carousel-reblog-post-url" value="" />
+				<input type="hidden" id="carousel-reblog-post-title" value="" />
+			</div>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="9cf7ca1c98" /><input type="hidden" name="_wp_http_referer" value="/2016/05/25/la-violence-des-opprime%C2%B7e%C2%B7s/" />		</form>
+
+		<div class="arrow"></div>
+	</div>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/emmaclit.com\/2016\/05\/25\/la-violence-des-opprime%c2%b7e%c2%b7s\/":216};
+	</script>
+				<link rel='stylesheet' id='all-css-0-3' href='https://s0.wp.com/wp-content/mu-plugins/carousel/jetpack-carousel.css?m=1563361695h&cssminify=yes' type='text/css' media='all' />
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyFUEFSwzAM/BCOCKSQHpi+JdhqKkeR3chOCK+vC+mhwAwnabSr3ZVgicYGSSgJvILDmSzGj8rrA9xDMWgaUbXr8Q/UnzNO61Yqkplw+ZfmMcXODmZCpc9fqmM2kXNPosA0oEJZynjqxDFONzKJ5ewKeA1PmmBGcWG6QjHweiTmaiT5qX0TPmZmo5TQoKNE0m+WUD/W7evzy74BwUW/Ur5zsMPmUvpCLR/R77HZ7j2Mb/Wu3T+1TVM3/gLyqYDg'></script>
+<script type='text/javascript'>
+( 'fetch' in window ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?m=1573572739h&#038;ver=3.0.0"></scr' + 'ipt>' );( document.contains ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?m=1540208548h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?m=1585663916h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?m=1585663916h&#038;ver=3.6.4"></scr' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?m=1550600082h&#038;ver=3.0.12"></scr' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?m=1540208548h&#038;ver=2.0.2"></scr' + 'ipt>' );
+( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-url.min.7490158b.js?m=1588209800h&#038;ver=3.6.4"></scr' + 'ipt>' );
+( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-dom-rect.7e21c103.js?m=1588209800h&#038;ver=3.42.0"></scr' + 'ipt>' );
+</script>
+<script src='https://s0.wp.com/wp-includes/js/dist/vendor/lodash.min.js?m=1573572739h&#038;ver=4.17.15'></script>
+<script>
+window.lodash = _.noConflict();
+</script>
+<script>
+var comment_like_text = {"loading":"chargement\u2026"};
+</script>
+<script>
+var actionbardata = {"siteID":"110271071","siteName":"Emma","siteURL":"https:\/\/emmaclit.com","icon":"<img alt='' src='https:\/\/emmaclitdotcom.files.wordpress.com\/2017\/10\/cropped-avatar.png?w=50' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/penscratch","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Femmaclit.com%2F2016%2F05%2F25%2Fla-violence-des-opprime%C2%B7e%C2%B7s%2F&signup_flow=account&domain=emmaclit.com","themeURL":"","xhrURL":"https:\/\/emmaclit.com\/wp-admin\/admin-ajax.php","nonce":"08de5007a5","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"bfabac3571\" \/>","referer":"https:\/\/emmaclit.com\/2016\/05\/25\/la-violence-des-opprime%C2%B7e%C2%B7s\/","canFollow":"1","feedID":"47354216","statusMessage":"","customizeLink":"https:\/\/emmaclitdotcom.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Femmaclitdotcom.wordpress.com%2F2016%2F05%2F25%2Fla-violence-des-opprime%25C2%25B7e%25C2%25B7s%2F","postID":"216","shortlink":"https:\/\/wp.me\/p7sGxF-3u","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/emmaclit.com\/216","statsLink":"https:\/\/wordpress.com\/stats\/post\/216\/emmaclit.com","i18n":{"view":"Afficher le site","follow":"Suivre","following":"Abonn\u00e9","edit":"Modifier","login":"Connexion","signup":"S'inscrire","customize":"Personnaliser","report":"Signaler ce contenu","themeInfo":"Obtenir le th\u00e8me: Penscratch","shortlink":"Copier shortlink","copied":"Copi\u00e9","followedText":"Les nouveaux articles de ce site appara\u00eetront d\u00e9sormais dans votre <a href=\"https:\/\/wordpress.com\/\">Lecteur<\/a>","foldBar":"R\u00e9duire cette barre","unfoldBar":"\u00c9tendre cette barre","editSubs":"G\u00e9rer les abonnements","viewReader":"Voir le site dans le Lecteur","viewReadPost":"Voir l\u2019article dans le Lecteur","subscribe":"M\u2019inscrire","enterEmail":"Entrez votre adresse e-mail","followers":"Rejoignez 3&nbsp;384 autres abonn\u00e9s","alreadyUser":"Vous disposez d\u00e9j\u00e0 d\u02bcun compte WordPress ? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Femmaclit.com%2F2016%2F05%2F25%2Fla-violence-des-opprime%C2%B7e%C2%B7s%2F&signup_flow=account&domain=emmaclit.com\">Connectez-vous maintenant.<\/a>","stats":"Statistiques"}};
+</script>
+<script>
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"fr","ajaxurl":"https:\/\/emmaclit.com\/wp-admin\/admin-ajax.php","nonce":"e1e93fd6ec","display_exif":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Commentaire","post_comment":"Laisser un commentaire","write_comment":"\u00c9crire un commentaire...","loading_comments":"Chargement des commentaires\u2026","download_original":"Afficher dans sa taille r\u00e9elle <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>.","no_comment_text":"Veuillez ajouter du contenu \u00e0 votre commentaire.","no_comment_email":"Merci de renseigner une adresse e-mail.","no_comment_author":"Merci de renseigner votre nom.","comment_post_error":"Une erreur s'est produite \u00e0 la publication de votre commentaire. Veuillez nous en excuser, et r\u00e9essayer dans quelques instants.","comment_approved":"Votre commentaire a \u00e9t\u00e9 approuv\u00e9.","comment_unapproved":"Votre commentaire est en attente de validation.","camera":"Appareil photo","aperture":"Ouverture","shutter_speed":"Vitesse d'obturation","focal_length":"Focale","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/emmaclitdotcom.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Femmaclit.com%2F2016%2F05%2F25%2Fla-violence-des-opprime%25c2%25b7e%25c2%25b7s%2F","blog_id":"110271071","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">E-mail (requis)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Nom (requis)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Site web<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogu\u00e9","reblog_add_thoughts":"Ajoutez votre grain de sel personnel... (facultatif)","reblogging":"Reblogging...","post_reblog":"Relais d\u2019article","stats_query_args":"blog=110271071&v=wpcom&tz=1&user_id=0&subd=emmaclitdotcom","is_public":"1","reblog_enabled":""};
+</script>
+<script>
+var sharing_js_options = {"lang":"fr","counts":"1","is_stats_active":"1"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyVUtlSwzAM/CEcNTRA+sDwKYzjKKkSX1h2Q/8ehx70mg59srzSanXB5IVyNqKN4HXqyTL0KX8bDH32BIS6WBQLaBLpFqisLZBt8bsY+AkeI7fOiICy3d7P0CWtBVNEgS1Fsr3YeaBclPXb8nVVgcWJvVSjaLRTI0NLHEHJ4BKj3oFiQzhdSpgkDirKGZMhoWlEhoFBUwM8kcdHSGfAJTGu0eQwnxrwaFkFGdV6Zlm5oV5GcvbfFB7JZxU7is6pxKKj4/zIKp3a83oCer0tDF0JnDQj2+wXjQxgJEcM2RJugyHQnOyIPZghhryXq1GcktTc+Ew6Wrc6Yf9X/Ck+fCUM2/1TnEbd2tf+JGDA+HsvB+BefSOxwSiW+W4/szJ0Lpg78d5xFJ2WFIDXMuR7PbyZ9GHey5d69VxXVVkNP5vvRLo='></script>
+<script type='text/javascript'>
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<iframe src='https://widgets.wp.com/likes/master.html?ver=20190321#ver=20190321&amp;lang=fr' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+		<div id='likes-other-gravatars'><div class="likes-text"><span>%d</span> blogueurs aiment cette page :</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+<script src="//stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'110271071','blog_tz':'1','user_lang':'fr','blog_lang':'fr','user_id':'0'}]);
+_stq.push(['view', {'blog':'110271071','v':'wpcom','tz':'1','user_id':'0','post':'216','subd':'emmaclitdotcom'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1TaVhzUzFMbjdWNHpwZGhTayxPSUFCMGRVYVNrSFguN3FwSmQ5RGtNX3VQcj1yVzhiflM1THQtLGFdQ2toOXYlK2lYQj1PZnRQXUR1VzFfZzJFV3J5dGoxRHB3a116T098cSY0diZEdGwuNnxFTVp8ZDRTfj10QTQtSnZIYndWQW04UUVFQzhPRnhxbXM/VSxTS2I5Q2xzXzRBYktUcnYsN3dYMl0lLi8lVGZGbHprWEE1YzAvMTItVHpSaXo5N1A3UFUleDZFRTZZVHhwSENfSi5GMj9zPVUsa009QnBEWFFUQyYlcldSN0otaXRVX2lnLitXaU90YyVML1RbVTlIZXp6WXVrLDZpZzlhU29RSUJQSklmTHxyLDRFMVN6NkV8Ji1meWY4NVVURm0rVnZSK0NEZnc2JVg4LFhXVUxtZ24='}]);
+_stq.push([ 'clickTrackerInit', '110271071', '216' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>

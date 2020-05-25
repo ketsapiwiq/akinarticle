@@ -1,0 +1,6 @@
+---
+title: "ISF: Hollande ravit à Sarkozy le titre de «président des riches»"
+url: https://www.mediapart.fr/journal/economie/080616/isf-hollande-ravit-sarkozy-le-titre-de-president-des-riches?utm_source=twitter&utm_medium=social&utm_campaign=Sharing&xtor=CS3-67
+keywords: sarkozy,françois,ravit,milliardaires,zéro,socialiste,violente,symbole,titre,président,isf,hollande,système,riches,statistiques
+---
+Les Français ont appris à leurs dépens, depuis 2012, que la politique de François Hollande pouvait être violente pour les plus modestes et accommodante pour les plus riches. Les statistiques fiscales confidentielles révélées mercredi 8 juin par *Le Canard enchaîné* en fournissent une nouvelle démonstration : grâce au système de plafonnement mis au point par le pouvoir socialiste, les milliardaires ont encore profité en 2015 d'allègements de l'impôt de solidarité sur la fortune (ISF) considérables, l'ISF de certains des contribuables parmi les plus riches, comme Liliane Bettencourt (L'Oréal) ou Léone Meyer (Galeries Lafayette-BHV), étant même ramené carrément à... zéro ! En somme, François Hollande a plus avantagé les milliardaires que Nicolas Sarkozy, dont le célèbre « bouclier fiscal » avait pourtant été pointé par le Parti socialiste comme le symbole des inégalités du quinquennat précédent.
