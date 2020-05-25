@@ -1,0 +1,23 @@
+* FIX BIG BUG IN models.py for question-object couples that don't already have a score.
+* adjust weights
+* clean up code (esp. select statements: sql alchemy? json? elasticsearch? postgresql?)
+* document!
+* ask user if they'd answer a few more questions if guess was wrong?
+* Protect admin page with nginx
+* Flask? python3?
+* security?
+* Add internationalization instead of hardcoding French 
+* Add autocomplete when adding an article and select by (normalized) link or title and select hidden with ID
+* Rename "think about someone" to "find an article"
+* guess once value is over 100?
+* styliser bouton
+* Make candidates and other results clickable
+* fix retrain page
+* Aspirer et parser les liens lors de l'ajout
+* add other databases
+* add weights when one keyword is related to another
+* more suggestions of "what were you thinking of"?
+* add title and content (ngrams? bags of words?) to probability guessing
+* can we do adversary learning?
+* improve design
+* add credits footer
