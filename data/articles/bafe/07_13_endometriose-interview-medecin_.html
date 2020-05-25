@@ -1,0 +1,1335 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="profile" href="http://gmpg.org/xfn/11">
+<link rel="pingback" href="https://passionmenstrues.com/xmlrpc.php">
+
+<title>Qu&rsquo;est-ce que l&rsquo;endométriose ? Le Dr. Martin Winckler nous répond &#8211; Passion Menstrues</title>
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9wYXNzaW9ubWVuc3RydWVzLmNvbQ%3D%3D"
+		+ "&wpcomid=93438561"
+		+ "&time=1589683785";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//passionmenstrues.wordpress.com' />
+<link rel='dns-prefetch' href='//wordpress.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.pubmine.com' />
+<link rel='dns-prefetch' href='//x.bidswitch.net' />
+<link rel='dns-prefetch' href='//static.criteo.net' />
+<link rel='dns-prefetch' href='//ib.adnxs.com' />
+<link rel='dns-prefetch' href='//aax.amazon-adsystem.com' />
+<link rel='dns-prefetch' href='//bidder.criteo.com' />
+<link rel='dns-prefetch' href='//cas.criteo.com' />
+<link rel='dns-prefetch' href='//gum.criteo.com' />
+<link rel='dns-prefetch' href='//ads.pubmatic.com' />
+<link rel='dns-prefetch' href='//gads.pubmatic.com' />
+<link rel='dns-prefetch' href='//tpc.googlesyndication.com' />
+<link rel='dns-prefetch' href='//ad.doubleclick.net' />
+<link rel='dns-prefetch' href='//googleads.g.doubleclick.net' />
+<link rel='dns-prefetch' href='//www.googletagservices.com' />
+<link rel='dns-prefetch' href='//cdn.switchadhub.com' />
+<link rel='dns-prefetch' href='//delivery.g.switchadhub.com' />
+<link rel='dns-prefetch' href='//delivery.swid.switchadhub.com' />
+<link rel='dns-prefetch' href='//a.teads.tv' />
+<link rel='dns-prefetch' href='//prebid.media.net' />
+<link rel='dns-prefetch' href='//adserver-us.adtech.advertising.com' />
+<link rel='dns-prefetch' href='//fastlane.rubiconproject.com' />
+<link rel='dns-prefetch' href='//prebid-server.rubiconproject.com' />
+<link rel='dns-prefetch' href='//hb-api.omnitagjs.com' />
+<link rel='dns-prefetch' href='//mtrx.go.sonobi.com' />
+<link rel='dns-prefetch' href='//apex.go.sonobi.com' />
+<link rel='dns-prefetch' href='//u.openx.net' />
+<link rel="alternate" type="application/rss+xml" title="Passion Menstrues &raquo; Flux" href="https://passionmenstrues.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Passion Menstrues &raquo; Flux des commentaires" href="https://passionmenstrues.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Passion Menstrues &raquo; Qu&rsquo;est-ce que l&rsquo;endométriose ? Le Dr. Martin Winckler nous&nbsp;répond Flux des commentaires" href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s0.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.1"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s0.wp.com/_static/??-eJytk91SwyAQhV9ISmOjpheOzwJhi7T8DQvGvL0kpDW2nejY3sGy357lwNLOk9bZCDZSk4jXSSqLtPOtMwSN0tCf7VYt4gOdYVw7+Q26IJhAKrXjTF/kziQCaBZBEO8wnu2WMK0OgHQP0bP2QMbdRfoxV6a85RBkPglAm9V6taY8KS2GpkecBxZ6irHX8IcyIzVTZ71LkcigxH9LBBaVlfgLvktaE1QRCAg1AJMdtFpXzcvmeVtTCx2OFScBofD4NIOlJUw+FHR3V2lZcAlB30nDBzAqmRO6bE3rplaq1eMmP2/paAqSm20t5ulctNyu1D+PLn3Y4evluPEsDhkmSzHQYHLaEtYpISEPRk6Z1iTC5zIyjinn2UBEcrQxvmetxZHK1NBNGaZR8EekoIpaF1Wm8bS4bWCmo11wV4woTVOfOLWp1cDy+F5/y9k9JFgIpcWry4F9M6/VU7N9bOq6qvdfZejdFQ==?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<link crossorigin="anonymous" rel='stylesheet' id='nucleare-fonts-css'  href='https://fonts.googleapis.com/css?family=Roboto%3A400%2C700%2C700italic%2C400italic%7CPlayfair+Display%3A400%2C400italic%2C700italic%2C700&#038;subset=latin%2Clatin-ext' media='all' />
+<link rel='stylesheet' id='all-css-2-1' href='https://s0.wp.com/_static/??-eJyNj0sOwjAMRC+EsQqlrBBnSYMbQp2PGkeB22PYABtgN+PRe5KxZbApCkVBOVOggrmOGKtlMguhLQUn3cE0KinQWg8rfINChczV+Viw+ZMjKUhV1zR7AjYNhUJmIyoucuO/BJOxNKoB2M8arr9JRwk4WSM+xY8CExu/fEMXGjk5je757Ks+oGM4dLvNftj2XT9c7mkqcJk=?cssminify=yes' type='text/css' media='all' />
+<link rel='stylesheet' id='print-css-3-1' href='https://s0.wp.com/wp-content/mu-plugins/global-print/global-print.css?m=1465851035h&cssminify=yes' type='text/css' media='print' />
+<link rel='stylesheet' id='all-css-4-1' href='https://s0.wp.com/_static/??/wp-content/mu-plugins/actionbar/actionbar.css,/wp-content/themes/pub/nucleare/inc/style-wpcom.css?m=1560469195j&cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-6-1' href='https://s0.wp.com/_static/??-eJxti0EKgCAQAD+ULWGJHaK3mJgaqyut0fejQ4eo0zAwA2cRlnJ1uUI6RMHDx8xQiKtY0cQdOJg9Zv+wtcwN/F9MNhoUSJ7e8plqcMkxhB480mLwDuY0dYMepVJaqu0CZXY33g==?cssminify=yes' type='text/css' media='all' />
+<script>
+var related_posts_js_options = {"post_heading":"h4"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJx9jMEOwjAMQ3+IruzABgfEt4wtVKmatDSNpv39ggSXHZAsWbae7dfikOekC4iPprdC3b7WRTn5f4AjDHVq0BHyD54zN+D2YSk/MYFTgToF6+zolY8cqStJA7L4CsnOFleytEOy1YPu/WXsb+dxGK5xB1+BRFU='></script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://passionmenstrues.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s0.wp.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='La Gazette des Menstrues&nbsp;#4' href='https://passionmenstrues.com/2015/07/12/gazette-menstrues-4/' />
+<link rel='next' title='Témoignages : Quelle relation entretiens-tu avec tes règles ?&nbsp;#2' href='https://passionmenstrues.com/2015/07/16/relation-regles-2/' />
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/" />
+<link rel='shortlink' href='https://wp.me/p6k3Dz-4X' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fpassionmenstrues.com%2F2015%2F07%2F13%2Fendometriose-interview-medecin%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fpassionmenstrues.com%2F2015%2F07%2F13%2Fendometriose-interview-medecin%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Qu&rsquo;est-ce que l&rsquo;endométriose ? Le Dr. Martin Winckler nous répond" />
+<meta property="og:url" content="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/" />
+<meta property="og:description" content="Qu&rsquo;est-ce que l&rsquo;endométriose ? Comment la diagnostiquer ? Comment la soigner ? Le médecin Martin Winckler répond à toutes nos questions.  (Source : Ashleigh Popplewell) L&rsquo;endométr…" />
+<meta property="article:published_time" content="2015-07-13T08:06:44+00:00" />
+<meta property="article:modified_time" content="2015-07-13T13:29:59+00:00" />
+<meta property="og:site_name" content="Passion Menstrues" />
+<meta property="og:image" content="https://passionmenstrues.files.wordpress.com/2015/07/uterine_by_ashleigh_michelle.jpg" />
+<meta property="og:image:width" content="600" />
+<meta property="og:image:height" content="571" />
+<meta property="og:locale" content="fr_FR" />
+<meta name="twitter:creator" content="@Menstrues" />
+<meta name="twitter:site" content="@Menstrues" />
+<meta name="twitter:text:title" content="Qu&rsquo;est-ce que l&rsquo;endométriose ? Le Dr. Martin Winckler nous&nbsp;répond" />
+<meta name="twitter:image" content="https://passionmenstrues.files.wordpress.com/2015/07/uterine_by_ashleigh_michelle.jpg?w=640" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/52be769cc363cbce2c80b879165f7616?s=32" sizes="16x16" />
+<link rel="icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/52be769cc363cbce2c80b879165f7616?s=32" sizes="16x16" />
+<link rel="apple-touch-icon" href="https://secure.gravatar.com/blavatar/52be769cc363cbce2c80b879165f7616?s=114" />
+<link rel='openid.server' href='https://passionmenstrues.com/?openidserver=1' />
+<link rel='openid.delegate' href='https://passionmenstrues.com/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://passionmenstrues.com/osd.xml" title="Passion Menstrues" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<meta name="theme-color" content="#f0f0f0" />
+		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="Passion Menstrues" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="...Et autres histoires de chatte." /><meta name="msapplication-task" content="name=Souscrire;action-uri=https://passionmenstrues.com/feed/;icon-uri=https://secure.gravatar.com/blavatar/52be769cc363cbce2c80b879165f7616?s=16" /><meta name="msapplication-task" content="name=Inscrivez-vous pour créer un blog gratuitement;action-uri=http://wordpress.com/signup/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Assistance WordPress.com;action-uri=http://support.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Forums WordPress.com;action-uri=http://forums.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="description" content="Qu&#039;est-ce que l&#039;endométriose ? Comment la diagnostiquer ? Comment la soigner ? Le médecin Martin Winckler répond à toutes nos questions.  (Source : Ashleigh Popplewell) L&#039;endométriose est une maladie qui touche environ 10 à 15% des personnes réglées en âge de procréer - c&#039;est énorme. Pourtant, il y a de fortes chances pour que vous n&#039;en ayez&hellip;" />
+	<style type="text/css">
+			.site-title,
+		.site-description {
+			position: absolute;
+			clip: rect(1px, 1px, 1px, 1px);
+		}
+		</style>
+	<style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #f0f0f0; }
+</style>
+			<script type="text/javascript">
+		function __ATA_CC() {var v = document.cookie.match('(^|;) ?personalized-ads-consent=([^;]*)(;|$)');return v ? 1 : 0;}
+		var __ATA_PP = { pt: 1, ht: 1, tn: 'nucleare', amp: false, siteid: 93438561, consent: __ATA_CC() };
+		var __ATA = __ATA || {};
+		__ATA.cmd = __ATA.cmd || [];
+		__ATA.criteo = __ATA.criteo || {};
+		__ATA.criteo.cmd = __ATA.criteo.cmd || [];
+		</script>
+		<script type="text/javascript">
+		(function(){var g=Date.now||function(){return+new Date};function h(a,b){a:{for(var c=a.length,d="string"==typeof a?a.split(""):a,e=0;e<c;e++)if(e in d&&b.call(void 0,d[e],e,a)){b=e;break a}b=-1}return 0>b?null:"string"==typeof a?a.charAt(b):a[b]};function k(a,b,c){c=null!=c?"="+encodeURIComponent(String(c)):"";if(b+=c){c=a.indexOf("#");0>c&&(c=a.length);var d=a.indexOf("?");if(0>d||d>c){d=c;var e=""}else e=a.substring(d+1,c);a=[a.substr(0,d),e,a.substr(c)];c=a[1];a[1]=b?c?c+"&"+b:b:c;a=a[0]+(a[1]?"?"+a[1]:"")+a[2]}return a};var l=0;function m(a,b){var c=document.createElement("script");c.src=a;c.onload=function(){b&&b(void 0)};c.onerror=function(){b("error")};a=document.getElementsByTagName("head");var d;a&&0!==a.length?d=a[0]:d=document.documentElement;d.appendChild(c)}function n(a){var b=void 0===b?document.cookie:b;return(b=h(b.split("; "),function(c){return-1!=c.indexOf(a+"=")}))?b.split("=")[1]:""}function p(a){return"string"==typeof a&&0<a.length}
+		function r(a,b,c){b=void 0===b?"":b;c=void 0===c?".":c;var d=[];Object.keys(a).forEach(function(e){var f=a[e],q=typeof f;"object"==q&&null!=f||"function"==q?d.push(r(f,b+e+c)):null!==f&&void 0!==f&&(e=encodeURIComponent(b+e),d.push(e+"="+encodeURIComponent(f)))});return d.filter(p).join("&")}function t(a,b){a||((window.__ATA||{}).config=b.c,m(b.url))}var u=Math.floor(1E13*Math.random()),v=window.__ATA||{};window.__ATA=v;v.rid=u;v.createdAt=g();var w=window.__ATA||{},x="s.pubmine.com";
+		w&&w.serverDomain&&(x=w.serverDomain);var y="//"+x+"/conf",z=window.top===window,A=window.__ATA_PP&&window.__ATA_PP.gdpr_applies,B="boolean"===typeof A?Number(A):null,C=window.__ATA_PP||null,D=z?document.referrer?document.referrer:null:null,E=z?window.location.href:document.referrer?document.referrer:null,F,G=n("__ATA_tuuid");F=G?G:null;var H=window.innerWidth+"x"+window.innerHeight,I=n("usprivacy"),J=r({gdpr:B,pp:C,rid:u,src:D,ref:E,tuuid:F,vp:H,us_privacy:I?I:null},"",".");
+		(function(a){var b=void 0===b?"cb":b;l++;var c="callback__"+g().toString(36)+"_"+l.toString(36);a=k(a,b,c);window[c]=function(d){t(void 0,d)};m(a,function(d){d&&t(d)})})(y+"?"+J);}).call(this);
+		</script><link rel="amphtml" href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/amp/"><style type="text/css" id="custom-colors-css">#wp-calendar>caption,.menu-toggle:focus,.menu-toggle:hover{color:#fff}.social-links .top-search{color:#fff}.widget.wp_widget_tag_cloud a,.more-link,.button,button,input[type="button"],input[type="reset"],input[type="submit"],#infinite-handle span{color:#fff}.social-links .top-search:hover,.button:hover,button:hover,input[type="button"]:hover,input[type="reset"]:hover,input[type="submit"]:hover,#infinite-handle span:hover,.button:focus,button:focus,input[type="button"]:focus,input[type="reset"]:focus,input[type="submit"]:focus,#infinite-handle span:focus,.button:active,button:active,input[type="button"]:active,input[type="reset"]:active,input[type="submit"]:active,#infinite-handle span:active{color:#fff}.widget,.widget a:hover,.widget a:focus,.widget a:active{color:#5e5e5e}.site-title a:hover,.site-title a:focus,.site-title a:active{color:#5e5e5e}.site-info,.site-description{color:#5e5e5e}body{background-color:#f0f0f0}.widget.wp_widget_tag_cloud a,.more-link,.button,button,input[type="button"],input[type="reset"],input[type="submit"],#infinite-handle span{background-color:#b65252}#wp-calendar>caption{background-color:#b65252}.social-links .top-search{background-color:#b65252}#wp-calendar tbody td#today,blockquote,.main-navigation div>ul>li>ul>li:first-child{border-color:#b65252}.main-navigation div>ul>li>ul::before{border-bottom-color:#b65252}.entry-featured-image,.menu-toggle:focus,.menu-toggle:hover{background-color:#b65252}.widget a,.site-info a,.site-title a{color:#a84646}.main-navigation a{color:#b54e4e}.social-links a:hover{color:#b54e4e}.entry-title a:hover,.entry-title a:focus,a{color:#b54e4e}</style>
+</head>
+
+<body class="post-template-default single single-post postid-307 single-format-standard custom-background customizer-styles-applied highlander-enabled highlander-light">
+<div id="page" class="hfeed site">
+	<a class="skip-link screen-reader-text" href="#content">Aller au contenu principal</a>
+
+	<div class="navigation-bar clear">
+		<div class="navigation-block">
+			<nav id="site-navigation" class="main-navigation" role="navigation">
+				<button class="menu-toggle" aria-controls="menu" aria-expanded="false"><i class="fa fa-bars"></i><span class="screen-reader-text">Open Menu</span></button>
+				<div class="menu"><ul>
+<li ><a href="https://passionmenstrues.com/">Accueil</a></li><li class="page_item page-item-1"><a href="https://passionmenstrues.com/a-propos/">À propos</a></li>
+<li class="page_item page-item-140"><a href="https://passionmenstrues.com/f-a-q/">F.A.Q.</a></li>
+<li class="page_item page-item-103"><a href="https://passionmenstrues.com/participer/">Participer</a></li>
+<li class="page_item page-item-788"><a href="https://passionmenstrues.com/revue-de-presse/">Revue de Presse</a></li>
+</ul></div>
+			</nav><!-- #site-navigation -->
+
+							<div class="social-links">
+					
+											<div class="open-search top-search"><i class="fa fa-search"><span class="screen-reader-text">Recherche</span></i></div>
+									</div>
+					</div>
+	</div>
+
+			<div class="search-full">
+			<div class="search-container">
+				<form role="search" method="get" class="search-form" action="https://passionmenstrues.com/">
+				<label>
+					<span class="screen-reader-text">Rechercher&nbsp;:</span>
+					<input type="search" class="search-field" placeholder="Recherche&hellip;" value="" name="s" />
+				</label>
+				<input type="submit" class="search-submit" value="Rechercher" />
+			</form>				<span><a class="close-search"><i class="fa fa-close space-right"></i>Fermer</a></span>
+			</div>
+		</div>
+	
+	<header id="masthead" class="site-header" role="banner">
+		<div class="site-branding">
+							<a href="https://passionmenstrues.com/" rel="home">
+					<img src="https://passionmenstrues.files.wordpress.com/2016/03/formatbanblog.png" width="850" height="340" alt="" class="custom-header">
+				</a>
+									<h1 class="site-title"><a href="https://passionmenstrues.com/" rel="home">Passion Menstrues</a></h1>
+			<h2 class="site-description">&#8230;Et autres histoires de chatte.</h2>
+		</div><!-- .site-branding -->
+	</header><!-- #masthead -->
+
+	<div id="content" class="site-content">
+
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+		
+			<article id="post-307" class="post-307 post type-post status-publish format-standard hentry category-interviews category-sante tag-contraception tag-endometriose tag-interviews-2">
+		<header class="entry-header">
+		<div class="entry-category">
+			<span class="cat-links"><a href="https://passionmenstrues.com/category/interviews/" rel="category tag">Interviews</a>/<a href="https://passionmenstrues.com/category/sante/" rel="category tag">Santé</a></span>		</div><!-- .entry-meta -->
+		<h1 class="entry-title">Qu&rsquo;est-ce que l&rsquo;endométriose ? Le Dr. Martin Winckler nous&nbsp;répond</h1>		<div class="entry-meta small-part">
+			<span class="posted-on"><i class="fa fa-clock-o space-left-right"></i><a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/" rel="bookmark"><time class="entry-date published" datetime="2015-07-13T10:06:44+01:00">13 juillet 2015</time><time class="updated" datetime="2015-07-13T15:29:59+01:00">13 juillet 2015</time></a></span><span class="byline"> <i class="fa fa-user space-left-right"></i><span class="author vcard"><a class="url fn n" href="https://passionmenstrues.com/author/jackxparker/">Jack Parker</a></span></span><span class="comments-link"><i class="fa fa-comments-o space-left-right"></i><a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/#comments">14 commentaires</a></span>		</div><!-- .entry-meta -->
+	</header><!-- .entry-header -->
+
+	<div class="entry-content">
+					<h3><em>Qu&rsquo;est-ce que l&rsquo;endométriose ? Comment la diagnostiquer ? Comment la soigner ? Le médecin Martin Winckler répond à toutes nos questions. </em></h3>
+<p><img data-attachment-id="311" data-permalink="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/uterine_by_ashleigh_michelle/" data-orig-file="https://passionmenstrues.files.wordpress.com/2015/07/uterine_by_ashleigh_michelle.jpg" data-orig-size="600,571" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="uterine_by_ashleigh_michelle" data-image-description="" data-medium-file="https://passionmenstrues.files.wordpress.com/2015/07/uterine_by_ashleigh_michelle.jpg?w=300" data-large-file="https://passionmenstrues.files.wordpress.com/2015/07/uterine_by_ashleigh_michelle.jpg?w=600" class="aligncenter size-full wp-image-311" src="https://passionmenstrues.files.wordpress.com/2015/07/uterine_by_ashleigh_michelle.jpg?w=809" alt="uterine_by_ashleigh_michelle" srcset="https://passionmenstrues.files.wordpress.com/2015/07/uterine_by_ashleigh_michelle.jpg 600w, https://passionmenstrues.files.wordpress.com/2015/07/uterine_by_ashleigh_michelle.jpg?w=150 150w, https://passionmenstrues.files.wordpress.com/2015/07/uterine_by_ashleigh_michelle.jpg?w=300 300w" sizes="(max-width: 600px) 100vw, 600px"   /></p>
+<p style="text-align:center;"><em>(Source : <a href="http://ashleighpopplewell.deviantart.com/art/Uterine-173121440">Ashleigh Popplewell</a>)</em></p>
+<p>L&rsquo;endométriose est une maladie qui touche environ 10 à 15% des personnes réglées en âge de procréer &#8211; c&rsquo;est énorme. Pourtant, il y a de fortes chances pour que vous n&rsquo;en ayez jamais entendu parler, ou qu&rsquo;il s&rsquo;agisse pour vous d&rsquo;un terme vague et lointain qui n&rsquo;évoque pas grand chose (un peu comme l&rsquo;ostéoporose et ce genre de trucs dont on parle dans les pubs pour les yaourts quoi).</p>
+<p>J&rsquo;ai donc contacté <a href="http://www.martinwinckler.com" target="_blank">Martin Winckler</a>, qui a été médecin généraliste en centre de planification pendant 25 ans, médecin de campagne pendant 10 ans, et qui s&rsquo;est &laquo;&nbsp;spécialisé&nbsp;&raquo; dans la santé des femmes parce qu&rsquo;elles étaient les consultantes les plus nombreuses et que la gynécologie était l&rsquo;un des principaux motifs de consultation, pour lui poser quelques questions.</p>
+<p><span id="more-307"></span></p>
+<h5 class="p1"><strong><span class="s1" style="color:#800000;">Dans des termes que des jeunes personnes non-renseignées sur le sujet (et les détails de leur anatomie) pourraient comprendre, comment expliqueriez-vous ce qu&rsquo;est l&rsquo;endométriose ?</span></strong></h5>
+<p>L&rsquo;endomètre, c&rsquo;est la paroi intérieure de l&rsquo;utérus. Elle s&rsquo;épaissit au fil du cycle, est à son maximum au moment de l’ovulation (pour accueillir un ovocyte fécondé) et se détache au moment des règles s’il n’y a pas de grossesse en cours. C’est une muqueuse, c’est à dire un tissu très riche en vaisseau sanguin, et « humide », comme l’intérieur du vagin ou de la bouche.</p>
+<p><strong>L&rsquo;endométriose, c&rsquo;est la présence d&rsquo;endomètre hors de l&rsquo;utérus</strong> : dans les trompes, sur les ovaires, dans l&rsquo;abdomen. Cet endomètre réagit comme l&rsquo;endomètre de l&rsquo;utérus : il se développe et se détache ​au fil du cycle. Quand il se détache, ça provoque une inflammation des tissus environnants et des douleurs très très intenses, plus intenses que les règles, et qui durent bien après la fin des saignements. <strong>C&rsquo;est la persistance de ces douleurs qui est caractéristique et doit évoquer l&rsquo;endométriose, dès l&rsquo;adolescence. </strong></p>
+<h5><span style="color:#800000;"><strong>Pourquoi est-ce qu&rsquo;on en entend si peu parler ? </strong></span></h5>
+<p class="p1"><span class="s1"><strong>​Probablement parce que la plupart des médecins n&rsquo;ont pas été formés à l&rsquo;identifier</strong>, et donc à en parler avec les femmes. Et aussi parce que c’est une maladie qui peut ne pas faire vraiment parler d’elle pendant longtemps, et qu’on ne recherche que si les femmes souffrent beaucoup d’emblée (dès l’adolescence) ou ont du mal à être enceintes (en général, plus tard). </span></p>
+<p class="p1"><span class="s1">On en parle plus depuis que l&rsquo;internet existe &#8211; et depuis que certains auteurs en parlent. (J&rsquo;en ai parlé abondamment dans un de mes livres &laquo;&nbsp;<em>Tout ce que vous vouliez savoir à propos des règles</em>&nbsp;&raquo; en 2007). ​</span></p>
+<h5 class="p1"><span class="s1" style="color:#800000;"><b>Quel est le rapport avec les règles ?</b></span></h5>
+<p class="p1"><span class="s1">Les règles, c’est le moment où l’utérus se contracte pour se vider de son endomètre, après un cycle sans fécondation (donc, sans grossesse). </span></p>
+<p class="p1"><span class="s1">Les règles ne sont pas constituées de sang pur, mais d’un tissu très fin (l’endomètre) gorgé de sang. C’est pour ça que parfois, les règles ont un aspect épais, comme des caillots. </span></p>
+<p class="p1"><span class="s1">En principe, ce qui fait mal pendant les règles, ce sont les contractions de l’utérus. </span></p>
+<p class="p1"><span class="s1">Les règles sont indolores ou presque chez de nombreuses femmes. Mais d’autres ont très très mal, probablement parce que la perception de la douleur varie d’une personne à une autre, et aussi parce que les contractions peuvent être plus ou moins intenses selon les femmes. </span></p>
+<p class="p1"><span class="s1"><strong>Aujourd’hui, on est à peu près sûr que l’endométriose est une maladie liée au fait que pendant les règles, chez certaines femmes dont les contractions sont intenses, l’endomètre n’est pas seulement évacué par le bas (dans le vagin) mais aussi vers le haut </strong>: dans les trompes, puis vers les ovaires et la cavité de l’abdomen. Au cours des cycles suivants, les cellules d’endomètre, qui se sont « greffées » sur les tissus des trompes, des ovaires, de l’abdomen, recommencent à se comporter comme si elles se trouvaient toujours dans l’utérus. On pense que c’est dû au fait que chez certaines femmes, les orifices des trompes, qui devraient se « fermer » au moment où l’utérus se contracte pendant les règles, restent ouverts et laissent passer de l’endomètre et du sang là où il ne faut pas. </span></p>
+<p class="p1"><span class="s1">Alors ça, c’est le mécanisme, pas la seule explication car il est probable que ce phénomène survient chez toutes les femmes plus ou moins, mais toutes ne souffrent pas d’endométriose. Il y a sûrement des prédispositions familiales : si une femme de votre famille en a souffert, vous avez plus de risque d’en souffrir qu’une femme dont la famille est indemne. Il est aussi probable que c’est dans les familles où c’est le plus fréquent que c’est le plus difficile à diagnostiquer :<strong> si une adolescente se plaint de souffrir, et si sa mère lui dit « C’était pareil pour moi, il faut que tu t’y fasses », la jeune femme risque de ne pas consulter avant longtemps…</strong></span></p>
+<h5 class="p1"><span class="s1" style="color:#800000;"><b>Quels sont les symptômes de l&rsquo;endométriose, comment ça se manifeste au quotidien ?</b></span></h5>
+<p class="p1"><span class="s1">Les femmes ont mal pendant leurs règles et plusieurs jours après, pendant parfois 8 à 10 jours. Et les douleurs s&rsquo;aggravent avec le temps. Comme on prescrit souvent la pilule aux adolescentes qui ont des règles très douloureuses, on fait diminuer voire disparaître les symptômes parce que la pilule réduit le volume des règles et amincit l&rsquo;endomètre, dans l&rsquo;utérus mais aussi à l&rsquo;extérieur. </span></p>
+<h5 class="p1"><span class="s1" style="color:#800000;"><b>Est-ce que ça se soigne ? </b></span></h5>
+<p class="p1"><span class="s1">Les douleurs elles-mêmes se soignent par l’ibuprofène, ou l’association paracétamol + codéine ou encore le tramadol. </span></p>
+<p class="p1"><span class="s1">Le premier traitement des zones d&rsquo;endométriose (même si pendant longtemps personne n&rsquo;en avait conscience) c&rsquo;est la contraception hormonale. ​<strong>En effet, les progestatifs contraceptifs font « fondre » les zones d’endomètre.</strong> C’est pour ça que les femmes sous pilule ont des règles moins abondantes que sans pilule. </span></p>
+<p class="p1"><span class="s1">Faire prescrire la pilule ou un implant ou un DIU (« stérilet ») hormonal à une adolescente qui a des règles très douloureuses est non seulement un excellent traitement des douleurs, mais évite à l’endométriose de se développer plus avant. Il y a maintenant d’autres traitements médicamenteux pour les endométrioses très sévères ; autrefois (mais c’est moins fréquent aujourd’hui) on allait jusqu’à opérer pour enlever les zones d’endométriose des ovaires, des trompes et de l’abdomen.</span></p>
+<h5 class="p2"><span class="s1" style="color:#800000;"><b>Comment peut-on savoir si on en souffre ? </b></span></h5>
+<p class="p1"><span class="s1">Si à partir de la puberté chez une jeune femme qui ne prend pas de contraception hormonale, les règles sont très douloureuses (vraiment très douloureuses) et si des douleurs persistent plusieurs jours après les saignements, c’est très probablement une endométriose. </span></p>
+<p class="p1"><span class="s1">Parfois, on ne s’en rend compte que beaucoup plus tard : certaines femmes ont souffert sans rien dire (ou en prenant des anti-inflammatoires au moment des règles) pendant des années et on le découvre quand elles essaient d’être enceintes. <strong>En effet, l’endométriose des trompes abîme les trompes et compromet le passage des spermatozoïdes et des ovocytes</strong>, et donc la survenue d’une grossesse. </span></p>
+<h5 class="p1"><span class="s1" style="color:#800000;"><b>Les médecins et gynécologues devraient-ils en parler systématiquement aux personnes réglées qui se plaignent de douleurs ?</b></span></h5>
+<p class="p1"><span class="s1">Oui. Toujours. </span></p>
+<p class="p1"><span class="s1">Et ils devraient en parler à toutes, même aux femmes qui ne se plaignent de rien car beaucoup pensent que c’est « normal » de souffrir pendant les règles. <strong>Or, ça ne l’est pas.</strong> </span></p>
+<p class="p1"><span class="s1">Si les crampes sont intenses pendant 24 heures et sont bien calmées par l’ibuprofène, et s’atténuent spontanément ensuite, on peut considérer que c’est « normal ». <strong>Mais de toute manière les douleurs des règles devraient être considérées comme un symptôme à traiter </strong>; et si elles ne sont pas bien soulagées, alors le médecin devrait toujours soulever l’hypothèse d’une endométriose.</span></p>
+<h5 class="p1"><span class="s1" style="color:#800000;"><b>Quels sont les risques si ce n&rsquo;est pas dépisté ? Et si ça l&rsquo;est ? Comment vit-on avec ?</b></span></h5>
+<p class="p1"><span class="s1">Les risques c’est une vie de souffrances quasi-permanentes, spontanées et pendant les rapports sexuels (dyspareunie), et une infertilité difficile à traiter. Plus le diagnostic est évoqué tard, plus c’est difficile à traiter, bien sûr. </span></p>
+<p class="p1"><span class="s1">Mais les femmes diagnostiquées et traitées tôt peuvent vivre très bien, à condition de contrôler les symptômes (en réduisant l’intensité et le volume des règles par exemple). Et elles ont des grossesses normalement. </span></p>
+<h5 class="p1"><span class="s1" style="color:#800000;"><b>Est-ce que ça touche beaucoup de personnes ? On m&rsquo;a parlé d&rsquo;une personne sur dix concernée, ça vous paraît correct ?</b></span></h5>
+<p class="p1"><span class="s1">C’est difficile à dire exactement en raison de la grande diffusion de la contraception hormonale. Mais je pense que c’est en dessous de la vérité. </span></p>
+<p class="p1"><span class="s1">J’ai vu beaucoup de femmes se mettre à souffrir après avoir pris la pilule plusieurs années et avoir eu des enfants et être passées au DIU au cuivre (non hormonal). Leur endométriose s’est manifestée seulement à ce moment-là. La fréquence est probablement grande pour des raisons tout simplement de variantes anatomiques : il est probable que les orifices des trompes restent plus ou moins ouverts pendant les règles chez de très nombreuses femmes et qu’une proportion seulement d’entre elles se plaignent et sont diagnostiquées. </span></p>
+<p class="p1"><span class="s1">Il doit y en avoir beaucoup d’autres chez qui le diagnostic n’est jamais fait, soit parce qu’elles n’en parlent pas (« C’est normal de souffrir », leur ont dit leur mère et leur grand-mère),<span class="Apple-converted-space">  </span>soit parce qu’elles s’en accommodent, soit encore parce qu’elles font partie de classes sociales défavorisées ou de milieux où on ne parle pas de ça, et où on ne se fait pas soigner non plus. Certaines femmes ne consultent que lorsqu’elles ne peuvent pas avoir d’enfant, et comme parfois elles essaient tard, elles passent au travers des enquêtes. </span></p>
+<p class="p1"><span class="s2"><a href="http://emlwy.blogspot.ca/2013/04/celebrities-with-endometriosis.html">Beaucoup de célébrités en Amérique</a></span><span class="s1"> ont déclaré et déclarent ouvertement avoir souffert ou souffrir d’endométriose. Marilyn Monroe souffrait d’une endométriose très intense, qui avait été diagnostiquée alors qu’elle avait 28 ans<span class="Apple-converted-space">  </span>et qui était probablement responsable de ses fréquentes absences des plateaux de tournage, de ses fausses-couches, de la « frigidité » évoquée par certains de ses partenaires (elle n’aimait pas avoir des rapports sexuels : elle avait mal), de son infertilité et de ses « sautes d’humeur », et aussi de son addiction aux anti-douleurs. (A sa place, j’aurais été pareil.)<span class="Apple-converted-space">  </span></span><span class="s3">Elle a subi plusieurs opérations qui n’ont pas été très efficaces. (Voir : </span><span class="s4">Summers A. <i>The Secret Lives of Marilyn Monroe</i>. New York: Onyx Books; 1985. Goddess.)</span></p>
+<h5 class="p1"><span class="s1" style="color:#800000;"><b>Pourquoi cette maladie est-elle aussi peu (re)connue ?</b></span></h5>
+<p class="p1"><span class="s1">Il y a certainement un faisceau de raisons : </span></p>
+<p class="p1"><span class="s1">&#8211; Le manque de formation des médecins.</span></p>
+<p class="p1"><span class="s1">&#8211; Le fait que beaucoup de médecins « traitent » des femmes ayant une endométriose sans le savoir en leur donnant la pilule très tôt &#8211; ce qui est très bien, mais contribue à sous-estimer la fréquence de l’endométriose.</span></p>
+<p class="p1"><span class="s1">&#8211; Le fait que beaucoup de femmes ne se plaignent pas (et donc, ne consultent pas).</span></p>
+<p class="p1"><span class="s1">&#8211; Le manque d’information des femmes elles-mêmes ; avant l’internet, beaucoup n’auraient jamais eu accès à des groupes de discussion où en parler. Or, en France, la généralisation de l’internet date d’une dizaine d’années, au plus, et elle ne s’est pas faite d’un coup.</span></p>
+<p class="p1"><span class="s1">&#8211; Le fait que beaucoup de médecins mésestiment les symptômes dont parlent les femmes parce que les médecins français n’apprennent pas bien à soigner les femmes (la migraine est un problème similaire, c’est une maladie plus souvent féminine que masculine, sous-diagnostiquée et souvent très mal traitée).</span></p>
+<p class="p1"><span class="s1">&#8211; C’est un trouble fréquent (donc, qu’on a tendance à sous-estimer) qui devient une maladie au bout de plusieurs années &#8211; quand les femmes veulent avoir des enfants ou en ont marre de souffrir ; et à ce moment-là, elles se voient expédiées aux spécialistes de la fécondité ou – c’est beaucoup moins bien – sont considérées comme des femmes qui « exagèrent leurs symptômes », exigeantes et difficiles à soigner et traitées comme « psy ». C’est inadmissible, et c’est malheureusement très fréquent. </span></p>
+<p class="p1"><em>&#8211; Martin Winckler a écrit plusieurs livres sur la contraception, dont <a href="http://www.amazon.fr/Contraceptions-mode-demplois-Martin-Winckler/dp/2846260176/ref=sr_1_1?ie=UTF8&amp;qid=1436695860&amp;sr=8-1&amp;keywords=martin+winckler+contraception">Contraceptions mode d&#8217;emploi</a> et <a href="http://www.amazon.fr/Choisir-sa-contraception-Martin-Winckler/dp/2215092920/ref=sr_1_2?ie=UTF8&amp;qid=1436695860&amp;sr=8-2&amp;keywords=martin+winckler+contraception">Choisir sa contraception</a>, et un livre sur les règles, intitulé <a href="http://www.amazon.fr/toujours-savoir-r%C3%A8gles-jamais-demander/dp/2215094818/ref=sr_1_1?ie=UTF8&amp;qid=1436695897&amp;sr=8-1&amp;keywords=martin+winckler+r%C3%A8gles">Tout ce que vous avez toujours voulu savoir sur les règles sans jamais avoir osé le demander.</a> Son site internet a été le premier en France à donner des informations sur la contraception et la santé des femmes. </em></p>
+			<div id="atatags-934385611-5ec0a6494e8ab"></div>
+			
+			<script>
+				__ATA.cmd.push(function() {
+					__ATA.initDynamicSlot({
+						id: 'atatags-934385611-5ec0a6494e8ab',
+						location: 120,
+						formFactor: '001',
+						label: {
+							text: 'Publicités',
+						},
+						creative: {
+							reportAd: {
+								text: 'Report this Ad',
+							},
+							privacySettings: {
+								text: 'Paramètres de confidentialité',
+							}
+						}
+					});
+				});
+			</script><div id="atatags-934385615-5ec0a6494e8ee">
+        <script type="text/javascript">
+            __ATA.cmd.push(function() {
+                __ATA.initVideoSlot('atatags-934385615-5ec0a6494e8ee', {
+                    sectionId: '934385615',
+                    format: 'inread'
+                });
+            });
+        </script>
+    </div><div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Partager :</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-307" class="share-twitter sd-button share-icon" href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?share=twitter" target="_blank" title="Cliquez pour partager sur Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-307" class="share-facebook sd-button share-icon" href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?share=facebook" target="_blank" title="Cliquez pour partager sur Facebook"><span>Facebook</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-93438561-307-5ec0a6494f55b' data-src='//widgets.wp.com/likes/index.html?ver=20190321#blog_id=93438561&amp;post_id=307&amp;origin=passionmenstrues.wordpress.com&amp;obj_id=93438561-307-5ec0a6494f55b&amp;domain=passionmenstrues.com' data-name='like-post-frame-93438561-307-5ec0a6494f55b'><h3 class='sd-title'>WordPress:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>J&#039;aime</span></span> <span class="loading">chargement&hellip;</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div>
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	<h3 class="jp-relatedposts-headline"><em>Articles similaires</em></h3>
+</div></div>					</div><!-- .entry-content -->
+
+	<footer class="entry-footer">
+		<div class="entry-bottom small-part">
+			<span class="tags-links"><i class="fa fa-tags space-right"></i><a href="https://passionmenstrues.com/tag/contraception/" rel="tag">contraception</a>, <a href="https://passionmenstrues.com/tag/endometriose/" rel="tag">endométriose</a>, <a href="https://passionmenstrues.com/tag/interviews-2/" rel="tag">interviews</a></span>		</div>
+	</footer><!-- .entry-footer -->
+</article><!-- #post-## -->
+
+				<nav class="navigation post-navigation" role="navigation">
+		<h1 class="screen-reader-text">Navigation des articles</h1>
+		<div class="nav-links">
+			<div class="nav-previous"><a href="https://passionmenstrues.com/2015/07/12/gazette-menstrues-4/" rel="prev"><div class="the-navigation-arrow"><i class="fa prev-next fa-2x fa-angle-left"></i></div> <div class="meta-nav"><span class="small-part">Article précédent</span><div class="next-prev-name">La Gazette des Menstrues&nbsp;#4</div></div></a></div><div class="nav-next"><a href="https://passionmenstrues.com/2015/07/16/relation-regles-2/" rel="next"><div class="meta-nav"><span class="small-part">Article suivant</span><div class="next-prev-name">Témoignages : Quelle relation entretiens-tu avec tes règles ?&nbsp;#2</div></div> <div class="the-navigation-arrow"><i class="fa prev-next fa-2x fa-angle-right"></i></div></a></div>		</div><!-- .nav-links -->
+	</nav><!-- .navigation -->
+	
+			
+<div id="comments" class="comments-area">
+
+	
+			<h2 class="comments-title">
+			14 r&eacute;flexions sur &ldquo;<span>Qu&rsquo;est-ce que l&rsquo;endométriose ? Le Dr. Martin Winckler nous&nbsp;répond</span>&rdquo;		</h2>
+
+		<ol class="comment-list">
+					<li id="comment-127" class="comment even thread-even depth-1 highlander-comment">
+			<article id="div-comment-127" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/fa29778d6c084bab635cc485c260fa0e?s=50&#038;d=identicon&#038;r=G' class='avatar avatar-50' height='50' width='50' />						<b class="fn">nuwanda85</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/#comment-127">
+							<time datetime="2015-07-13T15:09:57+01:00">
+								13 juillet 2015 à 15 h 09 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Martin Winckler ♥ (constructif je sais :))</p>
+<p id="comment-like-127" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?like_comment=127&#038;_wpnonce=0bd4cb53eb" class="comment-like-link needs-login" rel="nofollow" data-blog="93438561"><span>J&#039;aime</span></a><span id="comment-like-count-127" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?replytocom=127#respond' data-commentid="127" data-postid="307" data-belowelement="div-comment-127" data-respondelement="respond" aria-label='Répondre à nuwanda85'><span class="reply-link">Répondre<i class="fa fa-reply space-left"></i></span></a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-128" class="comment odd alt thread-odd thread-alt depth-1 highlander-comment">
+			<article id="div-comment-128" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/b97428963481ef926b1e219f6111800c?s=50&#038;d=identicon&#038;r=G' class='avatar avatar-50' height='50' width='50' />						<b class="fn">Marine</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/#comment-128">
+							<time datetime="2015-07-13T15:26:56+01:00">
+								13 juillet 2015 à 15 h 26 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Merci merci merci merci… Je n&rsquo;en souffre pas (même si j&rsquo;ai souvent eu des règles assez douloureuses avant la pilule), mais cet article m&rsquo;a permis enfin de comprendre les règles et la contraception!!! (Il était temps, j&rsquo;ai 25 ans…) Alors merci Jack et merci Monsieur Winckler!!!</p>
+<p id="comment-like-128" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?like_comment=128&#038;_wpnonce=4e40e20149" class="comment-like-link needs-login" rel="nofollow" data-blog="93438561"><span>J&#039;aime</span></a><span id="comment-like-count-128" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?replytocom=128#respond' data-commentid="128" data-postid="307" data-belowelement="div-comment-128" data-respondelement="respond" aria-label='Répondre à Marine'><span class="reply-link">Répondre<i class="fa fa-reply space-left"></i></span></a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-129" class="comment even thread-even depth-1 highlander-comment">
+			<article id="div-comment-129" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/e4d7632c048f31fabcd7a5e48f169377?s=50&#038;d=identicon&#038;r=G' class='avatar avatar-50' height='50' width='50' />						<b class="fn">trois</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/#comment-129">
+							<time datetime="2015-07-13T16:48:59+01:00">
+								13 juillet 2015 à 16 h 48 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>C&rsquo;est drôle,  cet article vient à  point nommé. J&rsquo;allais prendre un rdv chez le gynéco pour voir ce problème là.<br />
+J&rsquo;ai 36 ans, réglée depuis l&rsquo;âge de 12 ans, et depuis l&rsquo;âge de 11 ans je souffre le martyr chaque mois. Au point de tomber dans les pommes.<br />
+Je prends la pilule depuis seulement 2 ans, et ça m&rsquo;a changé la vie. Je précise en continu, car la &laquo;&nbsp;pause&nbsp;&raquo; entre 2 plaquettes me donnait les mêmes douleurs.<br />
+On m&rsquo;a parlé récemment de l&rsquo;endométriose, ça m&rsquo;a un peu fait flipper mais finalement je ne présente pas les bons symptômes: pas de douleurs après les  premières 48h de règles,  pas de douleurs pendant les rapports, entre autres.<br />
+Je vais quand même en re-parler au gynéco, pour tenter d&rsquo;avoir une autre réponse que: &nbsp;&raquo; c&rsquo;est normal&nbsp;&raquo;.<br />
+Merci au Dr Winkler pour son intérêt pour les problèmes feminins, si tous les médecins étaient comme lui, on serait sûrement moins emmerdés.<br />
+Et merci  Jack!</p>
+<p id="comment-like-129" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?like_comment=129&#038;_wpnonce=75ca69f1f6" class="comment-like-link needs-login" rel="nofollow" data-blog="93438561"><span>J&#039;aime</span></a><span id="comment-like-count-129" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?replytocom=129#respond' data-commentid="129" data-postid="307" data-belowelement="div-comment-129" data-respondelement="respond" aria-label='Répondre à trois'><span class="reply-link">Répondre<i class="fa fa-reply space-left"></i></span></a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-130" class="comment odd alt thread-odd thread-alt depth-1 highlander-comment">
+			<article id="div-comment-130" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/42cc6628ea8564b024fb2fb141f07078?s=50&#038;d=identicon&#038;r=G' class='avatar avatar-50' height='50' width='50' />						<b class="fn">Angie</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/#comment-130">
+							<time datetime="2015-07-14T14:16:48+01:00">
+								14 juillet 2015 à 14 h 16 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Article très intéressant ! </p>
+<p>C&rsquo;est vrai que les médecins sont mal formés quand même&#8230; Un jour j&rsquo;ai dit à ma (MA hein, même pas mon) gynécologue que mes règles étaient très très douloureuses et que j&rsquo;avais mal dans certaines positions pendant mes rapports. Genre vraiment mal, à me mettre à pleurer et tout hein.<br />
+Elle m&rsquo;a dit &laquo;&nbsp;ah oui&#8230; Ben on est pas toutes pareilles hein !&nbsp;&raquo; </p>
+<p>J&rsquo;ai changé de gyneco, j&rsquo;ai pas encore osé lui parler de ce problème là, mais elle a été à l&rsquo;écoute pour mes douleurs de règles, elle m&rsquo;a fait réessayer une pilule que j&rsquo;avais pris jeune et qui maintenant me va parfaitement.<br />
+Ça finit bien, mais c&rsquo;est dommage que cette histoire m&rsquo; ait fait perdre un an&#8230;</p>
+<p id="comment-like-130" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?like_comment=130&#038;_wpnonce=411a8f0b99" class="comment-like-link needs-login" rel="nofollow" data-blog="93438561"><span>J&#039;aime</span></a><span id="comment-like-count-130" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?replytocom=130#respond' data-commentid="130" data-postid="307" data-belowelement="div-comment-130" data-respondelement="respond" aria-label='Répondre à Angie'><span class="reply-link">Répondre<i class="fa fa-reply space-left"></i></span></a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-166" class="comment even thread-even depth-1 highlander-comment">
+			<article id="div-comment-166" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/08cac858f6553d70cb571585413234ce?s=50&#038;d=identicon&#038;r=G' class='avatar avatar-50' height='50' width='50' />						<b class="fn">Waldo</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/#comment-166">
+							<time datetime="2015-07-25T15:04:46+01:00">
+								25 juillet 2015 à 15 h 04 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Super article et super blog! Je suis atteinte d&rsquo;endométriose, c&rsquo;est une vraie plaie ce truc et oui ça te donne une autre perception de tes règles, c&rsquo;est plus un truc un peu relou qui t&rsquo;arrive chaque mois mais plutôt genre comme si Norman Bates de Psychose s&rsquo;acharnait sur ton bide, avec le suspens bien sûr, chaque mois&#8230; Un jour on te dit &laquo;&nbsp;vous avez de l&rsquo;endométriose&nbsp;&raquo; et personne ne connaît la raison ou ce qu&rsquo;il faut prescrire exactement comme traitement, on test des trucs, on te charcute et on attend de voir. Donc tu fais le tour des forums (forcément) et des assos et là tu vois que pleins de meufs en souffrent et se retrouvent avec des stomies (poches à caca) et sondes urinaires et là c&rsquo;est le cycle infernal qui commence, tu flippes. Bref merci d&rsquo;en parler sur blog afin qu&rsquo;on ait un peu des choses sérieuses sur le sujet</p>
+<p id="comment-like-166" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?like_comment=166&#038;_wpnonce=e91e44b891" class="comment-like-link needs-login" rel="nofollow" data-blog="93438561"><span>J&#039;aime</span></a><span id="comment-like-count-166" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?replytocom=166#respond' data-commentid="166" data-postid="307" data-belowelement="div-comment-166" data-respondelement="respond" aria-label='Répondre à Waldo'><span class="reply-link">Répondre<i class="fa fa-reply space-left"></i></span></a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-173" class="comment odd alt thread-odd thread-alt depth-1 parent highlander-comment">
+			<article id="div-comment-173" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/f207fdf14e81b3de3f403c28d55e742c?s=50&#038;d=identicon&#038;r=G' class='avatar avatar-50' height='50' width='50' />						<b class="fn">ancellin</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/#comment-173">
+							<time datetime="2015-07-28T14:20:37+01:00">
+								28 juillet 2015 à 14 h 20 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Ce que je lis là me fais peur.. Depuis mon adolescence, j&rsquo;ai des règles ultra douloureuses, mal aux ovaires, au bassin, aux reins, à la vessie, en j&rsquo;ai du mal à rester debout tellement que la douleur est intense. J&rsquo;ai souvent mal 1 semaine avant mes règles, et quelques jours après aussi, j&rsquo;ai souvent mal après ou pendant un rapport, et j&rsquo;ai les règles très abondantes&#8230; juste une douleur que je ne comprends pas durant ce cycle, c&rsquo;est celle au niveau des intestins, ça fait tellement mal que je redoute le moment où faut aller aux toilettes&#8230;. vu les symptômes décrit, ça ressemble à ce que j&rsquo;ai</p>
+<p id="comment-like-173" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?like_comment=173&#038;_wpnonce=05036b68f5" class="comment-like-link needs-login" rel="nofollow" data-blog="93438561"><span>J&#039;aime</span></a><span id="comment-like-count-173" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?replytocom=173#respond' data-commentid="173" data-postid="307" data-belowelement="div-comment-173" data-respondelement="respond" aria-label='Répondre à ancellin'><span class="reply-link">Répondre<i class="fa fa-reply space-left"></i></span></a></div>			</article><!-- .comment-body -->
+		<ul class="children">
+		<li id="comment-174" class="comment byuser comment-author-jackxparker bypostauthor even depth-2 parent highlander-comment">
+			<article id="div-comment-174" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/0f9d1d220b6369ea368b6bff6ffb44a8?s=50&#038;d=identicon&#038;r=G' class='avatar avatar-50' height='50' width='50' />						<b class="fn">Jack Parker</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/#comment-174">
+							<time datetime="2015-07-28T15:03:56+01:00">
+								28 juillet 2015 à 15 h 03 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>N&rsquo;hésite pas à aller consulter si tu as besoin d&rsquo;être rassurée ! Si tu n&rsquo;as pas de gynéco, tu peux en trouver de très chouettes ici <a href="https://gynandco.wordpress.com/" rel="nofollow ugc">https://gynandco.wordpress.com/</a></p>
+<p id="comment-like-174" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?like_comment=174&#038;_wpnonce=13b5e2fd8f" class="comment-like-link needs-login" rel="nofollow" data-blog="93438561"><span>J&#039;aime</span></a><span id="comment-like-count-174" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?replytocom=174#respond' data-commentid="174" data-postid="307" data-belowelement="div-comment-174" data-respondelement="respond" aria-label='Répondre à Jack Parker'><span class="reply-link">Répondre<i class="fa fa-reply space-left"></i></span></a></div>			</article><!-- .comment-body -->
+		<ul class="children">
+		<li id="comment-177" class="comment odd alt depth-3 highlander-comment">
+			<article id="div-comment-177" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/f207fdf14e81b3de3f403c28d55e742c?s=50&#038;d=identicon&#038;r=G' class='avatar avatar-50' height='50' width='50' />						<b class="fn">ancellin</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/#comment-177">
+							<time datetime="2015-07-28T18:25:54+01:00">
+								28 juillet 2015 à 18 h 25 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Merci beaucoup ! j&rsquo;en ai trouvé une pas loin de chez moi sur le site que tu viens de me donner, merci =)</p>
+<p id="comment-like-177" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?like_comment=177&#038;_wpnonce=cb9cf48835" class="comment-like-link needs-login" rel="nofollow" data-blog="93438561"><span>J&#039;aime</span></a><span id="comment-like-count-177" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+							</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-223" class="pingback even thread-even depth-1 highlander-comment">
+			<article id="div-comment-223" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/blavatar/52be769cc363cbce2c80b879165f7616?s=50' class='avatar avatar-50' height='50' width='50' />						<b class="fn"><a href='https://passionmenstrues.com/2015/09/18/regles-dans-l-espace/' rel='external nofollow ugc' class='url'>Que se passe-t-il quand on a ses règles dans l&rsquo;espace ? | Passion Menstrues</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/#comment-223">
+							<time datetime="2015-09-18T15:44:51+01:00">
+								18 septembre 2015 à 15 h 44 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>[&#8230;] l&rsquo;abdomen, générant douleurs et autres problèmes de santé (c&rsquo;est aussi un signe d&rsquo;endométriose, ndlr). Personne n&rsquo;a jamais expérimenté pour prouver cette théorie, et il n&rsquo;y avait [&#8230;]</p>
+<p id="comment-like-223" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?like_comment=223&#038;_wpnonce=ab2bd1a2af" class="comment-like-link needs-login" rel="nofollow" data-blog="93438561"><span>J&#039;aime</span></a><span id="comment-like-count-223" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?replytocom=223#respond' data-commentid="223" data-postid="307" data-belowelement="div-comment-223" data-respondelement="respond" aria-label='Répondre à Que se passe-t-il quand on a ses règles dans l&rsquo;espace ? | Passion Menstrues'><span class="reply-link">Répondre<i class="fa fa-reply space-left"></i></span></a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-389" class="pingback odd alt thread-odd thread-alt depth-1 highlander-comment">
+			<article id="div-comment-389" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://secure.gravatar.com/blavatar/52be769cc363cbce2c80b879165f7616?s=50' class='avatar avatar-50' height='50' width='50' />						<b class="fn"><a href='https://passionmenstrues.com/2016/03/23/cest-comme-si-on-me-transpercait-le-corps-avec-des-couteaux-moossye-27-ans-atteinte-dendometriose/' rel='external nofollow ugc' class='url'>&laquo;&nbsp;C’est comme si on me transperçait le corps avec des couteaux&nbsp;&raquo; &#8211; Moossye, 27 ans, atteinte d&rsquo;endométriose &#8211; Passion Menstrues</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/#comment-389">
+							<time datetime="2016-03-23T11:21:43+01:00">
+								23 mars 2016 à 11 h 21 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>[&#8230;] doctorante et actuellement ingénieure d’étude, a récemment découvert qu&rsquo;elle souffrait d&rsquo;endométriose &#8211; une expérience qu&rsquo;elle a d&rsquo;ailleurs racontée sur son blog, sur lequel elle [&#8230;]</p>
+<p id="comment-like-389" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?like_comment=389&#038;_wpnonce=701ef6afc5" class="comment-like-link needs-login" rel="nofollow" data-blog="93438561"><span>J&#039;aime</span></a><span id="comment-like-count-389" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?replytocom=389#respond' data-commentid="389" data-postid="307" data-belowelement="div-comment-389" data-respondelement="respond" aria-label='Répondre à &laquo;&nbsp;C’est comme si on me transperçait le corps avec des couteaux&nbsp;&raquo; &#8211; Moossye, 27 ans, atteinte d&rsquo;endométriose &#8211; Passion Menstrues'><span class="reply-link">Répondre<i class="fa fa-reply space-left"></i></span></a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-452" class="comment even thread-even depth-1 parent highlander-comment">
+			<article id="div-comment-452" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/234e6bf9440f800520d584967d5c0c01?s=50&#038;d=identicon&#038;r=G' class='avatar avatar-50' height='50' width='50' />						<b class="fn"><a href='http://losteenager.tumblr.com' rel='external nofollow ugc' class='url'>effy</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/#comment-452">
+							<time datetime="2016-04-26T04:47:12+01:00">
+								26 avril 2016 à 4 h 47 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>Je crois que je suis atteinte d&rsquo;endométriose. Je me reconnais dans tous les symptômes. Je pensais juste être une chochotte parce que ma mère et mes soeurs n&rsquo;ont pas l&rsquo;air de souffrir autant que moi durant leurs règles. Du coup je prends des Spasfon qui n&rsquo;agissent pas. Sur une semaine de règles j&rsquo;ai 3jours cloués au lit en général.</p>
+<p id="comment-like-452" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?like_comment=452&#038;_wpnonce=b25ac4704f" class="comment-like-link needs-login" rel="nofollow" data-blog="93438561"><span>J&#039;aime</span></a><span id="comment-like-count-452" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?replytocom=452#respond' data-commentid="452" data-postid="307" data-belowelement="div-comment-452" data-respondelement="respond" aria-label='Répondre à effy'><span class="reply-link">Répondre<i class="fa fa-reply space-left"></i></span></a></div>			</article><!-- .comment-body -->
+		<ul class="children">
+		<li id="comment-455" class="comment byuser comment-author-jackxparker bypostauthor odd alt depth-2 highlander-comment">
+			<article id="div-comment-455" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://0.gravatar.com/avatar/0f9d1d220b6369ea368b6bff6ffb44a8?s=50&#038;d=identicon&#038;r=G' class='avatar avatar-50' height='50' width='50' />						<b class="fn">Jack Parker</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/#comment-455">
+							<time datetime="2016-04-27T09:43:37+01:00">
+								27 avril 2016 à 9 h 43 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>N&rsquo;hésite pas à aller faire une IRM et à te faire diagnostiquer, ça peut être un chemin un peu long et chiant mais ça te changera la vie si tu es effectivement atteinte d&rsquo;endométriose. Le diagnostic est un passage important.</p>
+<p id="comment-like-455" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?like_comment=455&#038;_wpnonce=8535b0295e" class="comment-like-link needs-login" rel="nofollow" data-blog="93438561"><span>J&#039;aime</span></a><span id="comment-like-count-455" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?replytocom=455#respond' data-commentid="455" data-postid="307" data-belowelement="div-comment-455" data-respondelement="respond" aria-label='Répondre à Jack Parker'><span class="reply-link">Répondre<i class="fa fa-reply space-left"></i></span></a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li id="comment-453" class="comment even thread-odd thread-alt depth-1 highlander-comment">
+			<article id="div-comment-453" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://2.gravatar.com/avatar/234e6bf9440f800520d584967d5c0c01?s=50&#038;d=identicon&#038;r=G' class='avatar avatar-50' height='50' width='50' />						<b class="fn"><a href='http://losteenager.tumblr.com' rel='external nofollow ugc' class='url'>effy</a></b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/#comment-453">
+							<time datetime="2016-04-26T04:54:15+01:00">
+								26 avril 2016 à 4 h 54 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>PS je viens de faire un tour sur la carte des gynécos qu&rsquo;a linké Jack Parker et il n&rsquo;y en a pas dans ma ville (je suis tristesse) -oui parce que j&rsquo;ai peur d&rsquo;en prendre unE par défaut-</p>
+<p id="comment-like-453" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?like_comment=453&#038;_wpnonce=027a4b5616" class="comment-like-link needs-login" rel="nofollow" data-blog="93438561"><span>J&#039;aime</span></a><span id="comment-like-count-453" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?replytocom=453#respond' data-commentid="453" data-postid="307" data-belowelement="div-comment-453" data-respondelement="respond" aria-label='Répondre à effy'><span class="reply-link">Répondre<i class="fa fa-reply space-left"></i></span></a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		<li id="comment-1184" class="comment odd alt thread-even depth-1 highlander-comment">
+			<article id="div-comment-1184" class="comment-body">
+				<footer class="comment-meta">
+					<div class="comment-author vcard">
+						<img alt='' src='https://1.gravatar.com/avatar/1b22504150a47597a4f149d39b0120d2?s=50&#038;d=identicon&#038;r=G' class='avatar avatar-50' height='50' width='50' />						<b class="fn">Desages Isabelle</b> <span class="says">dit&nbsp;:</span>					</div><!-- .comment-author -->
+
+					<div class="comment-metadata">
+						<a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/#comment-1184">
+							<time datetime="2017-06-22T17:02:51+01:00">
+								22 juin 2017 à 17 h 02 min							</time>
+						</a>
+											</div><!-- .comment-metadata -->
+
+									</footer><!-- .comment-meta -->
+
+				<div class="comment-content">
+					<p>bonjour, je suis atteinte d&rsquo;endométriose reconnue et opérée en 2000&#8230; Jusqu&rsquo;en 2013, après avoir arrêter la pilule, toute sorte de médoc, avoir une alimentation simple, fait maison et alcalinisante, je n&rsquo;avais plus de symptômes&#8230; c&rsquo;est à la suite d&rsquo;un choc post-traumatique que les symptômes sont revenues&#8230; Aujourd&rsquo;hui, je teste des extraits de plantes, la méditation-relaxante, les étirements, l’auto-massage du ventre, les huiles essentielles, la bouillotte et je m&rsquo;éloigne des situation stressante&#8230; les douleurs commence à diminuer&#8230; a suivre</p>
+<p id="comment-like-1184" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?like_comment=1184&#038;_wpnonce=7e64870dfd" class="comment-like-link needs-login" rel="nofollow" data-blog="93438561"><span>J&#039;aime</span></a><span id="comment-like-count-1184" class="comment-like-feedback">J&#039;aime</span></p>
+				</div><!-- .comment-content -->
+
+				<div class="reply"><a rel='nofollow' class='comment-reply-link' href='https://passionmenstrues.com/2015/07/13/endometriose-interview-medecin/?replytocom=1184#respond' data-commentid="1184" data-postid="307" data-belowelement="div-comment-1184" data-respondelement="respond" aria-label='Répondre à Desages Isabelle'><span class="reply-link">Répondre<i class="fa fa-reply space-left"></i></span></a></div>			</article><!-- .comment-body -->
+		</li><!-- #comment-## -->
+		</ol><!-- .comment-list -->
+
+		
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Votre commentaire <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2015/07/13/endometriose-interview-medecin/#respond" style="display:none;">Annuler la réponse.</a></small></h3><form action="https://passionmenstrues.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate><input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="647d1c6fe3" /><input type="hidden" name="_wp_http_referer" value="/2015/07/13/endometriose-interview-medecin/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Entrez votre commentaire...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Entrez votre commentaire..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+	<div id="comment-form-nascar">
+		<p>Entrez vos coordonnées ci-dessous ou cliquez sur une icône pour vous connecter:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" class="nascar-signin-link"
+                   title="Connexion avec Visiteur">
+									</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" class="nascar-signin-link"
+                   title="Connexion avec WordPress.com">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" class="nascar-signin-link"
+                   title="Connexion avec Twitter">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" class="nascar-signin-link"
+                   title="Connexion avec Facebook">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg>				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">E-mail <span class="required">(obligatoire)</span> <span class="nopublish">(adresse strictement confidentielle)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Nom <span class="required">(obligatoire)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Site web</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url" value="" /></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Logo WordPress.com" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+						<p class="comment-form-posting-as pa-wordpress">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte WordPress.com.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Photo Google" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+						<p class="comment-form-posting-as pa-googleplus">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Google.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" x="0px" y="0px" viewBox="0 0 60 60" ><path fill="#519bf7" d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" /><path fill="#3db366" d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" /><path fill="#fdc600" d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" /><path fill="#f15b44" d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" /></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Image Twitter" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+						<p class="comment-form-posting-as pa-twitter">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Twitter.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Photo Facebook" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+						<p class="comment-form-posting-as pa-facebook">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Facebook.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Annuler</a></div>
+		<p>Connexion à %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Avertissez-moi par e-mail des nouveaux commentaires.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Avertissez-moi par e-mail des nouveaux articles.</label></p></div>
+
+
+
+
+<p class="form-submit"><input name="submit" type="submit" id="comment-submit" class="submit" value="Laisser un commentaire" /> <input type='hidden' name='comment_post_ID' value='307' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="3a50d9ea74" /></p>
+<input type="hidden" name="genseq" value="1589683785" />
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="169"/></p></form>	</div><!-- #respond -->
+	<div style="clear: both"></div>
+</div><!-- #comments -->
+
+		
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+
+<div id="secondary" class="widget-area" role="complementary">
+				<div id="atatags-934385613-5ec0a6495de36"></div>
+			
+			<script>
+				__ATA.cmd.push(function() {
+					__ATA.initDynamicSlot({
+						id: 'atatags-934385613-5ec0a6495de36',
+						location: 140,
+						formFactor: '003',
+						label: {
+							text: 'Publicités',
+						},
+						creative: {
+							reportAd: {
+								text: 'Report this Ad',
+							},
+							privacySettings: {
+								text: 'Paramètres de confidentialité',
+							}
+						}
+					});
+				});
+			</script><aside id="text-3" class="widget widget_text"><h2 class="widget-title">Passion quoi pardon ?</h2>			<div class="textwidget"><p><IMG SRC="https://passionmenstrues.files.wordpress.com/2015/08/300.jpg" ALT="Starflower"><br />
+Passion Menstrues est un blog qui parle, on s'en doutait, des règles... et d'autres histoires de chatte(s).</p>
+<p>Pour abattre une bonne fois pour toutes les tabous qui pèsent encore trop lourd sur tout ça alors que bon, franchement, y a pas de quoi fouetter un chat.</p>
+<p>Si vous voulez afficher votre amour pour le blog, rendez-vous sur <a href="https://shop.spreadshirt.fr/passionmenstrues/"> LE SHOP PASSION MENSTRUES !</a></p>
+<p>(Si vous aimez Passion Menstrues et que vous souhaitez me soutenir et m'encourager, vous pouvez contribuer à<a href="https://www.tipeee.com/soutenez-jack-parker"> ma petite cagnotte sur Tipeee</a> !)</p>
+<p>La bannière est l'oeuvre du talentueux <a href="http://petitsmensonges.canalblog.com">Mr. Q</a>. </p>
+</div>
+		</aside><aside id="media_image-2" class="widget widget_media_image"><h2 class="widget-title">LE LIVRE OFFICIEL DE PASSION MENSTRUES !</h2><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="http://amzn.to/2ogaE6F"><img class="image alignnone" src="https://images-na.ssl-images-amazon.com/images/I/51PpPOoNqLL._SX305_BO1,204,203,200_.jpg" alt="" width="307" height="499" /></a></aside><aside id="twitter_timeline-3" class="widget widget_twitter_timeline"><h2 class="widget-title">Suivons-nous</h2><a class="twitter-timeline" data-height="400" data-theme="light" data-border-color="#e8e8e8" data-lang="FR" data-partner="jetpack" data-widget-id="621689212983738368" href="https://twitter.com/621689212983738368">Mes Tweets</a></aside><aside id="facebook-likebox-3" class="widget widget_facebook_likebox"><h2 class="widget-title"><a href="https://www.facebook.com/passionmenstrues">Aimons-nous</a></h2>		<div id="fb-root"></div>
+		<div class="fb-page" data-href="https://www.facebook.com/passionmenstrues" data-width="340"  data-height="432" data-hide-cover="false" data-show-facepile="true" data-tabs="false" data-hide-cta="false" data-small-header="false">
+		<div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/passionmenstrues"><a href="https://www.facebook.com/passionmenstrues">Aimons-nous</a></blockquote></div>
+		</div>
+		</aside><aside id="categories-5" class="widget widget_categories"><h2 class="widget-title">Catégories</h2>		<ul>
+				<li class="cat-item cat-item-30743"><a href="https://passionmenstrues.com/category/actu/">Actu</a>
+</li>
+	<li class="cat-item cat-item-8021"><a href="https://passionmenstrues.com/category/annonces/">Annonces</a>
+</li>
+	<li class="cat-item cat-item-177"><a href="https://passionmenstrues.com/category/art/">Art</a>
+</li>
+	<li class="cat-item cat-item-57226"><a href="https://passionmenstrues.com/category/autour-du-monde/">Autour du Monde</a>
+</li>
+	<li class="cat-item cat-item-48979"><a href="https://passionmenstrues.com/category/cinema-television/">Cinéma &amp; Télévision</a>
+</li>
+	<li class="cat-item cat-item-11306"><a href="https://passionmenstrues.com/category/conseils-astuces/">Conseils &amp; Astuces</a>
+</li>
+	<li class="cat-item cat-item-197167942"><a href="https://passionmenstrues.com/category/histoire-sciences/">Histoire &amp; Sciences</a>
+</li>
+	<li class="cat-item cat-item-831"><a href="https://passionmenstrues.com/category/interviews/">Interviews</a>
+</li>
+	<li class="cat-item cat-item-366402422"><a href="https://passionmenstrues.com/category/lache-tes-euros/">Lâche tes euros</a>
+</li>
+	<li class="cat-item cat-item-481599601"><a href="https://passionmenstrues.com/category/les-regles-au-quotidien/">Les règles au quotidien</a>
+</li>
+	<li class="cat-item cat-item-373927011"><a href="https://passionmenstrues.com/category/menstruosites/">Menstruosités</a>
+</li>
+	<li class="cat-item cat-item-6460"><a href="https://passionmenstrues.com/category/musique/">Musique</a>
+</li>
+	<li class="cat-item cat-item-6325"><a href="https://passionmenstrues.com/category/non-classe/">Non classé</a>
+</li>
+	<li class="cat-item cat-item-474163156"><a href="https://passionmenstrues.com/category/passion-teucha/">Passion Teucha</a>
+</li>
+	<li class="cat-item cat-item-25921"><a href="https://passionmenstrues.com/category/sante/">Santé</a>
+</li>
+	<li class="cat-item cat-item-104578"><a href="https://passionmenstrues.com/category/temoignages/">Témoignages</a>
+</li>
+	<li class="cat-item cat-item-1149"><a href="https://passionmenstrues.com/category/videos/">Vidéos</a>
+</li>
+		</ul>
+			</aside><aside id="text-6" class="widget widget_text"><h2 class="widget-title">La Playlist Passion Menstrues</h2>			<div class="textwidget"><iframe src="https://embed.spotify.com/?uri=spotify%3Auser%3Ajackx%3Aplaylist%3A58ZP8nv7hFqIhTPPfiwwgm" style="display:block; margin:0 auto; width:100%; height:380px;" frameborder="0" allowtransparency="true"></iframe></div>
+		</aside><aside id="search-5" class="widget widget_search"><form role="search" method="get" class="search-form" action="https://passionmenstrues.com/">
+				<label>
+					<span class="screen-reader-text">Rechercher&nbsp;:</span>
+					<input type="search" class="search-field" placeholder="Recherche&hellip;" value="" name="s" />
+				</label>
+				<input type="submit" class="search-submit" value="Rechercher" />
+			</form></aside><aside id="rss_links-3" class="widget widget_rss_links"><h2 class="widget-title">Pour ne rien rater</h2><ul><li><a href="https://passionmenstrues.com/feed/" title="S&rsquo;abonner à Articles">RSS - Articles</a></li><li><a href="https://passionmenstrues.com/comments/feed/" title="S&rsquo;abonner à Commentaires">RSS - Commentaires</a></li></ul>
+</aside><aside id="text-4" class="widget widget_text">			<div class="textwidget"><a href="http://www.hellocoton.fr/mapage/passionmenstrues" title="Suivez-moi sur Hellocoton"><img src="https://i0.wp.com/img.hellocoton.fr/fr/badges/badge-03-125x70.png" alt="Suivez-moi sur Hellocoton" border="0" /></a><div style="font-size:10px;color:#888;text-decoration:none;clear:both;padding:5px;text-align:left;">Retrouvez <a href="http://www.hellocoton.fr/mapage/passionmenstrues" style="color:#444;text-decoration:none;">passionmenstrues</a> sur <a href="http://www.hellocoton.fr/" style="color:#444;text-decoration:none;">Hellocoton</a></div></div>
+		</aside>			<div id="atatags-934385613-5ec0a6495f743"></div>
+			
+			<script>
+				__ATA.cmd.push(function() {
+					__ATA.initDynamicSlot({
+						id: 'atatags-934385613-5ec0a6495f743',
+						location: 140,
+						formFactor: '003',
+						label: {
+							text: 'Publicités',
+						},
+						creative: {
+							reportAd: {
+								text: 'Report this Ad',
+							},
+							privacySettings: {
+								text: 'Paramètres de confidentialité',
+							}
+						}
+					});
+				});
+			</script></div><!-- #secondary -->
+
+	</div><!-- #content -->
+
+	<footer id="colophon" class="site-footer" role="contentinfo">
+
+		
+		<div class="site-info small-part">
+			<a href="https://wordpress.com/?ref=footer_website" rel="nofollow">Créez un site Web ou un blog gratuitement sur WordPress.com.</a>
+			
+					</div><!-- .site-info -->
+	</footer><!-- #colophon -->
+</div><!-- #page -->
+<a href="#top" class="to-top"><i class="fa fa-angle-up fa-lg"><span class="screen-reader-text">Revenir en haut</span></i></a>
+<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202020y'></script>
+<script>
+var WPGroHo = {"my_hash":""};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-fa29778d6c084bab635cc485c260fa0e">
+	</div>
+	<div class="grofile-hash-map-b97428963481ef926b1e219f6111800c">
+	</div>
+	<div class="grofile-hash-map-e4d7632c048f31fabcd7a5e48f169377">
+	</div>
+	<div class="grofile-hash-map-42cc6628ea8564b024fb2fb141f07078">
+	</div>
+	<div class="grofile-hash-map-08cac858f6553d70cb571585413234ce">
+	</div>
+	<div class="grofile-hash-map-f207fdf14e81b3de3f403c28d55e742c">
+	</div>
+	<div class="grofile-hash-map-0f9d1d220b6369ea368b6bff6ffb44a8">
+	</div>
+	<div class="grofile-hash-map-234e6bf9440f800520d584967d5c0c01">
+	</div>
+	<div class="grofile-hash-map-1b22504150a47597a4f149d39b0120d2">
+	</div>
+	</div>
+<script>
+var HighlanderComments = {"loggingInText":"Connexion\u2026","submittingText":"Publication d\u2019un Commentaire\u2026","postCommentText":"Laisser un commentaire","connectingToText":"Connexion \u00e0 %s","commentingAsText":"%1$s: Vous commentez \u00e0 l\u2019aide de votre compte %2$s.","logoutText":"Se d\u00e9connecter","loginText":"Se connecter","connectURL":"https:\/\/passionmenstrues.wordpress.com\/public.api\/connect\/?action=request&domain=passionmenstrues.com","logoutURL":"https:\/\/passionmenstrues.wordpress.com\/wp-login.php?action=logout&_wpnonce=f37b16d984","homeURL":"https:\/\/passionmenstrues.com\/","postID":"307","gravDefault":"identicon","enterACommentError":"Entrez un commentaire","enterEmailError":"Veuillez entrer votre adresse mail","invalidEmailError":"Adresse email invalide","enterAuthorError":"Veuillez entrer votre nom","gravatarFromEmail":"L\u2019image s\u2019affiche lorsque vous postez un commentaire. Cliquez pour personnaliser.","logInToExternalAccount":"Connectez-vous pour utiliser les informations li\u00e9es \u00e0 un de ces comptes:","change":"Changer","changeAccount":"Changer de compte","comment_registration":"0","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1573483029j'></script>
+			<script type="text/javascript">
+			( function( $ ) {
+				$( document.body ).on( 'post-load', function () {
+					if ( typeof __ATA.insertInlineAds === 'function' ) {
+						__ATA.insertInlineAds();
+					}
+				} );
+			} )( jQuery );
+			</script>
+	<div id="carousel-reblog-box">
+		<form action="#" name="carousel-reblog">
+			<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Ajoutez votre grain de sel personnel... (facultatif)"></textarea>
+			<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Publier sur</label>
+			<select name="carousel-reblog-to-blog-id" id="carousel-reblog-to-blog-id">
+						</select>
+
+			<div class="submit">
+				<span class="canceltext"><a href="#" class="cancel">Annuler</a></span>
+				<input type="submit" name="carousel-reblog-submit" class="button" id="carousel-reblog-submit" value="Reblog Article" />
+				<input type="hidden" id="carousel-reblog-blog-id" value="93438561" />
+				<input type="hidden" id="carousel-reblog-blog-url" value="https://passionmenstrues.com" />
+				<input type="hidden" id="carousel-reblog-blog-title" value="Passion Menstrues" />
+				<input type="hidden" id="carousel-reblog-post-url" value="" />
+				<input type="hidden" id="carousel-reblog-post-title" value="" />
+			</div>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="9cf7ca1c98" /><input type="hidden" name="_wp_http_referer" value="/2015/07/13/endometriose-interview-medecin/" />		</form>
+
+		<div class="arrow"></div>
+	</div>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/passionmenstrues.com\/2015\/07\/13\/endometriose-interview-medecin\/":307};
+	</script>
+				<link rel='stylesheet' id='all-css-0-3' href='https://s0.wp.com/wp-content/mu-plugins/carousel/jetpack-carousel.css?m=1563361695h&cssminify=yes' type='text/css' media='all' />
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyFUEFSwzAM/BCOCKSQHpi+JdhqKkeR3chOCK+vC+mhwAwnabSr3ZVgicYGSSgJvILDmSzGj8rrA9xDMWgaUbXr8Q/UnzNO61Yqkplw+ZfmMcXODmZCpc9fqmM2kXNPosA0oEJZynjqxDFONzKJ5ewKeA1PmmBGcWG6QjHweiTmaiT5qX0TPmZmo5TQoKNE0m+WUD/W7evzy74BwUW/Ur5zsMPmUvpCLR/R77HZ7j2Mb/Wu3T+1TVM3/gLyqYDg'></script>
+<script type='text/javascript'>
+( 'fetch' in window ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?m=1573572739h&#038;ver=3.0.0"></scr' + 'ipt>' );( document.contains ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?m=1540208548h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?m=1585663916h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?m=1585663916h&#038;ver=3.6.4"></scr' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?m=1550600082h&#038;ver=3.0.12"></scr' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?m=1540208548h&#038;ver=2.0.2"></scr' + 'ipt>' );
+( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-url.min.7490158b.js?m=1588209800h&#038;ver=3.6.4"></scr' + 'ipt>' );
+( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-dom-rect.7e21c103.js?m=1588209800h&#038;ver=3.42.0"></scr' + 'ipt>' );
+</script>
+<script src='https://s0.wp.com/wp-includes/js/dist/vendor/lodash.min.js?m=1573572739h&#038;ver=4.17.15'></script>
+<script>
+window.lodash = _.noConflict();
+</script>
+<script>
+var comment_like_text = {"loading":"chargement\u2026"};
+</script>
+<script>
+var jpfbembed = {"appid":"249643311490","locale":"fr_FR"};
+</script>
+<script>
+var actionbardata = {"siteID":"93438561","siteName":"Passion Menstrues","siteURL":"https:\/\/passionmenstrues.com","icon":"<img alt='' src='https:\/\/secure.gravatar.com\/blavatar\/52be769cc363cbce2c80b879165f7616?s=50&d=https%3A%2F%2Fs0.wp.com%2Fi%2Flogo%2Fwpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/nucleare","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fpassionmenstrues.com%2F2015%2F07%2F13%2Fendometriose-interview-medecin%2F&signup_flow=account&domain=passionmenstrues.com","themeURL":"https:\/\/wordpress.com\/theme\/nucleare\/","xhrURL":"https:\/\/passionmenstrues.com\/wp-admin\/admin-ajax.php","nonce":"08de5007a5","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"ec8cc61f8f\" \/>","referer":"https:\/\/passionmenstrues.com\/2015\/07\/13\/endometriose-interview-medecin\/","canFollow":"1","feedID":"35883782","statusMessage":"","customizeLink":"https:\/\/passionmenstrues.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fpassionmenstrues.wordpress.com%2F2015%2F07%2F13%2Fendometriose-interview-medecin%2F","postID":"307","shortlink":"https:\/\/wp.me\/p6k3Dz-4X","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/passionmenstrues.com\/307","statsLink":"https:\/\/wordpress.com\/stats\/post\/307\/passionmenstrues.com","i18n":{"view":"Afficher le site","follow":"Suivre","following":"Abonn\u00e9","edit":"Modifier","login":"Connexion","signup":"S'inscrire","customize":"Personnaliser","report":"Signaler ce contenu","themeInfo":"Obtenir le th\u00e8me: Nucleare","shortlink":"Copier shortlink","copied":"Copi\u00e9","followedText":"Les nouveaux articles de ce site appara\u00eetront d\u00e9sormais dans votre <a href=\"https:\/\/wordpress.com\/\">Lecteur<\/a>","foldBar":"R\u00e9duire cette barre","unfoldBar":"\u00c9tendre cette barre","editSubs":"G\u00e9rer les abonnements","viewReader":"Voir le site dans le Lecteur","viewReadPost":"Voir l\u2019article dans le Lecteur","subscribe":"M\u2019inscrire","enterEmail":"Entrez votre adresse e-mail","followers":"Rejoignez 243 autres abonn\u00e9s","alreadyUser":"Vous disposez d\u00e9j\u00e0 d\u02bcun compte WordPress ? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fpassionmenstrues.com%2F2015%2F07%2F13%2Fendometriose-interview-medecin%2F&signup_flow=account&domain=passionmenstrues.com\">Connectez-vous maintenant.<\/a>","stats":"Statistiques"}};
+</script>
+<script>
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"fr","ajaxurl":"https:\/\/passionmenstrues.com\/wp-admin\/admin-ajax.php","nonce":"e1e93fd6ec","display_exif":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Commentaire","post_comment":"Laisser un commentaire","write_comment":"\u00c9crire un commentaire...","loading_comments":"Chargement des commentaires\u2026","download_original":"Afficher dans sa taille r\u00e9elle <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>.","no_comment_text":"Veuillez ajouter du contenu \u00e0 votre commentaire.","no_comment_email":"Merci de renseigner une adresse e-mail.","no_comment_author":"Merci de renseigner votre nom.","comment_post_error":"Une erreur s'est produite \u00e0 la publication de votre commentaire. Veuillez nous en excuser, et r\u00e9essayer dans quelques instants.","comment_approved":"Votre commentaire a \u00e9t\u00e9 approuv\u00e9.","comment_unapproved":"Votre commentaire est en attente de validation.","camera":"Appareil photo","aperture":"Ouverture","shutter_speed":"Vitesse d'obturation","focal_length":"Focale","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/passionmenstrues.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fpassionmenstrues.com%2F2015%2F07%2F13%2Fendometriose-interview-medecin%2F","blog_id":"93438561","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">E-mail (requis)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Nom (requis)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Site web<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogu\u00e9","reblog_add_thoughts":"Ajoutez votre grain de sel personnel... (facultatif)","reblogging":"Reblogging...","post_reblog":"Relais d\u2019article","stats_query_args":"blog=93438561&v=wpcom&tz=1&user_id=0&subd=passionmenstrues","is_public":"1","reblog_enabled":""};
+</script>
+<script>
+var sharing_js_options = {"lang":"fr","counts":"1","is_stats_active":"1"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyVU1ty2zAMvFAhWI3TKh+dHqVDkZACia8SpFXfPvQ4ch0no7G/CC6weCxIXCLo4DP5jNGWkb3gWOq1pzRWTyLsml2zw76wNcht55G9oX/NJN/wMbIJDhIpc9zOMBRrQTgTkOHMfoSzB9td2/18+vGyR0+LRKVn6G3Qs6BhyahVCkXInkE4MC23JVyBtYoOzlUILM8kOAla7lEWjvQI6QNwS8yv5GpYLD36oi2pqkflrPa94erAo8oc/J0EmTnWhvwMQ9BFYOCL1Oy1LeZj64miPTaOP6W/mnthM1IWpFK9YWYCqxbM5KJVmW7wjTwT5dPa8E9tBAelqa8sINeTuZeVF86ZEmR2VIfc2pYydSroVUKnpHKqBeFAKfFJggv2YIacai+fdn1N0qdlnUgX6yv9Jf6X/Bqf/hZKx/ejuY766kG+v/lVI1iBrf5mFkcZnurHPC8iJLcRH4NkGKzihPKqUv2Q61lJv92v9rl7+d7t9+1+egNrW5k6'></script>
+<script type='text/javascript'>
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<iframe src='https://widgets.wp.com/likes/master.html?ver=20190321#ver=20190321&amp;lang=fr' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+		<div id='likes-other-gravatars'><div class="likes-text"><span>%d</span> blogueurs aiment cette page :</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+<script src="//stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'93438561','blog_tz':'1','user_lang':'fr','blog_lang':'fr','user_id':'0'}]);
+_stq.push(['view', {'blog':'93438561','v':'wpcom','tz':'1','user_id':'0','post':'307','subd':'passionmenstrues'}]);
+_stq.push(['extra', {'crypt':'UE5tW3cvZGRjeGRjVnhSRENOYWZoOWVZfjRwPW55VStjOFR4Y29bLGRFVDBIbDZWNjRmYkRTU0dlZ2JXZTJfWFRjeW1LVVJKLFRUNml5S2RNOWRTJld2T2U3Ymo3REo3Q0c9VT0mTFUsJXxxOWl8ZF1vV2EtZWlzL25DZXxBMEdtYWQ3fDglXTRBSHhZM3BseS0zbEdRLHldYls2UXo0NFMmeHV0bHBsVUo5OHIyNEd5emw0eFFyZmZUQmlMOXZrMHpKLDkycnkxTWlkZm01NU85L0tYSEk3UDJKZ2IsQmxTTTNGancuaDd2MUlHdiVSUEU3fjdLdF1GSWFmX2czUQ=='}]);
+_stq.push([ 'clickTrackerInit', '93438561', '307' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>

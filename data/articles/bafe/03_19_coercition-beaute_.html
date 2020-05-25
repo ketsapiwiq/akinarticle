@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="https://antisexisme.net/xmlrpc.php" />
+<!--[if lt IE 9]>
+<script src="https://s0.wp.com/wp-content/themes/pub/misty-lake/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+
+<title>La coercition à la beauté &#8211; Sexisme et Sciences humaines &#8211;  Féminisme</title>
+<meta name="google-site-verification" content="dDACYGJrsQEvuv-oy7_QanXA08avLRLBt-o49nmhsyw" />
+<meta name="msvalidate.01" content="71E10DBC12B1F5E339D377CAC0E2DFFB" />
+<meta name="yandex-verification" content="447d4b39d7c45d60" />
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9hbnRpc2V4aXNtZS5uZXQ%3D"
+		+ "&wpcomid=20930585"
+		+ "&time=1589683566";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//antisexisme.wordpress.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.pubmine.com' />
+<link rel='dns-prefetch' href='//x.bidswitch.net' />
+<link rel='dns-prefetch' href='//static.criteo.net' />
+<link rel='dns-prefetch' href='//ib.adnxs.com' />
+<link rel='dns-prefetch' href='//aax.amazon-adsystem.com' />
+<link rel='dns-prefetch' href='//bidder.criteo.com' />
+<link rel='dns-prefetch' href='//cas.criteo.com' />
+<link rel='dns-prefetch' href='//gum.criteo.com' />
+<link rel='dns-prefetch' href='//ads.pubmatic.com' />
+<link rel='dns-prefetch' href='//gads.pubmatic.com' />
+<link rel='dns-prefetch' href='//tpc.googlesyndication.com' />
+<link rel='dns-prefetch' href='//ad.doubleclick.net' />
+<link rel='dns-prefetch' href='//googleads.g.doubleclick.net' />
+<link rel='dns-prefetch' href='//www.googletagservices.com' />
+<link rel='dns-prefetch' href='//cdn.switchadhub.com' />
+<link rel='dns-prefetch' href='//delivery.g.switchadhub.com' />
+<link rel='dns-prefetch' href='//delivery.swid.switchadhub.com' />
+<link rel='dns-prefetch' href='//a.teads.tv' />
+<link rel='dns-prefetch' href='//prebid.media.net' />
+<link rel='dns-prefetch' href='//adserver-us.adtech.advertising.com' />
+<link rel='dns-prefetch' href='//fastlane.rubiconproject.com' />
+<link rel='dns-prefetch' href='//prebid-server.rubiconproject.com' />
+<link rel='dns-prefetch' href='//hb-api.omnitagjs.com' />
+<link rel='dns-prefetch' href='//mtrx.go.sonobi.com' />
+<link rel='dns-prefetch' href='//apex.go.sonobi.com' />
+<link rel='dns-prefetch' href='//u.openx.net' />
+<link rel="alternate" type="application/rss+xml" title="Sexisme et Sciences humaines -  Féminisme &raquo; Flux" href="https://antisexisme.net/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Sexisme et Sciences humaines -  Féminisme &raquo; Flux des commentaires" href="https://antisexisme.net/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Sexisme et Sciences humaines -  Féminisme &raquo; La coercition à la&nbsp;beauté Flux des commentaires" href="https://antisexisme.net/2017/03/19/coercition-beaute/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s0.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.1"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s0.wp.com/_static/??-eJytU1tywyAMvFAxceK2zkcnZwGjUBJhGAR1ffviR5pM0nEzbf4ssauVVxLvPGtcG6GN3CbmMWnTEu984ywjaxD6q6hoiJ74BU2i02eiC0oo4hqdFHiDvZAIgCKCYt5RvIqWaGiOQPwA0YvmyMboBn7C6pRDCUHnlwC8LlbFistkUA1Nj3QZROg5xR7hjjIj60Jd9C5FpoNRfy0RRDStpl/o+4TIyERgoMxAmO3g5aqsXzcv24q30NFYcRZQhk6jGSyd0uzDQPdwlUYElwjwQRo+gDXJflOXrWnc3EpZrDd5vFNHc5L929bJPMxFp7+b6l9nlxZ2WL2ct17EAWGzlAAEm2FLtM4oDfkwMmT+ZhE+lynjmUqZDSRiJxvje9a650YWlnt+2gf3Q9OTAPdJcpsd6TPzCOep7exb+Vxv13VVldXhC+NOprc=?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<!--[if IE 8]>
+<link rel='stylesheet' id='mistylake-ie-css'  href='https://s0.wp.com/wp-content/themes/pub/misty-lake/ie.css?m=1377549400h&#038;ver=5.4.1' media='all' />
+<![endif]-->
+<link crossorigin="anonymous" rel='stylesheet' id='mistylake-open-sans-css'  href='https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic,700,700italic&#038;subset=latin,latin-ext' media='all' />
+<link crossorigin="anonymous" rel='stylesheet' id='mistylake-droid-serif-css'  href='https://fonts.googleapis.com/css?family=Droid+Serif%3A400%2C400italic%2C400bold&#038;subset=latin&#038;ver=5.4.1' media='all' />
+<link rel='stylesheet' id='all-css-6-1' href='https://s0.wp.com/_static/??-eJyFjEEOwjAMBD+EsQqlnBBvSYMbhTpxVTtK+T3hBpdy29HuLNYFvGSjbJgKLFxCzIo1PgKZIpXWyhwJ2FU0Sgs7I0W1F9PRqx5w/2Bynsb2ABznFrb/ZiABFu8sSv4BmNjFdU9daWQJLQZsqy/8SPd06y6n63Duu354vgHjwVyT?cssminify=yes' type='text/css' media='all' />
+<link rel='stylesheet' id='print-css-7-1' href='https://s0.wp.com/wp-content/mu-plugins/global-print/global-print.css?m=1465851035h&cssminify=yes' type='text/css' media='print' />
+<link rel='stylesheet' id='all-css-8-1' href='https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?m=1560469195h&cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-10-1' href='https://s0.wp.com/_static/??-eJxti0EKgCAQAD+ULWGJHaK3mJgaqyut0fejQ4eo0zAwA2cRlnJ1uUI6RMHDx8xQiKtY0cQdOJg9Zv+wtcwN/F9MNhoUSJ7e8plqcMkxhB480mLwDuY0dYMepVJaqu0CZXY33g==?cssminify=yes' type='text/css' media='all' />
+<script>
+var related_posts_js_options = {"post_heading":"h4"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJx9jMEOwjAMQ3+IruzABgfEt4wtVKmatDSNpv39ggSXHZAsWbae7dfikOekC4iPprdC3b7WRTn5f4AjDHVq0BHyD54zN+D2YSk/MYFTgToF6+zolY8cqStJA7L4CsnOFleytEOy1YPu/WXsb+dxGK5xB1+BRFU='></script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://antisexisme.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s0.wp.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Des nouvelles : l&rsquo;écriture d&rsquo;un livre sur la culture du&nbsp;viol' href='https://antisexisme.net/2017/03/07/projet-livre/' />
+<link rel='next' title='L’impuissance comme idéal de beauté des femmes – Universalité des idéaux de faiblesse&nbsp;1' href='https://antisexisme.net/2017/04/06/universalite-1/' />
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://antisexisme.net/2017/03/19/coercition-beaute/" />
+<link rel='shortlink' href='https://wp.me/p1pP05-AS' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fantisexisme.net%2F2017%2F03%2F19%2Fcoercition-beaute%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fantisexisme.net%2F2017%2F03%2F19%2Fcoercition-beaute%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="La coercition à la beauté" />
+<meta property="og:url" content="https://antisexisme.net/2017/03/19/coercition-beaute/" />
+<meta property="og:description" content="Faut-il opposer les cultures occidentales aux autres cultures ? Partie 1 : Introduction Partie 2 : Un beau corps féminin est un corps qui n’occupe pas trop d’espace Partie 3 : Un beau corps féminin…" />
+<meta property="article:published_time" content="2017-03-19T09:00:00+00:00" />
+<meta property="article:modified_time" content="2017-05-29T12:26:31+00:00" />
+<meta property="og:site_name" content="Sexisme et Sciences humaines -  Féminisme" />
+<meta property="og:image" content="https://antisexisme.files.wordpress.com/2017/03/infibulation-1-300x208.jpg" />
+<meta property="og:image:width" content="300" />
+<meta property="og:image:height" content="208" />
+<meta property="og:image:alt" content="Pieds bandés Li Kunwu" />
+<meta property="og:locale" content="fr_FR" />
+<meta name="twitter:creator" content="@anti_sexism" />
+<meta name="twitter:site" content="@anti_sexism" />
+<meta name="twitter:text:title" content="La coercition à la&nbsp;beauté" />
+<meta name="twitter:image" content="https://antisexisme.files.wordpress.com/2017/03/zoom-minmin-min.jpg?w=640" />
+<meta name="twitter:image:alt" content="Pieds bandés Li Kunwu" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/e776828ff2f5e62ad07e68335ddca469?s=32" sizes="16x16" />
+<link rel="icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/e776828ff2f5e62ad07e68335ddca469?s=32" sizes="16x16" />
+<link rel="apple-touch-icon" href="https://secure.gravatar.com/blavatar/e776828ff2f5e62ad07e68335ddca469?s=114" />
+<link rel='openid.server' href='https://antisexisme.net/?openidserver=1' />
+<link rel='openid.delegate' href='https://antisexisme.net/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://antisexisme.net/osd.xml" title="Sexisme et Sciences humaines -  Féminisme" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<meta name="theme-color" content="#f3f3eb" />
+<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="Sexisme et Sciences humaines -  Féminisme" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Un blog féministe pour déceler les mécanismes sexistes qui maintiennent les inégalités entre femmes et hommes – ISSN 2430-5812" /><meta name="msapplication-task" content="name=Souscrire;action-uri=https://antisexisme.net/feed/;icon-uri=https://secure.gravatar.com/blavatar/e776828ff2f5e62ad07e68335ddca469?s=16" /><meta name="msapplication-task" content="name=Inscrivez-vous pour créer un blog gratuitement;action-uri=http://wordpress.com/signup/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Assistance WordPress.com;action-uri=http://support.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Forums WordPress.com;action-uri=http://forums.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="description" content="Faut-il opposer les cultures occidentales aux autres cultures ? Partie 1 : Introduction Partie 2 : Un beau corps féminin est un corps qui n’occupe pas trop d’espace Partie 3 : Un beau corps féminin se déplace avec difficulté Partie 4 : Un beau corps féminin est un corps à l’air jeune voire enfantin et qui est sexualisé&hellip;" />
+<style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #f3f3eb; background-image: url("https://antisexisme.files.wordpress.com/2017/04/fond3-min.jpg"); background-position: left top; background-size: auto; background-repeat: repeat; background-attachment: scroll; }
+</style>
+			<script type="text/javascript">
+
+			window.doNotSellCallback = function() {
+
+				var linkElements = [
+					'a[href="https://wordpress.com/?ref=footer_blog"]',
+					'a[href="https://wordpress.com/?ref=footer_website"]',
+					'a[href="https://wordpress.com/?ref=vertical_footer"]',
+					'a[href^="https://wordpress.com/?ref=footer_segment_"]',
+				].join(',');
+
+				var dnsLink = document.createElement( 'a' );
+				dnsLink.href = 'https://wordpress.com/advertising-program-optout';
+				dnsLink.classList.add( 'do-not-sell-link' );
+				dnsLink.rel = 'nofollow';
+				dnsLink.style.marginLeft = '0.5em';
+				dnsLink.textContent = 'Ne pas vendre mes informations personnelles.';
+
+				var creditLinks = document.querySelectorAll( linkElements );
+
+				if ( 0 === creditLinks.length ) {
+					return false;
+				}
+
+				Array.prototype.forEach.call( creditLinks, function( el ) {
+					el.insertAdjacentElement( 'afterend', dnsLink );
+				});
+
+				return true;
+			};
+
+		</script>
+				<script type="text/javascript">
+		function __ATA_CC() {var v = document.cookie.match('(^|;) ?personalized-ads-consent=([^;]*)(;|$)');return v ? 1 : 0;}
+		var __ATA_PP = { pt: 1, ht: 0, tn: 'misty-lake', amp: false, siteid: 8982, blogid: 20930585, consent: __ATA_CC() };
+		var __ATA = __ATA || {};
+		__ATA.cmd = __ATA.cmd || [];
+		__ATA.criteo = __ATA.criteo || {};
+		__ATA.criteo.cmd = __ATA.criteo.cmd || [];
+		</script>
+		<script type="text/javascript">
+		(function(){var g=Date.now||function(){return+new Date};function h(a,b){a:{for(var c=a.length,d="string"==typeof a?a.split(""):a,e=0;e<c;e++)if(e in d&&b.call(void 0,d[e],e,a)){b=e;break a}b=-1}return 0>b?null:"string"==typeof a?a.charAt(b):a[b]};function k(a,b,c){c=null!=c?"="+encodeURIComponent(String(c)):"";if(b+=c){c=a.indexOf("#");0>c&&(c=a.length);var d=a.indexOf("?");if(0>d||d>c){d=c;var e=""}else e=a.substring(d+1,c);a=[a.substr(0,d),e,a.substr(c)];c=a[1];a[1]=b?c?c+"&"+b:b:c;a=a[0]+(a[1]?"?"+a[1]:"")+a[2]}return a};var l=0;function m(a,b){var c=document.createElement("script");c.src=a;c.onload=function(){b&&b(void 0)};c.onerror=function(){b("error")};a=document.getElementsByTagName("head");var d;a&&0!==a.length?d=a[0]:d=document.documentElement;d.appendChild(c)}function n(a){var b=void 0===b?document.cookie:b;return(b=h(b.split("; "),function(c){return-1!=c.indexOf(a+"=")}))?b.split("=")[1]:""}function p(a){return"string"==typeof a&&0<a.length}
+		function r(a,b,c){b=void 0===b?"":b;c=void 0===c?".":c;var d=[];Object.keys(a).forEach(function(e){var f=a[e],q=typeof f;"object"==q&&null!=f||"function"==q?d.push(r(f,b+e+c)):null!==f&&void 0!==f&&(e=encodeURIComponent(b+e),d.push(e+"="+encodeURIComponent(f)))});return d.filter(p).join("&")}function t(a,b){a||((window.__ATA||{}).config=b.c,m(b.url))}var u=Math.floor(1E13*Math.random()),v=window.__ATA||{};window.__ATA=v;v.rid=u;v.createdAt=g();var w=window.__ATA||{},x="s.pubmine.com";
+		w&&w.serverDomain&&(x=w.serverDomain);var y="//"+x+"/conf",z=window.top===window,A=window.__ATA_PP&&window.__ATA_PP.gdpr_applies,B="boolean"===typeof A?Number(A):null,C=window.__ATA_PP||null,D=z?document.referrer?document.referrer:null:null,E=z?window.location.href:document.referrer?document.referrer:null,F,G=n("__ATA_tuuid");F=G?G:null;var H=window.innerWidth+"x"+window.innerHeight,I=n("usprivacy"),J=r({gdpr:B,pp:C,rid:u,src:D,ref:E,tuuid:F,vp:H,us_privacy:I?I:null},"",".");
+		(function(a){var b=void 0===b?"cb":b;l++;var c="callback__"+g().toString(36)+"_"+l.toString(36);a=k(a,b,c);window[c]=function(d){t(void 0,d)};m(a,function(d){d&&t(d)})})(y+"?"+J);}).call(this);
+		</script><link rel="amphtml" href="https://antisexisme.net/2017/03/19/coercition-beaute/amp/"><script type="text/javascript">
+	window.google_analytics_uacct = "UA-52447-2";
+</script>
+
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-52447-2']);
+	_gaq.push(['_gat._anonymizeIp']);
+	_gaq.push(['_setDomainName', 'none']);
+	_gaq.push(['_setAllowLinker', true]);
+	_gaq.push(['_initData']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	})();
+</script>
+</head>
+
+<body class="post-template-default single single-post postid-2286 single-format-standard custom-background customizer-styles-applied highlander-enabled highlander-light">
+<div id="page" class="hfeed site">
+		<header id="masthead" class="site-header" role="banner">
+		<div class="site-branding">
+			<h1 class="site-title"><a href="https://antisexisme.net/" title="Sexisme et Sciences humaines &#8211;  Féminisme" rel="home">Sexisme et Sciences humaines &#8211;  Féminisme</a></h1>
+			<h2 class="site-description">Un blog féministe pour déceler les mécanismes sexistes qui maintiennent les inégalités entre femmes et hommes – ISSN 2430-5812</h2>
+		</div>
+
+		<nav id="nav" role="navigation" class="site-navigation main-navigation">
+			<h1 class="assistive-text screen-reader-text">Menu</h1>
+			<div class="assistive-text skip-link screen-reader-text"><a href="#content" title="Aller au contenu principal">Aller au contenu principal</a></div>
+
+			<div class="menu-menu-1-container"><ul id="menu-menu-1" class="menu"><li id="menu-item-2033" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-2033"><a href="https://antisexisme.net/">Accueil</a></li>
+<li id="menu-item-2035" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-2035"><a href="https://antisexisme.net/articles-par-categorie/">Articles par catégorie</a>
+<ul class="sub-menu">
+	<li id="menu-item-2044" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2044"><a href="https://antisexisme.net/category/culture-du-viol/">Culture du viol</a></li>
+	<li id="menu-item-2072" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2072"><a href="https://antisexisme.net/category/mythes-sur-le-viol-2/">Mythes sur le viol</a></li>
+	<li id="menu-item-2039" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2039"><a href="https://antisexisme.net/category/objectivation-sexuelle-2/">Objectivation sexuelle</a></li>
+	<li id="menu-item-2038" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-2038"><a href="https://antisexisme.net/category/limpuissance-comme-ideal-de-beaute/">L’impuissance comme idéal de beauté</a></li>
+	<li id="menu-item-2042" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2042"><a href="https://antisexisme.net/category/attributs-du-pouvoir/">Attributs du pouvoir</a></li>
+	<li id="menu-item-2604" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2604"><a href="https://antisexisme.net/category/interactions-sexuelles-a-coercition-graduelle/">Interactions sexuelles à coercition graduelle</a></li>
+	<li id="menu-item-2043" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2043"><a href="https://antisexisme.net/category/sexualite/">Sexualité</a></li>
+	<li id="menu-item-2045" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2045"><a href="https://antisexisme.net/category/a-lecole/">A l&rsquo;école</a></li>
+	<li id="menu-item-2046" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2046"><a href="https://antisexisme.net/category/videos/">Vidéos</a></li>
+	<li id="menu-item-2047" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2047"><a href="https://antisexisme.net/category/livres/">Livres</a></li>
+</ul>
+</li>
+<li id="menu-item-2034" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2034"><a href="https://antisexisme.net/a-propos-about/">A propos</a></li>
+<li id="menu-item-2036" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2036"><a href="https://antisexisme.net/contactez-moi/">Contactez-moi !</a></li>
+<li id="menu-item-2037" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2037"><a href="https://antisexisme.net/presse/">Dans la presse</a></li>
+<li id="menu-item-2819" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2819"><a href="https://antisexisme.net/mon-livre/">Mon livre : En finir avec la culture du viol</a></li>
+</ul></div>		</nav><!-- .site-navigation .main-navigation -->
+	</header><!-- #masthead .site-header -->
+
+	<div id="main" class="site-main">
+
+					<div class="header-image">
+				<a href="https://antisexisme.net/" title="Sexisme et Sciences humaines &#8211;  Féminisme" rel="home">
+					<img src="https://antisexisme.files.wordpress.com/2017/04/cropped-headernew.jpg" width="1015" height="276" alt="" />
+				</a>
+			</div>
+		
+	<div id="primary" class="content-area">
+		<div id="content" class="site-content" role="main">
+
+		
+			
+<article id="post-2286" class="post-2286 post type-post status-publish format-standard hentry category-limpuissance-comme-ideal-de-beaute tag-excision">
+	<header class="entry-header">
+		<div class="entry-meta">
+			<a href="https://antisexisme.net/2017/03/19/coercition-beaute/" title="10 h 00 min" rel="bookmark"><time class="entry-date" datetime="2017-03-19T10:00:00+01:00" pubdate>19 mars 2017</time></a><span class="byline"> par <span class="author vcard"><a class="url fn n" href="https://antisexisme.net/author/antisexisme/" title="Voir tous les articles par antisexisme" rel="author">antisexisme</a></span></span>		</div><!-- .entry-meta -->
+		<h1 class="entry-title">La coercition à la&nbsp;beauté</h1>	</header><!-- .entry-header -->
+
+	<div class="entry-content">
+		<h4 style="text-align:justify;"><em>Faut-il opposer les cultures occidentales aux autres cultures ?</em></h4>
+<div data-shortcode="caption" id="attachment_2506" style="width: 540px" class="wp-caption aligncenter"><img aria-describedby="caption-attachment-2506" data-attachment-id="2506" data-permalink="https://antisexisme.net/2017/03/19/coercition-beaute/zoom-minmin-min/#main" data-orig-file="https://antisexisme.files.wordpress.com/2017/03/zoom-minmin-min.jpg" data-orig-size="530,510" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="zoom-minmin-min" data-image-description="&lt;p&gt;Pieds bandés Li Kunwu&lt;/p&gt;
+" data-medium-file="https://antisexisme.files.wordpress.com/2017/03/zoom-minmin-min.jpg?w=300" data-large-file="https://antisexisme.files.wordpress.com/2017/03/zoom-minmin-min.jpg?w=530" class="size-full wp-image-2506" src="https://antisexisme.files.wordpress.com/2017/03/zoom-minmin-min.jpg?w=660" alt="Pieds bandés Li Kunwu" srcset="https://antisexisme.files.wordpress.com/2017/03/zoom-minmin-min.jpg 530w, https://antisexisme.files.wordpress.com/2017/03/zoom-minmin-min.jpg?w=150 150w, https://antisexisme.files.wordpress.com/2017/03/zoom-minmin-min.jpg?w=300 300w" sizes="(max-width: 530px) 100vw, 530px"   /><p id="caption-attachment-2506" class="wp-caption-text">Extrait de la couverture des Pieds bandés, bande-dessinée de Li Kunwu</p></div>
+<p style="text-align:justify;"><a href="https://antisexisme.net/2016/01/02/impuissance-01/">Partie 1 : Introduction<br />
+</a><a href="https://antisexisme.net/2016/01/11/impuissance-02">Partie 2 : Un beau corps féminin est un corps qui n’occupe pas trop d’espace<br />
+</a><a href="https://antisexisme.net/2016/01/23/impuissance-03/">Partie 3 : Un beau corps féminin se déplace avec difficulté<br />
+</a><a href="https://antisexisme.net/2016/02/06/impuissance-04/" target="_blank" rel="noopener noreferrer">Partie 4 : Un beau corps féminin est un corps à l’air jeune voire enfantin et qui est sexualisé<br />
+</a><a href="https://antisexisme.net/2016/02/21/impuissance-05/" target="_blank" rel="noopener noreferrer">Partie 5 : Un beau corps féminin est un corps qui exprime l’abnégation – le sourire<br />
+</a><a href="https://antisexisme.net/2016/03/05/impuissance-06/">Partie 6 : Un beau corps féminin est un corps qui exprime l’abnégation – la répression des désirs<br />
+</a><a href="https://antisexisme.net/2017/03/19/douleur-physique/" target="_blank" rel="noopener noreferrer">Partie 7 : Un beau corps féminin est un corps qui exprime l’abnégation – la souffrance physique</a><strong><span style="color:#99cb00;"><br />
+</span></strong>Partie 8 : Un beau corps féminin est un corps qui exprime l’abnégation – la souffrance morale<br />
+<a href="https://antisexisme.net/2016/03/19/impuissance09/">Partie 9 : Sorcières et féministes, quelques figures de la laideur féminine<br />
+</a><a href="https://antisexisme.net/2017/04/06/universalite-1/" target="_blank" rel="noopener noreferrer">Partie 10 : Universalité des idéaux de faiblesse 1</a><br />
+<span style="color:#000000;"><a href="https://antisexisme.net/2017/04/16/beaute-universalite-2/" target="_blank" rel="noopener noreferrer">Partie 11 : Universalité des idéaux de faiblesse 2</a><br />
+Partie 12 : Conclusion<br />
+<span style="color:#99cc00;"><strong>Supplément : la coercition à la beauté</strong></span><a href="https://antisexisme.net/2017/03/19/coercition-beaute/" target="_blank" rel="noopener noreferrer"><br />
+</a><a href="https://antisexisme.net/2016/03/26/limpuissance-comme-ideal-de-beaute-des-femmes-en-video/" target="_blank" rel="noopener noreferrer">Supplément : L’impuissance comme idéal de beauté en vidéo</a></span></p>
+<p style="text-align:justify;">J’ai décidé d’écrire ce petit complément car j’anticipe certaines réactions à <a href="https://antisexisme.net/2017/03/19/douleur-physique/" target="_blank" rel="noopener noreferrer">mon article sur douleur des pratiques de beauté</a>. En effet, dans celui-ci, je compare les pratiques de beauté occidentales à des pratiques étrangères, qui nous apparaissent comme horribles : excision, bandage des pieds, etc. Je pense que certain∙e∙s lecteurs/trices pourront rétorquer qu’<strong>en Occident, les femmes s’imposent d’elles-mêmes ces pratiques douloureuses</strong>, tandis que des pratiques comme le bandage des pieds et les mutilations génitales féminines sont/étaient effectuées généralement sur des fillettes qui n’ont/n’avaient pas leur mot à dire.</p>
+<p style="text-align:justify;">Je pense qu’opposer l’Occident (où les femmes seraient « libres » de se faire « belles ») et les autres cultures (où les femmes seraient sous contrainte) n’est pas pertinent. Il ne s’agit pas là de nier qu’il peut y avoir des différences énormes entre cultures et que chez certaines, les pratiques cherchant à modifier le corps des femmes sont bien plus violentes, et les contraintes bien plus fortes, que chez d’autres.</p>
+<p style="text-align:justify;">Je vais m’appuyer sur deux exemples de pratiques de beauté étrangères à l’Occident : <strong>le bandage des pieds</strong>, pratiqué en Chine jusqu’au début du XXème siècle, et <strong>les mutilations génitales féminines</strong> (MGF : « interventions incluant l&rsquo;ablation partielle ou totale des organes génitaux externes de la femme ou toute autre lésion des organes génitaux féminins qui sont pratiquées pour des raisons non médicales » selon l’Organisation Mondiale de la Santé<sup>1</sup>), que l’on retrouve (sous sa forme « traditionnelle ») essentiellement dans certaines régions d’Afrique, d’Asie du Sud et du Moyen-Orient<sup>2</sup>. J&rsquo;insiste sur le terme « pratiques de beauté » : ce n&rsquo;est pas forcément l&rsquo;image que nous nous en faisons, notamment concernant les MGF. Même si ces les deux interventions citées ci-dessus (le bandage des pieds, aussi bien que les MGF) sont conçues comme des moyens de préserver la chasteté des femmes, elles ont néanmoins <strong>une connotation esthétique</strong> très forte.</p>
+<p style="text-align:justify;">J’ai beaucoup lu sur ces pratiques qui feront peut-être un jour l’objet d’articles. Ce qui est très marquant, c’est que ces manipulations du corps féminin sont souvent effectuées sur des enfants par la force, mais que les adolescentes et les femmes adultes peuvent également s’y adonner, de manière apparemment libre. En réalité, comme en Occident, ces adultes ne font pas de choix « libre » car il existe <strong>des normes de beauté extrêmement fortes </strong>en leur faveur.</p>
+<p><span id="more-2286"></span></p>
+<h2 style="text-align:justify;">Coercition sociale</h2>
+<div data-shortcode="caption" id="attachment_2066" style="width: 247px" class="wp-caption alignleft"><img aria-describedby="caption-attachment-2066" data-attachment-id="2066" data-permalink="https://antisexisme.net/pieds_bandes/" data-orig-file="https://antisexisme.files.wordpress.com/2016/06/pieds_bandc3a9s.jpg" data-orig-size="659,439" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="pieds_bandés" data-image-description="" data-medium-file="https://antisexisme.files.wordpress.com/2016/06/pieds_bandc3a9s.jpg?w=300" data-large-file="https://antisexisme.files.wordpress.com/2016/06/pieds_bandc3a9s.jpg?w=659" class="alignnone wp-image-2066" src="https://antisexisme.files.wordpress.com/2016/06/pieds_bandc3a9s.jpg?w=237&#038;h=158" alt="pieds_bandés" width="237" height="158" srcset="https://antisexisme.files.wordpress.com/2016/06/pieds_bandc3a9s.jpg?w=237&amp;h=158 237w, https://antisexisme.files.wordpress.com/2016/06/pieds_bandc3a9s.jpg?w=474&amp;h=316 474w, https://antisexisme.files.wordpress.com/2016/06/pieds_bandc3a9s.jpg?w=150&amp;h=100 150w, https://antisexisme.files.wordpress.com/2016/06/pieds_bandc3a9s.jpg?w=300&amp;h=200 300w" sizes="(max-width: 237px) 100vw, 237px" /><p id="caption-attachment-2066" class="wp-caption-text">(<a href="http://www.wsj.com/articles/SB125800116737444883" target="_blank" rel="noopener noreferrer">source</a>)</p></div>
+<p style="text-align:justify;"><strong>En Chine, il était totalement honteux d’avoir des pieds non déformées</strong> quand on était une femme<sup>3</sup>. Ce <a href="https://femcitations.wordpress.com/2016/06/23/bandage-des-pieds/" target="_blank" rel="noopener noreferrer">témoignage</a> est à ce propos très éclairant : il montre comment, pour une femme ou une fille, le fait ne pas avoir de petits pieds équivalait à <strong>se couvrir de ridicule et à réduire à néant toute chance de sa marier</strong> (tout comme arborer une pilosité naturelle sur ses jambes et ses aisselles est totalement stigmatisé à l’heure actuelle en Occident et réduit les chances de « se trouver un homme »). Si le bandage des pieds débutait par une coercition physique auquel il était impossible d’échapper (les mères bandaient de force les pieds de leur fillette quand elles avaient entre 3 et 5 ans<sup>4</sup>), les filles  commençaient à néanmoins avoir une petite marge de manœuvre quand elles étaient plus grandes<sup>4</sup>, puisque c’est elles-mêmes qui bandaient leurs pieds. En théorie, elles pouvaient « choisir » de les bander étroitement ou non. Or, comme le relève le témoignage cité précédemment, la coercition sociale faisait qu’une fille ou une femme chinoise ne pouvait « se laisser aller » au point de laisser ses bandages trop lâches : elle préférait bander étroitement ses pieds pour éviter d’être moquée. La coercition sociale fait donc suite, dans cet exemple, à une coercition physique.</p>
+<p style="text-align:justify;">Dans les sociétés où l’on pratique les mutilations génitales féminines (excision, infibulation, …), <strong>le sexe des femmes à l’état naturel est considéré comme sale, dégoûtant, laid, « odieux à la vue et au toucher »</strong><sup>5,6,6–8</sup>. Les adjectifs « non infibulée » ou « non excisée » peuvent d’ailleurs constituer de terribles insultes<sup>5</sup>. Deux anthropologues, Sandra Lane et Robert Rubinstein, décrivent dans un article de 1996 comment leur travail de terrain en Egypte rurale leur a permis de constater les émotions violentes suscitées par l’idée d’un sexe féminin non excisée : quand des femmes égyptiennes apprirent que la chercheuse qui menait l’étude n’était pas excisée, elles répondirent par un mélange de dégoût et de rire moqueur, se demandant comment sa mère avait pu être si négligeante<sup>6</sup>.</p>
+<p style="text-align:justify;">Françoise Couchard dans son livre traitant de l’excision<sup>9</sup> évoque <strong>les puissants effets de l’intériorisation de la norme de l’excision</strong>. Elle cite notamment une femme qui raconte que quand elle était fillette, elle attendait impatiemment d’être infibulée pour enfin être comme les autres. Elle avait conscience que si elle ne subissait pas cette mutilation, elle risquait d’être ostracisée et de ne pas trouver de mari.</p>
+<div data-shortcode="caption" id="attachment_2311" style="width: 260px" class="wp-caption alignright"><img aria-describedby="caption-attachment-2311" data-attachment-id="2311" data-permalink="https://antisexisme.net/2017/03/19/coercition-beaute/infibulation-1-300x208/#main" data-orig-file="https://antisexisme.files.wordpress.com/2017/03/infibulation-1-300x208.jpg" data-orig-size="300,208" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="infibulation-1-300&#215;208" data-image-description="" data-medium-file="https://antisexisme.files.wordpress.com/2017/03/infibulation-1-300x208.jpg?w=300" data-large-file="https://antisexisme.files.wordpress.com/2017/03/infibulation-1-300x208.jpg?w=300" class="wp-image-2311" style="border:0 solid #000000;" src="https://antisexisme.files.wordpress.com/2017/03/infibulation-1-300x208.jpg?w=250&#038;h=173" alt="infibulation-1-300x208" width="250" height="173" srcset="https://antisexisme.files.wordpress.com/2017/03/infibulation-1-300x208.jpg?w=250&amp;h=173 250w, https://antisexisme.files.wordpress.com/2017/03/infibulation-1-300x208.jpg?w=150&amp;h=104 150w, https://antisexisme.files.wordpress.com/2017/03/infibulation-1-300x208.jpg 300w" sizes="(max-width: 250px) 100vw, 250px" /><p id="caption-attachment-2311" class="wp-caption-text">Infibulation. Illustration tirée du site de la <a href="http://federationgams.org/mutilations-sexuelles-feminines/" target="_blank" rel="noopener noreferrer">fédération GAMS</a></p></div>
+<p style="text-align:justify;">On comprend alors aisément qu’une femme qui, pour une raison ou une autre, n’aurait pas été infibulée alors que c’est ce qui se fait dans sa culture, ne peut qu’en ressentir une forte honte. Il y a alors des chances qu’elle demande à subir une intervention une fois adulte pour être dans la norme. Un cas de figure fréquent concerne <strong>la re-infibulation après un accouchement</strong><sup>10–12</sup>. L’infibulation consiste en un rétrécissement de l’orifice vaginal réalisé en sectionnant et en repositionnant les petites lèvres, ou les grandes lèvres, parfois par suture<sup>1</sup>. Avant l’accouchement, une dé-infibulation est effectuée et permet de rouvrir l’orifice vaginale<sup>12</sup>. La ré-infibulation consiste à de nouveau fermer l’ouverture vaginale. Dans plusieurs parties du Soudan, la ré-infibulation après l’accouchement est perçue comme une évidence<sup>12</sup>. Elle concerne également les veuves ou les femmes divorcées<sup>12</sup>. En Occident, des femmes d’origine somalienne ou soudanaise demandent parfois une ré-infibulation auprès d’un médecin. Bien qu’il soit difficile de chiffrer ce phénomènes, ces cas ne doivent pas être extrêmement marginaux car ils font par exemple l’objet de recommandation officielle de la <em>British Medical Association</em><sup>13</sup>. Un étude réalisée au Soudan auprès de sages-femmes (également exciseuses) indique que la ré-infibulation est effectuée pour plaire au mari : cela lui rappellerait  l’étroitesse du vagin de son épouse au début de leur mariage et augmenterait son plaisir sexuel<sup>12</sup>. Il y aurait alors moins de risque qu’il prenne une deuxième femme ou qu’il demande le divorce… Néanmoins, selon les auteurs/autrices de l’étude, les époux n’ont pas nécessairement connaissance de l’existence de la procédure de ré-infibulation et parfois même, la désapprouvent<sup>12</sup> ! <strong>Cela indique qu’il n’y a pas forcément une pression directe des époux ; les femmes peuvent chercher à devancer les désirs de ces derniers</strong><sup>12</sup>. Cela rappelle beaucoup les femmes occidentales qui ont si bien intégré ce qui plaît aux hommes (épilation, minceur…) que ceux-ci n’ont généralement même pas besoin de leur dire. Dans ce cas-là, la coercition sociale paraît être d’une efficacité redoutable.</p>
+<p style="text-align:justify;"><strong>Ainsi, dans n’importe quelle société, les femmes intègrent les normes de beauté, les idéaux romantiques ou érotiques qui les accompagnent et les valeurs qu’elles représentent.</strong> Elles apprennent ce qui est censé être beau chez elles et ressentent de la honte si elles s’en éloignent, ou de la fierté si elles s’en rapprochent.</p>
+<h2 style="text-align:justify;">Coercition économique</h2>
+<p style="text-align:justify;">Il est à noter que les modifications du corps des fillettes sont souvent accomplies, ou du moins décidées, par des femmes de la famille. C’était par exemple les mères qui commençaient à bander les pieds de leurs filles en Chine<sup>4,14</sup> . Si ces femmes commettaient des actes aussi violents sur leurs propres filles, ce n’était pas par sadisme ou par bêtise, mais parce qu’elles savaient que cela était la condition nécessaire à une vie acceptable dans une société qui laissait peu de choix aux femmes. Avoir les pieds bandés était non seulement une nécessité pour être acceptée socialement, mais également pour être mariée. Or, <strong>dans de nombreuses sociétés patriarcales, actuelles ou passées, le mariage constituait ou constitue la seule perspective d’avenir pour les femmes.</strong> Pour de nombreuses femmes dans le monde, l’accès à des ressources matérielles ne peut ou ne pouvait se faire que par le mariage.</p>
+<p style="text-align:justify;">En Occident, avec l’accès au marché du travail et les lois permettant aux femmes de disposer de leur salaire et d’ouvrir un compte en banque, l’accès à des ressources matérielles ne passe plus essentiellement par le mariage. Néanmoins, une coercition économique demeure toujours. En effet, <strong>pour pouvoir trouver et conserver un travail, il faut présenter une apparence « acceptable ».</strong> Cela implique au minimum d’être épilée sur les jambes et les aisselles. Il y a des risques qu’une femme non épilée fasse une si mauvaise impression qu’elle ne soit pas recrutée, et cela, quelle que soit le domaine professionnel. Tous les métiers où il y a un contact avec des client∙e∙s, notamment les métiers d’accueil (hôtesse…) ou en lien avec le commerce, nécessitent, au-delà d’une apparence « acceptable », de « bien présenter » et donc de se livrer à des pratiques de beauté : maquillage (au moins léger), coiffure correcte, chaussures « féminines », souvent à talons, etc.</p>
+<div data-shortcode="caption" id="attachment_2315" style="width: 230px" class="wp-caption alignleft"><img aria-describedby="caption-attachment-2315" data-attachment-id="2315" data-permalink="https://antisexisme.net/2017/03/19/coercition-beaute/220px-zapatos_de_tacon_de_aguja-2008/#main" data-orig-file="https://antisexisme.files.wordpress.com/2017/03/220px-zapatos_de_tacc3b3n_de_aguja-2008.jpg" data-orig-size="220,147" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="220px-Zapatos_de_tacón_de_aguja-2008" data-image-description="" data-medium-file="https://antisexisme.files.wordpress.com/2017/03/220px-zapatos_de_tacc3b3n_de_aguja-2008.jpg?w=220" data-large-file="https://antisexisme.files.wordpress.com/2017/03/220px-zapatos_de_tacc3b3n_de_aguja-2008.jpg?w=220" class="size-full wp-image-2315 alignleft" src="https://antisexisme.files.wordpress.com/2017/03/220px-zapatos_de_tacc3b3n_de_aguja-2008.jpg?w=660" alt="220px-Zapatos_de_tacón_de_aguja-2008" srcset="https://antisexisme.files.wordpress.com/2017/03/220px-zapatos_de_tacc3b3n_de_aguja-2008.jpg 220w, https://antisexisme.files.wordpress.com/2017/03/220px-zapatos_de_tacc3b3n_de_aguja-2008.jpg?w=150 150w" sizes="(max-width: 220px) 100vw, 220px"   /><p id="caption-attachment-2315" class="wp-caption-text">(<a href="https://commons.wikimedia.org/wiki/File:Zapatos_de_tac%C3%B3n_de_aguja-2008.JPG" target="_blank" rel="noopener noreferrer">source</a>)</p></div>
+<p style="text-align:justify;">Plusieurs faits récents viennent illustrer cette coercition économique. Il y a quelques mois, au Royaume Uni, <a href="http://www.20minutes.fr/monde/1844295-20160512-londres-receptionniste-viree-apres-avoir-refuse-porter-talons-hauts" target="_blank" rel="noopener noreferrer"><strong>une jeune femme a été renvoyée de son travail</strong></a><strong> dans une entreprise de finance pour avoir refusé de porter des talons d’au moins 5 cm</strong>. Elle a d’ailleurs lancé <a href="https://petition.parliament.uk/petitions/129823" target="_blank" rel="noopener noreferrer">une pétition</a> (signée par plus de 150 000 personnes au moment où j’écris ces lignes) pour demander à ce qu’il devienne illégal d’obliger des employées à porter des talons hauts. Une femme canadienne a également récemment posté sur Facebook  <a href="http://www.huffingtonpost.fr/2016/05/12/sexisme-travail-pieds-sang_n_9929888.html?utm_hp_ref=france" target="_blank" rel="noopener noreferrer">une photo des pieds ensanglantés de sa collègue </a>(qui a même perdu un ongle) : dans le restaurant où elle travaille, les employées doivent obligatoirement porter des talons hauts. Malgré le sang et l’ongle tombé, elle a été réprimandée par son responsable quand elle a demandé à pouvoir changer de chaussures pour des plates.</p>
+<p>En France, <strong>un employeur peut obliger une employée à porter des talons</strong>, comme l’explique un avocat spécialiste en droit du travail au <a href="http://www.huffingtonpost.fr/2016/05/13/talons-bureau-france-salariees-porter-possible_n_9948850.html" target="_blank" rel="noopener noreferrer">Huffington Post</a> :</p>
+<blockquote>
+<p style="text-align:justify;">Le port de l&rsquo;uniforme peut être imposé pour des raisons commerciales ou de sécurité. &laquo;&nbsp;Un salarié qui ne respecte pas cette obligation, comme celle de porter des talons par exemple, peut s&rsquo;exposer à une mesure disciplinaire comme un changement de poste ou à un licenciement&nbsp;&raquo;, assure encore Eric Rocheblave [avocat spécialiste en droit du travail]. Seules des raisons médicales et non une convenance personnelle peuvent expliquer le non-respect de cette obligation.</p>
+</blockquote>
+<p style="text-align:justify;">La coercition économique s’ajoute donc à la coercition sociale et à la coercition physique pour obliger les femmes à se faire mal au nom de la beauté (et pour forcer également leurs filles à aller dans ce sens).</p>
+<h2 style="text-align:justify;">Conclusion</h2>
+<p style="text-align:justify;">Dans tous les pays du monde, les filles et les femmes peuvent donc être soumises à différents types de coercition (coercition physique, sociale ou économique) afin de voir leur corps transformé de manière douloureuse, au nom de la beauté. Si en Occident, c’est essentiellement la coercition sociale qui s’applique, et moins la coercition physique ou économique, cela ne signifie pas pour autant que le phénomène sous-jacent soit de nature différente : <strong>la douleur subordonne les femmes, donc les pratiques douloureuse les rendent belles</strong>. Et les femmes sont contraintes à respecter les normes de beauté, d&rsquo;une manière ou d&rsquo;une autre.</p>
+<h2 style="text-align:justify;">Bibliographie</h2>
+<ol>
+<li style="text-align:justify;">OMS | Mutilations sexuelles féminines &#8211; Aide-mémoire N°241. <em>Organisation Mondiale de La Santé</em>. Available from: <a href="http://www.who.int/mediacentre/factsheets/fs241/fr/" rel="nofollow">http://www.who.int/mediacentre/factsheets/fs241/fr/</a> [accessed June 27, 2016].</li>
+<li style="text-align:justify;"><em>Female genital mutilation/cutting: A global Concern.</em>, New-York: UNICEF; 2016.</li>
+<li style="text-align:justify;">Mackie G. Ending Footbinding and Infibulation: A Convention Account. <em>American Sociological Review</em> 1996;<strong>61</strong>(6):999–1017. Doi: 10.2307/2096305.</li>
+<li style="text-align:justify;">Ping W. <em>Aching for Beauty: Footbinding in China</em>, New York: Anchor; 2002.</li>
+<li style="text-align:justify;">Shweder RA. What about “Female Genital Mutilation”? And Why Understanding Culture Matters in the First Place. <em>Daedalus</em> 2000;<strong>129</strong>(4):209–32.</li>
+<li style="text-align:justify;">Lane SD., Rubinstein RA. Judging the Other: Responding to Traditional Female Genital Surgeries. <em>Hastings Center Report</em> 1996;<strong>26</strong>(3):31–40. Doi: 10.2307/3527930.</li>
+<li style="text-align:justify;">Gruenbaum E. Ritual and Meaning. <em>The Female Circumcision Controversy: An Anthropological Perspective</em>. 1 edition, Philadelphia: University of Pennsylvania Press; 2000.</li>
+<li style="text-align:justify;">Van Der Kwaak A. Special Issue Gender, Health and DevelopmentFemale circumcision and gender identity: A questionable alliance? <em>Social Science &amp; Medicine</em> 1992;<strong>35</strong>(6):777–87. Doi: 10.1016/0277-9536(92)90077-4.</li>
+<li style="text-align:justify;">Couchard F. <em>L’Excision</em>, Presses Universitaires de France &#8211; PUF; 2003.</li>
+<li style="text-align:justify;">Cook RJ., Dickens BM., Fathalla MF. Female genital cutting (mutilation/circumcision): ethical and legal dimensions. <em>International Journal of Gynecology &amp; Obstetrics</em> 2002;<strong>79</strong>(3):281–7. Doi: 10.1016/S0020-7292(02)00277-1.</li>
+<li style="text-align:justify;">Cook RJ., Dickens BM. Special commentary on the issue of reinfibulation. <em>International Journal of Gynecology &amp; Obstetrics</em> 2010;<strong>109</strong>(2):97–9. Doi: 10.1016/j.ijgo.2010.01.004.</li>
+<li style="text-align:justify;">Berggren V., Abdel Salam G., Bergström S., Johansson E., Edberg A-K. An explorative study of Sudanese midwives’ motives, perceptions and experiences of re-infibulation after birth. <em>Midwifery</em> 2004;<strong>20</strong>(4):299–311. Doi: 10.1016/j.midw.2004.05.001.</li>
+<li style="text-align:justify;">Krása K. Human rights for women: the ethical and legal discussion about Female Genital Mutilation in Germany in comparison with other Western European countries. <em>Med Health Care and Philos</em> 2010;<strong>13</strong>(3):269–78. Doi: 10.1007/s11019-010-9245-4.</li>
+<li style="text-align:justify;">Blake CF. Foot-Binding in Neo-Confucian China and the Appropriation of Female Labor. <em>Signs</em> 1994;<strong>19</strong>(3):676–712.</li>
+</ol>
+<div id="atatags-370373-5ec0a56e14ca4">
+        <script type="text/javascript">
+            __ATA.cmd.push(function() {
+                __ATA.initVideoSlot('atatags-370373-5ec0a56e14ca4', {
+                    sectionId: '370373',
+                    format: 'inread'
+                });
+            });
+        </script>
+    </div>			<div id="atatags-26942-5ec0a56e14d2d"></div>
+			
+			<script>
+				__ATA.cmd.push(function() {
+					__ATA.initDynamicSlot({
+						id: 'atatags-26942-5ec0a56e14d2d',
+						location: 120,
+						formFactor: '001',
+						label: {
+							text: 'Publicités',
+						},
+						creative: {
+							reportAd: {
+								text: 'Report this Ad',
+							},
+							privacySettings: {
+								text: 'Paramètres de confidentialité',
+							}
+						}
+					});
+				});
+			</script><div id="jp-post-flair" class="sharedaddy sd-rating-enabled sd-like-enabled sd-sharing-enabled"><div class="sd-block sd-rating"><h3 class="sd-title">Évaluez ceci :</h3><div class="cs-rating pd-rating" id="pd_rating_holder_4277183_post_2286"></div></div><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Partagez :</h3><div class="sd-content"><ul><li class="share-print"><a rel="nofollow noopener noreferrer" data-shared="" class="share-print sd-button share-icon" href="https://antisexisme.net/2017/03/19/coercition-beaute/#print" target="_blank" title="Cliquer pour imprimer"><span>Imprimer</span></a></li><li class="share-email"><a rel="nofollow noopener noreferrer" data-shared="" class="share-email sd-button share-icon" href="https://antisexisme.net/2017/03/19/coercition-beaute/?share=email" target="_blank" title="Cliquez pour envoyer par e-mail à un ami"><span>E-mail</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-2286" class="share-facebook sd-button share-icon" href="https://antisexisme.net/2017/03/19/coercition-beaute/?share=facebook" target="_blank" title="Cliquez pour partager sur Facebook"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-2286" class="share-twitter sd-button share-icon" href="https://antisexisme.net/2017/03/19/coercition-beaute/?share=twitter" target="_blank" title="Cliquez pour partager sur Twitter"><span>Twitter</span></a></li><li class="share-reddit"><a rel="nofollow noopener noreferrer" data-shared="" class="share-reddit sd-button share-icon" href="https://antisexisme.net/2017/03/19/coercition-beaute/?share=reddit" target="_blank" title="Cliquez pour partager sur Reddit"><span>Reddit</span></a></li><li class="share-skype"><a rel="nofollow noopener noreferrer" data-shared="sharing-skype-2286" class="share-skype sd-button share-icon" href="https://antisexisme.net/2017/03/19/coercition-beaute/?share=skype" target="_blank" title="Cliquez pour partager sur Skype"><span>Skype</span></a></li><li class="share-linkedin"><a rel="nofollow noopener noreferrer" data-shared="sharing-linkedin-2286" class="share-linkedin sd-button share-icon" href="https://antisexisme.net/2017/03/19/coercition-beaute/?share=linkedin" target="_blank" title="Cliquez pour partager sur LinkedIn"><span>LinkedIn</span></a></li><li class="share-tumblr"><a rel="nofollow noopener noreferrer" data-shared="" class="share-tumblr sd-button share-icon" href="https://antisexisme.net/2017/03/19/coercition-beaute/?share=tumblr" target="_blank" title="Cliquez pour partager sur Tumblr"><span>Tumblr</span></a></li><li class="share-pinterest"><a rel="nofollow noopener noreferrer" data-shared="sharing-pinterest-2286" class="share-pinterest sd-button share-icon" href="https://antisexisme.net/2017/03/19/coercition-beaute/?share=pinterest" target="_blank" title="Cliquez pour partager sur Pinterest"><span>Pinterest</span></a></li><li class="share-pocket"><a rel="nofollow noopener noreferrer" data-shared="" class="share-pocket sd-button share-icon" href="https://antisexisme.net/2017/03/19/coercition-beaute/?share=pocket" target="_blank" title="Cliquez pour partager sur Pocket"><span>Pocket</span></a></li><li class="share-telegram"><a rel="nofollow noopener noreferrer" data-shared="" class="share-telegram sd-button share-icon" href="https://antisexisme.net/2017/03/19/coercition-beaute/?share=telegram" target="_blank" title="Cliquez pour partager sur Telegram"><span>Telegram</span></a></li><li class="share-jetpack-whatsapp"><a rel="nofollow noopener noreferrer" data-shared="" class="share-jetpack-whatsapp sd-button share-icon" href="https://antisexisme.net/2017/03/19/coercition-beaute/?share=jetpack-whatsapp" target="_blank" title="Cliquez pour partager sur WhatsApp"><span>WhatsApp</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-20930585-2286-5ec0a56e164bf' data-src='//widgets.wp.com/likes/index.html?ver=20190321#blog_id=20930585&amp;post_id=2286&amp;origin=antisexisme.wordpress.com&amp;obj_id=20930585-2286-5ec0a56e164bf&amp;domain=antisexisme.net' data-name='like-post-frame-20930585-2286-5ec0a56e164bf'><h3 class='sd-title'>WordPress:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>J&#039;aime</span></span> <span class="loading">chargement&hellip;</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div>
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	<h3 class="jp-relatedposts-headline"><em>Articles similaires</em></h3>
+</div></div>			</div><!-- .entry-content -->
+
+	<footer class="entry-meta">
+		Cette entrée, publiée dans <a href="https://antisexisme.net/category/limpuissance-comme-ideal-de-beaute/" rel="category tag">L’impuissance comme idéal de beauté</a>, est taguée <a href="https://antisexisme.net/tag/excision/" rel="tag">excision</a>. Bookmarquez ce <a href="https://antisexisme.net/2017/03/19/coercition-beaute/" title="Permalien vers La coercition à la&nbsp;beauté" rel="bookmark">permalien</a>.
+			</footer><!-- .entry-meta -->
+</article><!-- #post-## -->
+
+				<nav role="navigation" id="nav-below" class="site-navigation post-navigation">
+		<h1 class="assistive-text screen-reader-text">Navigation des articles</h1>
+
+	
+		<div class="nav-previous"><a href="https://antisexisme.net/2017/03/07/projet-livre/" rel="prev"><span class="meta-nav">&larr;</span> Des nouvelles : l&rsquo;écriture d&rsquo;un livre sur la culture du&nbsp;viol</a></div>		<div class="nav-next"><a href="https://antisexisme.net/2017/04/06/universalite-1/" rel="next">L’impuissance comme idéal de beauté des femmes – Universalité des idéaux de faiblesse&nbsp;1 <span class="meta-nav">&rarr;</span></a></div>
+	
+	</nav><!-- #nav-below -->
+	
+			
+<div id="comments" class="comments-area">
+
+			<h2 class="comments-title">
+			18 r&eacute;flexions sur &ldquo;<span>La coercition à la&nbsp;beauté</span>&rdquo;		</h2>
+
+		
+		<ol class="commentlist">
+				<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-4517">
+		<article id="comment-4517" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://1.gravatar.com/avatar/a29a2451b5df6c1fc0a03212fb396e44?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn">El Gato</cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2017/03/19/coercition-beaute/#comment-4517"><time pubdate datetime="2017-03-19T16:56:45+01:00">
+						19 mars 2017 à 16 h 56 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_4517"></div><p>&nbsp;&raquo; la douleur subordonne les femmes, donc les pratiques douloureuse les rendent belles. Et les femmes sont contraintes à respecter les normes de beauté, d’une manière ou d’une autre.&nbsp;&raquo;<br />
+Toutes les normes de beauté ne sont pas mutilantes, irréversibles ou même douloureuses (maquillage).<br />
+Les &laquo;&nbsp;normes de beauté&nbsp;&raquo; sont des normes sociales. Les femmes et les hommes sont contraints de respecter dans toutes les sociétés, occidentale ou pas, des normes sociales vaguement dissimulées sous des motivations telles que la beauté, la religion ou la bienséance. Il existe d&rsquo;ailleurs dans les sociétés anciennes comme dans les sociétés capitalistes des normes de beauté qui concernent les hommes. Les entreprises où les femmes doivent porter des talons aiguilles obligent généralement les hommes à porter des cravates. Les scarifications rendent un guerrier plus désirable etc.<br />
+Il semble pourtant discutable de mettre sur le même plan l&rsquo;obligation de porter un cravate et celle de porter des talons aiguilles et absurde de mettre sur le même plan le bandage des pieds des filles et le port de la cravate.<br />
+Ce qui distingue ces normes, c&rsquo;est leur fonction, et leurs conséquences sur l&rsquo;individu.<br />
+Les pieds bandés tout comme l&rsquo;excision et l&rsquo;infibulation visent à contrôler la circulation des femmes. Pour qu&rsquo;une femme puisse travailler dans les champs, il faut qu&rsquo;elle dispose de ses pieds. En lui bandant les pieds on la destinait à devenir une courtisane. Une société polygame est une société où les hommes les plus âgés contrôlent les hommes les plus jeunes en créant artificiellement une rareté des femmes. Les pères détiennent le pouvoir sur les hommes les plus jeunes en décidant qui pourra avoir accès aux femmes. Dans cette perspective, le plaisir féminin est terrifiant, il pourrait inciter les femmes à désobéir..<br />
+Dans ces deux cas, on est en présence de nomes sociales aux conséquences irréversibles et mutilantes.<br />
+Les talons hauts ont été porté au cours de l&rsquo;histoire alternativement par les hommes et par les femmes. Après avoir été l&rsquo;accessoire des mondaines et des demi-mondaines au XIXème, le talons aiguilles, aujourd&rsquo;hui, est devenu un phénomène de mode au sein d&rsquo;une société qui fétichise le corps pour des raisons commerciales. Mais comme c&rsquo;est à priori plus facile de travailler avec des talons plats, les imposer au travail, c&rsquo;est signifier aux femmes, au choix,<br />
+que leur apparence compte plus que leur efficacité; ou qu&rsquo;elles ne sont efficaces que parce qu&rsquo;elles sont sexualisées. Mais peut-être que dans dix ans la mode ce sera les talons plats et les conséquences sont quand même moins lourdes sur le corps et sur la vie des femmes que l&rsquo;excision ou les pieds bandés.<br />
+Ce n&rsquo;est pas pour autant une raison d&rsquo;opposer la société occidentale aux autres cultures parce que toutes les autres cultures ne mutilent pas les femmes !</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2017/03/19/coercition-beaute/?replytocom=4517#respond' data-commentid="4517" data-postid="2286" data-belowelement="comment-4517" data-respondelement="respond" aria-label='Répondre à El Gato'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment odd alt depth-2 highlander-comment" id="li-comment-4546">
+		<article id="comment-4546" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://2.gravatar.com/avatar/b4da7e4b3ba90aeb227d6324f215fbd8?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='http://gnathaena.blogspot.fr/' rel='external nofollow ugc' class='url'>Vanessa</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2017/03/19/coercition-beaute/#comment-4546"><time pubdate datetime="2017-04-03T20:57:30+02:00">
+						3 avril 2017 à 20 h 57 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_4546"></div><p>Bonsoir,<br />
+Non, les pieds bandés ne limitaient pas la circulation des femmes chinoises. Des anthropologues (je n&rsquo;ai pas les noms en tête) avaient fait l&rsquo;expérience d&rsquo;en faire courir quelques-unes et elles avaient apparemment développé une nouvelle façon de marcher, sauter, courir. Si elles marchaient lentement, c&rsquo;est que la démarche lente était considérée comme très séduisante.<br />
+La motivation esthétique était très forte, puisque le petit pied était assimilé à une fleur de lotus. La dimension érotique était importante également, puisqu&rsquo;il était censé rivaliser avec le vagin comme organe de l&rsquo;extase sexuel. Mais il s&rsquo;agissait également d&rsquo;une zone érogène pour la femme (je n&rsquo;invente rien).<br />
+L&rsquo;usage des pieds bandés n&rsquo;était pas réservé aux courtisanes. Marqueur social, il était répandu dans toutes les classes aisées de la population.<br />
+Si je suis d&rsquo;accord avec le commentaire précédent sur le fait que la contrainte sociale sur le corps est à la base commune aux hommes et aux femmes (par exemple la déformation de la boîte crânienne, le tatouage, la déformation du pénis par introduction répétée d&rsquo;une lame dans l&rsquo;urètre), elles subsistent, en Occident, surtout pour les femmes (l&rsquo;excision reste quand même une mutilation génitale masculine courante et que personne n&rsquo;évoque jamais comme telle).<br />
+Bien cordialement et merci pour vos articles.</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2017/03/19/coercition-beaute/?replytocom=4546#respond' data-commentid="4546" data-postid="2286" data-belowelement="comment-4546" data-respondelement="respond" aria-label='Répondre à Vanessa'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-antisexisme bypostauthor even depth-3 highlander-comment" id="li-comment-4548">
+		<article id="comment-4548" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/c731be1005243beeefb57b3e2bc4b03c?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='https://antisexisme.wordpress.com' rel='external nofollow ugc' class='url'>antisexisme</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2017/03/19/coercition-beaute/#comment-4548"><time pubdate datetime="2017-04-04T17:41:52+02:00">
+						4 avril 2017 à 17 h 41 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_4548"></div><p>Bonjour Vanessa,</p>
+<p>A propos des pieds bandés, voici un extrait d&rsquo;un texte que j&rsquo;avais commencé à écrire :</p>
+<p>La déformation des pieds provoqués par les bandages avait pour conséquence directe de compliquer la mobilité des femmes chinoises. Il devenait difficile pour les femmes aux pieds bandés de marcher sur de longues distances sans aide, ce qui les empêchait de « vagabonder »<sup>1</sup>. Les pieds bandés s’inscrivaient dans un idéal féminin de délicatesse et de fragilité. Analysant des œuvres littéraires néoconfucianistes (un courant philosophique influent en Chine du XIVème siècle jusqu’au début du XXème siècle), l’universitaire Wang Ping note : « Les femmes figurant dans ces poèmes et ces œuvres littéraires présentent toutes les mêmes qualités : elles flottent et sont en état d’apesanteur comme une fée ou une déesse, fragiles et délicates comme un enfant, cachées et mystérieuses comme un trésor inatteignable. Les hommes ne peuvent s’empêcher de ressentir de la pitié à leur endroit et de tomber amoureux d’elles. Tous ces éléments sont indispensables à l’érotisme chinois et au charme féminin<sup>2</sup> ». Par ailleurs, au XIXème siècle, on attendait des femmes raffinées de la haute société qu’elles mènent une vie confinée chez elles<sup>1</sup>. Néanmoins, une immobilité totale n’était pas recherchée : il ne fallait pas que les pieds soient petits au point que les femmes ne soient plus du tout capables de marcher<sup>3</sup>. Quand, à la fin du XIXème siècle et au début du XXème siècle, des sociétés en faveur des pieds naturels émergèrent afin de lutter contre le bandage des pieds, elles avancèrent que les pieds bandés fragilisaient le corps des femmes, qu’ils les empêchaient de travailler efficacement au foyer et aux champs  et, qu’enfin, ils les rendaient plus vulnérables aux violences sexuelles pendant les guerres<sup>2</sup>.</p>
+<p>Des travaux en médecine de 1997<sup>4</sup>, portant sur les aptitudes physiques de femmes chinoises âgées de 70 ans ou plus, ont permis de produire des données sur les effets du bandage des pieds. Dans la patientèle étudiée, 38% des femmes ayant au moins 80 ans et 18% des femmes ayant un âge compris entre 70 et 79 ans avaient les pieds bandés. Les femmes qui avaient les pieds bandés avaient significativement eu plus de chance d’être tombées l’année précédente (38% contre 19% pour celles âgées de plus de 80 ans ; 28% contre 19% pour celles âgées de 70 à 79 ans). Elles étaient moins nombreuses à pouvoir s’accroupir (46% pour les pieds déformés contre 69% pour les pieds naturels, dans la tranche des plus de 80 ans) et à pouvoir se lever d’une chaise sans aide (57% contre 74% toujours dans la tranche des plus de 80 ans). Elles réussissaient également moins bien un test mesurant l’équilibre. En revanche, et de manière assez étonnante, les données n’ont pas permis de démontrer que les femmes aux pieds bandés étaient moins nombreuses à pouvoir marcher sur un kilomètre ou à pouvoir monter 10 marches d’escalier (précisons néanmoins qu’il n’y avait pas de mesure du temps nécessaire pour accomplir ces tâches dans cette étude, et qu’il n’est donc pas possible de savoir si les femmes qui avaient les pieds bandés prenaient plus de temps ou non pour les effectuer). Enfin, les auteurices font remarquer que la proportion de femmes aux pieds bandés peut paraître relativement élevée, notamment aux yeux des touristes qui ont visité la Chine et qui n’ont pas vu de femmes aux « pieds en lotus ». Iels précisent que c’est parce que ces femmes ont tendance à rester chez elles.</p>
+<p>Notons qu’une autre étude de 20155 (portant sur un tout petit nombre de femmes : 6) indique que les femmes ayant les pieds bandés se déplacent significativement moins vite que celles aux pieds non déformés (avec une vitesse environ réduite de 25%).</p>
+<p>En dehors du fait que toutes deux limitent la mobilité des femmes, la coutume des pieds bandée a des similitudes importantes avec celle du port des chaussures à talons hauts. Premièrement, les deux pratiques donnent au pied un aspect similaire<sup>2</sup> : le pied semble réduit parce que la surface de contact avec le sol est restreinte. Dans les deux cas, le pied adopte une position qui donne l’impression qu’il est en continuité avec la jambe, qui paraît alors plus longue et plus fine. Deuxièmement, les deux pratiques modifient la démarche de la même façon : les femmes sont obligées de marcher à petits pas<sup>3,6</sup>. La restriction imposée aux pieds impose également un déhanchement, jugé sensuel et érotique dans les deux cultures<sup>3,6</sup>.</p>
+<ol>
+<li>Yung J. Unbound Feet: A Social History of Chinese Women in San Francisco, University of California Press; 1995.</li>
+<li>Ping W. Aching for Beauty: Footbinding in China, New York: Anchor; 2002.</li>
+<li>Blake CF. Foot-Binding in Neo-Confucian China and the Appropriation of Female Labor. Signs 1994;19(3):676–712.</li>
+<li>Cummings SR., Ling X., Stone K. Consequences of foot binding among older women in Beijing, China. Am J Public Health 1997;87(10):1677–9.</li>
+<li>Gu Y., Mei Q., Fernandez J., Li J., Ren X., Feng N. Foot Loading Characteristics of Chinese Bound Feet Women: A Comparative Analysis. PLOS ONE 2015;10(4):e0121695. Doi: 10.1371/journal.pone.0121695.</li>
+<li>Jeffreys S. Beauty and Misogyny: Harmful Cultural Practices in the West, Routledge; 2005.</li>
+</ol>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2017/03/19/coercition-beaute/?replytocom=4548#respond' data-commentid="4548" data-postid="2286" data-belowelement="comment-4548" data-respondelement="respond" aria-label='Répondre à antisexisme'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-4595">
+		<article id="comment-4595" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/0d2399d5f7eb1cd46f0437b20a39efaa?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn">z</cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2017/03/19/coercition-beaute/#comment-4595"><time pubdate datetime="2017-04-15T17:50:28+02:00">
+						15 avril 2017 à 17 h 50 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_4595"></div><p><!--//--><!--
+PDRTJS_settings_5500324_comm_4595={"id":5500324,"unique_id":"wp-comment-4595","title":"Bonjour%2Cje%20ne%20comprends%20pas%20bien%20le%20Si%20en%20Occident%2C%20cest%20essentiellement%20la%20coercition%20sociale%20qui%20sapplique%2C%20et%20moins%20la%20coercition%20physique%20ou%20conomique%2C%20cela%20ne%20signifie%20pas%20pour%20autant%20que%20le...","permalink":"http:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-4595","item_id":"_comm_4595"};
+//--><br />
+<a href="https://polldaddy.com/js/rating/rating.js" rel="nofollow">https://polldaddy.com/js/rating/rating.js</a>Bonjour,<br />
+je ne comprends pas bien le «Si en Occident, c’est essentiellement la coercition sociale qui s’applique, et moins la coercition physique ou économique, cela ne signifie pas pour autant que le phénomène sous-jacent soit de nature différente »<br />
+Il y a des différences de degrés qui sont telles qu&rsquo;elles rendent inopérantes les généralisations. Car évidemment, il y a toujours un niveau de généralité qui permet de regrouper (par exemple tout ce qui touche au corps) ou au contraire un niveau de spécificité qui permet de tout distinguer (car rien n&rsquo;est jamais identique).<br />
+Et je ne vois pas la pertinence de rassembler ici sous le même vocable de &laquo;&nbsp;coercition&nbsp;&raquo;, des réalités aussi différentes que ceux qui sont derrières les FGM, le bandage des pieds et le port de talons hauts.<br />
+Bien sûr, tous les comportements sociaux ont des déterminants extrinsèques à l&rsquo;individu, mais il y a des degrés dans l&rsquo;aliénation :<br />
+Entre le pression plus ou moins explicite des paires/partenaires et les impératifs fondés en religion [0], il y a quand même une différence non négligeable !</p>
+<p>Pareil en ce qui concerne la réversibilité, le caractère temporaire ou non de la coercition. Ce n&rsquo;est pas tant la vitesse moyenne de marche qui est pertinente pour mesurer le degré d&rsquo;entrave, mais la capacité de se mettre à courrir si le besoin ou l&rsquo;envie s&rsquo;en fait sentir : une femme peut toujours retirer ses talons pour se mettre à courrir. À contrario, j&rsquo;ai une amie qui ne passe ses talons que lorsqu&rsquo;elle arrive sur le lieu où elle a décidée de passer la soirée en talons. Quel rapport avec une femme dont on a bandé les pieds à l&rsquo;âge de 5 ans ?</p>
+<p>Encore une fois, dire que des phénomènes sont de même nature ou non n&rsquo;a pas de sens en soi (ou alors, les hommes vont nous dire qu&rsquo;eux aussi, ils subissent une coercition sociale pour se raser, et qu&rsquo;ils en souffrent en se coupant!). Ce qui determine le sens de la subsomption, c&rsquo;est si effectivement il est pertient d&rsquo;avoir des réactions de même nature avec tous les concepts susbsumés.<br />
+Franchement, qui aurait des réactions de même nature à la perspective d&rsquo;avoir ses filles :<br />
+&#8211; excisées<br />
+&#8211; les pieds bandés<br />
+&#8211; portant des talons hauts<br />
+?</p>
+<p>[0] <a href="https://en.wikipedia.org/wiki/Religious_views_on_female_genital_mutilation" rel="nofollow">https://en.wikipedia.org/wiki/Religious_views_on_female_genital_mutilation</a></p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2017/03/19/coercition-beaute/?replytocom=4595#respond' data-commentid="4595" data-postid="2286" data-belowelement="comment-4595" data-respondelement="respond" aria-label='Répondre à z'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-antisexisme bypostauthor even depth-2 highlander-comment" id="li-comment-4596">
+		<article id="comment-4596" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/c731be1005243beeefb57b3e2bc4b03c?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='https://antisexisme.wordpress.com' rel='external nofollow ugc' class='url'>antisexisme</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2017/03/19/coercition-beaute/#comment-4596"><time pubdate datetime="2017-04-15T21:27:02+02:00">
+						15 avril 2017 à 21 h 27 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_4596"></div><p>Bonsoir,</p>
+<p>Je dois avouer que je ne comprends pas tellement votre commentaire, car j&rsquo;ai bien insisté sur le fait qu&rsquo;il existait divers degrés de gravité, et que ce qui m&rsquo;intéressait ici était plutôt les diverses formes de contrainte existantes.</p>
+<p>Cet article est en fait une réaction à certains commentaires que je lis et qui disent en somme : &laquo;&nbsp;la beauté est un sujet anodin et ridicule, c&rsquo;est les femmes qui CHOISISSENT de s&rsquo;épiler, de se maquiller, se faire des régimes, de faire de la chirurgie esthétique, etc.&nbsp;&raquo;</p>
+<p>Or les femmes occidentales ne sont pas les seules à s&rsquo;infliger des pratiques violentes, et quand il s&rsquo;agit de FGM ou de gavage, tout le monde reste choqué, y compris quand c&rsquo;est des adultes qui expriment le souhait que ces pratiques soient réalisées sur elles-mêmes. Pour moi, le fait que des femmes &laquo;&nbsp;choisissent&nbsp;&raquo; la chirurgie esthétique ne signifie pas 1) que ce choix est libre (il existe des contraintes), 2) que la violence de chirurgie esthétique disparaisse comme par magie.</p>
+<p>Il en va de même pour des pratiques étrangères à notre culture. Comme je l&rsquo;ai dit, des femmes adultes demandent d&rsquo;elles-mêmes à subir des FGM, car elles ne veulent pas avoir un sexe qu&rsquo;elle juge monstrueux. J&rsquo;avais aussi lu un compte-rendu d&rsquo;une étude anthropologique dans une région du Tchad, où l&rsquo;excision était une &laquo;&nbsp;nouvelle mode&nbsp;&raquo; (pratiquée traditionnellement par un groupe ethnique voisin) auxquelles les jeunes filles aspiraient et auxquels les parents s&rsquo;opposaient, car ça n&rsquo;avait rien de traditionnel. En Mauritanie, des femmes adultes prennent des stéroïdes pour grossir, de la même manière qu&rsquo;ici des femmes adultes se font vomir pour maigrir ! Que ce soit les FGM, le gavage, la chirurgie esthétique, les vomissements, ce sont des pratiques violentes, mais que des femmes adultes semblent &laquo;&nbsp;choisir&nbsp;&raquo; : cela ne les rend pas plus acceptables (pour les pieds bandés, c&rsquo;est un cas particulier, car une telle déformation des pieds ne pouvait être faite que dans l&rsquo;enfance). Par ailleurs, les idéaux derrière peuvent être similaires. Les chaussures à talon des femmes mandchoues étaient conçues pour donner l&rsquo;effet d&rsquo;avoir des pieds bandés, mais généraient, évidemment, un degré de douleur bien, bien moindre&#8230; Donc il me semble raisonnable de considérer qu&rsquo;il s&rsquo;agisse d&rsquo;une forme &laquo;&nbsp;atténuée&nbsp;&raquo; d&rsquo;une autre pratique, beaucoup plus violente. On ne peut pas dire que ça n&rsquo;a rien à voir.</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2017/03/19/coercition-beaute/?replytocom=4596#respond' data-commentid="4596" data-postid="2286" data-belowelement="comment-4596" data-respondelement="respond" aria-label='Répondre à antisexisme'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment odd alt depth-3 highlander-comment" id="li-comment-4597">
+		<article id="comment-4597" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/0d2399d5f7eb1cd46f0437b20a39efaa?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn">z</cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2017/03/19/coercition-beaute/#comment-4597"><time pubdate datetime="2017-04-16T12:40:02+02:00">
+						16 avril 2017 à 12 h 40 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_4597"></div><p><a href="https://polldaddy.com/js/rating/rating.jsBonjour" rel="nofollow ugc">https://polldaddy.com/js/rating/rating.jsBonjour</a>,<br />
+Bien sûr, vous indiquez dans le texte que le port de talons aiguilles, les FGM et le bandage des pieds sont différents (on s’en serait douté), mais la phrase que j’ai citée à laquelle je répondais, qui les renvoie à une même nature, transforme votre texte en palinodie.<br />
+Pour ce qui est de vos explications, je ne comprends pas en quoi renvoyer les talons aiguille et les FGM/ pieds bandés à une même nature répondrait à la problématique de la chirurgie esthétique qui est, elle, un cas limite très complexe. J’ai des amies qui ont eu recours à la chirurgie « esthétique » reconstructrice après masectomie pour cause de cancer du sein. Je me vois mal les culpabiliser en leur expliquant qu’elle subissent une aliénation qui ne serait pas « de nature différente » (les mots de votre conclusion que je réfute) que les femmes qui « choisissent » une FGM.<br />
+Encore une fois, tout à avoir avec tout au niveau de généralité suffisant, donc la question n’est pas de savoir si les talons aiguilles ont à voir avec les FGM (évidememnt oui à un certain niveau de généralité, évidemment non à un certain niveau de spécificité). La question est de savoir s’il y a quelquechose à tirer de cette « confusion ». Les deux conséquences qui me semblent logiques sont :<br />
+– mobiliser contre les talons aiguilles l’indignation suscitée par les FGM/pieds bandés<br />
+– susciter à l’égard des pieds bandés/ FGM la même tolérance dont jouissent les talons aiguilles<br />
+Aucune ne me semble satisfaisante, notamment car la première me semble en fait contre productive : si pour combattre les talons aiguilles, on a recours à un argument aussi fallacieux [0] que l’assimilation aux pieds bandés/FGM, le message implicite est qu’on a pas de meilleur argument. Or le port répété de talons aiguilles devrait être assez nocif EN LUI-MÊME pour rendre inacceptable le fait qu’un employeur puisse le rendre obligatoire !<br />
+Pour ce qui est du rapport à la « violence » auto imposée, je pense que s’il l’on veut la combattre, il faut comprendre d’où elle vient. Il faudrait plus qu’un message sur un blog[1] mais je pense qu’il s’agit notamment de signaler son altruisme (au sens technique en psychologie de la personnalité). Et qu’il y a des raisons aussi bien illégitmes que légitimes pour les hommes et la société de valoriser l’atruisme féminin. Ma conclusion serait donc plutôt que les pratiques douloureuses manifestent l’atruisme des femmes qui s’y adonnent donc elles valorisent celles-ci aux yeux des sociétés qui valorisent l’altruisme féminin. Or si je parlais de bonnes raisons de valoriser l’atruisme féminin, c’est qu’il vaut mieux être altruiste lorsqu’on interagit avec un nourisson car celui-ci est incapable de collaboration et encore moins de compétition !<br />
+Évidemment, je pense qu’il faudrait donner des moyens aux femmes de signaler leur altruisme, si elles le désirent, autrement qu’en abimant leur corps. Encore mieux, il faudrait faire comprendre aux gens, hommes et femmes, que ces rôles n’ont pas à déterminer de façon permanente leurs attitudes : on devrait par exemple être capable de moduler son altruisme en fonction des circonstances, suivant qu’on nourrit un bébé ou qu’on exige une augmentation de son patron.<br />
+[0] la non prise en compte de changements de nature aka <a href="https://fr.wikipedia.org/wiki/Paradoxe_sorite" rel="nofollow ugc">https://fr.wikipedia.org/wiki/Paradoxe_sorite</a><br />
+[1] en fait, j’en ferais des travaux de thèse si je pouvais trouver quelqu’un pour la diriger, mais comme il ne s’agirait pas de présenter les femmes comme des victimes et qu’il y aurait une approche psychologique importante, j’ai peu d’espoir en France.</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2017/03/19/coercition-beaute/?replytocom=4597#respond' data-commentid="4597" data-postid="2286" data-belowelement="comment-4597" data-respondelement="respond" aria-label='Répondre à z'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment even depth-4 highlander-comment" id="li-comment-4598">
+		<article id="comment-4598" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://1.gravatar.com/avatar/a29a2451b5df6c1fc0a03212fb396e44?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn">El Gato</cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2017/03/19/coercition-beaute/#comment-4598"><time pubdate datetime="2017-04-16T13:37:07+02:00">
+						16 avril 2017 à 13 h 37 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_4598"></div><p><!--//--><!--
+PDRTJS_settings_5500324_comm_4598={"id":5500324,"unique_id":"wp-comment-4598","title":"%26lt%3B%21-%2F%2F-%26gt%3B%26lt%3B%21-PDRTJS_settings_5500324_comm_4598%3D%7B%26quot%3Bid%26quot%3B%3A5500324%2C%26quot%3Bunique_id%26quot%3B%3A%26quot%3Bwp-comment-4598%26quot%3B%2C%26quot%3Btitle%26quot%3B%3A%26quot%3Bhttps%253A%252F%252Fpolldaddy.com%252Fjs%252Frating%252Frating.js%2540Z%2520je%2520suis%2520daccord%2520avec%2520votre%25...","permalink":"http:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-4598","item_id":"_comm_4598"};
+//--><br />
+<a href="https://polldaddy.com/js/rating/rating.js" rel="nofollow">https://polldaddy.com/js/rating/rating.js</a><!--//--><!--
+PDRTJS_settings_5500324_comm_4598={"id":5500324,"unique_id":"wp-comment-4598","title":"https%3A%2F%2Fpolldaddy.com%2Fjs%2Frating%2Frating.js%40Z%20je%20suis%20daccord%20avec%20votre%20commentaire%20sur%20le%20fait%20de%20dire%20que%20des%20phnomnes%20sont%20de%20mme%20nature%20ou%20non%20na%20pas%20de%20sens%20en%20soi.%20Par%20contre%2C%20je%20ne%20suis%20pas...","permalink":"http:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-4598","item_id":"_comm_4598"};
+//--><br />
+<a href="https://polldaddy.com/js/rating/rating.js" rel="nofollow">https://polldaddy.com/js/rating/rating.js</a><a href="https://polldaddy.com/js/rating/rating.js@Z" rel="nofollow">https://polldaddy.com/js/rating/rating.js@Z</a> je suis d’accord avec votre commentaire sur le fait de dire que des phénomènes sont de même nature ou non n’a pas de sens en soi. Par contre, je ne suis pas convaincu par l’approche psychologique 🙂<br />
+Toute société suppose des normes, pour les femmes comme pour les hommes qui tiennent à leur organisation. Certaines sont plus contraignantes, douloureuses, handicapantes que d’autres. Mais toutes ont une fonction politique. Et le fait que généralement ce soient les femmes qui soient victimes des contraintes les plus handicapantes, douloureuses et mutilantes est en soi un fait social.<br />
+Je ne connais pas cette étude anthropologique sur cette région du Tchad où l’excision serait une nouvelle « mode », mais je suis certain que ce n’a rien à voir avec un phénomène qui pourrait se réduire avec une évolution du « goût » des jeunes filles ou de leur rapport psychanalytique au pénis et tout avec une évolution politique et/ou économique de ces sociétés qui supposait que le contrôle de la sexualité des femmes passe par d’autres « modes » que précédemment.</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2017/03/19/coercition-beaute/?replytocom=4598#respond' data-commentid="4598" data-postid="2286" data-belowelement="comment-4598" data-respondelement="respond" aria-label='Répondre à El Gato'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment odd alt depth-5 highlander-comment" id="li-comment-4599">
+		<article id="comment-4599" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/0d2399d5f7eb1cd46f0437b20a39efaa?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn">z</cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2017/03/19/coercition-beaute/#comment-4599"><time pubdate datetime="2017-04-16T14:53:31+02:00">
+						16 avril 2017 à 14 h 53 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_4599"></div><p><a href="https://polldaddy.com/js/rating/rating.jsBonjour" rel="nofollow ugc">https://polldaddy.com/js/rating/rating.jsBonjour</a>,<br />
+Je ne comprends pas du tout pourquoi vous croyez bon de parler de « rapport psychanalytique au pénis » alors que je parle de psychologie de la personnalité [0].<br />
+Ce n’est pas parce qu’il y a « psy » dans « psychanalyse » et dans « psychologie de la personnalité » qu’on peut confondre les deux…<br />
+Pour vous en convaincre, vous pouvez vous renseigner sur le sujet [1].<br />
+[0] <a href="https://en.wikipedia.org/wiki/Personality_psychology" rel="nofollow ugc">https://en.wikipedia.org/wiki/Personality_psychology</a><br />
+[1] <a href="https://scholar.google.fr/scholar?q=sex+difference+agreeableness" rel="nofollow ugc">https://scholar.google.fr/scholar?q=sex+difference+agreeableness</a></p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2017/03/19/coercition-beaute/?replytocom=4599#respond' data-commentid="4599" data-postid="2286" data-belowelement="comment-4599" data-respondelement="respond" aria-label='Répondre à z'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment byuser comment-author-antisexisme bypostauthor even depth-4 highlander-comment" id="li-comment-4600">
+		<article id="comment-4600" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/c731be1005243beeefb57b3e2bc4b03c?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='https://antisexisme.wordpress.com' rel='external nofollow ugc' class='url'>antisexisme</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2017/03/19/coercition-beaute/#comment-4600"><time pubdate datetime="2017-04-16T17:27:54+02:00">
+						16 avril 2017 à 17 h 27 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_4600"></div><p>Ce qui n&rsquo;est peut-être pas clair, c&rsquo;est que cet article fait en fait partie d&rsquo;une longue série où j&rsquo;explique que les pratiques de beauté constituent des mécanismes pour &laquo;&nbsp;domestiquer&nbsp;&raquo; le corps des femmes. Par exemple, les talons aiguille réduisent la mobilité des femmes. Idem pour le gavage (Mauritanie) et les pieds bandés (Chine).</p>
+<p>Là où je veux en venir, c&rsquo;est que les pratiques de beauté, quelque soit les contraintes appliquées, le degré de violence infligée, etc. permettent de contrôler le corps des femmes. Cela les rend plus faibles, moins mobiles, et cela les détourne d&rsquo;elles-mêmes mais plutôt vers les besoins des autres (ça rejoint la notion d&rsquo;altruisme que vous avez développé)<br />
+Le premier article de la série : <a href="https://antisexisme.net/2016/01/02/impuissance-01/" rel="nofollow ugc">https://antisexisme.net/2016/01/02/impuissance-01/</a></p>
+<p>Je me suis dans un premier temps concentré sur les idéaux de beauté occidentaux, mais j&rsquo;ai développé le cas de l&rsquo;idéal de  faible mobilité dans d&rsquo;autres cultures ici (gavage et pieds bandés, notamment) : <a href="https://antisexisme.net/2017/04/06/universalite-1/" rel="nofollow ugc">https://antisexisme.net/2017/04/06/universalite-1/</a></p>
+<p>Dans un article qui sera publié demain, j&rsquo;évoquerai comment des pratiques de diverses cultures (pieds bandés, gavage et FGM) renvoient à des idéaux de chasteté.</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2017/03/19/coercition-beaute/?replytocom=4600#respond' data-commentid="4600" data-postid="2286" data-belowelement="comment-4600" data-respondelement="respond" aria-label='Répondre à antisexisme'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment odd alt depth-5 highlander-comment" id="li-comment-4631">
+		<article id="comment-4631" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/0d2399d5f7eb1cd46f0437b20a39efaa?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn">z</cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2017/03/19/coercition-beaute/#comment-4631"><time pubdate datetime="2017-04-16T17:59:19+02:00">
+						16 avril 2017 à 17 h 59 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_4631"></div><p>J&rsquo;ai bien compris que vous avez une thèse «les pratiques de beauté, quelque soit les contraintes appliquées, le degré de violence infligée, etc. permettent de contrôler le corps des femmes.» et que vous essayez d&rsquo;étayer en faisant rentrer dedans  différentes «pratiques de beauté» (quid du maquillage ?) de diverses cultures pour le rendre universel.<br />
+Mais je pense que vous êtes la victime complaisante d&rsquo;une illusion finaliste en ce qui concerne les talons : ce n&rsquo;est pas parce que les talons entravent le mouvement qu&rsquo;on met (fait mettre) des talons pour entraver le mouvement !<br />
+ Déjà l&rsquo;historique de son utilisation masculine devrait vous mettre la puce à l&rsquo;oreille, ensuite les effets sur le physique sont suffisants pour en justifier l&rsquo;usage (jambes d&rsquo;apparence plus tonique donc en meilleure santé par contraction du mollet et surtout cambrure des reins qui évoque la disponibilité sexuelle [0].</p>
+<p>[0] <a href="https://en.wikipedia.org/wiki/Lordosis_behavior#In_humans" rel="nofollow ugc">https://en.wikipedia.org/wiki/Lordosis_behavior#In_humans</a></p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2017/03/19/coercition-beaute/?replytocom=4631#respond' data-commentid="4631" data-postid="2286" data-belowelement="comment-4631" data-respondelement="respond" aria-label='Répondre à z'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-antisexisme bypostauthor even depth-6 highlander-comment" id="li-comment-4632">
+		<article id="comment-4632" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/c731be1005243beeefb57b3e2bc4b03c?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='https://antisexisme.wordpress.com' rel='external nofollow ugc' class='url'>antisexisme</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2017/03/19/coercition-beaute/#comment-4632"><time pubdate datetime="2017-04-16T18:13:02+02:00">
+						16 avril 2017 à 18 h 13 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_4632"></div><p>Merci de me traiter de &laquo;&nbsp;victime complaisante&nbsp;&raquo; ! Je ne suis pas sûre de vouloir continuer à discuter avec vous dans ces conditions.</p>
+<p>&laquo;&nbsp;ce n’est pas parce que les talons entravent le mouvement qu’on met (fait mettre) des talons pour entraver le mouvement !&nbsp;&raquo;<br />
+==&gt; Oui, merci, je me doute que les femmes ne mettent pas des talons en pensant &laquo;&nbsp;Ah, ben super, comme ça j&rsquo;aurai mal aux pieds&nbsp;&raquo;.<br />
+Mais les petits pas, la démarche hésitante, etc. sont perçues comme gracieuses et féminines.<br />
+Par ailleurs, si vous aviez pris la peine de lire, ou au moins de parcourir ma série d&rsquo;article, vous auriez vu que je traite également des talons comme sexualisant pour les femmes. Et réduire les femmes en objets sexuels, c&rsquo;est aussi une manière de les dominer et de les contrôler.</p>
+<p>Enfin, les talons masculins n&rsquo;étaient pas identiques aux talons féminins actuels : plus larges et moins hauts. Ils ont été créés à la base pour pouvoir mieux se maintenir à cheval, et donc par souci de praticité.</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2017/03/19/coercition-beaute/?replytocom=4632#respond' data-commentid="4632" data-postid="2286" data-belowelement="comment-4632" data-respondelement="respond" aria-label='Répondre à antisexisme'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment odd alt depth-7 highlander-comment" id="li-comment-4633">
+		<article id="comment-4633" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/0d2399d5f7eb1cd46f0437b20a39efaa?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn">z</cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2017/03/19/coercition-beaute/#comment-4633"><time pubdate datetime="2017-04-16T19:42:43+02:00">
+						16 avril 2017 à 19 h 42 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_4633"></div><p>Ce n&rsquo;est pas parce que les talons masculins ont été créés pour se maintenir dans des étriers qu&rsquo;ils étaient ensuite portés par soucis de praticité !<br />
+Et si la démarche hésitante est apréciée, ce n&rsquo;est pas forcément par soucis de domination, mais peut-être parce qu&rsquo;elle peut être considérée comme mignonne (au sens kawaï) car pataude comme tout ce qui évoque les bébés. Mais encore une fois, vous avez une vision finaliste : ce n&rsquo;est pas parce que la démarche hésitante serait perçue comme gracieuse, qu&rsquo;on porterait/ferait porter des talons pour provoquer une démarche hésitante.</p>
+<p>Et ce n&rsquo;est pas parce qu&rsquo;une femme décide de &laquo;&nbsp;sexualiser&nbsp;&raquo; sa tenue, par exemple avec des talons pour cambrer ses reins, qu&rsquo;elle est dominée en tant qu&rsquo;objet sexuel et contrôlée !</p>
+<p>Peut-être que les comportements humains, notamment en matière de séduction, sont un peu trop complexes pour être réduits à des rapports de domination/contrôle ?</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2017/03/19/coercition-beaute/?replytocom=4633#respond' data-commentid="4633" data-postid="2286" data-belowelement="comment-4633" data-respondelement="respond" aria-label='Répondre à z'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-antisexisme bypostauthor even depth-8 highlander-comment" id="li-comment-4634">
+		<article id="comment-4634" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/c731be1005243beeefb57b3e2bc4b03c?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='https://antisexisme.wordpress.com' rel='external nofollow ugc' class='url'>antisexisme</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2017/03/19/coercition-beaute/#comment-4634"><time pubdate datetime="2017-04-16T19:52:41+02:00">
+						16 avril 2017 à 19 h 52 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_4634"></div><p>Ça ne vous interroge pas qu&rsquo;une démarche &laquo;&nbsp;pataude&nbsp;&raquo;, &laquo;&nbsp;mignonne&nbsp;&raquo; ou &laquo;&nbsp;évoquant les bébés&nbsp;&raquo; soit appréciée chez les femmes, et non pas chez les hommes (chez qui ce serait considéré comme totalement ridicule) ? Pour vous, il n&rsquo;y a aucun rapport avec le statut subalterne des femmes ?<br />
+De même, pour vous, il est totalement &laquo;&nbsp;neutre&nbsp;&raquo; que ce soit les femmes qui soient montrées (ou se montrent) comme objets de désir ?</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2017/03/19/coercition-beaute/?replytocom=4634#respond' data-commentid="4634" data-postid="2286" data-belowelement="comment-4634" data-respondelement="respond" aria-label='Répondre à antisexisme'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment odd alt depth-9 highlander-comment" id="li-comment-4635">
+		<article id="comment-4635" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/0d2399d5f7eb1cd46f0437b20a39efaa?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn">z</cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2017/03/19/coercition-beaute/#comment-4635"><time pubdate datetime="2017-04-17T01:39:18+02:00">
+						17 avril 2017 à 1 h 39 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_4635"></div><p><a href="https://polldaddy.com/js/rating/rating.jsSi" rel="nofollow ugc">https://polldaddy.com/js/rating/rating.jsSi</a> les hommes ne sont pas concernés par le fait d’être trouvés mignons par leur faiblesses/incapacités, ce n’est pas forcément parce qu’ils sont en position de domination par rapport aux femmes. Plutôt qu’un rapport dominant/dominée (subalterne), on peut y voir un rapport protecteur/protégée. C’est à mon avis surtout parce que le pendant masculin de l’altruisme est l’héroïsme dont l’archétype est le soldat. Et là, en matière de violence subie, ça a beau être exceptionnel (et de plus en plus, on l’espère), il suffit de regarder une pyramide des âges après la première guerre mondiale pour constater les dégâts spécifiquement masculin du rôle social qui leur est imposé. De nos jours, on voit l’impact de ce rôle viril sur les mecs qui fréquentent les salles de muscu pur ressembler aux acteurs de films d’action. Et si j’en crois leurs T-shirt « no pain, no gain », ils ne sont pas en reste pour la conformité aux canons de beauté par la douleur.<br />
+Et s’il n’est évidemment pas neutre que ce soient les femmes qui soient montrées (ou se montrent) comme objet de désir, c’est le contraire d’une oppression mais justement un degré de liberté suplémentaire qu’elles ont en matière de disponibilité sexuelle : le femme peut se montrer ouverte ou non à des rapports sexuels, alors que l’homme, lui, est supposé être toujours disponible.</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2017/03/19/coercition-beaute/?replytocom=4635#respond' data-commentid="4635" data-postid="2286" data-belowelement="comment-4635" data-respondelement="respond" aria-label='Répondre à z'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='https://deslivresetlesmots.wordpress.com/2017/05/01/cest-le-1er-mai-je-balance-tout/' rel='external nofollow ugc' class='url'>C’est le 1er mai, je balance tout ! &#8211; Des livres et les mots</a></p>
+	</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-4737">
+		<article id="comment-4737" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://i1.wp.com/graph.facebook.com/v2.2/1892392611028560/picture?q=type%3Dlarge%26_md5%3D2e1df7cf115104ad50c15348487e4c9d&#038;resize=50%2C50' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='https://www.facebook.com/app_scoped_user_id/1892392611028560/' rel='external nofollow ugc' class='url'>Résilience Amphotéricine</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2017/03/19/coercition-beaute/#comment-4737"><time pubdate datetime="2017-06-04T05:53:33+02:00">
+						4 juin 2017 à 5 h 53 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_4737"></div><p><!--//--><!--
+PDRTJS_settings_5500324_comm_4737={"id":5500324,"unique_id":"wp-comment-4737","title":"Les%20conventions%20collectives%20de%20la%20restauration%20en%20France%20imposent%20un%20maquillage%20obligatoire%20des%20yeux%20et%20des%20lvres%2C%20pour%20les%20femmes%2C%20et%20une%20interdiction%20de%20moustache%20et%20barbe%20aux%20hommes%2C%20aprs%20peuv...","permalink":"http:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-4737","item_id":"_comm_4737"};
+//--><br />
+<a href="https://polldaddy.com/js/rating/rating.js" rel="nofollow">https://polldaddy.com/js/rating/rating.js</a>Les conventions collectives de la restauration en France imposent un maquillage obligatoire des yeux et des lèvres, pour les femmes, et une interdiction de moustache et barbe aux hommes, après peuvent y être ajouté une contrainte de vernissage des ongles idem leur couleur et les assortir aux rouge à lèvres : les maquillages permanents : espèce de tatto bas gamme d&rsquo;eye liner, surlignage des lèvres sont fréquents chez les &laquo;&nbsp;leadeuses&nbsp;&raquo; les femmes chef de rang, c&rsquo;est à la charge financière des salariés, idem &laquo;&nbsp;rasage permanent&nbsp;&raquo; masculin.</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2017/03/19/coercition-beaute/?replytocom=4737#respond' data-commentid="4737" data-postid="2286" data-belowelement="comment-4737" data-respondelement="respond" aria-label='Répondre à Résilience Amphotéricine'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-5401">
+		<article id="comment-5401" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/cfbb5f275fde17f72b37f5d1884d3af8?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn">1011</cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2017/03/19/coercition-beaute/#comment-5401"><time pubdate datetime="2018-06-06T08:53:16+02:00">
+						6 juin 2018 à 8 h 53 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_5401"></div><p><!--//--><!--
+PDRTJS_settings_5500324_comm_5401={"id":5500324,"unique_id":"wp-comment-5401","title":"Merci%20pour%20votre%20article%20qui%20explique%20entre%20autre%20l%26%23039%3Binfibulation%20%21%20Parler%20des%20mutilations%20sexuelles%2C%20c%26%23039%3Best%20le%20dbut%20du%20combat%20...Plasticienne%20engage%2C%20jai%20ralis%20une%20uvre%20intitule%20%26quot%3BInfibulation%26quot%3B%20sur...","permalink":"http:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-5401","item_id":"_comm_5401"};
+//--><br />
+<a href="https://polldaddy.com/js/rating/rating.js" rel="nofollow">https://polldaddy.com/js/rating/rating.js</a>Merci pour votre article qui explique entre autre l&rsquo;infibulation ! Parler des mutilations sexuelles, c&rsquo;est le début du combat &#8230;<br />
+Plasticienne engagée, j’ai réalisé une œuvre intitulée &laquo;&nbsp;Infibulation&nbsp;&raquo; sur le sujet des mutilations sexuelles féminines que j’ai pu présenter à 400 lycéens français pour la Journée des Femmes 2018.  L&rsquo;action est aussi la pédagogie et le débat.<br />
+A découvrir : <a href="https://1011-art.blogspot.fr/p/blog-page.html" rel="nofollow">https://1011-art.blogspot.fr/p/blog-page.html</a></p>
+<p>Mais aussi une oeuvre plus pudique intitulée « Noli me tangere » sur l’inviolabilité du corps de la femme : <a href="https://1011-art.blogspot.fr/p/noli-me-tangere.html" rel="nofollow">https://1011-art.blogspot.fr/p/noli-me-tangere.html</a></p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2017/03/19/coercition-beaute/?replytocom=5401#respond' data-commentid="5401" data-postid="2286" data-belowelement="comment-5401" data-respondelement="respond" aria-label='Répondre à 1011'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='https://simpleishonest.wordpress.com/2018/07/01/revolution-copernicienne-la-vulve/' rel='external nofollow ugc' class='url'>Révolution copernicienne: la VULVE! &#8211; Simple is honest</a></p>
+	</li><!-- #comment-## -->
+		</ol><!-- .commentlist -->
+
+		
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Votre commentaire <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2017/03/19/coercition-beaute/#respond" style="display:none;">Annuler la réponse.</a></small></h3><form action="https://antisexisme.net/wp-comments-post.php" method="post" id="commentform" class="comment-form"><input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="647d1c6fe3" /><input type="hidden" name="_wp_http_referer" value="/2017/03/19/coercition-beaute/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Entrez votre commentaire...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Entrez votre commentaire..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+	<div id="comment-form-nascar">
+		<p>Entrez vos coordonnées ci-dessous ou cliquez sur une icône pour vous connecter:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" class="nascar-signin-link"
+                   title="Connexion avec Visiteur">
+									</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" class="nascar-signin-link"
+                   title="Connexion avec WordPress.com">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" class="nascar-signin-link"
+                   title="Connexion avec Twitter">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" class="nascar-signin-link"
+                   title="Connexion avec Facebook">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg>				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=retro&amp;forcedefault=y&amp;r=G" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">E-mail <span class="required">(obligatoire)</span> <span class="nopublish">(adresse strictement confidentielle)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Nom <span class="required">(obligatoire)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Site web</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url" value="" /></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=retro&amp;forcedefault=y&amp;r=G" alt="Logo WordPress.com" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+						<p class="comment-form-posting-as pa-wordpress">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte WordPress.com.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=retro&amp;forcedefault=y&amp;r=G" alt="Photo Google" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+						<p class="comment-form-posting-as pa-googleplus">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Google.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" x="0px" y="0px" viewBox="0 0 60 60" ><path fill="#519bf7" d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" /><path fill="#3db366" d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" /><path fill="#fdc600" d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" /><path fill="#f15b44" d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" /></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=retro&amp;forcedefault=y&amp;r=G" alt="Image Twitter" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+						<p class="comment-form-posting-as pa-twitter">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Twitter.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=retro&amp;forcedefault=y&amp;r=G" alt="Photo Facebook" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+						<p class="comment-form-posting-as pa-facebook">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Facebook.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Annuler</a></div>
+		<p>Connexion à %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Avertissez-moi par e-mail des nouveaux commentaires.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Avertissez-moi par e-mail des nouveaux articles.</label></p></div>
+
+
+
+
+<p class="form-submit"><input name="submit" type="submit" id="comment-submit" class="submit" value="Laisser un commentaire" /> <input type='hidden' name='comment_post_ID' value='2286' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="363a154ec3" /></p>
+<input type="hidden" name="genseq" value="1589683566" />
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="109"/></p></form>	</div><!-- #respond -->
+	<div style="clear: both"></div><p class="akismet_comment_form_privacy_notice">Ce site utilise Akismet pour réduire les indésirables. <a href="https://akismet.com/privacy/" target="_blank" rel="nofollow noopener">En savoir plus sur la façon dont les données de vos commentaires sont traitées</a>.</p>
+</div><!-- #comments .comments-area -->
+
+		
+		</div><!-- #content .site-content -->
+	</div><!-- #primary .content-area -->
+
+
+<div id="secondary" class="updateable widget-area" role="complementary">
+		<aside id="search-3" class="widget widget_search">	<form method="get" id="searchform" action="https://antisexisme.net/" role="search">
+		<label for="s" class="assistive-text screen-reader-text">Recherche</label>
+		<input type="text" class="field" name="s" value="" id="s" placeholder="Recherche &hellip;" />
+		<input type="submit" class="submit" name="submit" id="searchsubmit" value="Recherche" />
+	</form>
+</aside><aside id="media_image-2" class="widget widget_media_image"><h1 class="widget-title">Mon livre</h1><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="http://www.lespetitsmatins.fr/collections/en-finir-avec-la-culture-du-viol/" target="_blank" rel="noopener noreferrer"><img width="2850" height="4512" src="https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=2850" class="image wp-image-2721  attachment-2850x4512 size-2850x4512" alt="En finir avec la culture du viol" style="max-width: 100%; height: auto;" srcset="https://antisexisme.files.wordpress.com/2018/02/couv-grand.png 2850w, https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=95 95w, https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=189 189w, https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=768 768w, https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=647 647w" sizes="(max-width: 2850px) 100vw, 2850px" data-attachment-id="2721" data-permalink="https://antisexisme.net/couv-grand/" data-orig-file="https://antisexisme.files.wordpress.com/2018/02/couv-grand.png" data-orig-size="2850,4512" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="couv grand" data-image-description="" data-medium-file="https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=189" data-large-file="https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=647" /></a></aside><aside id="text-17" class="widget widget_text"><h1 class="widget-title">Pétition : Inceste, aucun consentement de 0 à 18 ans ! Aucune prescription !</h1>			<div class="textwidget"><p><a href="https://www.change.org/p/inceste-aucun-consentement-de-0-%C3%A0-18-ans-aucune-prescription" target="_blank" rel="noopener noreferrer"><img class="aligncenter wp-image-2896 size-full" style="border:0 solid #000000;" src="https://antisexisme.files.wordpress.com/2018/03/aivi-logositenew.png" alt="" width="211" height="68" /></a></p>
+<p><a href="https://www.change.org/p/inceste-aucun-consentement-de-0-%C3%A0-18-ans-aucune-prescription" target="_blank" rel="noopener noreferrer">Pétition à signer pour mieux défendre les victimes d&rsquo;inceste !</a></p>
+</div>
+		</aside>		<aside id="recent-posts-3" class="widget widget_recent_entries">		<h1 class="widget-title">Articles récents</h1>		<ul>
+											<li>
+					<a href="https://antisexisme.net/2019/07/25/enqueteepilation-analyse-multivariee-de-nos-resultats/">#EnquêteEpilation : analyse multivariée de nos&nbsp;résultats</a>
+									</li>
+											<li>
+					<a href="https://antisexisme.net/2019/06/02/enqueteepilation-les-premiers-resultats-de-notre-grande-enquete-sur-la-norme-du-glabre/">#EnquêteEpilation : les premiers résultats de notre grande enquête sur la norme du&nbsp;glabre</a>
+									</li>
+											<li>
+					<a href="https://antisexisme.net/2019/01/25/fevrier2019/">Trois rencontres publiques en février autour de mon livre ou du&nbsp;féminisme</a>
+									</li>
+											<li>
+					<a href="https://antisexisme.net/2018/04/22/viol-discipline/">Le viol comme outil&nbsp;disciplinaire</a>
+									</li>
+											<li>
+					<a href="https://antisexisme.net/2018/03/26/kleber/">Rencontre le 6 avril à Strasbourg à la librairie&nbsp;Kléber</a>
+									</li>
+					</ul>
+		</aside><aside id="text-16" class="widget widget_text"><h1 class="widget-title">Pour citer un article de ce blog</h1>			<div class="textwidget"><p><em>Articles écrits par "Antisexisme"</em> :<br />
+<span style="line-height:1.5;">Renard, Noémie (date de publication de l'article). “Titre de l'article”. Antisexisme.net. ISSN 2430-5812. Date de consultation. https://antisexisme.net/url-de-l-article</span></p>
+<p><em>Articles écrits par Blandine Mollard :</em><br />
+<span style="line-height:1.5;">Mollard, Blandine (date de publication de l'article). “Titre de l'article”. Antisexisme.net. ISSN 2430-5812. Date de consultation. https://antisexisme.net/url-de-l-article</span></p>
+</div>
+		</aside><aside id="custom_html-2" class="widget_text widget widget_custom_html"><h1 class="widget-title">Appel à don</h1><div class="textwidget custom-html-widget">Pour m'aider à maintenir le fonctionnement de ce blog (achat du nom de domaine et de ressources), vous pouvez faire un don. Merci à vous :)
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=UNZD3P7UNPW6C" target="_blank" rel="noopener noreferrer"><img src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_donate_LG.gif" alt="Buy Now Button" style="border:none;" /></a></div></aside><aside id="blog_subscription-3" class="widget widget_blog_subscription jetpack_subscription_widget"><h1 class="widget-title"><label for="subscribe-field">S&#039;inscrire par mail</label></h1>
+			<form
+				action="https://subscribe.wordpress.com"
+				method="post"
+				accept-charset="utf-8"
+				id=""
+			>
+									<p>Cliquez ici pour vous inscrire et recevoir des notifications des nouveaux posts par mail.</p>
+<p>Rejoignez 9&nbsp;319 autres abonnés</p>
+					<p>
+						<input
+							type="text"
+							name="email"
+							style="width: 95%; padding: 1px 10px"
+							placeholder="Entrez votre adresse e-mail"
+							value=""
+							id=""
+						/>
+					</p>
+				
+                <p>
+                    <input type="hidden" name="action" value="subscribe"/>
+                    <input type="hidden" name="blog_id" value="20930585"/>
+                    <input type="hidden" name="source" value="https://antisexisme.net/2017/03/19/coercition-beaute/"/>
+                    <input type="hidden" name="sub-type" value="widget"/>
+                    <input type="hidden" name="redirect_fragment" value="blog_subscription-3"/>
+					<input type="hidden" id="_wpnonce" name="_wpnonce" value="9c53c40b3c" />                    <button type="submit"
+	                    		                	                >
+	                    Je m'inscris !                    </button>
+                </p>
+            </form>
+			
+</aside><aside id="archives-4" class="widget widget_archive"><h1 class="widget-title">Archives</h1>		<label class="screen-reader-text" for="archives-dropdown-4">Archives</label>
+		<select id="archives-dropdown-4" name="archive-dropdown">
+			
+			<option value="">Sélectionner un mois</option>
+				<option value='https://antisexisme.net/2019/07/'> juillet 2019 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2019/06/'> juin 2019 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2019/01/'> janvier 2019 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2018/04/'> avril 2018 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2018/03/'> mars 2018 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2018/02/'> février 2018 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2017/11/'> novembre 2017 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2017/10/'> octobre 2017 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2017/05/'> mai 2017 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2017/04/'> avril 2017 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2017/03/'> mars 2017 &nbsp;(3)</option>
+	<option value='https://antisexisme.net/2016/03/'> mars 2016 &nbsp;(4)</option>
+	<option value='https://antisexisme.net/2016/02/'> février 2016 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2016/01/'> janvier 2016 &nbsp;(3)</option>
+	<option value='https://antisexisme.net/2015/12/'> décembre 2015 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2015/10/'> octobre 2015 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2015/08/'> août 2015 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2015/02/'> février 2015 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2014/11/'> novembre 2014 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2014/05/'> mai 2014 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2014/03/'> mars 2014 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2014/01/'> janvier 2014 &nbsp;(3)</option>
+	<option value='https://antisexisme.net/2013/08/'> août 2013 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2013/06/'> juin 2013 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2013/02/'> février 2013 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2013/01/'> janvier 2013 &nbsp;(3)</option>
+	<option value='https://antisexisme.net/2012/12/'> décembre 2012 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2012/10/'> octobre 2012 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2012/09/'> septembre 2012 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2012/08/'> août 2012 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2012/07/'> juillet 2012 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2012/04/'> avril 2012 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2012/03/'> mars 2012 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2012/02/'> février 2012 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2012/01/'> janvier 2012 &nbsp;(3)</option>
+	<option value='https://antisexisme.net/2011/12/'> décembre 2011 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2011/10/'> octobre 2011 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2011/08/'> août 2011 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2011/05/'> mai 2011 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2011/04/'> avril 2011 &nbsp;(3)</option>
+	<option value='https://antisexisme.net/2011/03/'> mars 2011 &nbsp;(6)</option>
+
+		</select>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+	var dropdown = document.getElementById( "archives-dropdown-4" );
+	function onSelectChange() {
+		if ( dropdown.options[ dropdown.selectedIndex ].value !== '' ) {
+			document.location.href = this.options[ this.selectedIndex ].value;
+		}
+	}
+	dropdown.onchange = onSelectChange;
+})();
+/* ]]> */
+</script>
+
+		</aside><aside id="categories-3" class="widget widget_categories"><h1 class="widget-title">Catégories</h1>		<ul>
+				<li class="cat-item cat-item-5792121"><a href="https://antisexisme.net/category/a-lecole/">A l&#039;école</a>
+</li>
+	<li class="cat-item cat-item-116710868"><a href="https://antisexisme.net/category/attributs-du-pouvoir/">Attributs du pouvoir</a>
+</li>
+	<li class="cat-item cat-item-5722"><a href="https://antisexisme.net/category/autre/">Autre</a>
+</li>
+	<li class="cat-item cat-item-124656490"><a href="https://antisexisme.net/category/culture-du-viol/">Culture du viol</a>
+</li>
+	<li class="cat-item cat-item-18661666"><a href="https://antisexisme.net/category/en-politique/" title="L&#039;accès des femmes au pouvoir politique">En politique</a>
+</li>
+	<li class="cat-item cat-item-1259"><a href="https://antisexisme.net/category/genre/" title="Tout sur le genre">Genre</a>
+</li>
+	<li class="cat-item cat-item-595269358"><a href="https://antisexisme.net/category/interactions-sexuelles-a-coercition-graduelle/">Interactions sexuelles à coercition graduelle</a>
+</li>
+	<li class="cat-item cat-item-435629332"><a href="https://antisexisme.net/category/limpuissance-comme-ideal-de-beaute/">L’impuissance comme idéal de beauté</a>
+</li>
+	<li class="cat-item cat-item-35916"><a href="https://antisexisme.net/category/livres/" title="Livre sur le genre et le sexisme">Livres</a>
+</li>
+	<li class="cat-item cat-item-116710829"><a href="https://antisexisme.net/category/mythes-sur-le-viol-2/">Mythes sur le viol</a>
+</li>
+	<li class="cat-item cat-item-207933712"><a href="https://antisexisme.net/category/objectivation-sexuelle-2/">Objectivation sexuelle</a>
+</li>
+	<li class="cat-item cat-item-232196"><a href="https://antisexisme.net/category/sexualite/">Sexualité</a>
+</li>
+	<li class="cat-item cat-item-1149"><a href="https://antisexisme.net/category/videos/">Vidéos</a>
+</li>
+	<li class="cat-item cat-item-34956719"><a href="https://antisexisme.net/category/violence-2/">Violence</a>
+</li>
+		</ul>
+			</aside><aside id="wp_tag_cloud-3" class="widget wp_widget_tag_cloud"><h1 class="widget-title">Étiquettes</h1><div style="overflow:hidden"><a href="https://antisexisme.net/tag/8-mars/" class="tag-cloud-link tag-link-837345 tag-link-position-1" style="font-size: 15.636363636364pt;" aria-label="8 mars (5 éléments)">8 mars</a>
+<a href="https://antisexisme.net/tag/agriculture/" class="tag-cloud-link tag-link-14572 tag-link-position-2" style="font-size: 8pt;" aria-label="agriculture (1 élément)">agriculture</a>
+<a href="https://antisexisme.net/tag/andrea-dworkin/" class="tag-cloud-link tag-link-367452 tag-link-position-3" style="font-size: 14.363636363636pt;" aria-label="Andrea Dworkin (4 éléments)">Andrea Dworkin</a>
+<a href="https://antisexisme.net/tag/concepts-theoriques/" class="tag-cloud-link tag-link-14203136 tag-link-position-4" style="font-size: 17.545454545455pt;" aria-label="concepts théoriques (7 éléments)">concepts théoriques</a>
+<a href="https://antisexisme.net/tag/emploi/" class="tag-cloud-link tag-link-3407 tag-link-position-5" style="font-size: 12.772727272727pt;" aria-label="emploi (3 éléments)">emploi</a>
+<a href="https://antisexisme.net/tag/espace-et-mobilite/" class="tag-cloud-link tag-link-514045028 tag-link-position-6" style="font-size: 14.363636363636pt;" aria-label="espace et mobilité (4 éléments)">espace et mobilité</a>
+<a href="https://antisexisme.net/tag/excision/" class="tag-cloud-link tag-link-1152441 tag-link-position-7" style="font-size: 12.772727272727pt;" aria-label="excision (3 éléments)">excision</a>
+<a href="https://antisexisme.net/tag/genre-et-parole/" class="tag-cloud-link tag-link-515277567 tag-link-position-8" style="font-size: 10.863636363636pt;" aria-label="genre et parole (2 éléments)">genre et parole</a>
+<a href="https://antisexisme.net/tag/mythes-sur-le-viol/" class="tag-cloud-link tag-link-70652310 tag-link-position-9" style="font-size: 20.409090909091pt;" aria-label="mythes sur le viol (11 éléments)">mythes sur le viol</a>
+<a href="https://antisexisme.net/tag/psychotraumatismes/" class="tag-cloud-link tag-link-132437052 tag-link-position-10" style="font-size: 10.863636363636pt;" aria-label="psychotraumatismes (2 éléments)">psychotraumatismes</a>
+<a href="https://antisexisme.net/tag/sandra-bartky/" class="tag-cloud-link tag-link-3251659 tag-link-position-11" style="font-size: 10.863636363636pt;" aria-label="Sandra Bartky (2 éléments)">Sandra Bartky</a>
+<a href="https://antisexisme.net/tag/sexualite-des-femmes/" class="tag-cloud-link tag-link-16126893 tag-link-position-12" style="font-size: 15.636363636364pt;" aria-label="sexualité des femmes (5 éléments)">sexualité des femmes</a>
+<a href="https://antisexisme.net/tag/sociabilisation-genree/" class="tag-cloud-link tag-link-515262753 tag-link-position-13" style="font-size: 15.636363636364pt;" aria-label="sociabilisation genrée (5 éléments)">sociabilisation genrée</a>
+<a href="https://antisexisme.net/tag/stereotype/" class="tag-cloud-link tag-link-246647 tag-link-position-14" style="font-size: 10.863636363636pt;" aria-label="stéréotype (2 éléments)">stéréotype</a>
+<a href="https://antisexisme.net/tag/viol/" class="tag-cloud-link tag-link-1591361 tag-link-position-15" style="font-size: 22pt;" aria-label="viol (14 éléments)">viol</a></div></aside><aside id="recent-comments-3" class="widget widget_recent_comments"><h1 class="widget-title">Derniers commentaires</h1>				<table class="recentcommentsavatar" cellspacing="0" cellpadding="0" border="0">
+					<tr><td title="Maxence" class="recentcommentsavatartop" style="height:32px; width:32px;"><img alt='' src='https://2.gravatar.com/avatar/219b543d3f770fe1b7c3fab3e6c777af?s=32&#038;d=retro&#038;r=G' class='avatar avatar-32' height='32' width='32' /></td><td class="recentcommentstexttop" style="">Maxence dans <a href="https://antisexisme.net/2011/12/04/mythes-sur-les-viols-partie-1-quels-sont-ces-mythes-qui-y-adhere/#comment-7758">Mythes sur les viols. Partie 1&hellip;</a></td></tr><tr><td title="Maxence" class="recentcommentsavatarend" style="height:32px; width:32px;"><img alt='' src='https://2.gravatar.com/avatar/219b543d3f770fe1b7c3fab3e6c777af?s=32&#038;d=retro&#038;r=G' class='avatar avatar-32' height='32' width='32' /></td><td class="recentcommentstextend" style="">Maxence dans <a href="https://antisexisme.net/2011/12/04/mythes-sur-les-viols-partie-1-quels-sont-ces-mythes-qui-y-adhere/#comment-7757">Mythes sur les viols. Partie 1&hellip;</a></td></tr><tr><td title="Le pouvoir de l&rsquo;amour | Emma" class="recentcommentsavatarend" style="height:32px; width:32px;"><a href="http://emmaclit.com/2020/03/22/le-pouvoir-de-lamour/" rel="nofollow"><img alt='' src='https://emmaclitdotcom.files.wordpress.com/2017/10/cropped-avatar.png?w=32' class='avatar avatar-32' height='32' width='32' /></a></td><td class="recentcommentstextend" style=""><a href="http://emmaclit.com/2020/03/22/le-pouvoir-de-lamour/" rel="nofollow">Le pouvoir de l&hellip;</a> dans <a href="https://antisexisme.net/2016/02/21/impuissance-05/#comment-7699">L’impuissance comme idéal de b&hellip;</a></td></tr><tr><td title="Gilberton" class="recentcommentsavatarend" style="height:32px; width:32px;"><img alt='' src='https://0.gravatar.com/avatar/f4388ff5e4d43db20949f7dd32be82c5?s=32&#038;d=retro&#038;r=G' class='avatar avatar-32' height='32' width='32' /></td><td class="recentcommentstextend" style="">Gilberton dans <a href="https://antisexisme.net/2017/03/19/douleur-physique/#comment-7678">L’impuissance comme idéal de b&hellip;</a></td></tr><tr><td title="antisexisme" class="recentcommentsavatarend" style="height:32px; width:32px;"><a href="https://antisexisme.wordpress.com" rel="nofollow"><img alt='' src='https://0.gravatar.com/avatar/c731be1005243beeefb57b3e2bc4b03c?s=32&#038;d=retro&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></td><td class="recentcommentstextend" style=""><a href="https://antisexisme.wordpress.com" rel="nofollow">antisexisme</a> dans <a href="https://antisexisme.net/2017/03/19/douleur-physique/#comment-7673">L’impuissance comme idéal de b&hellip;</a></td></tr>				</table>
+				</aside><aside id="facebook-likebox-3" class="widget widget_facebook_likebox"><h1 class="widget-title"><a href="https://www.facebook.com/pages/Antisexisme-Sexisme-et-Science-Féminisme/233123106760072">Antisexisme sur Facebook</a></h1>		<div id="fb-root"></div>
+		<div class="fb-page" data-href="https://www.facebook.com/pages/Antisexisme-Sexisme-et-Science-Féminisme/233123106760072" data-width="180"  data-height="130" data-hide-cover="false" data-show-facepile="false" data-tabs="false" data-hide-cta="false" data-small-header="false">
+		<div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/pages/Antisexisme-Sexisme-et-Science-Féminisme/233123106760072"><a href="https://www.facebook.com/pages/Antisexisme-Sexisme-et-Science-Féminisme/233123106760072">Antisexisme sur Facebook</a></blockquote></div>
+		</div>
+		</aside><aside id="twitter_timeline-2" class="widget widget_twitter_timeline"><h1 class="widget-title">Suivez-moi sur Twitter</h1><a class="twitter-timeline" data-width="220" data-theme="light" data-border-color="#e8e8e8" data-tweet-limit="2" data-lang="FR" data-partner="jetpack" data-chrome="noheader nofooter noscrollbar transparent" href="https://twitter.com/@anti_sexism" href="https://twitter.com/@anti_sexism">Mes Tweets</a></aside><aside id="linkcat-137153" class="widget widget_links"><h1 class="widget-title">Autres sites</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://allodoxia.blog.lemonde.fr/" target="_blank">Allodoxia : observatoire critique de la vulgarisation</a></li>
+<li><a href="https://www.grainesdemane.fr" rel="friend" title="Site collaboratif sur l&rsquo;agriculture" target="_blank">Graines de Mane</a></li>
+<li><a href="http://nous-et-les-autres.blogspot.fr/" target="_blank">Nous et les autres</a></li>
+<li><a href="http://peuventilssouffrir.wordpress.com" target="_blank">Peuvent-ils souffrir ?</a></li>
+<li><a href="http://clementinevagne.wix.com/clementinevagne" title="Cinéaste &amp; réalisatrice" target="_blank">Site de Clémentine Vagne</a></li>
+<li><a href="http://webbbene.wordpress.com" rel="acquaintance met sibling" title="Funny french webcomics" target="_blank">Webbene</a></li>
+
+	</ul>
+</aside>
+<aside id="linkcat-515424537" class="widget widget_links"><h1 class="widget-title">Féminisme</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://www.50-50magazine.fr/" target="_blank">50/50 : le magazine de l’égalité femmes/hommes</a></li>
+<li><a href="http://www.avft.org/" target="_blank">Association européenne contre les Violences faites aux Femmes au Travail</a></li>
+<li><a href="http://cafaitgenre.wordpress.com/" title="je m’interroge, tu t’interroges, interrogez-vous" target="_blank">Ça fait genre</a></li>
+<li><a href="http://delphysyllepse.wordpress.com/" target="_blank">Blog de Christine Delphy</a></li>
+<li><a href="https://joellepalmieri.wordpress.com/" title="Féministe, antiraciste, antifasciste, post-colonialiste" target="_blank">Blog de Joelle Palmieri</a></li>
+<li><a href="http://www.breizhfemmes.fr/">Breizh Femmes</a></li>
+<li><a href="http://www.chathain.fr/" title="Une liste de livres autour du féminisme" target="_blank">Chathain</a></li>
+<li><a href="http://femcitations.wordpress.com/" title="Des citations de féministes" target="_blank">Citations féministes</a></li>
+<li><a href="http://www.cfcv.asso.fr/index.php" target="_blank">Collectif Féministe Contre le Viol</a></li>
+<li><a href="http://lacorrectionnalisationduviol.wordpress.com" target="_blank">Correctionnalisation du viol</a></li>
+<li><a href="http://decolereetdespoir.blogspot.fr/" target="_blank">De colère et d&#039;espoir</a></li>
+<li><a href="https://excursusblog.wordpress.com/" target="_blank">ex cursus</a></li>
+<li><a href="http://feministesentousgenres.blogs.nouvelobs.com/" title="entretiens et articles de chercheuses sur le genre et les sexualités" target="_blank">Féministes en tout genre</a></li>
+<li><a href="http://feminada.wordpress.com/" title="De tout et de rien sur le féminisme" target="_blank">Feminada</a></li>
+<li><a href="https://www.gazettedesfemmes.ca/" target="_blank">Gazette des femmes</a></li>
+<li><a href="http://hypathie.blogspot.com/" title="Blog féministe et anti-spéciste" target="_blank">Hypathie</a></li>
+<li><a href="http://www.ecoledugenre.com/" title="Un web documentaire pour décrypter comment les enfants apprennent à se comporter selon leur genre" target="_blank">L&#039;Ecole du genre</a></li>
+<li><a href="http://histoireparlesfemmes.wordpress.com/" title="Grandes Femmes de l’Histoire" target="_blank">L&#039;Histoire par les femmes</a></li>
+<li><a href="http://fondationdesfemmes.org/" target="_blank">La Fondation des Femmes</a></li>
+<li><a href="http://dikecourrier.wordpress.com/" title="Justice pour les femmes" target="_blank">Le courrier de Diké</a></li>
+<li><a href="http://lesaventuresdeuterpe.blogspot.com" title="A la recherche des femmes perdues dans l’espace-temps" target="_blank">Les aventures d&#039;Euterpe</a></li>
+<li><a href="http://www.lesnouvellesnews.fr/" title="Site d’actualités traitant notamment des rapports hommes-femmes" target="_blank">Les nouvelles news</a></li>
+<li><a href="http://lesquestionscomposent.fr/" title="Un blog avec notamment des analyses féministes très intéressantes" target="_blank">Les questions composent</a></li>
+<li><a href="http://blog.plafonddeverre.fr/" title="Les mécanismes du plafond de verre" target="_blank">Olympe et le plafond de verre</a></li>
+<li><a href="http://www.prostitutionetsociete.fr/" title="Site de la revue du Mouvement du Nid" target="_blank">Prostitution et Société</a></li>
+<li><a href="https://revolutionfeministe.wordpress.com/" target="_blank">Révolution féministe</a></li>
+<li><a href="https://ressourcesprostitution.wordpress.com/" target="_blank">Ressources prostitution</a></li>
+<li><a href="http://scenesdelavisquotidien.com/" title="En finir avec la masculinité" target="_blank">Scènes de l&#039;avis quotidien</a></li>
+<li><a href="http://sisyphe.org/" title="Site féministe d’information, d’analyse et d’opinion." target="_blank">Sisyphe</a></li>
+<li><a href="http://stopaudeni.com/" target="_blank">Stop au déni</a></li>
+<li><a href="https://tradfem.wordpress.com" target="_blank">Tradfem</a></li>
+<li><a href="https://womenandfictionblog.wordpress.com/" title="Ici on parle de : genre, littérature, cultures…" target="_blank">Women and fiction</a></li>
+
+	</ul>
+</aside>
+<aside id="jetpack_display_posts_widget-2" class="widget widget_jetpack_display_posts_widget"><h1 class="widget-title">Citations féministes</h1><div class="jetpack-display-remote-posts"><h4><a href="https://femcitations.wordpress.com/2016/06/23/bandage-des-pieds/" target="_blank" rel="noopener">Témoignage sur le bandage des pieds</a></h4>
+<h4><a href="https://femcitations.wordpress.com/2015/10/04/corps-esprit/" target="_blank" rel="noopener">Susan Bordo : à  propos du dualisme corps-esprit</a></h4>
+<h4><a href="https://femcitations.wordpress.com/2014/05/25/definition-du-monde-en-fonction-de-lexperience-des-hommes/" target="_blank" rel="noopener">Définition du monde en fonction de l&#8217;expérience des hommes</a></h4>
+<h4><a href="https://femcitations.wordpress.com/2014/03/20/prostitution/" target="_blank" rel="noopener">Le contrat sexuel</a></h4>
+<h4><a href="https://femcitations.wordpress.com/2014/02/26/le-contrat-sexuel/" target="_blank" rel="noopener">Le contrat sexuel</a></h4>
+</div><!-- .jetpack-display-remote-posts --></aside><aside id="custom_html-3" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><img height="1" width="1" style="display:none;" src="https://www.facebook.com/tr?id=1522418694446256&amp;ev=PageView&amp;noscript=1" />
+
+</div></aside>			<div id="atatags-286348-5ec0a56e2bbd8"></div>
+			
+			<script>
+				__ATA.cmd.push(function() {
+					__ATA.initDynamicSlot({
+						id: 'atatags-286348-5ec0a56e2bbd8',
+						location: 140,
+						formFactor: '003',
+						label: {
+							text: 'Publicités',
+						},
+						creative: {
+							reportAd: {
+								text: 'Report this Ad',
+							},
+							privacySettings: {
+								text: 'Paramètres de confidentialité',
+							}
+						}
+					});
+				});
+			</script></div><!-- #secondary .widget-area -->
+
+	</div><!-- #main .site-main -->
+
+	<footer id="colophon" class="site-footer" role="contentinfo">
+		<div class="site-info">
+						<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Propulsé par WordPress.com.</a>
+			
+					</div><!-- .site-info -->
+	</footer><!-- #colophon .site-footer -->
+</div><!-- #page .hfeed .site -->
+
+<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202020y'></script>
+<script>
+var WPGroHo = {"my_hash":""};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-a29a2451b5df6c1fc0a03212fb396e44">
+	</div>
+	<div class="grofile-hash-map-b4da7e4b3ba90aeb227d6324f215fbd8">
+	</div>
+	<div class="grofile-hash-map-c731be1005243beeefb57b3e2bc4b03c">
+	</div>
+	<div class="grofile-hash-map-0d2399d5f7eb1cd46f0437b20a39efaa">
+	</div>
+	<div class="grofile-hash-map-219b543d3f770fe1b7c3fab3e6c777af">
+	</div>
+	<div class="grofile-hash-map-cfbb5f275fde17f72b37f5d1884d3af8">
+	</div>
+	<div class="grofile-hash-map-f4388ff5e4d43db20949f7dd32be82c5">
+	</div>
+	</div>
+<script>
+var HighlanderComments = {"loggingInText":"Connexion\u2026","submittingText":"Publication d\u2019un Commentaire\u2026","postCommentText":"Laisser un commentaire","connectingToText":"Connexion \u00e0 %s","commentingAsText":"%1$s: Vous commentez \u00e0 l\u2019aide de votre compte %2$s.","logoutText":"Se d\u00e9connecter","loginText":"Se connecter","connectURL":"https:\/\/antisexisme.wordpress.com\/public.api\/connect\/?action=request&domain=antisexisme.net","logoutURL":"https:\/\/antisexisme.wordpress.com\/wp-login.php?action=logout&_wpnonce=f37b16d984","homeURL":"https:\/\/antisexisme.net\/","postID":"2286","gravDefault":"retro","enterACommentError":"Entrez un commentaire","enterEmailError":"Veuillez entrer votre adresse mail","invalidEmailError":"Adresse email invalide","enterAuthorError":"Veuillez entrer votre nom","gravatarFromEmail":"L\u2019image s\u2019affiche lorsque vous postez un commentaire. Cliquez pour personnaliser.","logInToExternalAccount":"Connectez-vous pour utiliser les informations li\u00e9es \u00e0 un de ces comptes:","change":"Changer","changeAccount":"Changer de compte","comment_registration":"","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1573483029j'></script>
+		<!-- CCPA [start] -->
+		<script type="text/javascript">
+			( function () {
+
+				var setupPrivacy = function() {
+
+					document.addEventListener( 'DOMContentLoaded', function() {
+
+						// Minimal Mozilla Cookie library
+						// https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie/Simple_document.cookie_framework
+						var cookieLib = window.cookieLib = {getItem:function(e){return e&&decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*"+encodeURIComponent(e).replace(/[\-\.\+\*]/g,"\\$&")+"\\s*\\=\\s*([^;]*).*$)|^.*$"),"$1"))||null},setItem:function(e,o,n,t,r,i){if(!e||/^(?:expires|max\-age|path|domain|secure)$/i.test(e))return!1;var c="";if(n)switch(n.constructor){case Number:c=n===1/0?"; expires=Fri, 31 Dec 9999 23:59:59 GMT":"; max-age="+n;break;case String:c="; expires="+n;break;case Date:c="; expires="+n.toUTCString()}return"rootDomain"!==r&&".rootDomain"!==r||(r=(".rootDomain"===r?".":"")+document.location.hostname.split(".").slice(-2).join(".")),document.cookie=encodeURIComponent(e)+"="+encodeURIComponent(o)+c+(r?"; domain="+r:"")+(t?"; path="+t:"")+(i?"; secure":""),!0}};
+
+						var setDefaultOptInCookie = function() {
+							var value = '1YNN';
+							var domain = '.wordpress.com' === location.hostname.slice( -14 ) ? '.rootDomain' : location.hostname;
+							cookieLib.setItem( 'usprivacy', value, 365 * 24 * 60 * 60, '/', domain );
+						};
+
+						var setCcpaAppliesCookie = function( value ) {
+							var domain = '.wordpress.com' === location.hostname.slice( -14 ) ? '.rootDomain' : location.hostname;
+							cookieLib.setItem( 'ccpa_applies', value, 24 * 60 * 60, '/', domain );
+						}
+
+						var maybeCallDoNotSellCallback = function() {
+							if ( 'function' === typeof window.doNotSellCallback ) {
+								return window.doNotSellCallback();
+							}
+
+							return false;
+						}
+
+						var usprivacyCookie = cookieLib.getItem( 'usprivacy' );
+
+						if ( null !== usprivacyCookie ) {
+							maybeCallDoNotSellCallback();
+							return;
+						}
+
+						var ccpaCookie = cookieLib.getItem( 'ccpa_applies' );
+
+						if ( null === ccpaCookie ) {
+
+							var request = new XMLHttpRequest();
+							request.open( 'GET', 'https://public-api.wordpress.com/geo/', true );
+
+							request.onreadystatechange = function () {
+								if ( 4 === this.readyState ) {
+									if ( 200 === this.status ) {
+
+										var data = JSON.parse( this.response );
+										var ccpa_applies = data['region'] && data['region'].toLowerCase() === 'california';
+
+										setCcpaAppliesCookie( ccpa_applies );
+
+										if ( ccpa_applies ) {
+											if ( maybeCallDoNotSellCallback() ) {
+												setDefaultOptInCookie();
+											}
+										}
+									} else {
+										setCcpaAppliesCookie( true );
+										if ( maybeCallDoNotSellCallback() ) {
+											setDefaultOptInCookie();
+										}
+									}
+								}
+							};
+
+							request.send();
+						} else {
+							if ( ccpaCookie === 'true' ) {
+								if ( maybeCallDoNotSellCallback() ) {
+									setDefaultOptInCookie();
+								}
+							}
+						}
+					} );
+				};
+
+				if ( window.defQueue && defQueue.isLOHP && defQueue.isLOHP === 2020 ) {
+					defQueue.items.push( setupPrivacy );
+				} else {
+					setupPrivacy();
+				}
+
+			} )();
+		</script>
+
+		<!-- CCPA [end] -->
+					<script type="text/javascript">
+			( function( $ ) {
+				$( document.body ).on( 'post-load', function () {
+					if ( typeof __ATA.insertInlineAds === 'function' ) {
+						__ATA.insertInlineAds();
+					}
+				} );
+			} )( jQuery );
+			</script>
+	<div id="carousel-reblog-box">
+		<form action="#" name="carousel-reblog">
+			<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Ajoutez votre grain de sel personnel... (facultatif)"></textarea>
+			<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Publier sur</label>
+			<select name="carousel-reblog-to-blog-id" id="carousel-reblog-to-blog-id">
+						</select>
+
+			<div class="submit">
+				<span class="canceltext"><a href="#" class="cancel">Annuler</a></span>
+				<input type="submit" name="carousel-reblog-submit" class="button" id="carousel-reblog-submit" value="Reblog Article" />
+				<input type="hidden" id="carousel-reblog-blog-id" value="20930585" />
+				<input type="hidden" id="carousel-reblog-blog-url" value="https://antisexisme.net" />
+				<input type="hidden" id="carousel-reblog-blog-title" value="Sexisme et Sciences humaines -  Féminisme" />
+				<input type="hidden" id="carousel-reblog-post-url" value="" />
+				<input type="hidden" id="carousel-reblog-post-title" value="" />
+			</div>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="9cf7ca1c98" /><input type="hidden" name="_wp_http_referer" value="/2017/03/19/coercition-beaute/" />		</form>
+
+		<div class="arrow"></div>
+	</div>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/":2286};
+	</script>
+					<div id="sharing_email" style="display: none;">
+		<form action="/2017/03/19/coercition-beaute/" method="post">
+			<label for="target_email">Envoyer à l'adresse e-mail</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Votre nom</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Votre adresse e-mail</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="Ce champ est utilisé pour la validation du formulaire et ne doit pas être changé" />
+			
+			<div
+				class="g-recaptcha"
+				data-sitekey="6LcmyE0UAAAAALID28yVNg7pFCodGaArJzHitez_"
+				data-theme="light"
+				data-type="image"
+				data-tabindex="0"></div>
+			<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?hl=fr" async></script>
+			
+			<img style="float: right; display: none" class="loading" src="https://s0.wp.com/wp-content/mu-plugins/post-flair/sharing/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Envoyer un e-mail" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel" role="button">Annuler</a>
+
+			<div class="errors errors-1" style="display: none;">
+				L'article n'a pas été envoyé - Vérifiez vos adresses e-mail&nbsp;!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				La vérification e-mail a échoué, veuillez réessayer			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Impossible de partager les articles de votre blog par e-mail.			</div>
+		</form>
+	</div>
+		<div class="widget widget_eu_cookie_law_widget"><div
+	class="hide-on-button ads-active"
+	data-hide-timeout="30"
+	data-consent-expiration="180"
+	id="eu-cookie-law"
+>
+	<form method="post">
+		<input type="submit" value="Fermer et accepter" class="accept" />
+
+		Confidentialité &amp; Cookies : Ce site utilise des cookies. En continuant à utiliser ce site, vous acceptez leur utilisation.<br />
+Pour en savoir davantage, y compris comment contrôler les cookies, voir :
+		<a href="https://automattic.com/cookies" >
+			Politique relative aux cookies		</a>
+ </form>
+</div>
+</div><link rel='stylesheet' id='all-css-0-3' href='https://s0.wp.com/_static/??/wp-content/mu-plugins/carousel/jetpack-carousel.css,/wp-content/mu-plugins/widgets/wordpress-post-widget/style.css?m=1563361695j&cssminify=yes' type='text/css' media='all' />
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyFUEFSwzAM/BCOCKSQHpi+JdhqKkeR3chOCK+vC+mhwAwnabSr3ZVgicYGSSgJvILDmSzGj8rrA9xDMWgaUbXr8Q/UnzNO61Yqkplw+ZfmMcXODmZCpc9fqmM2kXNPosA0oEJZynjqxDFONzKJ5ewKeA1PmmBGcWG6QjHweiTmaiT5qX0TPmZmo5TQoKNE0m+WUD/W7evzy74BwUW/Ur5zsMPmUvpCLR/R77HZ7j2Mb/Wu3T+1TVM3/gLyqYDg'></script>
+<script type='text/javascript'>
+( 'fetch' in window ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?m=1573572739h&#038;ver=3.0.0"></scr' + 'ipt>' );( document.contains ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?m=1540208548h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?m=1585663916h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?m=1585663916h&#038;ver=3.6.4"></scr' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?m=1550600082h&#038;ver=3.0.12"></scr' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?m=1540208548h&#038;ver=2.0.2"></scr' + 'ipt>' );
+( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-url.min.7490158b.js?m=1588209800h&#038;ver=3.6.4"></scr' + 'ipt>' );
+( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-dom-rect.7e21c103.js?m=1588209800h&#038;ver=3.42.0"></scr' + 'ipt>' );
+</script>
+<script src='https://s0.wp.com/wp-includes/js/dist/vendor/lodash.min.js?m=1573572739h&#038;ver=4.17.15'></script>
+<script>
+window.lodash = _.noConflict();
+</script>
+<script>
+var jpfbembed = {"appid":"249643311490","locale":"fr_FR"};
+</script>
+<script>
+var actionbardata = {"siteID":"20930585","siteName":"Sexisme et Sciences humaines -  F\u00e9minisme","siteURL":"https:\/\/antisexisme.net","icon":"<img alt='' src='https:\/\/secure.gravatar.com\/blavatar\/e776828ff2f5e62ad07e68335ddca469?s=50&d=https%3A%2F%2Fs0.wp.com%2Fi%2Flogo%2Fwpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/misty-lake","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fantisexisme.net%2F2017%2F03%2F19%2Fcoercition-beaute%2F&signup_flow=account&domain=antisexisme.net","themeURL":"","xhrURL":"https:\/\/antisexisme.net\/wp-admin\/admin-ajax.php","nonce":"08de5007a5","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"9c53c40b3c\" \/>","referer":"https:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/","canFollow":"1","feedID":"13273473","statusMessage":"","customizeLink":"https:\/\/antisexisme.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fantisexisme.wordpress.com%2F2017%2F03%2F19%2Fcoercition-beaute%2F","postID":"2286","shortlink":"https:\/\/wp.me\/p1pP05-AS","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/antisexisme.net\/2286","statsLink":"https:\/\/wordpress.com\/stats\/post\/2286\/antisexisme.net","i18n":{"view":"Afficher le site","follow":"Suivre","following":"Abonn\u00e9","edit":"Modifier","login":"Connexion","signup":"S'inscrire","customize":"Personnaliser","report":"Signaler ce contenu","themeInfo":"Obtenir le th\u00e8me: Misty Lake","shortlink":"Copier shortlink","copied":"Copi\u00e9","followedText":"Les nouveaux articles de ce site appara\u00eetront d\u00e9sormais dans votre <a href=\"https:\/\/wordpress.com\/\">Lecteur<\/a>","foldBar":"R\u00e9duire cette barre","unfoldBar":"\u00c9tendre cette barre","editSubs":"G\u00e9rer les abonnements","viewReader":"Voir le site dans le Lecteur","viewReadPost":"Voir l\u2019article dans le Lecteur","subscribe":"M\u2019inscrire","enterEmail":"Entrez votre adresse e-mail","followers":"Rejoignez 9&nbsp;319 autres abonn\u00e9s","alreadyUser":"Vous disposez d\u00e9j\u00e0 d\u02bcun compte WordPress ? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fantisexisme.net%2F2017%2F03%2F19%2Fcoercition-beaute%2F&signup_flow=account&domain=antisexisme.net\">Connectez-vous maintenant.<\/a>","stats":"Statistiques"}};
+</script>
+<script>
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"fr","ajaxurl":"https:\/\/antisexisme.net\/wp-admin\/admin-ajax.php","nonce":"e1e93fd6ec","display_exif":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Commentaire","post_comment":"Laisser un commentaire","write_comment":"\u00c9crire un commentaire...","loading_comments":"Chargement des commentaires\u2026","download_original":"Afficher dans sa taille r\u00e9elle <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>.","no_comment_text":"Veuillez ajouter du contenu \u00e0 votre commentaire.","no_comment_email":"Merci de renseigner une adresse e-mail.","no_comment_author":"Merci de renseigner votre nom.","comment_post_error":"Une erreur s'est produite \u00e0 la publication de votre commentaire. Veuillez nous en excuser, et r\u00e9essayer dans quelques instants.","comment_approved":"Votre commentaire a \u00e9t\u00e9 approuv\u00e9.","comment_unapproved":"Votre commentaire est en attente de validation.","camera":"Appareil photo","aperture":"Ouverture","shutter_speed":"Vitesse d'obturation","focal_length":"Focale","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/antisexisme.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fantisexisme.net%2F2017%2F03%2F19%2Fcoercition-beaute%2F","blog_id":"20930585","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">E-mail (requis)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Nom (requis)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Site web<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogu\u00e9","reblog_add_thoughts":"Ajoutez votre grain de sel personnel... (facultatif)","reblogging":"Reblogging...","post_reblog":"Relais d\u2019article","stats_query_args":"blog=20930585&v=wpcom&tz=2&user_id=0&subd=antisexisme","is_public":"1","reblog_enabled":""};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyVUu1OwzAMfCFSr6xA+YF4FJQmXnGbj5I4K3t7PI2OaZoq9ivOnc8+O4F5UiYGxsAwudJTyNAXuXaYemESQlttqg10hZwFqtsAFCx+V0N+gPvENnqVUNvDeoVdcU5lYlRoiSn06sRAvanbl+3zawMB5zxpM6rORTNmsJQZjE6xZHQnUO0J5+sW/IkeM0ylAy+Sg3J6RBgyZK+lqcdQFgkF44qVZGFN9EKxmJ/cofIUruv6ohb3M9keOQMWYeNIKD1mYPST04xX+EqdAfk4IXyIEdhpg52oFPoO7X9VPBMzJsXk0VHAFZ22MpXqdAKvs2gkUnGPKdFxBWfszgqcxEteExmmGI6ic3Rr/3n6W/klPnwVTIffo7rMutFr+R7LjtQCrPkbKXtktZU/fHqImLzkv/u3+ql9fWybpm6GH7u4NNM='></script>
+<script>
+<!--//--><![CDATA[//><!--
+PDRTJS_settings_4277183_post_2286={"id":4277183,"unique_id":"wp-post-2286","title":"La%20coercition%20%C3%A0%20la%26nbsp%3Bbeaut%C3%A9","permalink":"https:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/","item_id":"_post_2286"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_4277183_post_2286 == 'undefined' ){PDRTJS_4277183_post_2286 = new PDRTJS_RATING( PDRTJS_settings_4277183_post_2286 );}}PDRTJS_settings_5500324_comm_4517={"id":5500324,"unique_id":"wp-comment-4517","title":"%26quot%3B%20la%20douleur%20subordonne%20les%20femmes%2C%20donc%20les%20pratiques%20douloureuse%20les%20rendent%20belles.%20Et%20les%20femmes%20sont%20contraintes%20%20respecter%20les%20normes%20de%20beaut%2C%20dune%20manire%20ou%20dune%20autre.%26quot%3B%20Toutes%20les%20normes...","permalink":"https:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-4517","item_id":"_comm_4517"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_4517 == 'undefined' ){PDRTJS_5500324_comm_4517 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_4517 );}}PDRTJS_settings_5500324_comm_4546={"id":5500324,"unique_id":"wp-comment-4546","title":"Bonsoir%2CNon%2C%20les%20pieds%20bands%20ne%20limitaient%20pas%20la%20circulation%20des%20femmes%20chinoises.%20Des%20anthropologues%20%28je%20n%26%23039%3Bai%20pas%20les%20noms%20en%20tte%29%20avaient%20fait%20l%26%23039%3Bexprience%20d%26%23039%3Ben%20faire%20courir%20quelques-unes%20et%20el...","permalink":"https:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-4546","item_id":"_comm_4546"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_4546 == 'undefined' ){PDRTJS_5500324_comm_4546 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_4546 );}}PDRTJS_settings_5500324_comm_4548={"id":5500324,"unique_id":"wp-comment-4548","title":"Bonjour%20Vanessa%2CA%20propos%20des%20pieds%20bands%2C%20voici%20un%20extrait%20d%26%23039%3Bun%20texte%20que%20j%26%23039%3Bavais%20commenc%20%20crire%20%3ALa%20dformation%20des%20pieds%20provoqus%20par%20les%20bandages%20avait%20pour%20consquence%20directe%20de%20compliquer%20la%20...","permalink":"https:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-4548","item_id":"_comm_4548"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_4548 == 'undefined' ){PDRTJS_5500324_comm_4548 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_4548 );}}PDRTJS_settings_5500324_comm_4595={"id":5500324,"unique_id":"wp-comment-4595","title":"%26lt%3B%21--%2F%2F--%26gt%3B%26lt%3B%21--PDRTJS_settings_5500324_comm_4595%3D%7B%26quot%3Bid%26quot%3B%3A5500324%2C%26quot%3Bunique_id%26quot%3B%3A%26quot%3Bwp-comment-4595%26quot%3B%2C%26quot%3Btitle%26quot%3B%3A%26quot%3BBonjour%252Cje%2520ne%2520comprends%2520pas%2520bien%2520le%2520Si%2520en%2520Occident%252C%2520cest%2520essentiellemen...","permalink":"https:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-4595","item_id":"_comm_4595"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_4595 == 'undefined' ){PDRTJS_5500324_comm_4595 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_4595 );}}PDRTJS_settings_5500324_comm_4596={"id":5500324,"unique_id":"wp-comment-4596","title":"Bonsoir%2CJe%20dois%20avouer%20que%20je%20ne%20comprends%20pas%20tellement%20votre%20commentaire%2C%20car%20j%26%23039%3Bai%20bien%20insist%20sur%20le%20fait%20qu%26%23039%3Bil%20existait%20divers%20degrs%20de%20gravit%2C%20et%20que%20ce%20qui%20m%26%23039%3Bintressait%20ici%20tait%20plutt%20les%20d...","permalink":"https:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-4596","item_id":"_comm_4596"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_4596 == 'undefined' ){PDRTJS_5500324_comm_4596 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_4596 );}}PDRTJS_settings_5500324_comm_4597={"id":5500324,"unique_id":"wp-comment-4597","title":"https%3A%2F%2Fpolldaddy.com%2Fjs%2Frating%2Frating.jsBonjour%2CBien%20sr%2C%20vous%20indiquez%20dans%20le%20texte%20que%20le%20port%20de%20talons%20aiguilles%2C%20les%20FGM%20et%20le%20bandage%20des%20pieds%20sont%20diffrents%20%28on%20sen%20serait%20dout%29%2C%20mais%20la...","permalink":"https:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-4597","item_id":"_comm_4597"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_4597 == 'undefined' ){PDRTJS_5500324_comm_4597 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_4597 );}}PDRTJS_settings_5500324_comm_4598={"id":5500324,"unique_id":"wp-comment-4598","title":"%26lt%3B%21--%2F%2F--%26gt%3B%26lt%3B%21--PDRTJS_settings_5500324_comm_4598%3D%7B%26quot%3Bid%26quot%3B%3A5500324%2C%26quot%3Bunique_id%26quot%3B%3A%26quot%3Bwp-comment-4598%26quot%3B%2C%26quot%3Btitle%26quot%3B%3A%26quot%3B%2526lt%253B%2521-%252F%252F-%2526gt%253B%2526lt%253B%2521-PDRTJS_settings_5500324_comm_4598%253D%257B%2526quot%253Bid%2526qu...","permalink":"https:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-4598","item_id":"_comm_4598"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_4598 == 'undefined' ){PDRTJS_5500324_comm_4598 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_4598 );}}PDRTJS_settings_5500324_comm_4599={"id":5500324,"unique_id":"wp-comment-4599","title":"https%3A%2F%2Fpolldaddy.com%2Fjs%2Frating%2Frating.jsBonjour%2CJe%20ne%20comprends%20pas%20du%20tout%20pourquoi%20vous%20croyez%20bon%20de%20parler%20de%20rapport%20psychanalytique%20au%20pnis%20alors%20que%20je%20parle%20de%20psychologie%20de%20la%20personna...","permalink":"https:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-4599","item_id":"_comm_4599"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_4599 == 'undefined' ){PDRTJS_5500324_comm_4599 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_4599 );}}PDRTJS_settings_5500324_comm_4600={"id":5500324,"unique_id":"wp-comment-4600","title":"Ce%20qui%20n%26%23039%3Best%20peut-tre%20pas%20clair%2C%20c%26%23039%3Best%20que%20cet%20article%20fait%20en%20fait%20partie%20d%26%23039%3Bune%20longue%20srie%20o%20j%26%23039%3Bexplique%20que%20les%20pratiques%20de%20beaut%20constituent%20des%20mcanismes%20pour%20%26quot%3Bdomestiquer%26quot%3B%20le%20corps%20des%20femm...","permalink":"https:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-4600","item_id":"_comm_4600"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_4600 == 'undefined' ){PDRTJS_5500324_comm_4600 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_4600 );}}PDRTJS_settings_5500324_comm_4631={"id":5500324,"unique_id":"wp-comment-4631","title":"J%26%23039%3Bai%20bien%20compris%20que%20vous%20avez%20une%20thse%20les%20pratiques%20de%20beaut%2C%20quelque%20soit%20les%20contraintes%20appliques%2C%20le%20degr%20de%20violence%20inflige%2C%20etc.%20permettent%20de%20contrler%20le%20corps%20des%20femmes.%20et%20que%20vous%20...","permalink":"https:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-4631","item_id":"_comm_4631"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_4631 == 'undefined' ){PDRTJS_5500324_comm_4631 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_4631 );}}PDRTJS_settings_5500324_comm_4632={"id":5500324,"unique_id":"wp-comment-4632","title":"Merci%20de%20me%20traiter%20de%20%26quot%3Bvictime%20complaisante%26quot%3B%20%21%20Je%20ne%20suis%20pas%20sre%20de%20vouloir%20continuer%20%20discuter%20avec%20vous%20dans%20ces%20conditions.%26quot%3Bce%20nest%20pas%20parce%20que%20les%20talons%20entravent%20le%20mouvement%20quon%20met%20%28...","permalink":"https:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-4632","item_id":"_comm_4632"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_4632 == 'undefined' ){PDRTJS_5500324_comm_4632 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_4632 );}}PDRTJS_settings_5500324_comm_4633={"id":5500324,"unique_id":"wp-comment-4633","title":"Ce%20n%26%23039%3Best%20pas%20parce%20que%20les%20talons%20masculins%20ont%20t%20crs%20pour%20se%20maintenir%20dans%20des%20triers%20qu%26%23039%3Bils%20taient%20ensuite%20ports%20par%20soucis%20de%20praticit%20%21Et%20si%20la%20dmarche%20hsitante%20est%20aprcie%2C%20ce%20n%26%23039%3Best%20pas%20forc...","permalink":"https:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-4633","item_id":"_comm_4633"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_4633 == 'undefined' ){PDRTJS_5500324_comm_4633 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_4633 );}}PDRTJS_settings_5500324_comm_4634={"id":5500324,"unique_id":"wp-comment-4634","title":"a%20ne%20vous%20interroge%20pas%20qu%26%23039%3Bune%20dmarche%20%26quot%3Bpataude%26quot%3B%2C%20%26quot%3Bmignonne%26quot%3B%20ou%20%26quot%3Bvoquant%20les%20bbs%26quot%3B%20soit%20apprcie%20chez%20les%20femmes%2C%20et%20non%20pas%20chez%20les%20hommes%20%28chez%20qui%20ce%20serait%20considr%20comme%20totalement%20ridicule%29%20%3F...","permalink":"https:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-4634","item_id":"_comm_4634"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_4634 == 'undefined' ){PDRTJS_5500324_comm_4634 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_4634 );}}PDRTJS_settings_5500324_comm_4635={"id":5500324,"unique_id":"wp-comment-4635","title":"https%3A%2F%2Fpolldaddy.com%2Fjs%2Frating%2Frating.jsSi%20les%20hommes%20ne%20sont%20pas%20concerns%20par%20le%20fait%20dtre%20trouvs%20mignons%20par%20leur%20faiblesses%2Fincapacits%2C%20ce%20nest%20pas%20forcment%20parce%20quils%20sont%20en%20position%20de%20do...","permalink":"https:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-4635","item_id":"_comm_4635"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_4635 == 'undefined' ){PDRTJS_5500324_comm_4635 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_4635 );}}PDRTJS_settings_5500324_comm_4737={"id":5500324,"unique_id":"wp-comment-4737","title":"%26lt%3B%21--%2F%2F--%26gt%3B%26lt%3B%21--PDRTJS_settings_5500324_comm_4737%3D%7B%26quot%3Bid%26quot%3B%3A5500324%2C%26quot%3Bunique_id%26quot%3B%3A%26quot%3Bwp-comment-4737%26quot%3B%2C%26quot%3Btitle%26quot%3B%3A%26quot%3BLes%2520conventions%2520collectives%2520de%2520la%2520restauration%2520en%2520France%2520imposent%2520un%2520maquil...","permalink":"https:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-4737","item_id":"_comm_4737"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_4737 == 'undefined' ){PDRTJS_5500324_comm_4737 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_4737 );}}PDRTJS_settings_5500324_comm_5401={"id":5500324,"unique_id":"wp-comment-5401","title":"%26lt%3B%21--%2F%2F--%26gt%3B%26lt%3B%21--PDRTJS_settings_5500324_comm_5401%3D%7B%26quot%3Bid%26quot%3B%3A5500324%2C%26quot%3Bunique_id%26quot%3B%3A%26quot%3Bwp-comment-5401%26quot%3B%2C%26quot%3Btitle%26quot%3B%3A%26quot%3BMerci%2520pour%2520votre%2520article%2520qui%2520explique%2520entre%2520autre%2520l%2526%2523039%253Binfibulation%2520%25...","permalink":"https:\/\/antisexisme.net\/2017\/03\/19\/coercition-beaute\/#comment-5401","item_id":"_comm_5401"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_5401 == 'undefined' ){PDRTJS_5500324_comm_5401 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_5401 );}}
+//--><!]]>
+</script>
+<script src='https://polldaddy.com/js/rating/rating.js?ver=wpcom'></script>
+<script>
+var sharing_js_options = {"lang":"fr","counts":"1","is_stats_active":"1"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/mu-plugins/post-flair/sharing/sharing.js?m=1564557884h'></script>
+<script type='text/javascript'>
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-skype', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomskype', 'menubar=1,resizable=1,width=305,height=665' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-linkedin', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomlinkedin', 'menubar=1,resizable=1,width=580,height=450' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-tumblr', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtumblr', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-pocket', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcompocket', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-telegram', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtelegram', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<iframe src='https://widgets.wp.com/likes/master.html?ver=20190321#ver=20190321&amp;lang=fr' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+		<div id='likes-other-gravatars'><div class="likes-text"><span>%d</span> blogueurs aiment cette page :</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+<script src="//stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'20930585','blog_tz':'2','user_lang':'fr','blog_lang':'fr','user_id':'0'}]);
+_stq.push(['view', {'blog':'20930585','v':'wpcom','tz':'2','user_id':'0','post':'2286','subd':'antisexisme'}]);
+_stq.push(['extra', {'crypt':'UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdWtpP0NsWnVkPS9sL0ViLndld3AyMWJHeTE5ZSxINVtddjVqRTBJV245LXpdQkUtbHJPVEZWamFZUy9XaVpCMlprM3ladDMxTDJfaDRCTCZkLlAvVyV2bmRVV01hSkw9Y1twOHFWbHE9P05mWFBGZERUZDFNV3ZGLXg9OCYvRC9KVFZOZnJJcT1kX1A9YVJRLmJ8RS1bNiY2JWF1T0YwQk9ieS8wVzFbJkVoLXxCPyVnJlFxXTFMQ2QvQ1tuM1FNRm0teUZLNjBsdFRmZEhvdlZuWkZjJXhmWHQ/bzI2MjFnMUF0WFg9UWNNNE9iWF9IeXQuOXpRNmF6N1gxW0gzdFBuLkdsLEVaXSZHRXh6VUpbeVpVcVhCNk9Tdj0uLm9KckVPWSx8TSVBTj98V0x2YU9jfDlzbE4/dkk9Nzg9LVdaQzd6SWZhRCVIKzJ3JjUveg=='}]);
+_stq.push([ 'clickTrackerInit', '20930585', '2286' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>

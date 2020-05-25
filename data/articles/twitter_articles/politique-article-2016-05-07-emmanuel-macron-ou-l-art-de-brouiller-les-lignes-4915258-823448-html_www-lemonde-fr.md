@@ -1,0 +1,16 @@
+---
+title: "Emmanuel Macron ou l’art de brouiller les lignes"
+url: http://www.lemonde.fr/politique/article/2016/05/07/emmanuel-macron-ou-l-art-de-brouiller-les-lignes_4915258_823448.html
+keywords: vision,république,quest,récit,brouiller,jamais,pays,lart,politique,rêve,lignes,emmanuel,macron
+---
+Article réservé aux abonnés
+
+![Au Sénat, le 4  mars  2015. Retransmission de l'audition d'Emmanuel Macron par la commission spéciale chargée du projet de loi « croissance et activité ».](https://img.lemde.fr/2016/05/06/0/0/4256/2832/688/0/60/0/9c0e2d6_1857-1mosn9o.JPG) ![](https://img.lemde.fr/2016/05/06/0/0/4256/2832/688/0/60/0/9c0e2d6_1857-1mosn9o.JPG) Au Sénat, le 4  mars  2015. Retransmission de l'audition d'Emmanuel Macron par la commission spéciale chargée du projet de loi « croissance et activité ». Marc Chaumeil pour \"Le Monde\"
+
+Emmanuel Macron s'apprête à présider la traditionnelle cérémonie des fêtes en l'honneur de Jeanne d'Arc, dimanche 8 mai à Orléans, à l'invitation du maire Les Républicains de la ville, Olivier Carré. L'occasion pour lui de développer sa vision de la République, quelques jours après que François Hollande a explicité sa vision de la gauche.
+
+Emmanuel Macron, c'est d'abord un âge (38 ans), une tête bien faite (DEA de philosophie, ENA), un parcours atypique (jamais élu, ex-banquier d'affaires), une ingénuité politique revendiquée : « Je suis dans la bienveillance, je n'ai jamais dit une phrase négative contre tel ou tel, je ne veux pas être embarqué dans la comédie humaine », jure-t-il tout en flirtant allègrement avec la ligne jaune. En réalité, une sorte de flibustier qui « casse le verrou de cette profession réglementée qu'est devenue la politique », dixit son ami Laurent Bigorgne, directeur de l'Institut Montaigne. Mais Emmanuel Macron, c'est aussi une offre politique atypique qui prétend enjamber le traditionnel clivage gauche-droite pour construire une majorité en 2017. Macron ou l'art de brouiller les lignes avec quelques idées bien arrêtées.
+
+Le mot « idée » est fondamental chez ce novice qui, avant même de faire une entrée fracassante en politique, a revendiqué l'importance de l'idéologie pour soigner un pays dépressif. Il l'a fait en marge du Parti socialiste qui, depuis l'échec de 2002, a le plus grand mal à se définir, et au côté du président de la République, qui n'a jamais voulu conceptualiser ses propres évolutions. « On a créé un pragmatisme au quotidien. Il manque quelque chose », a diagnostiqué Emmanuel Macron dès le début du quinquennat en fustigeant « une gauche postmoderne qui a renoncé aux grandes histoires pour régler de petits désaccords locaux ». Pour lui, pas de politique sans récit ni de récit sans idéal.
+
+Dans un long article publié en juillet 2015 dans la Revue des deux mondes, il préconise de réinvestir « les trois rêves » qui fondent, selon lui, l'identité française : « le rêve de l'égalité, le rêve d'Europe, le rêve industriel ». Mais quand on lui demande aujourd'hui de dire ce qu'est le « macronisme », il botte en touche : « Je suis incapable de le définir, je crois dans mon pays, son énergie, ses valeurs, sa capacité à réussir dans la mondialisation, je crois au progrès », se contente-t-il de répondre. Macron ou la confiance retrouvée. Un peu court.

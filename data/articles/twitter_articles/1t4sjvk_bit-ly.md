@@ -1,0 +1,12 @@
+---
+title: "« Trending topics » : le Sénat américain pose une série de questions à Facebook"
+url: http://bit.ly/1T4SJvk
+keywords: topics,trending,social,sénat,tendance,américain,sénateur,facebook,questions,pose,liste,gizmodo,série,sujets,thune
+---
+![Les « trending topics » (ou sujets tendance, en français) de Facebook.](https://img.lemde.fr/2016/05/10/0/0/2185/824/688/0/60/0/05db908_23041-1ge2134.png) ![](https://img.lemde.fr/2016/05/10/0/0/2185/824/688/0/60/0/05db908_23041-1ge2134.png) Les « trending topics » (ou sujets tendance, en français) de Facebook. Facebook
+
+Le comité du commerce du Sénat américain a envoyé une série de questions à Mark Zuckerberg, le pésident-directeur général de Facebook, après la publication d'un article du site Gizmodo accusant le premier réseau social au monde d'avoir censuré des sujets d'actualité « conservateurs » dans sa liste de trending topics (« sujets tendance » ou « sujets du moment », en français). Cette fonctionnalité, disponible uniquement aux Etats-Unis, affiche une liste d'articles très lus sur le réseau social. Un papier publié par Gizmodo lundi 9 mai, citant d'anciens sous-traitants travaillant à la mise en forme de cette liste, affirmait que des sites conservateurs en étaient systématiquement écartés ; ce que Facebook dément.
+
+La lettre, envoyée par le sénateur républicain John Thune, demande notamment à Facebook de fournir à la commission sénatoriale les règles de fonctionnement des trending topics, ainsi qu'une liste de toutes les informations qui auraient pu faire l'objet d'une censure ou, au contraire, être injectées « artificiellement » dans la liste. Le responsable des sujets tendance chez Facebook avait d'ores et déjà répondu à une partie de ces questions le 10 mai, par un long message Facebook démentant plusieurs affirmations de Gizmodo, dont le fait que le mouvement Black Lives Matter (littéralement « les vies noires comptent ») aurait été artificiellement ajouté à la liste des sujets du moment.
+
+Comme le note [le site spécialisé Techcrunch](http://techcrunch.com/2016/05/10/senate-committee-asks-facebook-to-answer-questions-about-its-trending-topics/?ncid=rss&utm_source=feedburner&utm_medium=feed&utm_campaign=Feed%3A+Techcrunch+%28TechCrunch%29&sr_share=twitter), s'il n'est pas surprenant que ce soit un sénateur conservateur qui questionne ainsi Facebook, John Thune s'était par le passé opposé à un projet de loi qui aurait rendu obligatoire, pour les grands services Internet, une forme de « parité » des opinions politiques.

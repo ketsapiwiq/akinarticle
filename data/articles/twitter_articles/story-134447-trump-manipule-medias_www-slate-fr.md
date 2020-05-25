@@ -1,0 +1,60 @@
+---
+title: "La brillante stratégie de Donald Trump pour affaiblir les médias américains"
+url: http://www.slate.fr/story/134447/trump-manipule-medias
+keywords: stratégie,brillante,conférence,tapper,quil,presse,cnn,donald,médias,trump,face,affaiblir,dossier,buzzfeed,américains
+---
+Temps de lecture: 7 min
+
+Les «médias de gauche» américains sont depuis longtemps un des punching ball préférés de Donald Trump. Ce n'était donc pas une surprise mercredi 11 janvier, de voir Trump utiliser sa première conférence de presse depuis l'élection pour s'attaquer à CNN et BuzzFeed en raison de leur [couverture d'un dossier](http://www.slate.com/articles/technology/technology/2017/01/why_buzzfeed_published_the_explosive_memos_about_trump_and_russia_and_no.html) rempli d'affirmations non-vérifiées sur sa relation au gouvernement russe.
+
+Le spectacle a commencé avant même que Trump ne monte sur scène, lorsque le nouveau porte-parole de la Maison-Blanche Sean Spicer a décrit la publication du contenu du dossier par BuzzFeed comme «franchement scandaleuse et tout à fait irresponsable». Il a poursuivi en caractérisant les reportages de BuzzFeed et CNN de «tentative pathétique et triste de faire du clic» et de «chasse aux sorcières politique» «franchement honteuse et scandaleuse». Le second à s'exprimer a été le vice-président élu Mike Pence, qui s'est plaint de la «décision irresponsable» de BuzzFeed, décision qui selon lui «ne peut être attribuée qu'au parti pris des médias». Finalement, Trump lui-même est arrivé et est tombé sur ses vieux ennemis dans les médias. Il les a trouvés «si professionnels, si incroyablement professionnels que mon estime de vous vient de monter d'un cran, OK?»
+
+Attendez\... Quoi?
+
+Oui, Trump a bien débuté sa conférence en flattant les journalistes réunis autour de lui, c'est à dire les journalistes dont les employeurs n'avaient pas publié le contenu du dossier. «Je respecte beaucoup la presse et j'ai un grand respect pour la liberté de la presse et tout ça». Il a même fait l'éloge du New York Times en particulier, remerciant le journal d'avoir écrit que le rapport «n'aurait même pas dû être imprimé car il ne vaut même pas le prix du papier sur lequel il est imprimé».
+
+Peu importe que le New York Times n'ait [pas réellement dit ça](https://www.nytimes.com/2017/01/10/business/buzzfeed-donald-trump-russia.html)... Les mots de Trump étaient d'ordre tactique, pas littéral et son objectif est devenu clair lors des questions-réponses: isoler et punir les deux organes de presse dont il avait trouvé la couverture du dossier inacceptable.
+
+Cela a fonctionné. On a tant et si bien jeté l'anathème sur BuzzFeed qu'à la fin de la conférence de presse, leurs condisciples prenaient leurs plateaux-repas pour s'éloigner d'eux jusqu'à l'autre bout de la cafétéria. «Je peux comprendre pourquoi le président élu Trump pourrait être fâché» contre BuzzFeed a déclaré Jake Tapper, de CNN, lui-même co-auteur du long reportage qui venait d'être attaqué lors de la conférence de presse. «A sa place je serais fâché moi aussi.»
+
+### Diviser la presse
+
+Trump a exploité les faiblesses de la presse, pas seulement sa tendance à se regarder le nombril, mais aussi ses inquiétudes sociales. Il a notamment exploité le désir intense des organes de presse traditionnels d'être perçus comme sobres et objectifs, et d'être donc respectés par les conservateurs comme par les progressistes. Un impératif commercial est ainsi devenu une injonction éthique.
+
+Après avoir démoli les documents («fake news»), Trump a poursuivi en traitant BuzzFeed de «tas d'ordures raté» qui «va subir des conséquences». Puis il a commencé à disséquer le reportage de CNN et était en train de le désigner comme «une honte» pour laquelle la chaîne «devrait présenter ses excuses» lorsque Jim Acosta de CNN a posé une question. Voici l'échange qui a eu lieu.
+
+> Donald Trump refuses to take a question from CNN\'s Senior White House Correspondent [\@Acosta](https://twitter.com/Acosta) <https://t.co/SYIPLekALG> <https://t.co/Im5Dlc38B4>
+>
+> --- CNN (\@CNN) [January 11, 2017](https://twitter.com/CNN/status/819232117116715008)
+
+Qu'ils aient été rendus dociles par la flatterie ou simplement sous le choc, les autres représentants des médias ont poursuivi avec leurs propres questions, semblant accepter l'exclusion de CNN
+
+Parfois, lorsqu'une figure publique refuse de répondre à une question d'un organe de presse tout à fait légitime, les autres présents parmi le groupe de journalistes insistent pour qu'une réponse soit apportée avant que l'on poursuive. Mais, à ce moment-là, ce n'est pas arrivé. Qu'ils aient été rendus dociles par la flatterie ou simplement sous le choc, les autres représentants des médias ont poursuivi avec leurs propres questions, semblant accepter l'exclusion de CNN. Acosta n'a même pas pu poser sa question. Il a déclaré après-coup avoir été menacé par Spicer d'être [chassé de la conférence de presse](https://twitter.com/cnni/status/819239065304367105) s'il persistait à vouloir la poser.
+
+Acosta a également ajouté plus tard que Cecilia Vega, de ABC, avait posé pour lui sa question à Trump ultérieurement lors de la conférence de presse, mais Trump avait déjà transmis son message dans le cadre le plus à même de lui donner une large résonnance: si vous offensez le président par votre travail, vous renoncez au droit de lui poser des questions.
+
+CNN était visiblement mécontent. Dès que la conférence s'est terminée, Tapper a répliqué à la caractérisation de CNN comme «fake news», mais pourtant, ce n'est pas Trump qui a été l'objet principal de ses critiques. C'est BuzzFeed.
+
+Tapper a noté que Trump avait attaqué le travail des deux organes de presse conjointement, bien que CNN ait en réalité pris soin de ne pas publier ou même de décrire en détail les allégations qui n'étaient pas vérifiées. Tapper a continué en démolissant BuzzFeed pour ce qu'il a appelé du «journalisme irresponsable», faisant écho à l'indignation scandalisée de Trump face à la révélation du dossier et sympathisant même explicitement avec le président élu pour le traitement qu'il avait reçu de BuzzFeed. «Il est irresponsable de publier des informations non vérifiées sur internet» a déclaré Tapper, avant d'ajouter fièrement que «CNN s'occupe de comprendre ce qui est juste et ce qui est faux».
+
+### Le relai des intimidations
+
+Tapper n'était pas le seul à réagir ainsi. CNN a publié ensuite un [communiqué officiel](https://www.poynter.org/2017/cnn-publishes-statement-distancing-itself-from-buzzfeed/445054/) qui commençait ainsi:
+
+> «La décision de CNN de publier des informations attentivement vérifiées sur les opérations de notre gouvernement est très différent de la décision de BuzzFeed de publier des mémos non corroborés. L'équipe de Trump sait cela. Elle utilise BuzzFeed pour donner une fausse image des informations données par CNN, qui correspondent à celles publiées par d'autres grands organes de presse.»
+
+Il n'y a pas de mal à ce que CNN continue de défendre ses informations et ses décisions éditoriales. Ils auraient visiblement pu publier ou résumer le dossier s'ils avaient jugé cela approprié, mais ils ne l'ont pas fait, même suite à sa mise en ligne par BuzzFeed à la vue de chacun. Evidemment ils se sont sentis accusés à tort par Trump. Dans le brouhaha, on n'a pas noté que plus tôt ce jour-là, NBC avait suggéré qu'une affirmation centrale avancée par CNN, [serait fausse](http://www.nbcnews.com/news/world/trump-cites-nazi-germany-rejects-dossier-alleged-russia-dealings-n705586) (celle selon laquelle on aurait montré à Trump un résumé de deux pages du dossier non-vérifié). Si l'information de NBC s'avérait correcte, le pêché journalistique de CNN serait bien plus clair que celui de BuzzFeed.
+
+Quoi qu'il en soit, il a été désagréable de voir un organe de presse réagir à des intimidations à son encontre par un responsable politique non en condamnant les intimidants mais en les détournant sur un autre organe de presse. La chaîne n'a-t-elle pas voulu comprendre que les deux publications se renforçaient mutuellement? Le rapport de BuzzFeed n'aurait pas existé si CNN n'avait pas fait une information de ce dossier lui-même, que les affirmations qu'il contient soient vérifiées ou non. L'imprécision déconcertante de l\'article de CNN, avec ses circonvolutions et insinuations, se dissipe face aux mémos obtenus par Buzz Feed.
+
+### Exploiter les inquiétudes des médias
+
+Il y a au sein des médias une inquiétude de classe et du ressentiment tout comme il y en a dans l'électorat et ce mercredi-là, Trump s'en est emparé adroitement
+
+Il y a au sein des médias une inquiétude de classe et du ressentiment tout comme il y en a dans l'électorat et ce mercredi-là, Trump s'en est emparé adroitement. La confiance des Américains dans les médias est au plus bas, notamment en raison de l'efficace campagne des conservateurs pour discréditer les médias mainstream en les accusant d'être biaisés. «Fake news», une formule utilisée originellement pour décrire les histoires montées de toutes pièces par des escrocs de l'information est devenue le qualificatif par défaut des conservateurs pour évoquer des institutions historiques respectées telles que CNN ou le New York Times. Pour les journalistes de cette catégorie de médias qui travaillent depuis des décennies pour atteindre le sommet de leur profession, rien ne pourrait être plus rabaissant. Cela les pousse de façon pressante à se démarquer et se distancer de médias moins prestigieux, y compris des nouveaux-venus tels que BuzzFeed dont «le journalisme irresponsable», selon l'expression de Tapper, de CNN, «nous fait du mal à tous».
+
+Trump, Spicer et compagnie savent qu'ils sont considérés avec mépris par la vieille garde des médias. Mais ils savent aussi que ces organisations sont sur la défensive, pas seulement face aux accusations selon lesquelles elles auraient un parti pris de gauche, mais aussi face à un environnement médiatique qui change rapidement et menace leurs normes et leur modèle économique. CNN, le New York Times et leurs semblables ne se sentent peut-être pas en mesure d'empêcher BuzzFeed et les autres de récupérer les jeunes générations et d'attirer les annonceurs en ligne, de la même façon que de nombreux Américains se sentent impuissants face à une économie qui change trop vite. Cela ne les rend que plus sensibles à ce qui touche à leur identité et à la supériorité de leurs valeurs traditionnelles.
+
+Trump a réussi à en appeler à cela mercredi. Avant même le début de la conférence de presse, il savait que les médias étaient divisés par décision de BuzzFeed. [David A. Graham de The Atlantic](https://www.theatlantic.com/politics/archive/2017/01/why-did-buzzfeed-publish-the-trump-dossier/512771/) et [Margaret Sullivan du Washington Post](https://www.washingtonpost.com/lifestyle/style/how-buzzfeed-crossed-the-line-in-publishing-salacious-dossier-on-trump/2017/01/11/957b59f6-d801-11e6-9a36-1d296534b31e_story.html) l'avaient critiquée. [Richard Tofel de ProPublica](https://twitter.com/dicktofel/status/819149821739143168) et [Mathew Ingram de Fortune](http://fortune.com/2017/01/11/buzzfeed-trump-russia/) l'avaient défendue. J'avais fait [un peu des deux](http://www.slate.com/articles/technology/technology/2017/01/why_buzzfeed_published_the_explosive_memos_about_trump_and_russia_and_no.html). Mais mercredi, les médias qui s'étaient écriés face à l'article sur le dossier sont montés d'un cran dans l'estime de Trump, tandis que ceux qui l'avaient publié ont été éliminés du tableau.
+
+Pendant toute sa campagne Trump s'est employé à enfermer les organes de presse mainstream dans une cage de zoo médiatique et en a fait un spectacle dont lui et ses partisans pouvaient [se moquer](http://www.slate.com/articles/news_and_politics/politics/2016/11/on_the_trail_for_the_final_week_of_the_trump_campaign.html). Aujourd'hui, il propose à certains d'entre eux d'en sortir, à condition qu'ils se retournent alors pour humilier avec lui ceux qu'il aura laissés dans la cage.

@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="https://antisexisme.net/xmlrpc.php" />
+<!--[if lt IE 9]>
+<script src="https://s0.wp.com/wp-content/themes/pub/misty-lake/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+
+<title>Mythes autour du viol. Partie 4 : Les mythes sur le viol augmentent la propension au viol. &#8211; Sexisme et Sciences humaines &#8211;  Féminisme</title>
+<meta name="google-site-verification" content="dDACYGJrsQEvuv-oy7_QanXA08avLRLBt-o49nmhsyw" />
+<meta name="msvalidate.01" content="71E10DBC12B1F5E339D377CAC0E2DFFB" />
+<meta name="yandex-verification" content="447d4b39d7c45d60" />
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9hbnRpc2V4aXNtZS5uZXQ%3D"
+		+ "&wpcomid=20930585"
+		+ "&time=1589683533";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//antisexisme.wordpress.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.pubmine.com' />
+<link rel='dns-prefetch' href='//x.bidswitch.net' />
+<link rel='dns-prefetch' href='//static.criteo.net' />
+<link rel='dns-prefetch' href='//ib.adnxs.com' />
+<link rel='dns-prefetch' href='//aax.amazon-adsystem.com' />
+<link rel='dns-prefetch' href='//bidder.criteo.com' />
+<link rel='dns-prefetch' href='//cas.criteo.com' />
+<link rel='dns-prefetch' href='//gum.criteo.com' />
+<link rel='dns-prefetch' href='//ads.pubmatic.com' />
+<link rel='dns-prefetch' href='//gads.pubmatic.com' />
+<link rel='dns-prefetch' href='//tpc.googlesyndication.com' />
+<link rel='dns-prefetch' href='//ad.doubleclick.net' />
+<link rel='dns-prefetch' href='//googleads.g.doubleclick.net' />
+<link rel='dns-prefetch' href='//www.googletagservices.com' />
+<link rel='dns-prefetch' href='//cdn.switchadhub.com' />
+<link rel='dns-prefetch' href='//delivery.g.switchadhub.com' />
+<link rel='dns-prefetch' href='//delivery.swid.switchadhub.com' />
+<link rel='dns-prefetch' href='//a.teads.tv' />
+<link rel='dns-prefetch' href='//prebid.media.net' />
+<link rel='dns-prefetch' href='//adserver-us.adtech.advertising.com' />
+<link rel='dns-prefetch' href='//fastlane.rubiconproject.com' />
+<link rel='dns-prefetch' href='//prebid-server.rubiconproject.com' />
+<link rel='dns-prefetch' href='//hb-api.omnitagjs.com' />
+<link rel='dns-prefetch' href='//mtrx.go.sonobi.com' />
+<link rel='dns-prefetch' href='//apex.go.sonobi.com' />
+<link rel='dns-prefetch' href='//u.openx.net' />
+<link rel="alternate" type="application/rss+xml" title="Sexisme et Sciences humaines -  Féminisme &raquo; Flux" href="https://antisexisme.net/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Sexisme et Sciences humaines -  Féminisme &raquo; Flux des commentaires" href="https://antisexisme.net/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Sexisme et Sciences humaines -  Féminisme &raquo; Mythes autour du viol. Partie 4 : Les mythes sur le viol augmentent la propension au&nbsp;viol. Flux des commentaires" href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s0.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.1"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s0.wp.com/_static/??-eJytU1tywyAMvFAxceK2zkcnZwGjUBJhGAR1ffviR5pM0nEzbf4ssauVVxLvPGtcG6GN3CbmMWnTEu984ywjaxD6q6hoiJ74BU2i02eiC0oo4hqdFHiDvZAIgCKCYt5RvIqWaGiOQPwA0YvmyMboBn7C6pRDCUHnlwC8LlbFistkUA1Nj3QZROg5xR7hjjIj60Jd9C5FpoNRfy0RRDStpl/o+4TIyERgoMxAmO3g5aqsXzcv24q30NFYcRZQhk6jGSyd0uzDQPdwlUYElwjwQRo+gDXJflOXrWnc3EpZrDd5vFNHc5L929bJPMxFp7+b6l9nlxZ2WL2ct17EAWGzlAAEm2FLtM4oDfkwMmT+ZhE+lynjmUqZDSRiJxvje9a650YWlnt+2gf3Q9OTAPdJcpsd6TPzCOep7exb+Vxv13VVldXhC+NOprc=?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<!--[if IE 8]>
+<link rel='stylesheet' id='mistylake-ie-css'  href='https://s0.wp.com/wp-content/themes/pub/misty-lake/ie.css?m=1377549400h&#038;ver=5.4.1' media='all' />
+<![endif]-->
+<link crossorigin="anonymous" rel='stylesheet' id='mistylake-open-sans-css'  href='https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic,700,700italic&#038;subset=latin,latin-ext' media='all' />
+<link crossorigin="anonymous" rel='stylesheet' id='mistylake-droid-serif-css'  href='https://fonts.googleapis.com/css?family=Droid+Serif%3A400%2C400italic%2C400bold&#038;subset=latin&#038;ver=5.4.1' media='all' />
+<link rel='stylesheet' id='all-css-6-1' href='https://s0.wp.com/_static/??-eJyFjEEOwjAMBD+EsQqlnBBvSYMbhTpxVTtK+T3hBpdy29HuLNYFvGSjbJgKLFxCzIo1PgKZIpXWyhwJ2FU0Sgs7I0W1F9PRqx5w/2Bynsb2ABznFrb/ZiABFu8sSv4BmNjFdU9daWQJLQZsqy/8SPd06y6n63Duu354vgHjwVyT?cssminify=yes' type='text/css' media='all' />
+<link rel='stylesheet' id='print-css-7-1' href='https://s0.wp.com/wp-content/mu-plugins/global-print/global-print.css?m=1465851035h&cssminify=yes' type='text/css' media='print' />
+<link rel='stylesheet' id='all-css-8-1' href='https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?m=1560469195h&cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-10-1' href='https://s0.wp.com/_static/??-eJxti0EKgCAQAD+ULWGJHaK3mJgaqyut0fejQ4eo0zAwA2cRlnJ1uUI6RMHDx8xQiKtY0cQdOJg9Zv+wtcwN/F9MNhoUSJ7e8plqcMkxhB480mLwDuY0dYMepVJaqu0CZXY33g==?cssminify=yes' type='text/css' media='all' />
+<script>
+var related_posts_js_options = {"post_heading":"h4"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJx9jMEOwjAMQ3+IruzABgfEt4wtVKmatDSNpv39ggSXHZAsWbae7dfikOekC4iPprdC3b7WRTn5f4AjDHVq0BHyD54zN+D2YSk/MYFTgToF6+zolY8cqStJA7L4CsnOFleytEOy1YPu/WXsb+dxGK5xB1+BRFU='></script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://antisexisme.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s0.wp.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Mythes autour du viol. Partie 3 : Les mythes sur le viol restreignent la liberté des&nbsp;femmes' href='https://antisexisme.net/2012/01/31/les-mythes-autour-du-viol-et-leurs-consequences-partie-3/' />
+<link rel='next' title='Mon blog a un an&nbsp;!' href='https://antisexisme.net/2012/03/08/mon-blog-a-un-an/' />
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/" />
+<link rel='shortlink' href='https://wp.me/p1pP05-80' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fantisexisme.net%2F2012%2F02%2F12%2Fmythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fantisexisme.net%2F2012%2F02%2F12%2Fmythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Mythes autour du viol. Partie 4 : Les mythes sur le viol augmentent la propension au viol." />
+<meta property="og:url" content="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/" />
+<meta property="og:description" content="Partie 1 : Quels sont ces mythes ? Qui y adhère ? Partie 2 : Les conséquences pour la victime Partie 3 : Les mythes sur le viol restreignent la liberté des femmes Partie 4 : Les mythes sur le viol …" />
+<meta property="article:published_time" content="2012-02-12T18:51:43+00:00" />
+<meta property="article:modified_time" content="2016-07-27T19:24:42+00:00" />
+<meta property="og:site_name" content="Sexisme et Sciences humaines -  Féminisme" />
+<meta property="og:image" content="https://antisexisme.files.wordpress.com/2012/02/article.jpg" />
+<meta property="og:image:width" content="500" />
+<meta property="og:image:height" content="367" />
+<meta property="og:image:alt" content="rÃ©sultats de l&#039;article" />
+<meta property="og:locale" content="fr_FR" />
+<meta name="twitter:creator" content="@anti_sexism" />
+<meta name="twitter:site" content="@anti_sexism" />
+<meta name="twitter:text:title" content="Mythes autour du viol. Partie 4 : Les mythes sur le viol augmentent la propension au&nbsp;viol." />
+<meta name="twitter:image" content="https://antisexisme.files.wordpress.com/2012/02/viol-de-lucrc3a8ce1.jpg?w=640" />
+<meta name="twitter:image:alt" content="viol de lucrÃ¨ce" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/e776828ff2f5e62ad07e68335ddca469?s=32" sizes="16x16" />
+<link rel="icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/e776828ff2f5e62ad07e68335ddca469?s=32" sizes="16x16" />
+<link rel="apple-touch-icon" href="https://secure.gravatar.com/blavatar/e776828ff2f5e62ad07e68335ddca469?s=114" />
+<link rel='openid.server' href='https://antisexisme.net/?openidserver=1' />
+<link rel='openid.delegate' href='https://antisexisme.net/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://antisexisme.net/osd.xml" title="Sexisme et Sciences humaines -  Féminisme" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<meta name="theme-color" content="#f3f3eb" />
+<style type="text/css">.recentcomments a{display:inline !important;padding:0 !important;margin:0 !important;}</style>		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="Sexisme et Sciences humaines -  Féminisme" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Un blog féministe pour déceler les mécanismes sexistes qui maintiennent les inégalités entre femmes et hommes – ISSN 2430-5812" /><meta name="msapplication-task" content="name=Souscrire;action-uri=https://antisexisme.net/feed/;icon-uri=https://secure.gravatar.com/blavatar/e776828ff2f5e62ad07e68335ddca469?s=16" /><meta name="msapplication-task" content="name=Inscrivez-vous pour créer un blog gratuitement;action-uri=http://wordpress.com/signup/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Assistance WordPress.com;action-uri=http://support.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Forums WordPress.com;action-uri=http://forums.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="description" content="Partie 1 : Quels sont ces mythes ? Qui y adhère ? Partie 2 : Les conséquences pour la victime Partie 3 : Les mythes sur le viol restreignent la liberté des femmes Partie 4 : Les mythes sur le viol augmentent la propension au viol Partie 5 : Les mythes sur le viol dans les médias Les mythes sur le viol&hellip;" />
+<style type="text/css" id="custom-background-css">
+body.custom-background { background-color: #f3f3eb; background-image: url("https://antisexisme.files.wordpress.com/2017/04/fond3-min.jpg"); background-position: left top; background-size: auto; background-repeat: repeat; background-attachment: scroll; }
+</style>
+			<script type="text/javascript">
+
+			window.doNotSellCallback = function() {
+
+				var linkElements = [
+					'a[href="https://wordpress.com/?ref=footer_blog"]',
+					'a[href="https://wordpress.com/?ref=footer_website"]',
+					'a[href="https://wordpress.com/?ref=vertical_footer"]',
+					'a[href^="https://wordpress.com/?ref=footer_segment_"]',
+				].join(',');
+
+				var dnsLink = document.createElement( 'a' );
+				dnsLink.href = 'https://wordpress.com/advertising-program-optout';
+				dnsLink.classList.add( 'do-not-sell-link' );
+				dnsLink.rel = 'nofollow';
+				dnsLink.style.marginLeft = '0.5em';
+				dnsLink.textContent = 'Ne pas vendre mes informations personnelles.';
+
+				var creditLinks = document.querySelectorAll( linkElements );
+
+				if ( 0 === creditLinks.length ) {
+					return false;
+				}
+
+				Array.prototype.forEach.call( creditLinks, function( el ) {
+					el.insertAdjacentElement( 'afterend', dnsLink );
+				});
+
+				return true;
+			};
+
+		</script>
+				<script type="text/javascript">
+		function __ATA_CC() {var v = document.cookie.match('(^|;) ?personalized-ads-consent=([^;]*)(;|$)');return v ? 1 : 0;}
+		var __ATA_PP = { pt: 1, ht: 0, tn: 'misty-lake', amp: false, siteid: 8982, blogid: 20930585, consent: __ATA_CC() };
+		var __ATA = __ATA || {};
+		__ATA.cmd = __ATA.cmd || [];
+		__ATA.criteo = __ATA.criteo || {};
+		__ATA.criteo.cmd = __ATA.criteo.cmd || [];
+		</script>
+		<script type="text/javascript">
+		(function(){var g=Date.now||function(){return+new Date};function h(a,b){a:{for(var c=a.length,d="string"==typeof a?a.split(""):a,e=0;e<c;e++)if(e in d&&b.call(void 0,d[e],e,a)){b=e;break a}b=-1}return 0>b?null:"string"==typeof a?a.charAt(b):a[b]};function k(a,b,c){c=null!=c?"="+encodeURIComponent(String(c)):"";if(b+=c){c=a.indexOf("#");0>c&&(c=a.length);var d=a.indexOf("?");if(0>d||d>c){d=c;var e=""}else e=a.substring(d+1,c);a=[a.substr(0,d),e,a.substr(c)];c=a[1];a[1]=b?c?c+"&"+b:b:c;a=a[0]+(a[1]?"?"+a[1]:"")+a[2]}return a};var l=0;function m(a,b){var c=document.createElement("script");c.src=a;c.onload=function(){b&&b(void 0)};c.onerror=function(){b("error")};a=document.getElementsByTagName("head");var d;a&&0!==a.length?d=a[0]:d=document.documentElement;d.appendChild(c)}function n(a){var b=void 0===b?document.cookie:b;return(b=h(b.split("; "),function(c){return-1!=c.indexOf(a+"=")}))?b.split("=")[1]:""}function p(a){return"string"==typeof a&&0<a.length}
+		function r(a,b,c){b=void 0===b?"":b;c=void 0===c?".":c;var d=[];Object.keys(a).forEach(function(e){var f=a[e],q=typeof f;"object"==q&&null!=f||"function"==q?d.push(r(f,b+e+c)):null!==f&&void 0!==f&&(e=encodeURIComponent(b+e),d.push(e+"="+encodeURIComponent(f)))});return d.filter(p).join("&")}function t(a,b){a||((window.__ATA||{}).config=b.c,m(b.url))}var u=Math.floor(1E13*Math.random()),v=window.__ATA||{};window.__ATA=v;v.rid=u;v.createdAt=g();var w=window.__ATA||{},x="s.pubmine.com";
+		w&&w.serverDomain&&(x=w.serverDomain);var y="//"+x+"/conf",z=window.top===window,A=window.__ATA_PP&&window.__ATA_PP.gdpr_applies,B="boolean"===typeof A?Number(A):null,C=window.__ATA_PP||null,D=z?document.referrer?document.referrer:null:null,E=z?window.location.href:document.referrer?document.referrer:null,F,G=n("__ATA_tuuid");F=G?G:null;var H=window.innerWidth+"x"+window.innerHeight,I=n("usprivacy"),J=r({gdpr:B,pp:C,rid:u,src:D,ref:E,tuuid:F,vp:H,us_privacy:I?I:null},"",".");
+		(function(a){var b=void 0===b?"cb":b;l++;var c="callback__"+g().toString(36)+"_"+l.toString(36);a=k(a,b,c);window[c]=function(d){t(void 0,d)};m(a,function(d){d&&t(d)})})(y+"?"+J);}).call(this);
+		</script><link rel="amphtml" href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/amp/"><script type="text/javascript">
+	window.google_analytics_uacct = "UA-52447-2";
+</script>
+
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-52447-2']);
+	_gaq.push(['_gat._anonymizeIp']);
+	_gaq.push(['_setDomainName', 'none']);
+	_gaq.push(['_setAllowLinker', true]);
+	_gaq.push(['_initData']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	})();
+</script>
+</head>
+
+<body class="post-template-default single single-post postid-496 single-format-standard custom-background customizer-styles-applied highlander-enabled highlander-light">
+<div id="page" class="hfeed site">
+		<header id="masthead" class="site-header" role="banner">
+		<div class="site-branding">
+			<h1 class="site-title"><a href="https://antisexisme.net/" title="Sexisme et Sciences humaines &#8211;  Féminisme" rel="home">Sexisme et Sciences humaines &#8211;  Féminisme</a></h1>
+			<h2 class="site-description">Un blog féministe pour déceler les mécanismes sexistes qui maintiennent les inégalités entre femmes et hommes – ISSN 2430-5812</h2>
+		</div>
+
+		<nav id="nav" role="navigation" class="site-navigation main-navigation">
+			<h1 class="assistive-text screen-reader-text">Menu</h1>
+			<div class="assistive-text skip-link screen-reader-text"><a href="#content" title="Aller au contenu principal">Aller au contenu principal</a></div>
+
+			<div class="menu-menu-1-container"><ul id="menu-menu-1" class="menu"><li id="menu-item-2033" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-2033"><a href="https://antisexisme.net/">Accueil</a></li>
+<li id="menu-item-2035" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-2035"><a href="https://antisexisme.net/articles-par-categorie/">Articles par catégorie</a>
+<ul class="sub-menu">
+	<li id="menu-item-2044" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2044"><a href="https://antisexisme.net/category/culture-du-viol/">Culture du viol</a></li>
+	<li id="menu-item-2072" class="menu-item menu-item-type-taxonomy menu-item-object-category current-post-ancestor current-menu-parent current-post-parent menu-item-2072"><a href="https://antisexisme.net/category/mythes-sur-le-viol-2/">Mythes sur le viol</a></li>
+	<li id="menu-item-2039" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2039"><a href="https://antisexisme.net/category/objectivation-sexuelle-2/">Objectivation sexuelle</a></li>
+	<li id="menu-item-2038" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2038"><a href="https://antisexisme.net/category/limpuissance-comme-ideal-de-beaute/">L’impuissance comme idéal de beauté</a></li>
+	<li id="menu-item-2042" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2042"><a href="https://antisexisme.net/category/attributs-du-pouvoir/">Attributs du pouvoir</a></li>
+	<li id="menu-item-2604" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2604"><a href="https://antisexisme.net/category/interactions-sexuelles-a-coercition-graduelle/">Interactions sexuelles à coercition graduelle</a></li>
+	<li id="menu-item-2043" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2043"><a href="https://antisexisme.net/category/sexualite/">Sexualité</a></li>
+	<li id="menu-item-2045" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2045"><a href="https://antisexisme.net/category/a-lecole/">A l&rsquo;école</a></li>
+	<li id="menu-item-2046" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2046"><a href="https://antisexisme.net/category/videos/">Vidéos</a></li>
+	<li id="menu-item-2047" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-2047"><a href="https://antisexisme.net/category/livres/">Livres</a></li>
+</ul>
+</li>
+<li id="menu-item-2034" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2034"><a href="https://antisexisme.net/a-propos-about/">A propos</a></li>
+<li id="menu-item-2036" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2036"><a href="https://antisexisme.net/contactez-moi/">Contactez-moi !</a></li>
+<li id="menu-item-2037" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2037"><a href="https://antisexisme.net/presse/">Dans la presse</a></li>
+<li id="menu-item-2819" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2819"><a href="https://antisexisme.net/mon-livre/">Mon livre : En finir avec la culture du viol</a></li>
+</ul></div>		</nav><!-- .site-navigation .main-navigation -->
+	</header><!-- #masthead .site-header -->
+
+	<div id="main" class="site-main">
+
+					<div class="header-image">
+				<a href="https://antisexisme.net/" title="Sexisme et Sciences humaines &#8211;  Féminisme" rel="home">
+					<img src="https://antisexisme.files.wordpress.com/2017/04/cropped-headernew.jpg" width="1015" height="276" alt="" />
+				</a>
+			</div>
+		
+	<div id="primary" class="content-area">
+		<div id="content" class="site-content" role="main">
+
+		
+			
+<article id="post-496" class="post-496 post type-post status-publish format-standard hentry category-mythes-sur-le-viol-2 category-violence-2 tag-mythes-sur-le-viol tag-viol">
+	<header class="entry-header">
+		<div class="entry-meta">
+			<a href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/" title="19 h 51 min" rel="bookmark"><time class="entry-date" datetime="2012-02-12T19:51:43+01:00" pubdate>12 février 2012</time></a><span class="byline"> par <span class="author vcard"><a class="url fn n" href="https://antisexisme.net/author/antisexisme/" title="Voir tous les articles par antisexisme" rel="author">antisexisme</a></span></span>		</div><!-- .entry-meta -->
+		<h1 class="entry-title">Mythes autour du viol. Partie 4 : Les mythes sur le viol augmentent la propension au&nbsp;viol.</h1>	</header><!-- .entry-header -->
+
+	<div class="entry-content">
+		<p>Partie 1 : <a href="https://antisexisme.wordpress.com/2011/12/04/mythes-sur-les-viols-partie-1-quels-sont-ces-mythes-qui-y-adhere/" target="_blank">Quels sont ces mythes ? Qui y adhère ?<br />
+</a>Partie 2 : <a title="Les mythes autour du viol et leurs conséquences. Partie 2 : les conséquences pour la victime" href="https://antisexisme.wordpress.com/2012/01/16/les-mythes-autour-du-viol-et-leurs-consequences-partie-2-les-consequences-pour-la-victime/" target="_blank">Les conséquences pour la victime<br />
+</a>Partie 3 : <a title="Mythes autour du viol. Partie 3 : Les mythes sur le viol restreignent la liberté des femmes" href="https://antisexisme.wordpress.com/2012/01/31/les-mythes-autour-du-viol-et-leurs-consequences-partie-3/" target="_blank">Les mythes sur le viol restreignent la liberté des femmes</a><br />
+<span style="color:#99cc00;"><strong>Partie 4 : Les mythes sur le viol augmentent la propension au viol</strong></span><a title="Mythes autour du viol. Partie 4 : Les mythes sur le viol augmentent la propension au viol." href="https://antisexisme.wordpress.com/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/" target="_blank"><br />
+</a>Partie 5 : <a title="Mythes autour du viol. Partie 5 : Les mythes sur le viol dans les médias" href="https://antisexisme.wordpress.com/2012/03/08/les-mythes-sur-le-viol-dans-les-media/" target="_blank">Les mythes sur le viol dans les médias</a></p>
+<p>Les mythes sur le viol et les agressions sexuelles &#8211; ces croyances infondées qui transfèrent de l’agresseur vers la victime la responsabilité du viol &#8211; non seulement nuisent au rétablissement des victimes, mais en plus, servent de prétextes à limiter la liberté des femmes. Nous allons voir maintenant quelles sont leurs conséquences sur la propension des hommes à violer.</p>
+<p style="text-align:justify;">Pour simplifier la lecture de l’article, nous utiliserons deux abréviations :<br />
+&#8211; <strong>RP</strong> (« Rape proclivity ») pour « <strong>Propension au viol</strong> »<br />
+&#8211; <strong>RMA</strong> (« Rape Myth Acceptance ») pour « <strong>Acceptation des Mythes sur le viol</strong> »</p>
+<div data-shortcode="caption" id="attachment_471" style="width: 510px" class="wp-caption aligncenter"><a href="https://antisexisme.files.wordpress.com/2012/02/viol-de-lucrc3a8ce1.jpg"><img aria-describedby="caption-attachment-471" data-attachment-id="471" data-permalink="https://antisexisme.net/viol-de-lucrece-2/" data-orig-file="https://antisexisme.files.wordpress.com/2012/02/viol-de-lucrc3a8ce1.jpg" data-orig-size="603,445" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="viol de lucrèce" data-image-description="&lt;p&gt;Le viol de Lucrèce, Titien&lt;/p&gt;
+" data-medium-file="https://antisexisme.files.wordpress.com/2012/02/viol-de-lucrc3a8ce1.jpg?w=300" data-large-file="https://antisexisme.files.wordpress.com/2012/02/viol-de-lucrc3a8ce1.jpg?w=603" class="size-full wp-image-471" title="viol de lucrèce" src="https://antisexisme.files.wordpress.com/2012/02/viol-de-lucrc3a8ce1.jpg?w=660" alt="viol de lucrèce" srcset="https://antisexisme.files.wordpress.com/2012/02/viol-de-lucrc3a8ce1.jpg 603w, https://antisexisme.files.wordpress.com/2012/02/viol-de-lucrc3a8ce1.jpg?w=150 150w, https://antisexisme.files.wordpress.com/2012/02/viol-de-lucrc3a8ce1.jpg?w=300 300w" sizes="(max-width: 603px) 100vw, 603px"   /></a><p id="caption-attachment-471" class="wp-caption-text">Le viol de Lucrèce, Titien</p></div>
+<p><span id="more-496"></span></p>
+<h3>Qu’est ce que la propension au viol (RP) ?</h3>
+<p style="text-align:justify;">La propension au viol (RP) est le penchant pour le viol que manifestent certaines personnes. Elle permet d’estimer <strong>la probabilité qu’un individu soit un violeur potentiel</strong>.</p>
+<p style="text-align:justify;">Expérimentalement, elle est mesurée de la façon suivante : un scénario de viol est décrit (mais sans que jamais le mot « viol » n’apparaisse) et l’on demande à un échantillon de personnes si elles se seraient comportées comme l&rsquo;agresseur du scénario. Les réponses possibles varient de (1) <em>Pas du tout</em> à (5) <em>Très probablement</em>.</p>
+<p style="text-align:justify;"><span style="text-decoration:underline;">Par exemple</span> :</p>
+<table style="text-align:center;width:495px;height:35px;" border="0" width="495" cellspacing="2" cellpadding="2">
+<tbody>
+<tr>
+<td style="background-color:#a4e1a9;text-align:justify;">Cela fait plusieurs fois que vous êtes sorti avec une femme rencontrée récemment. Un week-end, vous allez tous deux au cinéma, puis vous retournez ensemble chez vous. Vous buvez quelques bières, écoutez de la musique et vous vous faîtes quelques caresses. A un moment, votre amie se rend compte qu’elle a trop bu et qu’elle ne peut pas conduire pour rentrer chez elle. Vous lui dites qu’elle peut rester ici pour dormir, pas de problèmes ! Vous avez envie de saisir cette opportunité de coucher avec elle. Mais elle objecte, disant que tout cela arrive trop précipitamment et qu’elle est trop ivre. Vous ne vous laissez pas rebuter, vous vous allongez sur elle et faîtes ce que vous avez envie de faire.</td>
+</tr>
+</tbody>
+</table>
+<p style="text-align:justify;">Cette méthode de mesure n’est pas reliée à la désirabilité sociale<sup>1</sup> : autrement dit, les répondants  ne sont pas influencés par le « Qu’en dira-t-on ? ».</p>
+<p style="text-align:justify;">Dans une review de 1981, Malamuth indiquait que, sur l’ensemble des études analysées,<strong> environ 35% des hommes présentaient une certaine propension au viol</strong><sup>2</sup>. Une autre étude de 1992<span style="font-size:11px;">,</span> portant sur 159 étudiants d’une université américaine protestante, a montré que 34% d’entre eux admettaient une certaine propension aux agressions sexuelles<sup>3</sup>. Dans une étude réalisée en 1998 en Allemagne, 33% des participants avaient  déclaré qu’il y aurait une chance qu’ils se comportent comme l’agresseur<sup>4</sup>. Enfin, dans une étude qualitative de 2004 portant sur 20 étudiants<sup>5</sup>, 6 d’entre eux ont admis que sous des circonstances particulières, ils seraient capables de violer ou d’agresser sexuellement.</p>
+<div data-shortcode="caption" id="attachment_476" style="width: 250px" class="wp-caption alignleft"><a href="https://antisexisme.files.wordpress.com/2012/02/minangkabau.jpg"><img aria-describedby="caption-attachment-476" data-attachment-id="476" data-permalink="https://antisexisme.net/2013/01/09/cultures-du-viol-1/minangkabau/#main" data-orig-file="https://antisexisme.files.wordpress.com/2012/02/minangkabau.jpg" data-orig-size="598,393" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="femmes Minangkabau" data-image-description="&lt;p&gt;femmes Minangkabau&lt;/p&gt;
+" data-medium-file="https://antisexisme.files.wordpress.com/2012/02/minangkabau.jpg?w=300" data-large-file="https://antisexisme.files.wordpress.com/2012/02/minangkabau.jpg?w=598" class=" wp-image-476 " title="femmes Minangkabau" src="https://antisexisme.files.wordpress.com/2012/02/minangkabau.jpg?w=240&#038;h=158" alt="femmes Minangkabau" width="240" height="158" srcset="https://antisexisme.files.wordpress.com/2012/02/minangkabau.jpg?w=240&amp;h=158 240w, https://antisexisme.files.wordpress.com/2012/02/minangkabau.jpg?w=480&amp;h=316 480w, https://antisexisme.files.wordpress.com/2012/02/minangkabau.jpg?w=150&amp;h=99 150w, https://antisexisme.files.wordpress.com/2012/02/minangkabau.jpg?w=300&amp;h=197 300w" sizes="(max-width: 240px) 100vw, 240px" /></a><p id="caption-attachment-476" class="wp-caption-text">Il y a très peu de viols chez les Minangkabau</p></div>
+<p style="text-align:justify;">En 1986, l’anthropologue Peggy Reeves Sanday a proposé une échelle afin de mesurer la propension au viol de différentes sociétés<sup>6</sup>. Cette échelle allait de « très encline au viol » à « hostile au viol ». Les Etats-Unis – qui ont le plus haut taux de viol dans les pays industrialisés<sup>7</sup> &#8211; étaient classés parmi les sociétés très enclines au viol, très loin devant les pays européens. A l’inverse, la Suède, la Norvège et la société des Minangkabau à Sumatra présentaient une très faible propension au viol. Elle a pu constater que les sociétés hostiles au viol étaient caractérisées par le droit, pour les femmes, à conserver leurs biens après le mariage, par la participation des hommes à l’éducation des enfants et par une moindre ségrégation des sexes.</p>
+<h3>Lien entre propension au viol (RP) et acceptation des mythes sur le viol (RMA)</h3>
+<p style="text-align:justify;">En 1980, Burt émettait l’hypothèse que<strong> les mythes sur le viol puissent agir comme des « neutralisants psychologiques » qui permettent aux hommes de s’affranchir de l’interdiction sociale de blesser les autres, quand ils agressent sexuellement</strong><sup>8</sup>.</p>
+<p style="text-align:justify;">De nombreuses études expérimentales ont clairement mis en évidence <strong>une corrélation significative entre la RP et le niveau de RMA</strong>. Ainsi en 1981, Malamuth a trouvé une corrélation égale à 0,60 entre la RP et la RMA<sup>2</sup>. Dans une méta-analyse de 2002, la corrélation moyenne sur 11 études, entre ces deux variables était de 0,26.</p>
+<p style="text-align:justify;">Ces corrélations sont compatibles avec l’idée de Burt, selon laquelle les mythes sur le viol affectent la probabilité de violer au niveau individuel. Deux autres hypothèses sont également possibles :</p>
+<ul>
+<li style="text-align:justify;">Les hommes justifient des tendances préexistantes au viol en adoptant les mythes sur le viol. Ainsi la RP serait la cause (et non pas la conséquence) de la RMA.</li>
+<li style="text-align:justify;"><span style="text-align:justify;">Il n’y a pas de lien causal direct entre RMA et RP, mais ces deux variables sont corrélées à  une troisième autre, comme par exemple l’hostilité à l’égard des femmes.</span></li>
+</ul>
+<h3 style="text-align:justify;">Mise en évidence d’un impact des mythes à propos du viol sur la propension à violer</h3>
+<p style="text-align:justify;">En 1998, Bohner et ses collaborateurs ont été les premiers à tenter d’élucider ces liens causaux<sup>4</sup>. Ils firent le raisonnement suivant :</p>
+<ul style="text-align:justify;">
+<li>Si la RMA a un effet causal sur la RP, alors la relation entre RMA et RP sera plus forte, si les participants pensent aux mythes sur le viol quand ils remplissent le questionnaire sur la RP.</li>
+<li>A l’inverse, si la RP est la cause de la RMA, la relation entre les deux variables sera plus forte si les participants remplissent un questionnaire sur la RMA, alors qu’ils sont en train de penser à leur propension au viol.</li>
+<li>S’il n’y a pas de lien causal direct, l’importance de la corrélation ne variera pas.</li>
+</ul>
+<div data-shortcode="caption" id="attachment_475" style="width: 160px" class="wp-caption alignright"><img aria-describedby="caption-attachment-475" data-attachment-id="475" data-permalink="https://antisexisme.net/dv766087/" data-orig-file="https://antisexisme.files.wordpress.com/2012/02/forms.jpg" data-orig-size="358,357" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;Getty Images&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;Close Up of a Man Signing a Form&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;(c) Flying Colours Ltd&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;dv766087&quot;}" data-image-title="formulaire" data-image-description="&lt;p&gt;Close Up of a Man Signing a Form&lt;/p&gt;
+" data-medium-file="https://antisexisme.files.wordpress.com/2012/02/forms.jpg?w=300" data-large-file="https://antisexisme.files.wordpress.com/2012/02/forms.jpg?w=358" class="size-thumbnail wp-image-475" title="formulaire" src="https://antisexisme.files.wordpress.com/2012/02/forms.jpg?w=150&#038;h=150" alt="formulaire" width="150" height="150" srcset="https://antisexisme.files.wordpress.com/2012/02/forms.jpg?w=150&amp;h=150 150w, https://antisexisme.files.wordpress.com/2012/02/forms.jpg?w=300&amp;h=300 300w" sizes="(max-width: 150px) 100vw, 150px" /><p id="caption-attachment-475" class="wp-caption-text">Selon l&rsquo;ordre des questionnaires, la corrélation entre RMA et RP change.</p></div>
+<p style="text-align:justify;">Ils comparèrent deux situations expérimentales: dans la première, les 113 participants complétaient d’abord le test sur la RMA, puis celui sur la RP ; dans la seconde, ils complétaient les deux questionnaires dans l’ordre inverse. Ils trouvèrent que la relation entre RP et RMA était plus forte quand les participants avaient d’abord rempli le test sur la RMA.</p>
+<p style="text-align:justify;">Les auteurs en déduisirent que<strong> les mythes sur les viols avaient bien un effet causal sur la propension à violer</strong>, au niveau individuel, comme l’avait suggéré Burt 18 ans plus tôt.</p>
+<p style="text-align:justify;">Ces résultats ont été répétés en 2005 sur 107 individus<sup>10</sup>. De plus,<strong> la corrélation entre RP et RMA était plus forte chez les hommes qui avaient déjà été agressif sexuellement dans le passé</strong><sup>10</sup>. Ces derniers représentaient 44% des individus de l’échantillon et la majorité d’entre eux n’avaient pas utilisé la force pour obtenir un rapport sexuel, mais avaient usé d’un comportement manipulatoire pour arriver à leur fin.</p>
+<h3>Détermination des motivations médiatrices entre RMA et RP</h3>
+<p style="text-align:justify;">Une fois que le lien causal entre RMA et RP a été établi, il fallait chercher quelles étaient<strong> les motivations</strong> qui servaient de médiateurs entre RMA et RP. En général, deux grandes hypothèses sont émises à propos de la motivation des violeurs<sup>1</sup> :</p>
+<ul>
+<li><strong>L’excitation sexuelle</strong></li>
+<li><span style="text-align:justify;"><strong>L’exercice d’un pouvoir</strong>,  un moyen (parmi tant d’autres) permettant aux hommes de maintenir leur statut supérieur.</span></li>
+</ul>
+<div data-shortcode="caption" id="attachment_477" style="width: 250px" class="wp-caption alignright"><img aria-describedby="caption-attachment-477" data-attachment-id="477" data-permalink="https://antisexisme.net/viol/" data-orig-file="https://antisexisme.files.wordpress.com/2012/02/viol.jpg" data-orig-size="400,300" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="viol" data-image-description="&lt;p&gt;viol&lt;/p&gt;
+" data-medium-file="https://antisexisme.files.wordpress.com/2012/02/viol.jpg?w=300" data-large-file="https://antisexisme.files.wordpress.com/2012/02/viol.jpg?w=400" class=" wp-image-477 " title="viol" src="https://antisexisme.files.wordpress.com/2012/02/viol.jpg?w=240&#038;h=180" alt="viol" width="240" height="180" srcset="https://antisexisme.files.wordpress.com/2012/02/viol.jpg?w=240&amp;h=180 240w, https://antisexisme.files.wordpress.com/2012/02/viol.jpg?w=150&amp;h=113 150w, https://antisexisme.files.wordpress.com/2012/02/viol.jpg?w=300&amp;h=225 300w, https://antisexisme.files.wordpress.com/2012/02/viol.jpg 400w" sizes="(max-width: 240px) 100vw, 240px" /><p id="caption-attachment-477" class="wp-caption-text">Qu&rsquo;est ce qui motive les violeurs ? L&rsquo;excitation sexuelle ? Le désir de dominer ? ou bien les deux ?</p></div>
+<p style="text-align:justify;">Les études basées sur les témoignages de violeurs ou d’agresseurs sexuels, condamnées ou ayant avoué leur crime, suggèrent que la principale motivation au viol est l’excitation sexuelle<sup>1</sup>. Le problème est que les violeurs et agresseurs n’ont pas forcément bien conscience de ce qui les a motivés à agresser. De plus, même si ils étaient conscients de leurs motivations profondes, il y a peu de chance qu’ils admettent avoir violé par plaisir de dominer une femme.</p>
+<p style="text-align:justify;">Les contenus des mythes sur le viol sont très divers. Certains prétendent que les hommes ne peuvent pas contrôler leurs pulsions et d’autres minimisent la gravité des agressions sexuelles, les reléguant au statut de rapport sexuel habituel. Par ailleurs, certains mythes sur le viol mettent plus l’accent sur le comportement de la victime, sous-entendant qu’« elle l’a bien mérité » et donc qu’elle devait être punie. Tout cela semble indiquer que, aussi bien l’excitation sexuelle que le désir de domination, peuvent motiver un violeur.</p>
+<p style="text-align:justify;">Pour y voir plus clair, des chercheurs (dont Bohner) ont entrepris une série d’expérimentations en 2004<sup>1</sup>. Ils ont pris comme cadre de travail le cas des viols commis par un proche, qui représentent 75% des viols<sup>11</sup>. Plus exactement, ils ont réanalysé leurs données de 1998 (obtenues sur un échantillon de 113 hommes Allemands, « étude 1 ») et ont conduit deux autres expérimentations au Royaume-Uni (« étude 2 ») et au Zimbabwe (« étude 3 »).</p>
+<p style="text-align:justify;">Dans les trois cas, des hommes ont répondu à un test sur leur RMA et ont lu 5 scénarios de viol ayant eu lieu lors d’un rendez-vous amoureux. Pour chacun des scénarios, les participants devaient indiquer :</p>
+<ol style="text-align:justify;">
+<li>la probabilité de se comporter comme l’agresseur (mesure de la <strong>RP</strong>)</li>
+<li>quel serait leur niveau d&rsquo;excitation sexuelle dans cette situation (mesure de l’<strong>excitation sexuelle anticipée</strong>)</li>
+<li>quel serait leur niveau de contentement d’avoir pu obtenir ce qu’ils voulaient (mesure du <strong>plaisir de dominer anticipé</strong>)</li>
+</ol>
+<p style="text-align:justify;">Pour analyser ces résultats, un modèle de régression multiple a été utilisé, permettant de déterminer les variations d’une variable (ici, la RP) en fonction d’autres variables (ici, la RMA et les deux médiateurs potentiels : l’excitation sexuelle et le plaisir de dominer). Ils ont également cherché à évaluer la variation des deux médiateurs potentiels en fonction de la RMA.</p>
+<p style="text-align:justify;">Dans les études 2 et 3, ils ont retrouvé la corrélation entre RMA et RP. Dans les études 1 et 2, le plaisir de dominer, mais pas l’excitation sexuelle, était significativement reliée à la RP. Dans l’étude 3, il y avait une relation positive et significative entre la RP et les deux médiateurs potentiels. Cependant, la relation entre RMA et l’excitation sexuelle n’était pas significative, ce qui l’exclut d’office comme médiateur. De plus, la relation entre excitation sexuelle et RP était beaucoup plus faible que la relation entre plaisir de la domination et RP.</p>
+<div style="width: 510px" class="wp-caption aligncenter"><img data-attachment-id="478" data-permalink="https://antisexisme.net/article/" data-orig-file="https://antisexisme.files.wordpress.com/2012/02/article.jpg" data-orig-size="642,472" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="résultats de l&amp;rsquo;article" data-image-description="&lt;p&gt;résultats de l&amp;rsquo;article&lt;/p&gt;
+" data-medium-file="https://antisexisme.files.wordpress.com/2012/02/article.jpg?w=300" data-large-file="https://antisexisme.files.wordpress.com/2012/02/article.jpg?w=642" class="size-full wp-image-478" title="résultats de l'article" src="https://antisexisme.files.wordpress.com/2012/02/article.jpg?w=660" alt="résultats de l'article" srcset="https://antisexisme.files.wordpress.com/2012/02/article.jpg 642w, https://antisexisme.files.wordpress.com/2012/02/article.jpg?w=150 150w, https://antisexisme.files.wordpress.com/2012/02/article.jpg?w=300 300w" sizes="(max-width: 642px) 100vw, 642px"   /><p class="wp-caption-text">Coefficients prédisant une variable (par exemple, RP) à partir d’une autre (par exemple, RMA). Les coefficients entre parenthèses et le coefficient de la RMA quand on inclut les médiateurs potentiels comme prédicteurs concurrents. *p &lt; .05. **p &lt; .01. ***p &lt; .001. D’après Chiroro et al 2004<sup>1</sup></p></div>
+<p style="text-align:justify;">Ainsi,<strong> le plaisir de dominer serait la motivation médiatrice entre le RMA et la RP, contrairement à l’excitation sexuelle.</strong> Ces résultats corroborent la théorie féministe selon laquelle le viol a pour fonction de perpétuer la domination masculine (voir notamment : <a title="Mythes autour du viol. Partie 3 : Les mythes sur le viol restreignent la liberté des femmes" href="https://antisexisme.wordpress.com/2012/01/31/les-mythes-autour-du-viol-et-leurs-consequences-partie-3/" target="_blank">Les mythes sur le viol restreignent la liberté des femmes</a>). Par contre, ils vont plutôt à l’encontre des théories qui suggèrent que le viol est motivé par l’excitation sexuelle.</p>
+<p style="text-align:justify;">Cela dit, dans les trois études, le plaisir de dominer et l’excitation sexuelle étaient très corrélés. Les auteurs supposent que<strong> pour beaucoup d’hommes, le désir de dominer et le désir sexuels sont très fortement associés</strong>. Cela est cohérent avec les résultats d’une étude qui a révélé que les hommes présentant une forte probabilité d’harceler ou d’agresser sexuellement, faisaient un lien automatique entre sexe et pouvoir<sup>12</sup>. Quand ces hommes étaient en présence d’un stimulus évoquant le pouvoir, ils avaient tendance à se dire plus attirés par une femme, ce qui n’était pas le cas des autres participants.</p>
+<h3 style="text-align:justify;">En conclusion</h3>
+<p style="text-align:justify;">Les mythes sur le viol poussent certains hommes à agresser sexuellement. Ce lien de cause à effet est principalement motivé par une volonté de dominer sa victime. Dénoncer et démanteler les mythes sur le viol est donc sans doute un moyen de limiter les agressions sexuelles.</p>
+<hr />
+<h2><strong>Références</strong></h2>
+<p style="text-align:justify;">1. <strong>Chiroro P, Bohner G, Viki GT, Jarvis CI</strong>. Rape Myth Acceptance and Rape Proclivity. Journal of Interpersonal Violence. 2004;19(4):427 -442.</p>
+<p style="text-align:justify;">2. <strong>Malamuth NM</strong>. Rape Proclivity Among Males. Journal of Social Issues. 1981;37(4):138-157.</p>
+<p style="text-align:justify;">3. <strong>Osland JA, Fitch M, Willis EE</strong>. Likelihood to rape in college males. Sex Roles. 1996;35(3-4):171-183.</p>
+<p style="text-align:justify;">4. <strong>Bohner G, Reinhard M, Rutz S, et al.</strong> Rape myths as neutralizing cognitions: evidence for a causal impact of anti‐victim attitudes on men’s self‐reported likelihood of raping. European Journal of Social Psychology. 1998;28(2):257-268.</p>
+<p style="text-align:justify;">5. <strong>Lev-Wiesel R. </strong>Male University Students’ Attitudes Toward Rape and Rapists. Child and Adolescent Social Work Journal. 2004;21(3):199-210.</p>
+<p style="text-align:justify;">6. <strong>Reeves-Sanday P</strong>. Rape and the Silencing of the Feminine. Rape. 1986.</p>
+<p style="text-align:justify;">7. <strong>Murnen SK, Wright C, Kaluzny G</strong>. If « Boys Will Be Boys, » Then Girls Will Be Victims? A Meta-Analytic Review of the Research That Relates Masculine Ideology to Sexual Aggression. Sex Roles. 2002;46(11-12):359-375.</p>
+<p style="text-align:justify;">8. <strong>Burt MR.</strong> Cultural myths and supports for rape. Journal of Personality and Social Psychology. 1980;38(2):217-230.</p>
+<p style="text-align:justify;">9. <strong>Bohner G, Siebler F, Schmelcher J</strong>. Social Norms and the Likelihood of Raping: Perceived Rape Myth Acceptance of Others Affects Men’s Rape Proclivity. Personality and Social Psychology Bulletin. 2006;32(3):286 -297.</p>
+<p style="text-align:justify;">10. <strong>Bohner G, Jarvis CI, Eyssel F, Siebler F.</strong> The causal impact of rape myth acceptance on men’s rape proclivity: comparing sexually coercive and noncoercive men. European Journal of Social Psychology. 2005;35(6):819-828.</p>
+<p style="text-align:justify;">11. Bulletin 2006. Collectif Féministe Contre le Viol; 2006.</p>
+<p style="text-align:justify;">12. <strong>Bargh JA, Raymond P, Pryor JB, Strack F.</strong> Attractiveness of the underling: An automatic power → sex association and its consequences for sexual harassment and aggression. Journal of Personality and Social Psychology. 1995;68(5):768-781.</p>
+<div id="atatags-370373-5ec0a54d250fd">
+        <script type="text/javascript">
+            __ATA.cmd.push(function() {
+                __ATA.initVideoSlot('atatags-370373-5ec0a54d250fd', {
+                    sectionId: '370373',
+                    format: 'inread'
+                });
+            });
+        </script>
+    </div>			<div id="atatags-26942-5ec0a54d25174"></div>
+			
+			<script>
+				__ATA.cmd.push(function() {
+					__ATA.initDynamicSlot({
+						id: 'atatags-26942-5ec0a54d25174',
+						location: 120,
+						formFactor: '001',
+						label: {
+							text: 'Publicités',
+						},
+						creative: {
+							reportAd: {
+								text: 'Report this Ad',
+							},
+							privacySettings: {
+								text: 'Paramètres de confidentialité',
+							}
+						}
+					});
+				});
+			</script><div id="jp-post-flair" class="sharedaddy sd-rating-enabled sd-like-enabled sd-sharing-enabled"><div class="sd-block sd-rating"><h3 class="sd-title">Évaluez ceci :</h3><div class="cs-rating pd-rating" id="pd_rating_holder_4277183_post_496"></div></div><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Partagez :</h3><div class="sd-content"><ul><li class="share-print"><a rel="nofollow noopener noreferrer" data-shared="" class="share-print sd-button share-icon" href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/#print" target="_blank" title="Cliquer pour imprimer"><span>Imprimer</span></a></li><li class="share-email"><a rel="nofollow noopener noreferrer" data-shared="" class="share-email sd-button share-icon" href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?share=email" target="_blank" title="Cliquez pour envoyer par e-mail à un ami"><span>E-mail</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-496" class="share-facebook sd-button share-icon" href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?share=facebook" target="_blank" title="Cliquez pour partager sur Facebook"><span>Facebook</span></a></li><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-496" class="share-twitter sd-button share-icon" href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?share=twitter" target="_blank" title="Cliquez pour partager sur Twitter"><span>Twitter</span></a></li><li class="share-reddit"><a rel="nofollow noopener noreferrer" data-shared="" class="share-reddit sd-button share-icon" href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?share=reddit" target="_blank" title="Cliquez pour partager sur Reddit"><span>Reddit</span></a></li><li class="share-skype"><a rel="nofollow noopener noreferrer" data-shared="sharing-skype-496" class="share-skype sd-button share-icon" href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?share=skype" target="_blank" title="Cliquez pour partager sur Skype"><span>Skype</span></a></li><li class="share-linkedin"><a rel="nofollow noopener noreferrer" data-shared="sharing-linkedin-496" class="share-linkedin sd-button share-icon" href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?share=linkedin" target="_blank" title="Cliquez pour partager sur LinkedIn"><span>LinkedIn</span></a></li><li class="share-tumblr"><a rel="nofollow noopener noreferrer" data-shared="" class="share-tumblr sd-button share-icon" href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?share=tumblr" target="_blank" title="Cliquez pour partager sur Tumblr"><span>Tumblr</span></a></li><li class="share-pinterest"><a rel="nofollow noopener noreferrer" data-shared="sharing-pinterest-496" class="share-pinterest sd-button share-icon" href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?share=pinterest" target="_blank" title="Cliquez pour partager sur Pinterest"><span>Pinterest</span></a></li><li class="share-pocket"><a rel="nofollow noopener noreferrer" data-shared="" class="share-pocket sd-button share-icon" href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?share=pocket" target="_blank" title="Cliquez pour partager sur Pocket"><span>Pocket</span></a></li><li class="share-telegram"><a rel="nofollow noopener noreferrer" data-shared="" class="share-telegram sd-button share-icon" href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?share=telegram" target="_blank" title="Cliquez pour partager sur Telegram"><span>Telegram</span></a></li><li class="share-jetpack-whatsapp"><a rel="nofollow noopener noreferrer" data-shared="" class="share-jetpack-whatsapp sd-button share-icon" href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?share=jetpack-whatsapp" target="_blank" title="Cliquez pour partager sur WhatsApp"><span>WhatsApp</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-20930585-496-5ec0a54d26873' data-src='//widgets.wp.com/likes/index.html?ver=20190321#blog_id=20930585&amp;post_id=496&amp;origin=antisexisme.wordpress.com&amp;obj_id=20930585-496-5ec0a54d26873&amp;domain=antisexisme.net' data-name='like-post-frame-20930585-496-5ec0a54d26873'><h3 class='sd-title'>WordPress:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>J&#039;aime</span></span> <span class="loading">chargement&hellip;</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div>
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	<h3 class="jp-relatedposts-headline"><em>Articles similaires</em></h3>
+</div></div>			</div><!-- .entry-content -->
+
+	<footer class="entry-meta">
+		Cette entrée, publiée dans <a href="https://antisexisme.net/category/mythes-sur-le-viol-2/" rel="category tag">Mythes sur le viol</a>, <a href="https://antisexisme.net/category/violence-2/" rel="category tag">Violence</a>, est taguée <a href="https://antisexisme.net/tag/mythes-sur-le-viol/" rel="tag">mythes sur le viol</a>, <a href="https://antisexisme.net/tag/viol/" rel="tag">viol</a>. Bookmarquez ce <a href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/" title="Permalien vers Mythes autour du viol. Partie 4 : Les mythes sur le viol augmentent la propension au&nbsp;viol." rel="bookmark">permalien</a>.
+			</footer><!-- .entry-meta -->
+</article><!-- #post-## -->
+
+				<nav role="navigation" id="nav-below" class="site-navigation post-navigation">
+		<h1 class="assistive-text screen-reader-text">Navigation des articles</h1>
+
+	
+		<div class="nav-previous"><a href="https://antisexisme.net/2012/01/31/les-mythes-autour-du-viol-et-leurs-consequences-partie-3/" rel="prev"><span class="meta-nav">&larr;</span> Mythes autour du viol. Partie 3 : Les mythes sur le viol restreignent la liberté des&nbsp;femmes</a></div>		<div class="nav-next"><a href="https://antisexisme.net/2012/03/08/mon-blog-a-un-an/" rel="next">Mon blog a un an&nbsp;! <span class="meta-nav">&rarr;</span></a></div>
+	
+	</nav><!-- #nav-below -->
+	
+			
+<div id="comments" class="comments-area">
+
+			<h2 class="comments-title">
+			24 r&eacute;flexions sur &ldquo;<span>Mythes autour du viol. Partie 4 : Les mythes sur le viol augmentent la propension au&nbsp;viol.</span>&rdquo;		</h2>
+
+		
+		<ol class="commentlist">
+				<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-412">
+		<article id="comment-412" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://2.gravatar.com/avatar/b4179f41bd46f4a1adb81599628c247b?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='http://susaufeminicides.blogspot.com/' rel='external nofollow ugc' class='url'>courroux</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/#comment-412"><time pubdate datetime="2012-02-12T20:37:05+01:00">
+						12 février 2012 à 20 h 37 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_412"></div><p>Les sociétés hostiles au viol auraient-elles viré leur cutie depuis 86 ou &#8230; ? cf. Rapport 2008-2010 Amnesty International Norvège, Finlande, Danemark (celui de être ou ne pas être, n&rsquo;est-ce pas ?)(<a href="http://susaufeminicides.blogspot.com/2010/03/viols-feminicides-au-nord-case-closed.html" rel="nofollow ugc">http://susaufeminicides.blogspot.com/2010/03/viols-feminicides-au-nord-case-closed.html</a></p>
+<p>Retour vers le futur &#8211; concernant les travaux anthropologiques de 1986, &laquo;&nbsp;&#8230;A l’inverse, la Suède, la Norvège et la société des Minangkabau à Sumatra présentaient une très faible propension au viol. Elle a pu constater que les sociétés hostiles au viol étaient caractérisées par le droit, pour les femmes, à conserver leurs biens après le mariage, par la participation des hommes à l’éducation des enfants et par une moindre ségrégation des sexes.&nbsp;&raquo;</p>
+<p>Quelle est la raison de la résistance à regrouper toutes les &laquo;&nbsp;violences contre les femmes&nbsp;&raquo; et les filles sous l&rsquo;expression directe, claire, qualifiable en Droit de VIOLENCES FEMINICIDES ?</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?replytocom=412#respond' data-commentid="412" data-postid="496" data-belowelement="comment-412" data-respondelement="respond" aria-label='Répondre à courroux'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment odd alt depth-2 highlander-comment" id="li-comment-438">
+		<article id="comment-438" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://i1.wp.com/graph.facebook.com/1636077104/picture?q=type%3Dlarge%26_md5%3D0e1b406feb18d1e3ca7bab7ba2f26612&#038;resize=50%2C50' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='http://www.facebook.com/christine.gamita' rel='external nofollow ugc' class='url'>Gamita Christine</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/#comment-438"><time pubdate datetime="2012-02-23T23:34:54+01:00">
+						23 février 2012 à 23 h 34 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_438"></div><p>Mes blogs dont le premier déjà signalé et <a href="http://susaufeminicides.blog.lemonde.fr/2012/01/10/bonjour-tout-le-monde/" rel="nofollow ugc">http://susaufeminicides.blog.lemonde.fr/2012/01/10/bonjour-tout-le-monde/</a> regroupent partie de mes résultats de travaux de recherche et de terrains d&rsquo;ethnologue. Je suis donc une scientifique française qui écrit non académiquement sur le viol féminicide, entre autres violences sexospécifiques.</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?replytocom=438#respond' data-commentid="438" data-postid="496" data-belowelement="comment-438" data-respondelement="respond" aria-label='Répondre à Gamita Christine'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment byuser comment-author-elfvy even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-413">
+		<article id="comment-413" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/f856555927bbe7fb584612926323230b?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='http://parlerpourexister.wordpress.com' rel='external nofollow ugc' class='url'>elfvy</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/#comment-413"><time pubdate datetime="2012-02-12T21:16:39+01:00">
+						12 février 2012 à 21 h 16 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_413"></div><p>Merci pour toutes ces données scientifiques ; ça clouera le bec à ceux qui nous parlent encore de &laquo;&nbsp;pulsions irrépressibles&nbsp;&raquo;<br />
+question plus personnelle : mais où trouvez-vous le temps de faire tout ça ? Rassembler toutes les études, les comprendre, les résumer et les rendre accessibles et compréhensibles à tous, c&rsquo;est du boulot !</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?replytocom=413#respond' data-commentid="413" data-postid="496" data-belowelement="comment-413" data-respondelement="respond" aria-label='Répondre à elfvy'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-antisexisme bypostauthor odd alt depth-2 highlander-comment" id="li-comment-415">
+		<article id="comment-415" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/c731be1005243beeefb57b3e2bc4b03c?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='https://antisexisme.wordpress.com' rel='external nofollow ugc' class='url'>antisexisme</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/#comment-415"><time pubdate datetime="2012-02-12T21:43:56+01:00">
+						12 février 2012 à 21 h 43 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_415"></div><p>Merci elfvy du commentaire !<br />
+Oui, ça me prends beaucoup beaucoup de temps&#8230; mais avec l&rsquo;habitude, j&rsquo;arrive à lire et à écrire plus vite !<br />
+Je le fais souvent le soir et certains week-ends.</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?replytocom=415#respond' data-commentid="415" data-postid="496" data-belowelement="comment-415" data-respondelement="respond" aria-label='Répondre à antisexisme'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-414">
+		<article id="comment-414" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/fab436197fbd494d96948e2c0a2c0df2?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='http://fcomme.blogspot.com/' rel='external nofollow ugc' class='url'>Hélo</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/#comment-414"><time pubdate datetime="2012-02-12T21:42:44+01:00">
+						12 février 2012 à 21 h 42 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_414"></div><p>Vraiment, chapeau pour ce travail de synthèse (et de traduction peut-être même) ! C&rsquo;est vraiment très instructif et ces différentes études permettent de valider ce que nous, féministes, supposons. </p>
+<p>Je remarque quand même que parmi les auteur.e.s et scientifiques, aucun.e n&rsquo;est français.e. Ici, la question mobilise peu. Merci donc de diffuser ces travaux !</p>
+<p>Autre remarque: le taux de propension au viol est toujours équivalent selon les différentes études, soit autour de 30/35% (même le résultat de 6 sur 20 étudiants équivaut à une proportion de 30% environ). C&rsquo;est énorme quand on se dit qu&rsquo;il ne manque probablement que l&rsquo;occasion à ces hommes pour passer à l&rsquo;acte &#8230;</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?replytocom=414#respond' data-commentid="414" data-postid="496" data-belowelement="comment-414" data-respondelement="respond" aria-label='Répondre à Hélo'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-antisexisme bypostauthor odd alt depth-2 highlander-comment" id="li-comment-416">
+		<article id="comment-416" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/c731be1005243beeefb57b3e2bc4b03c?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='https://antisexisme.wordpress.com' rel='external nofollow ugc' class='url'>antisexisme</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/#comment-416"><time pubdate datetime="2012-02-12T22:00:24+01:00">
+						12 février 2012 à 22 h 00 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_416"></div><p>Merci Hélo !</p>
+<p>Oui c&rsquo;est vrai que je ne crois pas avoir vu de Français parmi ces scientifiques. Le plus impliqué dans ce domaine de recherche est Gerd Bohner, un Allemand.</p>
+<p>J&rsquo;ai moi-même été très étonnée de trouver un taux très constant dans les études : très souvent autour de 30% !<br />
+Cependant une étude de 1981 montait à 51% et une autre était à 22%.</p>
+<p>C&rsquo;est en effet ENORME et j&rsquo;ai moi-même était assez choquée par ce chiffre !<br />
+Bon, après dans ces %, il y a ceux qui ont noter 2 sur 5  correspondant à &laquo;&nbsp;probablement pas&nbsp;&raquo; (mais qui n&rsquo;est pas 1 : &laquo;&nbsp;Pas du tout&nbsp;&raquo;).</p>
+<p>En plus l&rsquo;expérience, avec 22% montrait que ce chiffre augmentait à 39% quand le scénario n&rsquo;était pas celui d&rsquo;un viol, mais d&rsquo;une agression sexuelle sans pénétration.</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?replytocom=416#respond' data-commentid="416" data-postid="496" data-belowelement="comment-416" data-respondelement="respond" aria-label='Répondre à antisexisme'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-417">
+		<article id="comment-417" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://2.gravatar.com/avatar/82c5222a9e95b3d8e4250df9ed013e72?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='http://perso.orange.fr/CommissionDLA37' rel='external nofollow ugc' class='url'>Nicolas</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/#comment-417"><time pubdate datetime="2012-02-12T22:55:41+01:00">
+						12 février 2012 à 22 h 55 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_417"></div><p>Très bon article encore mais assez sec car très mathématique, ça me rappelle mes cours de stats de deug d&rsquo;histoire&#8230;<br />
+En finissant l&rsquo;article, j&rsquo;ai repensé au n°2 de Ni patrie ni frontière, en particulier à ce texte : Wendy McElroy : La nouvelle mythologie du viol <a href="http://www.mondialisme.org/spip.php?article121" rel="nofollow ugc">http://www.mondialisme.org/spip.php?article121</a></p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?replytocom=417#respond' data-commentid="417" data-postid="496" data-belowelement="comment-417" data-respondelement="respond" aria-label='Répondre à Nicolas'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-antisexisme bypostauthor odd alt depth-2 highlander-comment" id="li-comment-418">
+		<article id="comment-418" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/c731be1005243beeefb57b3e2bc4b03c?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='https://antisexisme.wordpress.com' rel='external nofollow ugc' class='url'>antisexisme</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/#comment-418"><time pubdate datetime="2012-02-13T07:30:11+01:00">
+						13 février 2012 à 7 h 30 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_418"></div><p>C&rsquo;est vrai que c&rsquo;est assez mathématiques&#8230;<br />
+En fait, j&rsquo;ai fait ça car certaines personnes m&rsquo;avaient conseiller d&rsquo;un peu plus détaillé les résultats. Peut-être que pour le coup j&rsquo;en ai trop fait au risque de rendre l&rsquo;article moins agréable à lire&#8230;</p>
+<p>Merci pour le texte =) je le lirai à l&rsquo;occasion</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?replytocom=418#respond' data-commentid="418" data-postid="496" data-belowelement="comment-418" data-respondelement="respond" aria-label='Répondre à antisexisme'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-432">
+		<article id="comment-432" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://1.gravatar.com/avatar/7246dd2d5cf669cf902044367bb1cba4?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn">Les Etres Humaines</cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/#comment-432"><time pubdate datetime="2012-02-17T10:40:37+01:00">
+						17 février 2012 à 10 h 40 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_432"></div><p>bonjour, je ne suis pas dans le bon topic et je m&rsquo;en excuse j&rsquo;aimerais juste attirer votre attention sur Les Êtres Humaines c&rsquo;est un collectif de lycéens spécialisé en art, nous nous interrogeons aujourd&rsquo;hui sur l&rsquo;égalité homme femme dans la grammaire française, venez sur notre page afin de nous aider à avancer dans nos projets s&rsquo;il vous plaît 🙂<br />
+<a href="http://www.facebook.com/pages/Les-Etres-Humaines/107136272743791?notif_t=page_new_likes" rel="nofollow ugc">http://www.facebook.com/pages/Les-Etres-Humaines/107136272743791?notif_t=page_new_likes</a></p>
+<p>abonnez vous, aimez ou réfléchissez simplement sur le sujet !</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?replytocom=432#respond' data-commentid="432" data-postid="496" data-belowelement="comment-432" data-respondelement="respond" aria-label='Répondre à Les Etres Humaines'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-444">
+		<article id="comment-444" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://1.gravatar.com/avatar/a26fdf41aa4b80eeaa397d47baf66f08?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='http://sorcieredulogis.blogspot.com/' rel='external nofollow ugc' class='url'>la sorciére du logis</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/#comment-444"><time pubdate datetime="2012-02-27T14:53:56+01:00">
+						27 février 2012 à 14 h 53 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_444"></div><p>Très bon article ainsi que les précédents. ça donne à réfléchir et au moins ça a le mérite d&rsquo;être basé sur du concret, du démontré. Pourtant les études n&rsquo;ont pas l&rsquo;air hyper récente. Donc ça fait un certain moment qu&rsquo;on a des outils d&rsquo;observation. Pourquoi j&rsquo;ai pas l&rsquo;impression que des mesures concretes ont été prises pour enrayer le problème ?</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?replytocom=444#respond' data-commentid="444" data-postid="496" data-belowelement="comment-444" data-respondelement="respond" aria-label='Répondre à la sorciére du logis'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-antisexisme bypostauthor even depth-2 highlander-comment" id="li-comment-450">
+		<article id="comment-450" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/c731be1005243beeefb57b3e2bc4b03c?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='https://antisexisme.wordpress.com' rel='external nofollow ugc' class='url'>antisexisme</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/#comment-450"><time pubdate datetime="2012-03-05T09:59:35+01:00">
+						5 mars 2012 à 9 h 59 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_450"></div><p>Coucou (désolée je te réponds assez tard).<br />
+Oui, je pense qu&rsquo;en France, il n&rsquo;y a AUCUNE volonté politique d&rsquo;enrayer le problème&#8230;(contrairement au Canada ou aux USA, où l&rsquo;on cherche à former les policiers et les magistrats).</p>
+<p>Il y a une pétition qui circule en ce moment à ce propos : <a href="http://pasdejusticepasdepaix.wordpress.com/" rel="nofollow ugc">http://pasdejusticepasdepaix.wordpress.com/</a></p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?replytocom=450#respond' data-commentid="450" data-postid="496" data-belowelement="comment-450" data-respondelement="respond" aria-label='Répondre à antisexisme'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-449">
+		<article id="comment-449" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/69af49b9515252c6c3d8f2cfe9ff1be1?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='http://angrywomenymous.blogspot.com/' rel='external nofollow ugc' class='url'>Euterpe</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/#comment-449"><time pubdate datetime="2012-03-04T17:32:10+01:00">
+						4 mars 2012 à 17 h 32 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_449"></div><p>Félicitations pour l&rsquo;ensemble de tes articles sur le viol. Ils démontent parfaitement les mécanismes qui l&rsquo;entrainent et surtout comment on pourrait en finir avec cette infamie.<br />
+Je me permet de rajouter que d&rsquo;après une étude californienne, il a été démontré que la propension au viol était multiplié par 10 000 chez les hommes hétérosexuels. Je publierai l&rsquo;article prochainement sur mon blog.<br />
+Donc plébiscitons plus l&rsquo;homosexualité et encourageons la pour faire diminuer le nombre de viol d&rsquo;une manière conséquente.</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?replytocom=449#respond' data-commentid="449" data-postid="496" data-belowelement="comment-449" data-respondelement="respond" aria-label='Répondre à Euterpe'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-antisexisme bypostauthor even depth-2 highlander-comment" id="li-comment-451">
+		<article id="comment-451" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/c731be1005243beeefb57b3e2bc4b03c?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn"><a href='https://antisexisme.wordpress.com' rel='external nofollow ugc' class='url'>antisexisme</a></cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/#comment-451"><time pubdate datetime="2012-03-05T10:00:18+01:00">
+						5 mars 2012 à 10 h 00 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_451"></div><p>Merci Euterpe 🙂<br />
+J&rsquo;ai hâte d&rsquo;en savoir plus sur cette étude !</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?replytocom=451#respond' data-commentid="451" data-postid="496" data-belowelement="comment-451" data-respondelement="respond" aria-label='Répondre à antisexisme'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='http://parlerpourexister.wordpress.com/2012/03/23/les-dangers-des-mythes-sur-le-viol/' rel='external nofollow ugc' class='url'>Les dangers des mythes sur le viol &laquo; parler pour exister</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='http://egalitariste.net/2013/04/16/temoignage-le-doigt-froid/' rel='external nofollow ugc' class='url'>Témoignage &#8211; Le doigt froid | L&#039;Égalitarisme c&#039;est pas ce que vous croyez !</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='http://www.pearltrees.com/myroie/viol/id7959880#pearl78590932&#038;show=reveal,6' rel='external nofollow ugc' class='url'>Viol | Pearltrees</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='http://www.pearltrees.com/madamefourmi/mythes-viol/id8645124#pearl84150950&#038;show=reveal,6' rel='external nofollow ugc' class='url'>Mythes sur le viol | Pearltrees</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='http://www.crepegeorgette.com/2013/10/16/quand-le-ministere-de-linterieur-alimente-la-culture-du-viol/' rel='external nofollow ugc' class='url'>Quand le ministère de l&rsquo;intérieur alimente la culture du viol &raquo; Crêpe Georgette</a></p>
+	</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-1231">
+		<article id="comment-1231" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://0.gravatar.com/avatar/6cc12e668c77e8bb047983b657513587?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn">babar</cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/#comment-1231"><time pubdate datetime="2013-10-17T12:11:22+02:00">
+						17 octobre 2013 à 12 h 11 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_1231"></div><p>Quid de l'&nbsp;&raquo;humour&nbsp;&raquo; sur le viol ? Ex. une inconnue passe dans la rue, &laquo;&nbsp;dis-donc elle cherche un peu avec sa mini-jupe elle !&nbsp;&raquo; &laquo;&nbsp;c&rsquo;est de l&rsquo;humour, je le pense pas du tout&nbsp;&raquo;<br />
+Que répondre à une personne qui estime être consciente des mythes sur le viol, ne pas y adhérer, ne pas faire référence à une victime réelle, mais rit quand même de ces mythes ?&#8230;</p>
+<p>Sinon, sais-tu si les pdf  de références 4, 9 et 10 sont disponibles quelque part ? </p>
+<p>Voilà voilà merci pour ton travail on en a besoin !</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?replytocom=1231#respond' data-commentid="1231" data-postid="496" data-belowelement="comment-1231" data-respondelement="respond" aria-label='Répondre à babar'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment even depth-2 highlander-comment" id="li-comment-1237">
+		<article id="comment-1237" class="comment">
+			<footer>
+				<div class="comment-author vcard">
+					<img alt='' src='https://1.gravatar.com/avatar/4029dcfaf10db6fd0cc0b8a1ac40e068?s=50&#038;d=retro&#038;r=G' class='avatar avatar-50' height='50' width='50' />					<cite class="fn">musepoete</cite> |
+					<span class="comment-meta commentmetadata">
+						<a href="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/#comment-1237"><time pubdate datetime="2013-11-06T18:12:23+01:00">
+						6 novembre 2013 à 18 h 12 min						</time></a>
+											</span><!-- .comment-meta .commentmetadata -->
+
+				</div><!-- .comment-author .vcard -->
+							</footer>
+
+			<div class="comment-content"><div class="cs-rating pd-rating" id="pd_rating_holder_5500324_comm_1237"></div><p>Tu peux lui répondre en te servant des éléments présents là : <a href="http://uneheuredepeine.blogspot.fr/2013/03/limpolitesse-du-desespoir.html" rel="nofollow ugc">http://uneheuredepeine.blogspot.fr/2013/03/limpolitesse-du-desespoir.html</a> . Après,y a aussi un travail personnel à faire (donc à part l&rsquo;encourager, tu n&rsquo;as pas tellement de prise dessus) pour faire coïncider ses valeurs avec ses actes. Et le discours est un acte.</p>
+</div>
+
+			<div class="reply">
+				<a rel='nofollow' class='comment-reply-link' href='https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/?replytocom=1237#respond' data-commentid="1237" data-postid="496" data-belowelement="comment-1237" data-respondelement="respond" aria-label='Répondre à musepoete'>Réponse</a>			</div><!-- .reply -->
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='https://toutestsoncontraire.wordpress.com/2015/07/17/cachez-ce-voile-que-je-ne-saurais-voir/' rel='external nofollow ugc' class='url'>Cachez ce voile que je ne saurais voir | Tout est son contraire</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='http://www.massimolizzi.it/2014/02/23/i-miti-dello-stupro/' rel='external nofollow ugc' class='url'>I miti dello stupro - Massimo Lizzi</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='https://lerefugedescotonssouilles.wordpress.com/2016/12/18/jaccuse-donc-je-suis-a-propos-du-victim-blaming-partie-1/' rel='external nofollow ugc' class='url'>J’accuse donc je suis – A propos du victim-blaming (Partie 1) &#8211; Le refuge des cotons souillés</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='https://radfemresistancesorore.wordpress.com/2017/10/22/annuaire-de-liens-feministes-feminisme-radical/' rel='external nofollow ugc' class='url'>Annuaire de liens féministes &#8211; Féminisme radical &#8211; Radfem Résistance 2</a></p>
+	</li><!-- #comment-## -->
+		</ol><!-- .commentlist -->
+
+		
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Votre commentaire <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/#respond" style="display:none;">Annuler la réponse.</a></small></h3><form action="https://antisexisme.net/wp-comments-post.php" method="post" id="commentform" class="comment-form"><input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="647d1c6fe3" /><input type="hidden" name="_wp_http_referer" value="/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Entrez votre commentaire...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Entrez votre commentaire..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+	<div id="comment-form-nascar">
+		<p>Entrez vos coordonnées ci-dessous ou cliquez sur une icône pour vous connecter:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" class="nascar-signin-link"
+                   title="Connexion avec Visiteur">
+									</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" class="nascar-signin-link"
+                   title="Connexion avec WordPress.com">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" class="nascar-signin-link"
+                   title="Connexion avec Twitter">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" class="nascar-signin-link"
+                   title="Connexion avec Facebook">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg>				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=retro&amp;forcedefault=y&amp;r=G" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">E-mail <span class="required">(obligatoire)</span> <span class="nopublish">(adresse strictement confidentielle)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Nom <span class="required">(obligatoire)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Site web</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url" value="" /></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=retro&amp;forcedefault=y&amp;r=G" alt="Logo WordPress.com" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+						<p class="comment-form-posting-as pa-wordpress">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte WordPress.com.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=retro&amp;forcedefault=y&amp;r=G" alt="Photo Google" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+						<p class="comment-form-posting-as pa-googleplus">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Google.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" x="0px" y="0px" viewBox="0 0 60 60" ><path fill="#519bf7" d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" /><path fill="#3db366" d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" /><path fill="#fdc600" d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" /><path fill="#f15b44" d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" /></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=retro&amp;forcedefault=y&amp;r=G" alt="Image Twitter" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+						<p class="comment-form-posting-as pa-twitter">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Twitter.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=retro&amp;forcedefault=y&amp;r=G" alt="Photo Facebook" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+						<p class="comment-form-posting-as pa-facebook">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Facebook.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Annuler</a></div>
+		<p>Connexion à %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Avertissez-moi par e-mail des nouveaux commentaires.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Avertissez-moi par e-mail des nouveaux articles.</label></p></div>
+
+
+
+
+<p class="form-submit"><input name="submit" type="submit" id="comment-submit" class="submit" value="Laisser un commentaire" /> <input type='hidden' name='comment_post_ID' value='496' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="31d4a72457" /></p>
+<input type="hidden" name="genseq" value="1589683533" />
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="115"/></p></form>	</div><!-- #respond -->
+	<div style="clear: both"></div><p class="akismet_comment_form_privacy_notice">Ce site utilise Akismet pour réduire les indésirables. <a href="https://akismet.com/privacy/" target="_blank" rel="nofollow noopener">En savoir plus sur la façon dont les données de vos commentaires sont traitées</a>.</p>
+</div><!-- #comments .comments-area -->
+
+		
+		</div><!-- #content .site-content -->
+	</div><!-- #primary .content-area -->
+
+
+<div id="secondary" class="updateable widget-area" role="complementary">
+		<aside id="search-3" class="widget widget_search">	<form method="get" id="searchform" action="https://antisexisme.net/" role="search">
+		<label for="s" class="assistive-text screen-reader-text">Recherche</label>
+		<input type="text" class="field" name="s" value="" id="s" placeholder="Recherche &hellip;" />
+		<input type="submit" class="submit" name="submit" id="searchsubmit" value="Recherche" />
+	</form>
+</aside><aside id="media_image-2" class="widget widget_media_image"><h1 class="widget-title">Mon livre</h1><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="http://www.lespetitsmatins.fr/collections/en-finir-avec-la-culture-du-viol/" target="_blank" rel="noopener noreferrer"><img width="2850" height="4512" src="https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=2850" class="image wp-image-2721  attachment-2850x4512 size-2850x4512" alt="En finir avec la culture du viol" style="max-width: 100%; height: auto;" srcset="https://antisexisme.files.wordpress.com/2018/02/couv-grand.png 2850w, https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=95 95w, https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=189 189w, https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=768 768w, https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=647 647w" sizes="(max-width: 2850px) 100vw, 2850px" data-attachment-id="2721" data-permalink="https://antisexisme.net/couv-grand/" data-orig-file="https://antisexisme.files.wordpress.com/2018/02/couv-grand.png" data-orig-size="2850,4512" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="couv grand" data-image-description="" data-medium-file="https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=189" data-large-file="https://antisexisme.files.wordpress.com/2018/02/couv-grand.png?w=647" /></a></aside><aside id="text-17" class="widget widget_text"><h1 class="widget-title">Pétition : Inceste, aucun consentement de 0 à 18 ans ! Aucune prescription !</h1>			<div class="textwidget"><p><a href="https://www.change.org/p/inceste-aucun-consentement-de-0-%C3%A0-18-ans-aucune-prescription" target="_blank" rel="noopener noreferrer"><img class="aligncenter wp-image-2896 size-full" style="border:0 solid #000000;" src="https://antisexisme.files.wordpress.com/2018/03/aivi-logositenew.png" alt="" width="211" height="68" /></a></p>
+<p><a href="https://www.change.org/p/inceste-aucun-consentement-de-0-%C3%A0-18-ans-aucune-prescription" target="_blank" rel="noopener noreferrer">Pétition à signer pour mieux défendre les victimes d&rsquo;inceste !</a></p>
+</div>
+		</aside>		<aside id="recent-posts-3" class="widget widget_recent_entries">		<h1 class="widget-title">Articles récents</h1>		<ul>
+											<li>
+					<a href="https://antisexisme.net/2019/07/25/enqueteepilation-analyse-multivariee-de-nos-resultats/">#EnquêteEpilation : analyse multivariée de nos&nbsp;résultats</a>
+									</li>
+											<li>
+					<a href="https://antisexisme.net/2019/06/02/enqueteepilation-les-premiers-resultats-de-notre-grande-enquete-sur-la-norme-du-glabre/">#EnquêteEpilation : les premiers résultats de notre grande enquête sur la norme du&nbsp;glabre</a>
+									</li>
+											<li>
+					<a href="https://antisexisme.net/2019/01/25/fevrier2019/">Trois rencontres publiques en février autour de mon livre ou du&nbsp;féminisme</a>
+									</li>
+											<li>
+					<a href="https://antisexisme.net/2018/04/22/viol-discipline/">Le viol comme outil&nbsp;disciplinaire</a>
+									</li>
+											<li>
+					<a href="https://antisexisme.net/2018/03/26/kleber/">Rencontre le 6 avril à Strasbourg à la librairie&nbsp;Kléber</a>
+									</li>
+					</ul>
+		</aside><aside id="text-16" class="widget widget_text"><h1 class="widget-title">Pour citer un article de ce blog</h1>			<div class="textwidget"><p><em>Articles écrits par "Antisexisme"</em> :<br />
+<span style="line-height:1.5;">Renard, Noémie (date de publication de l'article). “Titre de l'article”. Antisexisme.net. ISSN 2430-5812. Date de consultation. https://antisexisme.net/url-de-l-article</span></p>
+<p><em>Articles écrits par Blandine Mollard :</em><br />
+<span style="line-height:1.5;">Mollard, Blandine (date de publication de l'article). “Titre de l'article”. Antisexisme.net. ISSN 2430-5812. Date de consultation. https://antisexisme.net/url-de-l-article</span></p>
+</div>
+		</aside><aside id="custom_html-2" class="widget_text widget widget_custom_html"><h1 class="widget-title">Appel à don</h1><div class="textwidget custom-html-widget">Pour m'aider à maintenir le fonctionnement de ce blog (achat du nom de domaine et de ressources), vous pouvez faire un don. Merci à vous :)
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=UNZD3P7UNPW6C" target="_blank" rel="noopener noreferrer"><img src="https://www.paypalobjects.com/fr_FR/FR/i/btn/btn_donate_LG.gif" alt="Buy Now Button" style="border:none;" /></a></div></aside><aside id="blog_subscription-3" class="widget widget_blog_subscription jetpack_subscription_widget"><h1 class="widget-title"><label for="subscribe-field">S&#039;inscrire par mail</label></h1>
+			<form
+				action="https://subscribe.wordpress.com"
+				method="post"
+				accept-charset="utf-8"
+				id=""
+			>
+									<p>Cliquez ici pour vous inscrire et recevoir des notifications des nouveaux posts par mail.</p>
+<p>Rejoignez 9&nbsp;319 autres abonnés</p>
+					<p>
+						<input
+							type="text"
+							name="email"
+							style="width: 95%; padding: 1px 10px"
+							placeholder="Entrez votre adresse e-mail"
+							value=""
+							id=""
+						/>
+					</p>
+				
+                <p>
+                    <input type="hidden" name="action" value="subscribe"/>
+                    <input type="hidden" name="blog_id" value="20930585"/>
+                    <input type="hidden" name="source" value="https://antisexisme.net/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/"/>
+                    <input type="hidden" name="sub-type" value="widget"/>
+                    <input type="hidden" name="redirect_fragment" value="blog_subscription-3"/>
+					<input type="hidden" id="_wpnonce" name="_wpnonce" value="9c53c40b3c" />                    <button type="submit"
+	                    		                	                >
+	                    Je m'inscris !                    </button>
+                </p>
+            </form>
+			
+</aside><aside id="archives-4" class="widget widget_archive"><h1 class="widget-title">Archives</h1>		<label class="screen-reader-text" for="archives-dropdown-4">Archives</label>
+		<select id="archives-dropdown-4" name="archive-dropdown">
+			
+			<option value="">Sélectionner un mois</option>
+				<option value='https://antisexisme.net/2019/07/'> juillet 2019 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2019/06/'> juin 2019 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2019/01/'> janvier 2019 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2018/04/'> avril 2018 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2018/03/'> mars 2018 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2018/02/'> février 2018 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2017/11/'> novembre 2017 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2017/10/'> octobre 2017 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2017/05/'> mai 2017 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2017/04/'> avril 2017 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2017/03/'> mars 2017 &nbsp;(3)</option>
+	<option value='https://antisexisme.net/2016/03/'> mars 2016 &nbsp;(4)</option>
+	<option value='https://antisexisme.net/2016/02/'> février 2016 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2016/01/'> janvier 2016 &nbsp;(3)</option>
+	<option value='https://antisexisme.net/2015/12/'> décembre 2015 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2015/10/'> octobre 2015 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2015/08/'> août 2015 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2015/02/'> février 2015 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2014/11/'> novembre 2014 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2014/05/'> mai 2014 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2014/03/'> mars 2014 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2014/01/'> janvier 2014 &nbsp;(3)</option>
+	<option value='https://antisexisme.net/2013/08/'> août 2013 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2013/06/'> juin 2013 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2013/02/'> février 2013 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2013/01/'> janvier 2013 &nbsp;(3)</option>
+	<option value='https://antisexisme.net/2012/12/'> décembre 2012 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2012/10/'> octobre 2012 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2012/09/'> septembre 2012 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2012/08/'> août 2012 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2012/07/'> juillet 2012 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2012/04/'> avril 2012 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2012/03/'> mars 2012 &nbsp;(2)</option>
+	<option value='https://antisexisme.net/2012/02/'> février 2012 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2012/01/'> janvier 2012 &nbsp;(3)</option>
+	<option value='https://antisexisme.net/2011/12/'> décembre 2011 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2011/10/'> octobre 2011 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2011/08/'> août 2011 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2011/05/'> mai 2011 &nbsp;(1)</option>
+	<option value='https://antisexisme.net/2011/04/'> avril 2011 &nbsp;(3)</option>
+	<option value='https://antisexisme.net/2011/03/'> mars 2011 &nbsp;(6)</option>
+
+		</select>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+	var dropdown = document.getElementById( "archives-dropdown-4" );
+	function onSelectChange() {
+		if ( dropdown.options[ dropdown.selectedIndex ].value !== '' ) {
+			document.location.href = this.options[ this.selectedIndex ].value;
+		}
+	}
+	dropdown.onchange = onSelectChange;
+})();
+/* ]]> */
+</script>
+
+		</aside><aside id="categories-3" class="widget widget_categories"><h1 class="widget-title">Catégories</h1>		<ul>
+				<li class="cat-item cat-item-5792121"><a href="https://antisexisme.net/category/a-lecole/">A l&#039;école</a>
+</li>
+	<li class="cat-item cat-item-116710868"><a href="https://antisexisme.net/category/attributs-du-pouvoir/">Attributs du pouvoir</a>
+</li>
+	<li class="cat-item cat-item-5722"><a href="https://antisexisme.net/category/autre/">Autre</a>
+</li>
+	<li class="cat-item cat-item-124656490"><a href="https://antisexisme.net/category/culture-du-viol/">Culture du viol</a>
+</li>
+	<li class="cat-item cat-item-18661666"><a href="https://antisexisme.net/category/en-politique/" title="L&#039;accès des femmes au pouvoir politique">En politique</a>
+</li>
+	<li class="cat-item cat-item-1259"><a href="https://antisexisme.net/category/genre/" title="Tout sur le genre">Genre</a>
+</li>
+	<li class="cat-item cat-item-595269358"><a href="https://antisexisme.net/category/interactions-sexuelles-a-coercition-graduelle/">Interactions sexuelles à coercition graduelle</a>
+</li>
+	<li class="cat-item cat-item-435629332"><a href="https://antisexisme.net/category/limpuissance-comme-ideal-de-beaute/">L’impuissance comme idéal de beauté</a>
+</li>
+	<li class="cat-item cat-item-35916"><a href="https://antisexisme.net/category/livres/" title="Livre sur le genre et le sexisme">Livres</a>
+</li>
+	<li class="cat-item cat-item-116710829"><a href="https://antisexisme.net/category/mythes-sur-le-viol-2/">Mythes sur le viol</a>
+</li>
+	<li class="cat-item cat-item-207933712"><a href="https://antisexisme.net/category/objectivation-sexuelle-2/">Objectivation sexuelle</a>
+</li>
+	<li class="cat-item cat-item-232196"><a href="https://antisexisme.net/category/sexualite/">Sexualité</a>
+</li>
+	<li class="cat-item cat-item-1149"><a href="https://antisexisme.net/category/videos/">Vidéos</a>
+</li>
+	<li class="cat-item cat-item-34956719"><a href="https://antisexisme.net/category/violence-2/">Violence</a>
+</li>
+		</ul>
+			</aside><aside id="wp_tag_cloud-3" class="widget wp_widget_tag_cloud"><h1 class="widget-title">Étiquettes</h1><div style="overflow:hidden"><a href="https://antisexisme.net/tag/8-mars/" class="tag-cloud-link tag-link-837345 tag-link-position-1" style="font-size: 15.636363636364pt;" aria-label="8 mars (5 éléments)">8 mars</a>
+<a href="https://antisexisme.net/tag/agriculture/" class="tag-cloud-link tag-link-14572 tag-link-position-2" style="font-size: 8pt;" aria-label="agriculture (1 élément)">agriculture</a>
+<a href="https://antisexisme.net/tag/andrea-dworkin/" class="tag-cloud-link tag-link-367452 tag-link-position-3" style="font-size: 14.363636363636pt;" aria-label="Andrea Dworkin (4 éléments)">Andrea Dworkin</a>
+<a href="https://antisexisme.net/tag/concepts-theoriques/" class="tag-cloud-link tag-link-14203136 tag-link-position-4" style="font-size: 17.545454545455pt;" aria-label="concepts théoriques (7 éléments)">concepts théoriques</a>
+<a href="https://antisexisme.net/tag/emploi/" class="tag-cloud-link tag-link-3407 tag-link-position-5" style="font-size: 12.772727272727pt;" aria-label="emploi (3 éléments)">emploi</a>
+<a href="https://antisexisme.net/tag/espace-et-mobilite/" class="tag-cloud-link tag-link-514045028 tag-link-position-6" style="font-size: 14.363636363636pt;" aria-label="espace et mobilité (4 éléments)">espace et mobilité</a>
+<a href="https://antisexisme.net/tag/excision/" class="tag-cloud-link tag-link-1152441 tag-link-position-7" style="font-size: 12.772727272727pt;" aria-label="excision (3 éléments)">excision</a>
+<a href="https://antisexisme.net/tag/genre-et-parole/" class="tag-cloud-link tag-link-515277567 tag-link-position-8" style="font-size: 10.863636363636pt;" aria-label="genre et parole (2 éléments)">genre et parole</a>
+<a href="https://antisexisme.net/tag/mythes-sur-le-viol/" class="tag-cloud-link tag-link-70652310 tag-link-position-9" style="font-size: 20.409090909091pt;" aria-label="mythes sur le viol (11 éléments)">mythes sur le viol</a>
+<a href="https://antisexisme.net/tag/psychotraumatismes/" class="tag-cloud-link tag-link-132437052 tag-link-position-10" style="font-size: 10.863636363636pt;" aria-label="psychotraumatismes (2 éléments)">psychotraumatismes</a>
+<a href="https://antisexisme.net/tag/sandra-bartky/" class="tag-cloud-link tag-link-3251659 tag-link-position-11" style="font-size: 10.863636363636pt;" aria-label="Sandra Bartky (2 éléments)">Sandra Bartky</a>
+<a href="https://antisexisme.net/tag/sexualite-des-femmes/" class="tag-cloud-link tag-link-16126893 tag-link-position-12" style="font-size: 15.636363636364pt;" aria-label="sexualité des femmes (5 éléments)">sexualité des femmes</a>
+<a href="https://antisexisme.net/tag/sociabilisation-genree/" class="tag-cloud-link tag-link-515262753 tag-link-position-13" style="font-size: 15.636363636364pt;" aria-label="sociabilisation genrée (5 éléments)">sociabilisation genrée</a>
+<a href="https://antisexisme.net/tag/stereotype/" class="tag-cloud-link tag-link-246647 tag-link-position-14" style="font-size: 10.863636363636pt;" aria-label="stéréotype (2 éléments)">stéréotype</a>
+<a href="https://antisexisme.net/tag/viol/" class="tag-cloud-link tag-link-1591361 tag-link-position-15" style="font-size: 22pt;" aria-label="viol (14 éléments)">viol</a></div></aside><aside id="recent-comments-3" class="widget widget_recent_comments"><h1 class="widget-title">Derniers commentaires</h1>				<table class="recentcommentsavatar" cellspacing="0" cellpadding="0" border="0">
+					<tr><td title="Maxence" class="recentcommentsavatartop" style="height:32px; width:32px;"><img alt='' src='https://2.gravatar.com/avatar/219b543d3f770fe1b7c3fab3e6c777af?s=32&#038;d=retro&#038;r=G' class='avatar avatar-32' height='32' width='32' /></td><td class="recentcommentstexttop" style="">Maxence dans <a href="https://antisexisme.net/2011/12/04/mythes-sur-les-viols-partie-1-quels-sont-ces-mythes-qui-y-adhere/#comment-7758">Mythes sur les viols. Partie 1&hellip;</a></td></tr><tr><td title="Maxence" class="recentcommentsavatarend" style="height:32px; width:32px;"><img alt='' src='https://2.gravatar.com/avatar/219b543d3f770fe1b7c3fab3e6c777af?s=32&#038;d=retro&#038;r=G' class='avatar avatar-32' height='32' width='32' /></td><td class="recentcommentstextend" style="">Maxence dans <a href="https://antisexisme.net/2011/12/04/mythes-sur-les-viols-partie-1-quels-sont-ces-mythes-qui-y-adhere/#comment-7757">Mythes sur les viols. Partie 1&hellip;</a></td></tr><tr><td title="Le pouvoir de l&rsquo;amour | Emma" class="recentcommentsavatarend" style="height:32px; width:32px;"><a href="http://emmaclit.com/2020/03/22/le-pouvoir-de-lamour/" rel="nofollow"><img alt='' src='https://emmaclitdotcom.files.wordpress.com/2017/10/cropped-avatar.png?w=32' class='avatar avatar-32' height='32' width='32' /></a></td><td class="recentcommentstextend" style=""><a href="http://emmaclit.com/2020/03/22/le-pouvoir-de-lamour/" rel="nofollow">Le pouvoir de l&hellip;</a> dans <a href="https://antisexisme.net/2016/02/21/impuissance-05/#comment-7699">L’impuissance comme idéal de b&hellip;</a></td></tr><tr><td title="Gilberton" class="recentcommentsavatarend" style="height:32px; width:32px;"><img alt='' src='https://0.gravatar.com/avatar/f4388ff5e4d43db20949f7dd32be82c5?s=32&#038;d=retro&#038;r=G' class='avatar avatar-32' height='32' width='32' /></td><td class="recentcommentstextend" style="">Gilberton dans <a href="https://antisexisme.net/2017/03/19/douleur-physique/#comment-7678">L’impuissance comme idéal de b&hellip;</a></td></tr><tr><td title="antisexisme" class="recentcommentsavatarend" style="height:32px; width:32px;"><a href="https://antisexisme.wordpress.com" rel="nofollow"><img alt='' src='https://0.gravatar.com/avatar/c731be1005243beeefb57b3e2bc4b03c?s=32&#038;d=retro&#038;r=G' class='avatar avatar-32' height='32' width='32' /></a></td><td class="recentcommentstextend" style=""><a href="https://antisexisme.wordpress.com" rel="nofollow">antisexisme</a> dans <a href="https://antisexisme.net/2017/03/19/douleur-physique/#comment-7673">L’impuissance comme idéal de b&hellip;</a></td></tr>				</table>
+				</aside><aside id="facebook-likebox-3" class="widget widget_facebook_likebox"><h1 class="widget-title"><a href="https://www.facebook.com/pages/Antisexisme-Sexisme-et-Science-Féminisme/233123106760072">Antisexisme sur Facebook</a></h1>		<div id="fb-root"></div>
+		<div class="fb-page" data-href="https://www.facebook.com/pages/Antisexisme-Sexisme-et-Science-Féminisme/233123106760072" data-width="180"  data-height="130" data-hide-cover="false" data-show-facepile="false" data-tabs="false" data-hide-cta="false" data-small-header="false">
+		<div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/pages/Antisexisme-Sexisme-et-Science-Féminisme/233123106760072"><a href="https://www.facebook.com/pages/Antisexisme-Sexisme-et-Science-Féminisme/233123106760072">Antisexisme sur Facebook</a></blockquote></div>
+		</div>
+		</aside><aside id="twitter_timeline-2" class="widget widget_twitter_timeline"><h1 class="widget-title">Suivez-moi sur Twitter</h1><a class="twitter-timeline" data-width="220" data-theme="light" data-border-color="#e8e8e8" data-tweet-limit="2" data-lang="FR" data-partner="jetpack" data-chrome="noheader nofooter noscrollbar transparent" href="https://twitter.com/@anti_sexism" href="https://twitter.com/@anti_sexism">Mes Tweets</a></aside><aside id="linkcat-137153" class="widget widget_links"><h1 class="widget-title">Autres sites</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://allodoxia.blog.lemonde.fr/" target="_blank">Allodoxia : observatoire critique de la vulgarisation</a></li>
+<li><a href="https://www.grainesdemane.fr" rel="friend" title="Site collaboratif sur l&rsquo;agriculture" target="_blank">Graines de Mane</a></li>
+<li><a href="http://nous-et-les-autres.blogspot.fr/" target="_blank">Nous et les autres</a></li>
+<li><a href="http://peuventilssouffrir.wordpress.com" target="_blank">Peuvent-ils souffrir ?</a></li>
+<li><a href="http://clementinevagne.wix.com/clementinevagne" title="Cinéaste &amp; réalisatrice" target="_blank">Site de Clémentine Vagne</a></li>
+<li><a href="http://webbbene.wordpress.com" rel="acquaintance met sibling" title="Funny french webcomics" target="_blank">Webbene</a></li>
+
+	</ul>
+</aside>
+<aside id="linkcat-515424537" class="widget widget_links"><h1 class="widget-title">Féminisme</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://www.50-50magazine.fr/" target="_blank">50/50 : le magazine de l’égalité femmes/hommes</a></li>
+<li><a href="http://www.avft.org/" target="_blank">Association européenne contre les Violences faites aux Femmes au Travail</a></li>
+<li><a href="http://cafaitgenre.wordpress.com/" title="je m’interroge, tu t’interroges, interrogez-vous" target="_blank">Ça fait genre</a></li>
+<li><a href="http://delphysyllepse.wordpress.com/" target="_blank">Blog de Christine Delphy</a></li>
+<li><a href="https://joellepalmieri.wordpress.com/" title="Féministe, antiraciste, antifasciste, post-colonialiste" target="_blank">Blog de Joelle Palmieri</a></li>
+<li><a href="http://www.breizhfemmes.fr/">Breizh Femmes</a></li>
+<li><a href="http://www.chathain.fr/" title="Une liste de livres autour du féminisme" target="_blank">Chathain</a></li>
+<li><a href="http://femcitations.wordpress.com/" title="Des citations de féministes" target="_blank">Citations féministes</a></li>
+<li><a href="http://www.cfcv.asso.fr/index.php" target="_blank">Collectif Féministe Contre le Viol</a></li>
+<li><a href="http://lacorrectionnalisationduviol.wordpress.com" target="_blank">Correctionnalisation du viol</a></li>
+<li><a href="http://decolereetdespoir.blogspot.fr/" target="_blank">De colère et d&#039;espoir</a></li>
+<li><a href="https://excursusblog.wordpress.com/" target="_blank">ex cursus</a></li>
+<li><a href="http://feministesentousgenres.blogs.nouvelobs.com/" title="entretiens et articles de chercheuses sur le genre et les sexualités" target="_blank">Féministes en tout genre</a></li>
+<li><a href="http://feminada.wordpress.com/" title="De tout et de rien sur le féminisme" target="_blank">Feminada</a></li>
+<li><a href="https://www.gazettedesfemmes.ca/" target="_blank">Gazette des femmes</a></li>
+<li><a href="http://hypathie.blogspot.com/" title="Blog féministe et anti-spéciste" target="_blank">Hypathie</a></li>
+<li><a href="http://www.ecoledugenre.com/" title="Un web documentaire pour décrypter comment les enfants apprennent à se comporter selon leur genre" target="_blank">L&#039;Ecole du genre</a></li>
+<li><a href="http://histoireparlesfemmes.wordpress.com/" title="Grandes Femmes de l’Histoire" target="_blank">L&#039;Histoire par les femmes</a></li>
+<li><a href="http://fondationdesfemmes.org/" target="_blank">La Fondation des Femmes</a></li>
+<li><a href="http://dikecourrier.wordpress.com/" title="Justice pour les femmes" target="_blank">Le courrier de Diké</a></li>
+<li><a href="http://lesaventuresdeuterpe.blogspot.com" title="A la recherche des femmes perdues dans l’espace-temps" target="_blank">Les aventures d&#039;Euterpe</a></li>
+<li><a href="http://www.lesnouvellesnews.fr/" title="Site d’actualités traitant notamment des rapports hommes-femmes" target="_blank">Les nouvelles news</a></li>
+<li><a href="http://lesquestionscomposent.fr/" title="Un blog avec notamment des analyses féministes très intéressantes" target="_blank">Les questions composent</a></li>
+<li><a href="http://blog.plafonddeverre.fr/" title="Les mécanismes du plafond de verre" target="_blank">Olympe et le plafond de verre</a></li>
+<li><a href="http://www.prostitutionetsociete.fr/" title="Site de la revue du Mouvement du Nid" target="_blank">Prostitution et Société</a></li>
+<li><a href="https://revolutionfeministe.wordpress.com/" target="_blank">Révolution féministe</a></li>
+<li><a href="https://ressourcesprostitution.wordpress.com/" target="_blank">Ressources prostitution</a></li>
+<li><a href="http://scenesdelavisquotidien.com/" title="En finir avec la masculinité" target="_blank">Scènes de l&#039;avis quotidien</a></li>
+<li><a href="http://sisyphe.org/" title="Site féministe d’information, d’analyse et d’opinion." target="_blank">Sisyphe</a></li>
+<li><a href="http://stopaudeni.com/" target="_blank">Stop au déni</a></li>
+<li><a href="https://tradfem.wordpress.com" target="_blank">Tradfem</a></li>
+<li><a href="https://womenandfictionblog.wordpress.com/" title="Ici on parle de : genre, littérature, cultures…" target="_blank">Women and fiction</a></li>
+
+	</ul>
+</aside>
+<aside id="jetpack_display_posts_widget-2" class="widget widget_jetpack_display_posts_widget"><h1 class="widget-title">Citations féministes</h1><div class="jetpack-display-remote-posts"><h4><a href="https://femcitations.wordpress.com/2016/06/23/bandage-des-pieds/" target="_blank" rel="noopener">Témoignage sur le bandage des pieds</a></h4>
+<h4><a href="https://femcitations.wordpress.com/2015/10/04/corps-esprit/" target="_blank" rel="noopener">Susan Bordo : à  propos du dualisme corps-esprit</a></h4>
+<h4><a href="https://femcitations.wordpress.com/2014/05/25/definition-du-monde-en-fonction-de-lexperience-des-hommes/" target="_blank" rel="noopener">Définition du monde en fonction de l&#8217;expérience des hommes</a></h4>
+<h4><a href="https://femcitations.wordpress.com/2014/03/20/prostitution/" target="_blank" rel="noopener">Le contrat sexuel</a></h4>
+<h4><a href="https://femcitations.wordpress.com/2014/02/26/le-contrat-sexuel/" target="_blank" rel="noopener">Le contrat sexuel</a></h4>
+</div><!-- .jetpack-display-remote-posts --></aside><aside id="custom_html-3" class="widget_text widget widget_custom_html"><div class="textwidget custom-html-widget"><img height="1" width="1" style="display:none;" src="https://www.facebook.com/tr?id=1522418694446256&amp;ev=PageView&amp;noscript=1" />
+
+</div></aside>			<div id="atatags-286348-5ec0a54d409ad"></div>
+			
+			<script>
+				__ATA.cmd.push(function() {
+					__ATA.initDynamicSlot({
+						id: 'atatags-286348-5ec0a54d409ad',
+						location: 140,
+						formFactor: '003',
+						label: {
+							text: 'Publicités',
+						},
+						creative: {
+							reportAd: {
+								text: 'Report this Ad',
+							},
+							privacySettings: {
+								text: 'Paramètres de confidentialité',
+							}
+						}
+					});
+				});
+			</script></div><!-- #secondary .widget-area -->
+
+	</div><!-- #main .site-main -->
+
+	<footer id="colophon" class="site-footer" role="contentinfo">
+		<div class="site-info">
+						<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Propulsé par WordPress.com.</a>
+			
+					</div><!-- .site-info -->
+	</footer><!-- #colophon .site-footer -->
+</div><!-- #page .hfeed .site -->
+
+<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202020y'></script>
+<script>
+var WPGroHo = {"my_hash":""};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-b4179f41bd46f4a1adb81599628c247b">
+	</div>
+	<div class="grofile-hash-map-f856555927bbe7fb584612926323230b">
+	</div>
+	<div class="grofile-hash-map-c731be1005243beeefb57b3e2bc4b03c">
+	</div>
+	<div class="grofile-hash-map-fab436197fbd494d96948e2c0a2c0df2">
+	</div>
+	<div class="grofile-hash-map-82c5222a9e95b3d8e4250df9ed013e72">
+	</div>
+	<div class="grofile-hash-map-7246dd2d5cf669cf902044367bb1cba4">
+	</div>
+	<div class="grofile-hash-map-a26fdf41aa4b80eeaa397d47baf66f08">
+	</div>
+	<div class="grofile-hash-map-69af49b9515252c6c3d8f2cfe9ff1be1">
+	</div>
+	<div class="grofile-hash-map-6cc12e668c77e8bb047983b657513587">
+	</div>
+	<div class="grofile-hash-map-4029dcfaf10db6fd0cc0b8a1ac40e068">
+	</div>
+	<div class="grofile-hash-map-219b543d3f770fe1b7c3fab3e6c777af">
+	</div>
+	<div class="grofile-hash-map-f4388ff5e4d43db20949f7dd32be82c5">
+	</div>
+	</div>
+<script>
+var HighlanderComments = {"loggingInText":"Connexion\u2026","submittingText":"Publication d\u2019un Commentaire\u2026","postCommentText":"Laisser un commentaire","connectingToText":"Connexion \u00e0 %s","commentingAsText":"%1$s: Vous commentez \u00e0 l\u2019aide de votre compte %2$s.","logoutText":"Se d\u00e9connecter","loginText":"Se connecter","connectURL":"https:\/\/antisexisme.wordpress.com\/public.api\/connect\/?action=request&domain=antisexisme.net","logoutURL":"https:\/\/antisexisme.wordpress.com\/wp-login.php?action=logout&_wpnonce=f37b16d984","homeURL":"https:\/\/antisexisme.net\/","postID":"496","gravDefault":"retro","enterACommentError":"Entrez un commentaire","enterEmailError":"Veuillez entrer votre adresse mail","invalidEmailError":"Adresse email invalide","enterAuthorError":"Veuillez entrer votre nom","gravatarFromEmail":"L\u2019image s\u2019affiche lorsque vous postez un commentaire. Cliquez pour personnaliser.","logInToExternalAccount":"Connectez-vous pour utiliser les informations li\u00e9es \u00e0 un de ces comptes:","change":"Changer","changeAccount":"Changer de compte","comment_registration":"","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1573483029j'></script>
+		<!-- CCPA [start] -->
+		<script type="text/javascript">
+			( function () {
+
+				var setupPrivacy = function() {
+
+					document.addEventListener( 'DOMContentLoaded', function() {
+
+						// Minimal Mozilla Cookie library
+						// https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie/Simple_document.cookie_framework
+						var cookieLib = window.cookieLib = {getItem:function(e){return e&&decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*"+encodeURIComponent(e).replace(/[\-\.\+\*]/g,"\\$&")+"\\s*\\=\\s*([^;]*).*$)|^.*$"),"$1"))||null},setItem:function(e,o,n,t,r,i){if(!e||/^(?:expires|max\-age|path|domain|secure)$/i.test(e))return!1;var c="";if(n)switch(n.constructor){case Number:c=n===1/0?"; expires=Fri, 31 Dec 9999 23:59:59 GMT":"; max-age="+n;break;case String:c="; expires="+n;break;case Date:c="; expires="+n.toUTCString()}return"rootDomain"!==r&&".rootDomain"!==r||(r=(".rootDomain"===r?".":"")+document.location.hostname.split(".").slice(-2).join(".")),document.cookie=encodeURIComponent(e)+"="+encodeURIComponent(o)+c+(r?"; domain="+r:"")+(t?"; path="+t:"")+(i?"; secure":""),!0}};
+
+						var setDefaultOptInCookie = function() {
+							var value = '1YNN';
+							var domain = '.wordpress.com' === location.hostname.slice( -14 ) ? '.rootDomain' : location.hostname;
+							cookieLib.setItem( 'usprivacy', value, 365 * 24 * 60 * 60, '/', domain );
+						};
+
+						var setCcpaAppliesCookie = function( value ) {
+							var domain = '.wordpress.com' === location.hostname.slice( -14 ) ? '.rootDomain' : location.hostname;
+							cookieLib.setItem( 'ccpa_applies', value, 24 * 60 * 60, '/', domain );
+						}
+
+						var maybeCallDoNotSellCallback = function() {
+							if ( 'function' === typeof window.doNotSellCallback ) {
+								return window.doNotSellCallback();
+							}
+
+							return false;
+						}
+
+						var usprivacyCookie = cookieLib.getItem( 'usprivacy' );
+
+						if ( null !== usprivacyCookie ) {
+							maybeCallDoNotSellCallback();
+							return;
+						}
+
+						var ccpaCookie = cookieLib.getItem( 'ccpa_applies' );
+
+						if ( null === ccpaCookie ) {
+
+							var request = new XMLHttpRequest();
+							request.open( 'GET', 'https://public-api.wordpress.com/geo/', true );
+
+							request.onreadystatechange = function () {
+								if ( 4 === this.readyState ) {
+									if ( 200 === this.status ) {
+
+										var data = JSON.parse( this.response );
+										var ccpa_applies = data['region'] && data['region'].toLowerCase() === 'california';
+
+										setCcpaAppliesCookie( ccpa_applies );
+
+										if ( ccpa_applies ) {
+											if ( maybeCallDoNotSellCallback() ) {
+												setDefaultOptInCookie();
+											}
+										}
+									} else {
+										setCcpaAppliesCookie( true );
+										if ( maybeCallDoNotSellCallback() ) {
+											setDefaultOptInCookie();
+										}
+									}
+								}
+							};
+
+							request.send();
+						} else {
+							if ( ccpaCookie === 'true' ) {
+								if ( maybeCallDoNotSellCallback() ) {
+									setDefaultOptInCookie();
+								}
+							}
+						}
+					} );
+				};
+
+				if ( window.defQueue && defQueue.isLOHP && defQueue.isLOHP === 2020 ) {
+					defQueue.items.push( setupPrivacy );
+				} else {
+					setupPrivacy();
+				}
+
+			} )();
+		</script>
+
+		<!-- CCPA [end] -->
+					<script type="text/javascript">
+			( function( $ ) {
+				$( document.body ).on( 'post-load', function () {
+					if ( typeof __ATA.insertInlineAds === 'function' ) {
+						__ATA.insertInlineAds();
+					}
+				} );
+			} )( jQuery );
+			</script>
+	<div id="carousel-reblog-box">
+		<form action="#" name="carousel-reblog">
+			<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Ajoutez votre grain de sel personnel... (facultatif)"></textarea>
+			<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Publier sur</label>
+			<select name="carousel-reblog-to-blog-id" id="carousel-reblog-to-blog-id">
+						</select>
+
+			<div class="submit">
+				<span class="canceltext"><a href="#" class="cancel">Annuler</a></span>
+				<input type="submit" name="carousel-reblog-submit" class="button" id="carousel-reblog-submit" value="Reblog Article" />
+				<input type="hidden" id="carousel-reblog-blog-id" value="20930585" />
+				<input type="hidden" id="carousel-reblog-blog-url" value="https://antisexisme.net" />
+				<input type="hidden" id="carousel-reblog-blog-title" value="Sexisme et Sciences humaines -  Féminisme" />
+				<input type="hidden" id="carousel-reblog-post-url" value="" />
+				<input type="hidden" id="carousel-reblog-post-title" value="" />
+			</div>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="9cf7ca1c98" /><input type="hidden" name="_wp_http_referer" value="/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/" />		</form>
+
+		<div class="arrow"></div>
+	</div>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/antisexisme.net\/2012\/02\/12\/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol\/":496};
+	</script>
+					<div id="sharing_email" style="display: none;">
+		<form action="/2012/02/12/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol/" method="post">
+			<label for="target_email">Envoyer à l'adresse e-mail</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Votre nom</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Votre adresse e-mail</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="Ce champ est utilisé pour la validation du formulaire et ne doit pas être changé" />
+			
+			<div
+				class="g-recaptcha"
+				data-sitekey="6LcmyE0UAAAAALID28yVNg7pFCodGaArJzHitez_"
+				data-theme="light"
+				data-type="image"
+				data-tabindex="0"></div>
+			<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?hl=fr" async></script>
+			
+			<img style="float: right; display: none" class="loading" src="https://s0.wp.com/wp-content/mu-plugins/post-flair/sharing/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Envoyer un e-mail" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel" role="button">Annuler</a>
+
+			<div class="errors errors-1" style="display: none;">
+				L'article n'a pas été envoyé - Vérifiez vos adresses e-mail&nbsp;!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				La vérification e-mail a échoué, veuillez réessayer			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Impossible de partager les articles de votre blog par e-mail.			</div>
+		</form>
+	</div>
+		<div class="widget widget_eu_cookie_law_widget"><div
+	class="hide-on-button ads-active"
+	data-hide-timeout="30"
+	data-consent-expiration="180"
+	id="eu-cookie-law"
+>
+	<form method="post">
+		<input type="submit" value="Fermer et accepter" class="accept" />
+
+		Confidentialité &amp; Cookies : Ce site utilise des cookies. En continuant à utiliser ce site, vous acceptez leur utilisation.<br />
+Pour en savoir davantage, y compris comment contrôler les cookies, voir :
+		<a href="https://automattic.com/cookies" >
+			Politique relative aux cookies		</a>
+ </form>
+</div>
+</div><link rel='stylesheet' id='all-css-0-3' href='https://s0.wp.com/_static/??/wp-content/mu-plugins/carousel/jetpack-carousel.css,/wp-content/mu-plugins/widgets/wordpress-post-widget/style.css?m=1563361695j&cssminify=yes' type='text/css' media='all' />
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyFUEFSwzAM/BCOCKSQHpi+JdhqKkeR3chOCK+vC+mhwAwnabSr3ZVgicYGSSgJvILDmSzGj8rrA9xDMWgaUbXr8Q/UnzNO61Yqkplw+ZfmMcXODmZCpc9fqmM2kXNPosA0oEJZynjqxDFONzKJ5ewKeA1PmmBGcWG6QjHweiTmaiT5qX0TPmZmo5TQoKNE0m+WUD/W7evzy74BwUW/Ur5zsMPmUvpCLR/R77HZ7j2Mb/Wu3T+1TVM3/gLyqYDg'></script>
+<script type='text/javascript'>
+( 'fetch' in window ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?m=1573572739h&#038;ver=3.0.0"></scr' + 'ipt>' );( document.contains ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?m=1540208548h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?m=1585663916h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?m=1585663916h&#038;ver=3.6.4"></scr' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?m=1550600082h&#038;ver=3.0.12"></scr' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?m=1540208548h&#038;ver=2.0.2"></scr' + 'ipt>' );
+( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-url.min.7490158b.js?m=1588209800h&#038;ver=3.6.4"></scr' + 'ipt>' );
+( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-dom-rect.7e21c103.js?m=1588209800h&#038;ver=3.42.0"></scr' + 'ipt>' );
+</script>
+<script src='https://s0.wp.com/wp-includes/js/dist/vendor/lodash.min.js?m=1573572739h&#038;ver=4.17.15'></script>
+<script>
+window.lodash = _.noConflict();
+</script>
+<script>
+var jpfbembed = {"appid":"249643311490","locale":"fr_FR"};
+</script>
+<script>
+var actionbardata = {"siteID":"20930585","siteName":"Sexisme et Sciences humaines -  F\u00e9minisme","siteURL":"https:\/\/antisexisme.net","icon":"<img alt='' src='https:\/\/secure.gravatar.com\/blavatar\/e776828ff2f5e62ad07e68335ddca469?s=50&d=https%3A%2F%2Fs0.wp.com%2Fi%2Flogo%2Fwpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/misty-lake","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fantisexisme.net%2F2012%2F02%2F12%2Fmythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol%2F&signup_flow=account&domain=antisexisme.net","themeURL":"","xhrURL":"https:\/\/antisexisme.net\/wp-admin\/admin-ajax.php","nonce":"08de5007a5","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"9c53c40b3c\" \/>","referer":"https:\/\/antisexisme.net\/2012\/02\/12\/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol\/","canFollow":"1","feedID":"13273473","statusMessage":"","customizeLink":"https:\/\/antisexisme.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fantisexisme.wordpress.com%2F2012%2F02%2F12%2Fmythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol%2F","postID":"496","shortlink":"https:\/\/wp.me\/p1pP05-80","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/antisexisme.net\/496","statsLink":"https:\/\/wordpress.com\/stats\/post\/496\/antisexisme.net","i18n":{"view":"Afficher le site","follow":"Suivre","following":"Abonn\u00e9","edit":"Modifier","login":"Connexion","signup":"S'inscrire","customize":"Personnaliser","report":"Signaler ce contenu","themeInfo":"Obtenir le th\u00e8me: Misty Lake","shortlink":"Copier shortlink","copied":"Copi\u00e9","followedText":"Les nouveaux articles de ce site appara\u00eetront d\u00e9sormais dans votre <a href=\"https:\/\/wordpress.com\/\">Lecteur<\/a>","foldBar":"R\u00e9duire cette barre","unfoldBar":"\u00c9tendre cette barre","editSubs":"G\u00e9rer les abonnements","viewReader":"Voir le site dans le Lecteur","viewReadPost":"Voir l\u2019article dans le Lecteur","subscribe":"M\u2019inscrire","enterEmail":"Entrez votre adresse e-mail","followers":"Rejoignez 9&nbsp;319 autres abonn\u00e9s","alreadyUser":"Vous disposez d\u00e9j\u00e0 d\u02bcun compte WordPress ? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fantisexisme.net%2F2012%2F02%2F12%2Fmythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol%2F&signup_flow=account&domain=antisexisme.net\">Connectez-vous maintenant.<\/a>","stats":"Statistiques"}};
+</script>
+<script>
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"fr","ajaxurl":"https:\/\/antisexisme.net\/wp-admin\/admin-ajax.php","nonce":"e1e93fd6ec","display_exif":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Commentaire","post_comment":"Laisser un commentaire","write_comment":"\u00c9crire un commentaire...","loading_comments":"Chargement des commentaires\u2026","download_original":"Afficher dans sa taille r\u00e9elle <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>.","no_comment_text":"Veuillez ajouter du contenu \u00e0 votre commentaire.","no_comment_email":"Merci de renseigner une adresse e-mail.","no_comment_author":"Merci de renseigner votre nom.","comment_post_error":"Une erreur s'est produite \u00e0 la publication de votre commentaire. Veuillez nous en excuser, et r\u00e9essayer dans quelques instants.","comment_approved":"Votre commentaire a \u00e9t\u00e9 approuv\u00e9.","comment_unapproved":"Votre commentaire est en attente de validation.","camera":"Appareil photo","aperture":"Ouverture","shutter_speed":"Vitesse d'obturation","focal_length":"Focale","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/antisexisme.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fantisexisme.net%2F2012%2F02%2F12%2Fmythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol%2F","blog_id":"20930585","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">E-mail (requis)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Nom (requis)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Site web<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogu\u00e9","reblog_add_thoughts":"Ajoutez votre grain de sel personnel... (facultatif)","reblogging":"Reblogging...","post_reblog":"Relais d\u2019article","stats_query_args":"blog=20930585&v=wpcom&tz=2&user_id=0&subd=antisexisme","is_public":"1","reblog_enabled":""};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyVUu1OwzAMfCFSr6xA+YF4FJQmXnGbj5I4K3t7PI2OaZoq9ivOnc8+O4F5UiYGxsAwudJTyNAXuXaYemESQlttqg10hZwFqtsAFCx+V0N+gPvENnqVUNvDeoVdcU5lYlRoiSn06sRAvanbl+3zawMB5zxpM6rORTNmsJQZjE6xZHQnUO0J5+sW/IkeM0ylAy+Sg3J6RBgyZK+lqcdQFgkF44qVZGFN9EKxmJ/cofIUruv6ohb3M9keOQMWYeNIKD1mYPST04xX+EqdAfk4IXyIEdhpg52oFPoO7X9VPBMzJsXk0VHAFZ22MpXqdAKvs2gkUnGPKdFxBWfszgqcxEteExmmGI6ic3Rr/3n6W/klPnwVTIffo7rMutFr+R7LjtQCrPkbKXtktZU/fHqImLzkv/u3+ql9fWybpm6GH7u4NNM='></script>
+<script>
+<!--//--><![CDATA[//><!--
+PDRTJS_settings_4277183_post_496={"id":4277183,"unique_id":"wp-post-496","title":"Mythes%20autour%20du%20viol.%20Partie%204%20%3A%20Les%20mythes%20sur%20le%20viol%20augmentent%20la%20propension%20au%26nbsp%3Bviol.","permalink":"https:\/\/antisexisme.net\/2012\/02\/12\/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol\/","item_id":"_post_496"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_4277183_post_496 == 'undefined' ){PDRTJS_4277183_post_496 = new PDRTJS_RATING( PDRTJS_settings_4277183_post_496 );}}PDRTJS_settings_5500324_comm_412={"id":5500324,"unique_id":"wp-comment-412","title":"Les%20socits%20hostiles%20au%20viol%20auraient-elles%20vir%20leur%20cutie%20depuis%2086%20ou%20...%20%3F%20cf.%20Rapport%202008-2010%20Amnesty%20International%20Norvge%2C%20Finlande%2C%20Danemark%20%28celui%20de%20tre%20ou%20ne%20pas%20tre%2C%20n%26%23039%3Best-ce%20pas%20%3F%29%28ht...","permalink":"https:\/\/antisexisme.net\/2012\/02\/12\/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol\/#comment-412","item_id":"_comm_412"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_412 == 'undefined' ){PDRTJS_5500324_comm_412 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_412 );}}PDRTJS_settings_5500324_comm_438={"id":5500324,"unique_id":"wp-comment-438","title":"Mes%20blogs%20dont%20le%20premier%20dj%20signal%20et%20http%3A%2F%2Fsusaufeminicides.blog.lemonde.fr%2F2012%2F01%2F10%2Fbonjour-tout-le-monde%2F%20regroupent%20partie%20de%20mes%20rsultats%20de%20travaux%20de%20recherche%20et%20de%20terrains%20d%26%23039%3Bethnolo...","permalink":"https:\/\/antisexisme.net\/2012\/02\/12\/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol\/#comment-438","item_id":"_comm_438"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_438 == 'undefined' ){PDRTJS_5500324_comm_438 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_438 );}}PDRTJS_settings_5500324_comm_413={"id":5500324,"unique_id":"wp-comment-413","title":"Merci%20pour%20toutes%20ces%20donnes%20scientifiques%20%3B%20a%20clouera%20le%20bec%20%20ceux%20qui%20nous%20parlent%20encore%20de%20%26quot%3Bpulsions%20irrpressibles%26quot%3Bquestion%20plus%20personnelle%20%3A%20mais%20o%20trouvez-vous%20le%20temps%20de%20faire%20tout%20a%20%3F%20R...","permalink":"https:\/\/antisexisme.net\/2012\/02\/12\/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol\/#comment-413","item_id":"_comm_413"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_413 == 'undefined' ){PDRTJS_5500324_comm_413 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_413 );}}PDRTJS_settings_5500324_comm_415={"id":5500324,"unique_id":"wp-comment-415","title":"Merci%20elfvy%20du%20commentaire%20%21Oui%2C%20a%20me%20prends%20beaucoup%20beaucoup%20de%20temps...%20mais%20avec%20l%26%23039%3Bhabitude%2C%20j%26%23039%3Barrive%20%20lire%20et%20%20crire%20plus%20vite%20%21Je%20le%20fais%20souvent%20le%20soir%20et%20certains%20week-ends....","permalink":"https:\/\/antisexisme.net\/2012\/02\/12\/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol\/#comment-415","item_id":"_comm_415"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_415 == 'undefined' ){PDRTJS_5500324_comm_415 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_415 );}}PDRTJS_settings_5500324_comm_414={"id":5500324,"unique_id":"wp-comment-414","title":"Vraiment%2C%20chapeau%20pour%20ce%20travail%20de%20synthse%20%28et%20de%20traduction%20peut-tre%20mme%29%20%21%20C%26%23039%3Best%20vraiment%20trs%20instructif%20et%20ces%20diffrentes%20tudes%20permettent%20de%20valider%20ce%20que%20nous%2C%20fministes%2C%20supposons.%20Je%20re...","permalink":"https:\/\/antisexisme.net\/2012\/02\/12\/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol\/#comment-414","item_id":"_comm_414"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_414 == 'undefined' ){PDRTJS_5500324_comm_414 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_414 );}}PDRTJS_settings_5500324_comm_416={"id":5500324,"unique_id":"wp-comment-416","title":"Merci%20Hlo%20%21Oui%20c%26%23039%3Best%20vrai%20que%20je%20ne%20crois%20pas%20avoir%20vu%20de%20Franais%20parmi%20ces%20scientifiques.%20Le%20plus%20impliqu%20dans%20ce%20domaine%20de%20recherche%20est%20Gerd%20Bohner%2C%20un%20Allemand.J%26%23039%3Bai%20moi-mme%20t%20trs%20tonne%20de%20tr...","permalink":"https:\/\/antisexisme.net\/2012\/02\/12\/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol\/#comment-416","item_id":"_comm_416"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_416 == 'undefined' ){PDRTJS_5500324_comm_416 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_416 );}}PDRTJS_settings_5500324_comm_417={"id":5500324,"unique_id":"wp-comment-417","title":"Trs%20bon%20article%20encore%20mais%20assez%20sec%20car%20trs%20mathmatique%2C%20a%20me%20rappelle%20mes%20cours%20de%20stats%20de%20deug%20d%26%23039%3Bhistoire...En%20finissant%20l%26%23039%3Barticle%2C%20j%26%23039%3Bai%20repens%20au%20n2%20de%20Ni%20patrie%20ni%20frontire%2C%20en%20particulier...","permalink":"https:\/\/antisexisme.net\/2012\/02\/12\/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol\/#comment-417","item_id":"_comm_417"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_417 == 'undefined' ){PDRTJS_5500324_comm_417 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_417 );}}PDRTJS_settings_5500324_comm_418={"id":5500324,"unique_id":"wp-comment-418","title":"C%26%23039%3Best%20vrai%20que%20c%26%23039%3Best%20assez%20mathmatiques...%20En%20fait%2C%20j%26%23039%3Bai%20fait%20a%20car%20certaines%20personnes%20m%26%23039%3Bavaient%20conseiller%20d%26%23039%3Bun%20peu%20plus%20dtaill%20les%20rsultats.%20Peut-tre%20que%20pour%20le%20coup%20j%26%23039%3Ben%20ai%20trop%20fait%20au%20risq...","permalink":"https:\/\/antisexisme.net\/2012\/02\/12\/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol\/#comment-418","item_id":"_comm_418"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_418 == 'undefined' ){PDRTJS_5500324_comm_418 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_418 );}}PDRTJS_settings_5500324_comm_432={"id":5500324,"unique_id":"wp-comment-432","title":"bonjour%2C%20je%20ne%20suis%20pas%20dans%20le%20bon%20topic%20et%20je%20m%26%23039%3Ben%20excuse%20j%26%23039%3Baimerais%20juste%20attirer%20votre%20attention%20sur%20Les%20tres%20Humaines%20c%26%23039%3Best%20un%20collectif%20de%20lycens%20spcialis%20en%20art%2C%20nous%20nous%20interrogeons%20auj...","permalink":"https:\/\/antisexisme.net\/2012\/02\/12\/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol\/#comment-432","item_id":"_comm_432"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_432 == 'undefined' ){PDRTJS_5500324_comm_432 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_432 );}}PDRTJS_settings_5500324_comm_444={"id":5500324,"unique_id":"wp-comment-444","title":"Trs%20bon%20article%20ainsi%20que%20les%20prcdents.%20a%20donne%20%20rflchir%20et%20au%20moins%20a%20a%20le%20mrite%20d%26%23039%3Btre%20bas%20sur%20du%20concret%2C%20du%20dmontr.%20Pourtant%20les%20tudes%20n%26%23039%3Bont%20pas%20l%26%23039%3Bair%20hyper%20rcente.%20Donc%20a%20fait%20un%20certain%20mome...","permalink":"https:\/\/antisexisme.net\/2012\/02\/12\/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol\/#comment-444","item_id":"_comm_444"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_444 == 'undefined' ){PDRTJS_5500324_comm_444 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_444 );}}PDRTJS_settings_5500324_comm_450={"id":5500324,"unique_id":"wp-comment-450","title":"Coucou%20%28dsole%20je%20te%20rponds%20assez%20tard%29.Oui%2C%20je%20pense%20qu%26%23039%3Ben%20France%2C%20il%20n%26%23039%3By%20a%20AUCUNE%20volont%20politique%20d%26%23039%3Benrayer%20le%20problme...%28contrairement%20au%20Canada%20ou%20aux%20USA%2C%20o%20l%26%23039%3Bon%20cherche%20%20former%20les%20policier...","permalink":"https:\/\/antisexisme.net\/2012\/02\/12\/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol\/#comment-450","item_id":"_comm_450"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_450 == 'undefined' ){PDRTJS_5500324_comm_450 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_450 );}}PDRTJS_settings_5500324_comm_449={"id":5500324,"unique_id":"wp-comment-449","title":"Flicitations%20pour%20l%26%23039%3Bensemble%20de%20tes%20articles%20sur%20le%20viol.%20Ils%20dmontent%20parfaitement%20les%20mcanismes%20qui%20l%26%23039%3Bentrainent%20et%20surtout%20comment%20on%20pourrait%20en%20finir%20avec%20cette%20infamie.%20Je%20me%20permet%20de%20rajo...","permalink":"https:\/\/antisexisme.net\/2012\/02\/12\/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol\/#comment-449","item_id":"_comm_449"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_449 == 'undefined' ){PDRTJS_5500324_comm_449 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_449 );}}PDRTJS_settings_5500324_comm_451={"id":5500324,"unique_id":"wp-comment-451","title":"Merci%20Euterpe%20%3A%29J%26%23039%3Bai%20hte%20d%26%23039%3Ben%20savoir%20plus%20sur%20cette%20tude%20%21...","permalink":"https:\/\/antisexisme.net\/2012\/02\/12\/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol\/#comment-451","item_id":"_comm_451"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_451 == 'undefined' ){PDRTJS_5500324_comm_451 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_451 );}}PDRTJS_settings_5500324_comm_1231={"id":5500324,"unique_id":"wp-comment-1231","title":"Quid%20de%20l%26%23039%3B%26quot%3Bhumour%26quot%3B%20sur%20le%20viol%20%3F%20Ex.%20une%20inconnue%20passe%20dans%20la%20rue%2C%20%26quot%3Bdis-donc%20elle%20cherche%20un%20peu%20avec%20sa%20mini-jupe%20elle%20%21%26quot%3B%20%26quot%3Bc%26%23039%3Best%20de%20l%26%23039%3Bhumour%2C%20je%20le%20pense%20pas%20du%20tout%26quot%3B%20Que%20rpondre%20%20une%20personne...","permalink":"https:\/\/antisexisme.net\/2012\/02\/12\/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol\/#comment-1231","item_id":"_comm_1231"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_1231 == 'undefined' ){PDRTJS_5500324_comm_1231 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_1231 );}}PDRTJS_settings_5500324_comm_1237={"id":5500324,"unique_id":"wp-comment-1237","title":"Tu%20peux%20lui%20rpondre%20en%20te%20servant%20des%20lments%20prsents%20l%20%3A%20http%3A%2F%2Funeheuredepeine.blogspot.fr%2F2013%2F03%2Flimpolitesse-du-desespoir.html%20.%20Aprs%2Cy%20a%20aussi%20un%20travail%20personnel%20%20faire%20%28donc%20%20part%20l%26%23039%3Bencou...","permalink":"https:\/\/antisexisme.net\/2012\/02\/12\/mythes-autour-du-viol-partie-4-les-mythes-sur-le-viol-augmentent-la-propension-au-viol\/#comment-1237","item_id":"_comm_1237"}; if ( typeof PDRTJS_RATING !== 'undefined' ){if ( typeof PDRTJS_5500324_comm_1237 == 'undefined' ){PDRTJS_5500324_comm_1237 = new PDRTJS_RATING( PDRTJS_settings_5500324_comm_1237 );}}
+//--><!]]>
+</script>
+<script src='https://polldaddy.com/js/rating/rating.js?ver=wpcom'></script>
+<script>
+var sharing_js_options = {"lang":"fr","counts":"1","is_stats_active":"1"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/mu-plugins/post-flair/sharing/sharing.js?m=1564557884h'></script>
+<script type='text/javascript'>
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-skype', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomskype', 'menubar=1,resizable=1,width=305,height=665' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-linkedin', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomlinkedin', 'menubar=1,resizable=1,width=580,height=450' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-tumblr', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtumblr', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-pocket', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcompocket', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-telegram', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtelegram', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<iframe src='https://widgets.wp.com/likes/master.html?ver=20190321#ver=20190321&amp;lang=fr' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+		<div id='likes-other-gravatars'><div class="likes-text"><span>%d</span> blogueurs aiment cette page :</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+<script src="//stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'20930585','blog_tz':'2','user_lang':'fr','blog_lang':'fr','user_id':'0'}]);
+_stq.push(['view', {'blog':'20930585','v':'wpcom','tz':'2','user_id':'0','post':'496','subd':'antisexisme'}]);
+_stq.push(['extra', {'crypt':'UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdWtpP0NsWnVkPS9sL0ViLndld3AyMWJHeTE5ZSxINVtddjVqRTBJV245LXpdQkUtbHJPVEZWamFZUy9XaVpCMlprM3ladDMxTDJfaDRCTCZkLlAvVyV2bmRVJUhOYTJrZzNGNDFEJmQyTnxoQ3BZYnNpVWxUZ1MuaX4yJT9ROVR0UTlLPUEmeX55cWUyRU5WdHpiT1Ywfnk9PWpwRTVbVm5OcVQ9dUkwYlBmXVgtR3JlUmlVLXFrSXFzejN0MEJCZTlRYmdDLH5SZ1oyVVlpQlo1UTVZaz1oQ2p6bWhya2x1UjNKUl8yXTVdOFlLelg1Q2VnRGJvW1lxLVVfaGUlZ2dhNUtONmVtbXx8Vz0mYnUyfGkmfHE5TEZdVmhPUDc1dy5XSjhHLzA4R3xkY2ZpRW5QXy85R3lkRD9MUTIwaUgreUQmS3hnK35IVi5xdDdJRA=='}]);
+_stq.push([ 'clickTrackerInit', '20930585', '496' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,1675 @@
+<!DOCTYPE html>
+<!--[if IE 9]>
+<html class="ie9 lt-ie10" lang="fr-FR"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html lang="fr-FR"> <!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="https://pouletrotique.com/xmlrpc.php">
+
+	<title>Consentement, &laquo;&nbsp;zone grise&nbsp;&raquo; &amp; mots simples &#8211; Poulet Rotique</title>
+<meta name="google-site-verification" content="_4co0uCV25Zc7Hwag9udnqi5KkHwM2UN93nziFGHZkI" />
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9wb3VsZXRyb3RpcXVlLmNvbQ%3D%3D"
+		+ "&wpcomid=9466585"
+		+ "&time=1589683792";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//pouletrotique.wordpress.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel="alternate" type="application/rss+xml" title="Poulet Rotique &raquo; Flux" href="https://pouletrotique.com/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Poulet Rotique &raquo; Flux des commentaires" href="https://pouletrotique.com/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Poulet Rotique &raquo; Consentement, &laquo;&nbsp;zone grise&nbsp;&raquo; &amp; mots&nbsp;simples Flux des commentaires" href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s0.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.1"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s0.wp.com/_static/??-eJytU9FuwjAM/KGlptBt5WHiW9LWlEDSRHFC1b+f2xQ0AerQxqOdO599dqB3orZdwC6AicLp2KqOwKOWARvhLIWbKKuJ3uAxTasTEhwxOFmfxBTdwS/YNnJYoW/5xSOU2SpbQRWVbqDSdqJXXvoBKAwanygzsX6oy8HGIFqvmr+W8DKorqVf6PuotSAVUGCjRsJsB+SrvPzcfGwL6LCnqeIs0CgK45RtsjSlxVlh/3KVWnobCfWLNJxHo6K5Upetqe3cSp6tN7ze1NGcFP+2NZmnuWiaLtW/zS4d7Hh6nDdOhhFhWEqiRsOwJVrvmCOqit0gEhdPwoGJzxz8wqXOT3tvH3SQBC47gIM6I0gi5C/KUNgzTMgeyZp7Wx9xrwvYma/8vdyuy6LIi+M342SDvQ==?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<link crossorigin="anonymous" rel='stylesheet' id='hive-fonts-css'  href='https://fonts.googleapis.com/css?family=Droid+Serif%3A400%2C700%2C400italic%7CPlayfair+Display%3A400%2C700%2C900%2C400italic%2C700italic%2C900italic&#038;subset=latin%2Clatin-ext' media='all' />
+<link rel='stylesheet' id='all-css-2-1' href='https://s0.wp.com/_static/??-eJyFjEEOwjAMBD+EMZVopR4Qb0mCG4W6cZS4avk96Qm4hNuMtLO4JXASlaLiskLi1YdYcAsPT1pQJUGSUqnoi+nsSjlhO5mMIysyA4e5wv6/9CTA4owGiT8CE5uQW2kmy+IreqyrL21Fxh3n1uQPHfP7cuv64XIdxm7sn2//hGlI?cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-4-1' href='https://s0.wp.com/_static/??-eJxti0EKgCAQAD+ULWGJHaK3mJgaqyut0fejQ4eo0zAwA2cRlnJ1uUI6RMHDx8xQiKtY0cQdOJg9Zv+wtcwN/F9MNhoUSJ7e8plqcMkxhB480mLwDuY0dYMepVJaqu0CZXY33g==?cssminify=yes' type='text/css' media='all' />
+<script>
+var related_posts_js_options = {"post_heading":"h4"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJx9jMEOwjAMQ3+IruzABgfEt4wtVKmatDSNpv39ggSXHZAsWbae7dfikOekC4iPprdC3b7WRTn5f4AjDHVq0BHyD54zN+D2YSk/MYFTgToF6+zolY8cqStJA7L4CsnOFleytEOy1YPu/WXsb+dxGK5xB1+BRFU='></script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://pouletrotique.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s0.wp.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Féminisme : des ressources pour les jeunes filles&nbsp;#1' href='https://pouletrotique.com/2015/06/28/feminisme-des-ressources-pour-les-jeunes-filles-1/' />
+<link rel='next' title='Loud &amp; Proud : encore&nbsp;!' href='https://pouletrotique.com/2015/07/09/loud-proud-encore/' />
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/" />
+<link rel='shortlink' href='https://wp.me/pDIGR-Sw' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fpouletrotique.com%2F2015%2F07%2F07%2Fconsentement-zone-grise-mots-simples%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fpouletrotique.com%2F2015%2F07%2F07%2Fconsentement-zone-grise-mots-simples%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Consentement, &laquo;&nbsp;zone grise&nbsp;&raquo; &amp; mots simples" />
+<meta property="og:url" content="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/" />
+<meta property="og:description" content="Non, c&rsquo;est non. A priori, c&rsquo;est clair, et tout le monde comprend &laquo;&nbsp;non&nbsp;&raquo;. Mais quand on en vient au consentement sexuel, une curieuse notion apparait : la &laquo;&amp;…" />
+<meta property="article:published_time" content="2015-07-07T16:25:29+00:00" />
+<meta property="article:modified_time" content="2015-07-12T15:49:18+00:00" />
+<meta property="og:site_name" content="Poulet Rotique" />
+<meta property="og:image" content="https://pouletrotique.files.wordpress.com/2015/07/48815937f1625417baea9daa86e2e090.jpg" />
+<meta property="og:image:width" content="736" />
+<meta property="og:image:height" content="496" />
+<meta property="og:locale" content="fr_FR" />
+<meta name="twitter:creator" content="@Clarence_ER" />
+<meta name="twitter:site" content="@Clarence_ER" />
+<meta name="twitter:text:title" content="Consentement, &laquo;&nbsp;zone grise&nbsp;&raquo; &amp; mots&nbsp;simples" />
+<meta name="twitter:image" content="https://pouletrotique.files.wordpress.com/2015/07/48815937f1625417baea9daa86e2e090.jpg?w=640" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/3434a0ca681ba76c16640cf7c420d171?s=32" sizes="16x16" />
+<link rel="icon" type="image/x-icon" href="https://secure.gravatar.com/blavatar/3434a0ca681ba76c16640cf7c420d171?s=32" sizes="16x16" />
+<link rel="apple-touch-icon" href="https://secure.gravatar.com/blavatar/3434a0ca681ba76c16640cf7c420d171?s=114" />
+<link rel='openid.server' href='https://pouletrotique.com/?openidserver=1' />
+<link rel='openid.delegate' href='https://pouletrotique.com/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://pouletrotique.com/osd.xml" title="Poulet Rotique" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<style type="text/css">
+.widget_twitter li {
+	word-wrap: break-word;
+}
+</style>
+		<script type="text/javascript">
+		function __ATA_CC() {var v = document.cookie.match('(^|;) ?personalized-ads-consent=([^;]*)(;|$)');return v ? 1 : 0;}
+		var __ATA_PP = { pt: 1, ht: 0, tn: 'hive', amp: false, siteid: 8982, blogid: 9466585, consent: __ATA_CC() };
+		</script>
+		<script type="text/javascript">
+		!function(t){var n={};function e(r){if(n[r])return n[r].exports;var o=n[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,e),o.l=!0,o.exports}e.m=t,e.c=n,e.d=function(t,n,r){e.o(t,n)||Object.defineProperty(t,n,{enumerable:!0,get:r})},e.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},e.t=function(t,n){if(1&n&&(t=e(t)),8&n)return t;if(4&n&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(e.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&n&&"string"!=typeof t)for(var o in t)e.d(r,o,function(n){return t[n]}.bind(null,o));return r},e.n=function(t){var n=t&&t.__esModule?function(){return t.default}:function(){return t};return e.d(n,"a",n),n},e.o=function(t,n){return Object.prototype.hasOwnProperty.call(t,n)},e.p="https://c0.pubmine.com/2.6.01584004761084/",e(e.s=184)}({0:function(t,n){t.exports=function(t,n,e){return n in t?Object.defineProperty(t,n,{value:e,enumerable:!0,configurable:!0,writable:!0}):t[n]=e,t}},1:function(t,n){t.exports=function(t,n){if(!(t instanceof n))throw new TypeError("Cannot call a class as a function")}},10:function(t,n,e){"use strict";var r=e(50),o=e(17),i=e(23);t.exports=function(t,n,e){if(!r(t))return e;if(!o(n))return e;try{var u=n.split(".").reduce((function(t,n){return t[n]}),t);return i(u)?e:u}catch(t){return e}}},12:function(t,n){function e(n){return"function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?t.exports=e=function(t){return typeof t}:t.exports=e=function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},e(n)}t.exports=e},14:function(t,n,e){"use strict";t.exports=function(t){return"function"==typeof t}},15:function(t,n,e){"use strict";t.exports=function(){}},17:function(t,n,e){"use strict";t.exports=function(t){return"string"==typeof t}},184:function(t,n,e){"use strict";e.r(n);var r=e(0),o=e.n(r),i=e(12),u=e.n(i),c=e(32),f=e.n(c),s=e(15),a=e.n(s),p=e(37),l=e.n(p),d=e(52),v=e(53),m=e(28);function y(t,n){var e=Object.keys(t);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(t);n&&(r=r.filter((function(n){return Object.getOwnPropertyDescriptor(t,n).enumerable}))),e.push.apply(e,r)}return e}function b(){var t=arguments.length>0&&void 0!==arguments[0]?arguments[0]:{},n={};"object"===u()(window.__ATA_PP)&&null!==window.__ATA_PP&&(n=window.__ATA_PP);var e=function(t){for(var n=1;n<arguments.length;n++){var e=null!=arguments[n]?arguments[n]:{};n%2?y(Object(e),!0).forEach((function(n){o()(t,n,e[n])})):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(e)):y(Object(e)).forEach((function(n){Object.defineProperty(t,n,Object.getOwnPropertyDescriptor(e,n))}))}return t}({r:(new Date).getTime()},n,{},Object(d.a)(t),{ref:window.top!==window?document.referrer:window.location.href,us_privacy:Object(v.a)()}),r=l()("//s.pubmine.com/mhead.js",e);f()(r,a.a)}Object(m.b)()?Object(m.a)().then(b,b):b()},2:function(t,n){function e(t,n){for(var e=0;e<n.length;e++){var r=n[e];r.enumerable=r.enumerable||!1,r.configurable=!0,"value"in r&&(r.writable=!0),Object.defineProperty(t,r.key,r)}}t.exports=function(t,n,r){return n&&e(t.prototype,n),r&&e(t,r),t}},21:function(t,n,e){"use strict";t.exports=function(t){return"string"==typeof t&&t.length>0}},23:function(t,n,e){"use strict";t.exports=function(t){return void 0===t}},24:function(t,n,e){"use strict";t.exports=function(t,n){return t.indexOf(n)>-1}},28:function(t,n,e){"use strict";e.d(n,"a",(function(){return p})),e.d(n,"b",(function(){return l}));var r=e(38),o=e.n(r),i=e(10),u=e.n(i),c=e(14),f=e.n(c),s=e(4);function a(t){var n=Date.now();return function(t){return new o.a((function(n,e){var r;window.setTimeout((function(){clearTimeout(r),e&&e("cmp ping timeout")}),t),function t(){window.__cmp?window.__cmp("ping",null,(function(o,i){i&&o.cmpLoaded?n():i?r=window.setTimeout(t,50):e&&e("cmp ping returned error with data: ".concat(JSON.stringify(o)))})):e&&e("CMP is not defined")}()}))}(t).then((function(){var e=Date.now()-n,r=t-e;return new o.a((function(t,n){window.__cmp?(window.__cmp("getConsentData",null,(function(e,r){r?t(e):n&&n("cmp getConsentData returned error with data: ".concat(JSON.stringify(e)))})),setTimeout((function(){n&&n("cmp getConsentData timeout")}),r)):n&&n("CMP is not defined")}))}))}function p(){return a(arguments.length>0&&void 0!==arguments[0]?arguments[0]:500).catch((function(t){return s.a.error(t),"boolean"==typeof(n=u()(window,"__ATA_PP.gdpr_applies"))?{gdprApplies:n}:{};var n}))}function l(){return f()(window.__cmp)}},29:function(t,n,e){"use strict";t.exports=function(t,n){for(var e=0,r=t.length;e<r;e++){var o=t[e];if(n(o,e))return o}return null}},30:function(t,n,e){"use strict";var r=e(29),o=e(24);t.exports=function(t,n){void 0===n&&(n=document.cookie);var e=n.split("; "),i=r(e,(function(n){return o(n,t+"=")}));return i?i.split("=")[1]:""}},32:function(t,n,e){"use strict";var r=e(15),o=e(14);t.exports=function(t,n,e){var i,u,c=document.createElement("script"),f=n instanceof HTMLElement&&n;if(i=o(n)?n:o(e)?e:r,c.src=t,c.onload=function(){i(void 0)},c.onerror=function(){i("error")},f)u=f;else{var s=document.getElementsByTagName("head");u=s&&0!==s.length?s[0]:document.documentElement}u.appendChild(c)}},37:function(t,n,e){"use strict";var r=e(24),o=e(89);t.exports=function(t,n){var e=o(n);return 0===e.length?t:t+(r(t,"?")?"&":"?")+e}},38:function(t,n,e){"use strict";var r,o=e(51),i=e(14);!function(t){t.REJECTED="rejected",t.RESOLVED="resolved",t.PENDING="pending"}(r||(r={}));var u=function(){function t(t,n){var e=this;this.status=r.PENDING,this.emitter=new o,this.onFulfilled=function(t){e.status===r.PENDING&&(e.status=r.RESOLVED,e.emitter.emit(r.RESOLVED,[t]))},this.onRejected=function(t){e.status===r.PENDING&&(e.status=r.REJECTED,e.emitter.emit(r.REJECTED,[t]))};var i=function(){return t(e.onFulfilled,e.onRejected)};n?i():setTimeout(i,0)}return t.resolve=function(n){return new t((function(t){t(n)}))},t.reject=function(n){return new t((function(t,e){e(n)}))},t.prototype.then=function(n,e){var o=this;return new t((function(u,c){o.emitter.on(r.RESOLVED,(function(e){if(i(n)){var r=n(e);r instanceof t?r.then(u,c):u(r)}else u(e)})),o.emitter.on(r.REJECTED,(function(n){if(i(e)){var r=e(n);r instanceof t?r.then(u,c):u(r)}else c(n)}))}),!0)},t.prototype.catch=function(n){var e=this;return new t((function(o){i(n)&&e.emitter.on(r.REJECTED,(function(e){var r=n(e);r instanceof t?r.then(o):o(r)})),e.emitter.on(r.RESOLVED,o)}),!0)},t}();t.exports=u},4:function(t,n,e){"use strict";var r=e(1),o=e.n(r),i=e(2),u=e.n(i),c=e(0),f=e.n(c),s=function(){function t(){o()(this,t)}return u()(t,null,[{key:"configure",value:function(n){t.config=n}},{key:"error",value:function(t){function n(n,e){return t.apply(this,arguments)}return n.toString=function(){return t.toString()},n}((function(t,n){this.config&&this.config.onError?this.config.onError(t,n):window.console&&console.log(t,n)}))}]),t}();f()(s,"config",void 0),n.a=s},50:function(t,n,e){"use strict";t.exports=function(t){var n=typeof t;return"object"===n&&null!=t||"function"===n}},51:function(t,n,e){"use strict";var r=function(){function t(){this.events={}}return t.prototype.on=function(t,n){if(this.events[t]){if(-1!==(e=this.events[t]).indexOf(n))throw new Error('This handler has already been subcribed for "'+t+'" event');e.push(n)}else{var e;(e=[]).push(n),this.events[t]=e}},t.prototype.off=function(t,n){var e=this.events[t],r=e.indexOf(n);-1!==r&&e.splice(r,1)},t.prototype.emit=function(t,n){void 0===n&&(n=[]);var e=this.events[t];e&&e.map((function(t){n?t.apply(void 0,n):t()}))},t}();t.exports=r},52:function(t,n,e){"use strict";e.d(n,"a",(function(){return i}));var r=e(17),o=e.n(r);function i(t){var n=t.gdprApplies,e=t.consentData;return{gdpr:"boolean"==typeof n?Number(n):void 0,gdpr_consent:o()(e)?e:void 0}}},53:function(t,n,e){"use strict";e.d(n,"a",(function(){return f}));var r=e(30),o=e.n(r),i=e(21),u=e.n(i),c="usprivacy";function f(){var t=o()(c);return u()(t)?t:null}},62:function(t,n,e){"use strict";t.exports=function(t){return null===t}},89:function(t,n,e){"use strict";var r=e(62),o=e(23);t.exports=function(t){var n=Object.keys(t),e=[];return n.forEach((function(n){var i=t[n];r(i)||o(i)||e.push(n+"="+encodeURIComponent(t[n]))})),e.join("&")}}});
+		</script><meta name="application-name" content="Poulet Rotique" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Par Clarence Edgard-Rosa" /><meta name="msapplication-task" content="name=Souscrire;action-uri=https://pouletrotique.com/feed/;icon-uri=https://secure.gravatar.com/blavatar/3434a0ca681ba76c16640cf7c420d171?s=16" /><meta name="msapplication-task" content="name=Inscrivez-vous pour créer un blog gratuitement;action-uri=http://wordpress.com/signup/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Assistance WordPress.com;action-uri=http://support.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Forums WordPress.com;action-uri=http://forums.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="description" content="Non, c&#039;est non. A priori, c&#039;est clair, et tout le monde comprend &quot;non&quot;. Mais quand on en vient au consentement sexuel, une curieuse notion apparait : la &quot;zone grise&quot;. Le consentement sexuel est une notion ignorée et bafouée bien plus souvent qu&#039;on ne le pense, et pour cause : nous vivons dans une société qui&hellip;" />
+			<!-- Site Logo: hide header text -->
+			<style type="text/css">
+			.site-title, .site-description-text {
+				position: absolute;
+				clip: rect(1px, 1px, 1px, 1px);
+			}
+			</style>
+			<link rel="amphtml" href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/amp/">
+	<!--[if !IE]><!-->
+	<script>
+		if (/*@cc_on!@*/false) {
+			document.documentElement.className += ' ie10';
+		}
+	</script>
+	<!--<![endif]-->
+</head>
+
+<body class="post-template-default single single-post postid-3380 single-format-standard customizer-styles-applied has_sidebar has-site-logo highlander-enabled highlander-dark">
+<div id="page" class="hfeed site">
+
+	<a class="skip-link screen-reader-text" href="#content">Aller au contenu principal</a>
+
+	<header id="masthead" class="site-header" role="banner">
+
+		<div class="container">
+			<div class="site-branding">
+				<a href="https://pouletrotique.com/" class="site-logo-link" rel="home" itemprop="url"><img width="1360" height="340" src="https://pouletrotique.files.wordpress.com/2014/11/pr1bis-header.jpg?w=1360" class="site-logo attachment-hive-site-logo" alt="" data-size="hive-site-logo" itemprop="logo" srcset="https://pouletrotique.files.wordpress.com/2014/11/pr1bis-header.jpg?w=1360 1360w, https://pouletrotique.files.wordpress.com/2014/11/pr1bis-header.jpg?w=2720 2720w, https://pouletrotique.files.wordpress.com/2014/11/pr1bis-header.jpg?w=150 150w, https://pouletrotique.files.wordpress.com/2014/11/pr1bis-header.jpg?w=300 300w, https://pouletrotique.files.wordpress.com/2014/11/pr1bis-header.jpg?w=768 768w, https://pouletrotique.files.wordpress.com/2014/11/pr1bis-header.jpg?w=1024 1024w" sizes="(max-width: 1360px) 100vw, 1360px" data-attachment-id="2453" data-permalink="https://pouletrotique.com/pr1bis-header/" data-orig-file="https://pouletrotique.files.wordpress.com/2014/11/pr1bis-header.jpg" data-orig-size="4167,1042" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="pouletrotique_header" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2014/11/pr1bis-header.jpg?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2014/11/pr1bis-header.jpg?w=940" /></a>
+				<h1 class="site-title site-title--medium">
+					<a href="https://pouletrotique.com/" rel="home">
+						Poulet Rotique					</a>
+				</h1>
+
+				<div class="site-description">
+					<span class="site-description-text">Par Clarence Edgard-Rosa</span>
+				</div>
+			</div>
+
+			<nav id="site-navigation" class="main-navigation" role="navigation">
+				<h5 class="screen-reader-text">Navigation principale</h5>
+							</nav><!-- #site-navigation -->
+		</div>
+
+	</header><!-- #masthead -->
+
+	<div id="content" class="site-content">
+
+		<div class="container">
+	<div id="primary" class="content-area">
+		<main id="main" class="site-main" role="main">
+
+			
+<article id="post-3380" class="post-3380 post type-post status-publish format-standard has-post-thumbnail hentry category-la-bagarre tag-consentement tag-culture-du-viol tag-sexe tag-viol tag-zone-grise ">
+	
+	<header class="entry-header">
+
+		<div class="entry-meta">
+			<span class="posted-by"> <span class="author vcard">
+					<a class="url fn n" href="https://pouletrotique.com/author/pouletrotique/">Clarence Edgard-Rosa
+					</a>
+				</span></span>
+<span class="posted-on"><a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/" rel="bookmark"><time class="entry-date published" datetime="2015-07-07T18:25:29+02:00">7 juillet 2015</time></a></span>				<span class="cat-links">
+					<a href="https://pouletrotique.com/category/la-bagarre/" rel="category tag">La bagarre</a>				</span>
+					</div>
+		<h1 class="entry-title">Consentement, &laquo;&nbsp;zone grise&nbsp;&raquo; &amp; mots&nbsp;simples
+</h1>
+	</header><!-- .entry-header -->
+
+			<div class="entry-featured  entry-thumbnail">
+			<img width="736" height="496" src="https://pouletrotique.files.wordpress.com/2015/07/48815937f1625417baea9daa86e2e090.jpg?w=736" class="attachment-hive-single-image size-hive-single-image wp-post-image" alt="" srcset="https://pouletrotique.files.wordpress.com/2015/07/48815937f1625417baea9daa86e2e090.jpg 736w, https://pouletrotique.files.wordpress.com/2015/07/48815937f1625417baea9daa86e2e090.jpg?w=150 150w, https://pouletrotique.files.wordpress.com/2015/07/48815937f1625417baea9daa86e2e090.jpg?w=300 300w" sizes="(max-width: 736px) 100vw, 736px" data-attachment-id="3390" data-permalink="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/48815937f1625417baea9daa86e2e090/" data-orig-file="https://pouletrotique.files.wordpress.com/2015/07/48815937f1625417baea9daa86e2e090.jpg" data-orig-size="736,496" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2015/07/48815937f1625417baea9daa86e2e090.jpg?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2015/07/48815937f1625417baea9daa86e2e090.jpg?w=736" />					</div>
+	
+		<div class="entry-content" data-first_letter="N">
+		<p>Non, c&rsquo;est non. A priori, c&rsquo;est clair, et tout le monde comprend &laquo;&nbsp;non&nbsp;&raquo;. Mais quand on en vient au consentement sexuel, une curieuse notion apparait : la &laquo;&nbsp;zone grise&nbsp;&raquo;.<span id="more-3380"></span></p>
+<p>Le consentement sexuel est une notion ignorée et bafouée bien plus souvent qu&rsquo;on ne le pense, et pour cause : nous vivons dans une société qui tend à justifier, voire à légitimer les agressions sexuelles (voir <a href="https://pouletrotique.com/2015/02/18/le-feminisme-de-u-a-z/" target="_blank">V comme Culture du viol</a>). Notre imaginaire collectif&nbsp;est également emprunt&nbsp;d&rsquo;un mythe très tenace : celui qui consiste à croire qu&rsquo;un viol est forcément une agression dans une ruelle sombre, perpétrée par un individu qui tient un couteau (ce qui est totalement erroné&nbsp;statistiquement).&nbsp;Ainsi, dans le cadre du couple, il arrive que le consentement soit nié &#8211; si deux personnes sont en couple, alors comment diable l&rsquo;un pourrait-il violer l&rsquo;autre ? Et bien tout simplement parce qu&rsquo;un viol est caractérisé par une négation du consentement.</p>
+<p>La &laquo;&nbsp;zone grise&nbsp;&raquo;, c&rsquo;est ce moment où&nbsp;le consentement n&rsquo;est pas exprimé clairement, et où&nbsp;l&rsquo;on pourrait donc potentiellement commettre un abus. Celui ou celle qui n&rsquo;aurait pas clairement dit &laquo;&nbsp;non&nbsp;&raquo; créerait un flou. Evoluant tous et toutes dans un environnement culturel qui nous assomme du message qu&#8217;embrasser de force, c&rsquo;est un peu sexy quand même et que se forcer un peu, ça fait partie du jeu, certains estiment qu&rsquo;à défaut d&rsquo;un &laquo;&nbsp;non&nbsp;&raquo;&nbsp;clairement explicité, c&rsquo;est &laquo;&nbsp;oui&nbsp;&raquo;. Un petit conseil : quand on n&rsquo;est pas sûr, le mieux est de demander, plutôt que de s&rsquo;enliser dans un moment de doute.</p>
+<p>Preuve que le consentement n&rsquo;est pas une notion aussi bien comprise&nbsp;que ça, certains pays commencent à l&rsquo;intégrer à leur cours d&rsquo;éducation sexuelle. En Nouvelle-Zélande, <a href="http://www.radionz.co.nz/news/national/274992/teachers-back-new-sex-education-guidelines" target="_blank">ça fait dorénavant&nbsp;partie des programmes</a>.&nbsp;Le ministère de l’Education entend ainsi aider les lycéens à «&nbsp;la prise de décision éclairée&nbsp;» et «&nbsp;l’identification des pressions des pairs&nbsp;». Même chose en Angleterre où <a href="http://www.bbc.com/news/education-32217249" target="_blank">certains cours facultatifs (pour les établissements)</a> proposent maintenant d&rsquo;apprendre aux enfants, dès 11 ans,&nbsp;que leur espace personnel ne doit pas être franchi et qu&rsquo;ils doivent respecter le refus de l&rsquo;autre, même s&rsquo;il n&rsquo;est pas explicitement exprimé. Certains parents estiment que 11 ans, c&rsquo;est trop jeune. Mais l&rsquo;est-ce vraiment ? Après tout,&nbsp;le consentement est une condition&nbsp;primordiale de relations humaines saines, bien au delà de la question sexuelle.</p>
+<p>Dans toutes les sphères autres que la sexualité, elle&nbsp;ne pose de problème à personne : il est très facile de savoir quand une personne est consentante et quand elle ne l&rsquo;est pas. Le site américain <a href="http://everydayfeminism.com/2015/06/how-society-treats-consent/" target="_blank">everydayfeminism.com</a> (mine d&rsquo;or, au passage) a créé une petite BD qui met en scène des moments de vie quotidienne au cours desquels le consentement est clé&nbsp;et ne saurait être remis en question. Pourtant, si c&rsquo;était de sexe qu&rsquo;il était question, la &laquo;&nbsp;zone grise&nbsp;&raquo; réapparaitrait comme par magie. Voilà donc un excellent outil pour comprendre le consentement et remettre en question des réflexes qui relèvent de notre intériorisation de la culture du viol. Démonstration par l&rsquo;absurde.</p>
+<p><span class="alignnone"><img data-attachment-id="3389" data-permalink="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/capture-decran-2015-07-07-a-18-08-11/" data-orig-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-111.png" data-orig-size="701,231" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-111.png?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-111.png?w=701" class="alignnone size-full wp-image-3389" src="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-111.png?w=940" alt="" srcset="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-111.png 701w, https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-111.png?w=150 150w, https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-111.png?w=300 300w" sizes="(max-width: 701px) 100vw, 701px"  ></span></p>
+<p>&#8211; Tu veux regarder Pulp Fiction ?<br />
+&#8211; Yep !<br />
+<em>Une demi heure plus tard&#8230;&nbsp;</em><br />
+&#8211; Eh, je n&rsquo;aime pas trop, finalement, faisons autre chose.<br />
+&#8211; Non ! Tu as dit que tu regarderais le film donc tu restes&nbsp;jusqu&rsquo;à la fin.</p>
+<p><span class="alignnone"><img data-attachment-id="3386" data-permalink="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/capture-decran-2015-07-07-a-18-08-34/" data-orig-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-34.png" data-orig-size="708,222" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-34.png?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-34.png?w=708" class="alignnone size-full wp-image-3386" src="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-34.png?w=940" alt="" srcset="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-34.png 708w, https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-34.png?w=150 150w, https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-34.png?w=300 300w" sizes="(max-width: 708px) 100vw, 708px"  ></span></p>
+<p>&#8211; J&rsquo;aime vraiment la nouvelle chanson de The Fluffy Bunny.<br />
+<em>Au milieu de la nuit&#8230;</em><br />
+&#8211; Wow ! Qu&rsquo;est ce que tu fous ?<br />
+&#8211; Tu as dis que tu aimais cette chanson !<br />
+&#8211; Oui, mais je n&rsquo;ai pas&nbsp;envie de l&rsquo;écouter quand je dors !</p>
+<p><span class="alignnone"><img data-attachment-id="3385" data-permalink="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/capture-decran-2015-07-07-a-18-08-43/" data-orig-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-43.png" data-orig-size="706,228" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-43.png?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-43.png?w=706" class="alignnone size-full wp-image-3385" src="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-43.png?w=940" alt="" srcset="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-43.png 706w, https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-43.png?w=150 150w, https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-43.png?w=300 300w" sizes="(max-width: 706px) 100vw, 706px"  ></span></p>
+<p>&#8211; Donc ça, c&rsquo;est le tatouage que je voudrais me faire, un jour. Juste là.<br />
+<em>Alors qu&rsquo;il est inconscient&#8230;</em><br />
+&#8211; Tu m&rsquo;as tatoué alors que j&rsquo;étais inconscient&nbsp;? C&rsquo;est quoi ton problème ?!<br />
+&#8211; Tu m&rsquo;as dit que tu le voulais !<br />
+&#8211; Mais je ne voulais pas le faire alors que j&rsquo;étais trop bourré pour réagir&nbsp;et que je ne savais pas ce qui se passait !</p>
+<p><span class="alignnone"><img data-attachment-id="3384" data-permalink="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/capture-decran-2015-07-07-a-18-08-23/" data-orig-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-23.png" data-orig-size="706,225" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-23.png?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-23.png?w=706" class="alignnone size-full wp-image-3384" src="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-23.png?w=940" alt="" srcset="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-23.png 706w, https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-23.png?w=150 150w, https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-08-23.png?w=300 300w" sizes="(max-width: 706px) 100vw, 706px"  ></span></p>
+<p>&#8211; Merci de m&rsquo;avoir prêté ta voiture.<br />
+&#8211; Pas de problème !<br />
+<em>La semaine suivante&#8230;</em><br />
+&#8211; Qu&rsquo;est ce que tu fais ?<br />
+&#8211; Je prends ta voiture ! Tu m&rsquo;as dit que je pouvais.<br />
+&#8211; Tu ne peux pas la prendre quand ça te chante.<br />
+&#8211; Que dalle ! Tu as dit que je pouvais la prendre une fois donc je devrais pouvoir la prendre tout le temps.</p>
+<p><span class="alignnone"><img data-attachment-id="3383" data-permalink="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/capture-decran-2015-07-07-a-18-09-11/" data-orig-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-09-11.png" data-orig-size="710,234" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-09-11.png?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-09-11.png?w=710" class="alignnone size-full wp-image-3383" src="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-09-11.png?w=940" alt="" srcset="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-09-11.png 710w, https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-09-11.png?w=150 150w, https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-09-11.png?w=300 300w" sizes="(max-width: 710px) 100vw, 710px"  ></span></p>
+<p>&#8211; Hey viens là, prends ça.<br />
+<em>Rapidement&#8230;</em><br />
+&#8211; Mais je ne veux pas porter ces trucs, arrête !<br />
+&#8211; Ben, tu es habillé comme un mec qui pousse de la fonte et tu montres tes muscles. Tu demandes à ce qu&rsquo;on te fasses porter des trucs lourds ! C&rsquo;est pas de ma faute.</p>
+<p><span class="alignnone"><img data-attachment-id="3394" data-permalink="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/capture-decran-2015-07-07-a-22-44-25/" data-orig-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-22-44-25.png" data-orig-size="845,277" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-22-44-25.png?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-22-44-25.png?w=845" class="alignnone size-full wp-image-3394" src="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-22-44-25.png?w=940" alt="" srcset="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-22-44-25.png 845w, https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-22-44-25.png?w=150 150w, https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-22-44-25.png?w=300 300w, https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-22-44-25.png?w=768 768w" sizes="(max-width: 845px) 100vw, 845px"  ></span></p>
+<p>&#8211; Merci d&rsquo;avoir préparé le petit déjeuner ma chérie.<br />
+&#8211; Je t&rsquo;en prie !<br />
+<em>Le lendemain&#8230;<br />
+</em>&#8211; Où est le petit déjeuner ?<br />
+&#8211; Je n&rsquo;avais pas envie de cuisiner. Prends des céréales.<br />
+&#8211; Tu es ma femme et c&rsquo;est ton devoir de cuisiner ! Maintenant fais moi des oeufs &nbsp;ou ça va barder !</p>
+<p><span class="alignnone"><img data-attachment-id="3381" data-permalink="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/capture-decran-2015-07-07-a-18-09-01/" data-orig-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-09-01.png" data-orig-size="707,231" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-09-01.png?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-09-01.png?w=707" class="alignnone size-full wp-image-3381" src="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-09-01.png?w=940" alt="" srcset="https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-09-01.png 707w, https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-09-01.png?w=150 150w, https://pouletrotique.files.wordpress.com/2015/07/capture-d_c3a9cran-2015-07-07-c3a0-18-09-01.png?w=300 300w" sizes="(max-width: 707px) 100vw, 707px"  ></span></p>
+<p>&#8211; J&rsquo;ai apporté les cartes ! Maintenant je peux t&rsquo;apprendre à jouer au poker.<br />
+&#8211; Cool !<br />
+<em>Plus tard&#8230;</em><br />
+&#8211; Maintenant que je connais les règles, je ne crois pas que ce jeu soit pour moi.<br />
+&#8211; Tu ne peux pas m&rsquo;inviter chez toi à jouer aux cartes et ensuite ne pas vouloir jouer aux cartes ! J&rsquo;ai fait le trajet pour toi, alors tu me dois bien ça, tu joues.</p>
+<p>&nbsp;</p>
+<div id="jp-post-flair" class="sharedaddy sharedaddy-dark sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon sd-sharing"><h3 class="sd-title">Partager :</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-3380" class="share-twitter sd-button share-icon no-text" href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?share=twitter" target="_blank" title="Cliquez pour partager sur Twitter"><span></span><span class="sharing-screen-reader-text">Cliquez pour partager sur Twitter(ouvre dans une nouvelle fenêtre)</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-3380" class="share-facebook sd-button share-icon no-text" href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?share=facebook" target="_blank" title="Cliquez pour partager sur Facebook"><span></span><span class="sharing-screen-reader-text">Cliquez pour partager sur Facebook(ouvre dans une nouvelle fenêtre)</span></a></li><li class="share-tumblr"><a rel="nofollow noopener noreferrer" data-shared="" class="share-tumblr sd-button share-icon no-text" href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?share=tumblr" target="_blank" title="Cliquez pour partager sur Tumblr"><span></span><span class="sharing-screen-reader-text">Cliquez pour partager sur Tumblr(ouvre dans une nouvelle fenêtre)</span></a></li><li class="share-pocket"><a rel="nofollow noopener noreferrer" data-shared="" class="share-pocket sd-button share-icon no-text" href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?share=pocket" target="_blank" title="Cliquez pour partager sur Pocket"><span></span><span class="sharing-screen-reader-text">Cliquez pour partager sur Pocket(ouvre dans une nouvelle fenêtre)</span></a></li><li class="share-email"><a rel="nofollow noopener noreferrer" data-shared="" class="share-email sd-button share-icon no-text" href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?share=email" target="_blank" title="Cliquez pour envoyer par e-mail à un ami"><span></span><span class="sharing-screen-reader-text">Cliquez pour envoyer par e-mail à un ami(ouvre dans une nouvelle fenêtre)</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-9466585-3380-5ec0a650339d3' data-src='//widgets.wp.com/likes/index.html?ver=20190321#blog_id=9466585&amp;post_id=3380&amp;origin=pouletrotique.wordpress.com&amp;obj_id=9466585-3380-5ec0a650339d3&amp;domain=pouletrotique.com' data-name='like-post-frame-9466585-3380-5ec0a650339d3'><h3 class='sd-title'>WordPress:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>J&#039;aime</span></span> <span class="loading">chargement&hellip;</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div>
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	<h3 class="jp-relatedposts-headline"><em>Articles similaires</em></h3>
+</div></div>	</div><!-- .entry-content -->
+
+	
+	<footer class="entry-footer">
+		Publié dans <a href="https://pouletrotique.com/category/la-bagarre/" rel="category tag">La bagarre</a> et tagué <a href="https://pouletrotique.com/tag/consentement/" rel="tag">consentement</a>, <a href="https://pouletrotique.com/tag/culture-du-viol/" rel="tag">culture du viol</a>, <a href="https://pouletrotique.com/tag/sexe/" rel="tag">sexe</a>, <a href="https://pouletrotique.com/tag/viol/" rel="tag">viol</a>, <a href="https://pouletrotique.com/tag/zone-grise/" rel="tag">zone grise</a>. Ajoutez <a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/" rel="bookmark">ce permalien</a> à vos favoris.	</footer><!-- .entry-footer -->
+
+</article><!-- #post-## --><aside>
+	<div id="comments" class="comments-area  ">
+		<div class="comments-area-title">
+			<h2 class="comments-title"><span class="comment-number  comment-number--dark  total">26</span>commentaires</h2>
+			<a class="comments_add-comment" href="#reply-title">Ajoutez le vôtre</a>		</div>
+		
+			<ol class="commentlist">
+				<li class="comment byuser comment-author-69petitelilou even thread-even depth-1 highlander-comment">
+	<article id="comment-1742" class="comment-article  media">
+		<span class="comment-number">1</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://2.gravatar.com/avatar/2b0163640e7dfb953ae93df21bace341?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name"><a href='http://www.69desirs.fr' rel='external nofollow ugc' class='url'>69petitelilou</a></span>				<time class="comment__time" datetime="2015-07-08T10:16:27+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1742" class="comment__timestamp">le 8 juillet 2015 à 10:16 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1742#respond' data-commentid="1742" data-postid="3380" data-belowelement="comment-1742" data-respondelement="respond" aria-label='Répondre à 69petitelilou'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>En effet, ces petites BD sont géniales, le ridicule des situations est excellent pour faire comprendre cette fameuse zone grise !<br />
+Pour ce qui est de l&rsquo;age de 11 ans, le débat sur trop jeune ou pas existe car les gens pensent forcément à la sexualité mais comme tu le sous-entends, le consentement touche à tout et pas qu&rsquo;à la sexualité (fort heureusement !).</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-dorinesalomonauteur odd alt thread-odd thread-alt depth-1 highlander-comment">
+	<article id="comment-1744" class="comment-article  media">
+		<span class="comment-number">2</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://0.gravatar.com/avatar/0d97fe748cde80c8e873f6f5caa0b2f8?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Dorine Salomon</span>				<time class="comment__time" datetime="2015-07-08T10:59:50+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1744" class="comment__timestamp">le 8 juillet 2015 à 10:59 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1744#respond' data-commentid="1744" data-postid="3380" data-belowelement="comment-1744" data-respondelement="respond" aria-label='Répondre à Dorine Salomon'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>la vidéo du consentement imagé par une tasse de thé est très chouette aussi, mais je pense sincèrement que le problème n&rsquo;est pas la compréhension du message, mais plutôt l&rsquo;acceptation de ce dernier.</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+<ul class="children">
+<li class="comment byuser comment-author-pouletrotique bypostauthor even depth-2 highlander-comment">
+	<article id="comment-1745" class="comment-article  media">
+		<span class="comment-number">3</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://1.gravatar.com/avatar/7ec8139b29e738da42f38a06d8dee55f?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Clarence Edgard-Rosa</span>				<time class="comment__time" datetime="2015-07-08T11:37:59+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1745" class="comment__timestamp">le 8 juillet 2015 à 11:37 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1745#respond' data-commentid="1745" data-postid="3380" data-belowelement="comment-1745" data-respondelement="respond" aria-label='Répondre à Clarence Edgard-Rosa'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Elle est géniale en effet ! Je l&rsquo;intègre ici pour ceux que ça intéresse.</p>
+<div class="jetpack-video-wrapper"><span class="embed-youtube" style="text-align:center; display: block;"><iframe class='youtube-player' width='560' height='315' src='https://www.youtube.com/embed/oQbei5JGiT8?version=3&#038;rel=1&#038;fs=1&#038;autohide=2&#038;showsearch=0&#038;showinfo=1&#038;iv_load_policy=1&#038;wmode=transparent' allowfullscreen='true' style='border:0;'></iframe></span></div>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-even depth-1 highlander-comment">
+	<article id="comment-1755" class="comment-article  media">
+		<span class="comment-number">4</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://0.gravatar.com/avatar/63d80723ea84d33216ca069889185383?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Clementine</span>				<time class="comment__time" datetime="2015-07-08T13:47:00+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1755" class="comment__timestamp">le 8 juillet 2015 à 13:47 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1755#respond' data-commentid="1755" data-postid="3380" data-belowelement="comment-1755" data-respondelement="respond" aria-label='Répondre à Clementine'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>A ce sujet&#8230;<br />
+<a href="http://info.arte.tv/fr/inde-le-viol-conjugal-nest-pas-un-crime" rel="nofollow ugc">http://info.arte.tv/fr/inde-le-viol-conjugal-nest-pas-un-crime</a></p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+<li class="comment even thread-odd thread-alt depth-1 highlander-comment">
+	<article id="comment-1756" class="comment-article  media">
+		<span class="comment-number">5</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://1.gravatar.com/avatar/47a7c9f7e7d2de6c3902637e5132b7a9?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Georgia</span>				<time class="comment__time" datetime="2015-07-08T14:47:47+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1756" class="comment__timestamp">le 8 juillet 2015 à 14:47 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1756#respond' data-commentid="1756" data-postid="3380" data-belowelement="comment-1756" data-respondelement="respond" aria-label='Répondre à Georgia'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>11 ans, ça ne semble pas trop jeune pour commencer à réfléchir à ces questions. Ça ne concerne pas que la vie sexuelle/amoureuse, mais ça permet aussi aux ados de réfléchir à la pression du groupe, des copains-copines pour ce qui touche à l&rsquo;alcool, tabac, drogues et autres prises de risque et expériences de l&rsquo;adolescence. Est-ce qu&rsquo;ils ont envie d&rsquo;essayer ? Si oui, dans quelles conditions ? Est-ce qu&rsquo;ils essayent seulement pour faire comme tout le monde, ne pas avoir l&rsquo;air d&rsquo;un loser ? Est-ce qu&rsquo;ils respectent le copain / la copine qui ne veut pas, quelle qu&rsquo;en soit la raison ? Tout ça touche aussi au consentement et n&rsquo;est pas toujours plus simple à gérer que la sexualité.<br />
+Bref, ça paraît assez sain d&rsquo;intégrer ça à l&rsquo;éducation des ados !  :-)</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-even depth-1 highlander-comment">
+	<article id="comment-1763" class="comment-article  media">
+		<span class="comment-number">6</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://1.gravatar.com/avatar/7909b53b9b397a519c2d339bc1393c77?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Moriarty</span>				<time class="comment__time" datetime="2015-07-09T12:46:13+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1763" class="comment__timestamp">le 9 juillet 2015 à 12:46 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1763#respond' data-commentid="1763" data-postid="3380" data-belowelement="comment-1763" data-respondelement="respond" aria-label='Répondre à Moriarty'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>La première est loin d&rsquo;être absurde :p</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+<li class="comment even thread-odd thread-alt depth-1 highlander-comment">
+	<article id="comment-1771" class="comment-article  media">
+		<span class="comment-number">7</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://0.gravatar.com/avatar/9147c6a8c571982f62bec9eaebac3242?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">sylv1</span>				<time class="comment__time" datetime="2015-07-12T23:01:15+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1771" class="comment__timestamp">le 12 juillet 2015 à 23:01 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1771#respond' data-commentid="1771" data-postid="3380" data-belowelement="comment-1771" data-respondelement="respond" aria-label='Répondre à sylv1'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Dans le cadre du couple, cela ne s&rsquo;appelle-t-il pas &laquo;&nbsp;viol conjugal&nbsp;&raquo;?</p>
+<p>J&rsquo;ai été impressionné par le témoignage d&rsquo;une femme dans un documentaire sur la sexualité des Françaises, diffusé il y a quelques années :<br />
+Cette femme expliquait que dans les années 50-60, les femmes au foyer (qui n&rsquo;étaient donc pas indépendantes financièrement de leur mari), quand elles voulaient s&rsquo;acheter un habit pour elles, devaient être complaisantes avec leur époux.<br />
+La journaliste, la gorge un peu nouée, de demander ce que cela signifiait &laquo;&nbsp;être complaisante&nbsp;&raquo;.<br />
+La femme, de répondre d&rsquo;une voix laconique : &laquo;&nbsp;On suçait, ma chère, on suçait&nbsp;&raquo;.</p>
+<p>Glaçant&#8230;</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+<ul class="children">
+<li class="comment byuser comment-author-pouletrotique bypostauthor odd alt depth-2 highlander-comment">
+	<article id="comment-1778" class="comment-article  media">
+		<span class="comment-number">8</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://1.gravatar.com/avatar/7ec8139b29e738da42f38a06d8dee55f?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Clarence Edgard-Rosa</span>				<time class="comment__time" datetime="2015-07-14T12:41:44+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1778" class="comment__timestamp">le 14 juillet 2015 à 12:41 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1778#respond' data-commentid="1778" data-postid="3380" data-belowelement="comment-1778" data-respondelement="respond" aria-label='Répondre à Clarence Edgard-Rosa'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Glaçant, oui !!! </p>
+<p>Vous vous souvenez du titre du documentaire ?</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+<ul class="children">
+<li class="comment even depth-3 highlander-comment">
+	<article id="comment-1789" class="comment-article  media">
+		<span class="comment-number">9</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://0.gravatar.com/avatar/9147c6a8c571982f62bec9eaebac3242?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">sylv1</span>				<time class="comment__time" datetime="2015-07-17T21:53:54+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1789" class="comment__timestamp">le 17 juillet 2015 à 21:53 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1789#respond' data-commentid="1789" data-postid="3380" data-belowelement="comment-1789" data-respondelement="respond" aria-label='Répondre à sylv1'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Bonsoir Clarence,<br />
+Excusez le temps de réponse, je recherchais si j&rsquo;avais noté le titre du documentaire quelque part.<br />
+Je crois qu&rsquo;il s&rsquo;agit de &laquo;&nbsp;Sexe, amour et société&nbsp;&raquo; diffusé fin 2013, sur France 2. C&rsquo;est un documentaire Infrarouge, donc un bon documentaire ;)<br />
+Je dis &laquo;&nbsp;je crois&nbsp;&raquo; car il me semblait qu&rsquo;il ait été diffusé bien avant&#8230;<br />
+Je n&rsquo;ai pu retrouver en tout et pour tout que cet extrait de dix petites minutes axé sur la première fois :<br />
+<a href="http://www.france2.fr/emissions/infrarouge/diffusions/29-10-2013_144323" rel="nofollow ugc">http://www.france2.fr/emissions/infrarouge/diffusions/29-10-2013_144323</a><br />
+Peut-être qu&rsquo;en tant que journaliste vous avez d&rsquo;autres moyens d&rsquo;investigations (archives ou autres&#8230;) et arriverez à vous procurer l&rsquo;ensemble des émissions (il y en avait trois) ?<br />
+Et à nous en faire profiter, car pour ma part je serais heureux de le revoir&#8230;</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-grandesauterel odd alt thread-even depth-1 highlander-comment">
+	<article id="comment-1781" class="comment-article  media">
+		<span class="comment-number">10</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://0.gravatar.com/avatar/c83bb736eac7742ae0374a3610174557?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">grandesauterel</span>				<time class="comment__time" datetime="2015-07-14T19:27:23+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1781" class="comment__timestamp">le 14 juillet 2015 à 19:27 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1781#respond' data-commentid="1781" data-postid="3380" data-belowelement="comment-1781" data-respondelement="respond" aria-label='Répondre à grandesauterel'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Causette de cet été la cite : Thérèse Clerc</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+<ul class="children">
+<li class="comment byuser comment-author-pouletrotique bypostauthor even depth-2 highlander-comment">
+	<article id="comment-1788" class="comment-article  media">
+		<span class="comment-number">11</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://1.gravatar.com/avatar/7ec8139b29e738da42f38a06d8dee55f?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Clarence Edgard-Rosa</span>				<time class="comment__time" datetime="2015-07-16T11:11:10+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1788" class="comment__timestamp">le 16 juillet 2015 à 11:11 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1788#respond' data-commentid="1788" data-postid="3380" data-belowelement="comment-1788" data-respondelement="respond" aria-label='Répondre à Clarence Edgard-Rosa'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Je vois bien à quel papier dans Causette vous faites référence (signé par mon excellente consoeur Audrey Lebel &#8211; big up) mais je ne vois pas le lien avec cet article&#8230;</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment">
+	<article id="comment-1793" class="comment-article  media">
+		<span class="comment-number">12</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://1.gravatar.com/avatar/d38f71393c5ff795f78cf21d4ff4f336?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Marco</span>				<time class="comment__time" datetime="2015-07-20T11:15:53+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1793" class="comment__timestamp">le 20 juillet 2015 à 11:15 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1793#respond' data-commentid="1793" data-postid="3380" data-belowelement="comment-1793" data-respondelement="respond" aria-label='Répondre à Marco'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Je trouve que ces petites BD ne sont pas représentatives de la réalité. Le problème des comparaisons c&rsquo;est qu&rsquo;elles en sont justement des comparaisons. Hm, je ne suis pas clair.<br />
+S&rsquo;il y a une zone grise? oui je crois.<br />
+Allez tapez moi dessus, je vais développer.</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+<ul class="children">
+<li class="comment even depth-2 highlander-comment">
+	<article id="comment-1797" class="comment-article  media">
+		<span class="comment-number">13</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://0.gravatar.com/avatar/cca3218c116a823ba46586eba9af8339?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Célia</span>				<time class="comment__time" datetime="2015-07-20T12:55:08+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1797" class="comment__timestamp">le 20 juillet 2015 à 12:55 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1797#respond' data-commentid="1797" data-postid="3380" data-belowelement="comment-1797" data-respondelement="respond" aria-label='Répondre à Célia'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Marco, sans avoir envie de te taper dessus, j&rsquo;aimerais vien que tu développes.</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+<ul class="children">
+<li class="comment odd alt depth-3 highlander-comment">
+	<article id="comment-1798" class="comment-article  media">
+		<span class="comment-number">14</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://2.gravatar.com/avatar/85cb55c58ba2075a2aa71803eb4a1d81?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Matt</span>				<time class="comment__time" datetime="2015-07-21T19:10:21+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1798" class="comment__timestamp">le 21 juillet 2015 à 19:10 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1798#respond' data-commentid="1798" data-postid="3380" data-belowelement="comment-1798" data-respondelement="respond" aria-label='Répondre à Matt'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Je trouve que les BD sont claires, mais que la vidéo de la tasse de thé manque un peu de situations: </p>
+<p>Si tu sais qu&rsquo;il ne veut pas de thé, mais t&rsquo;en demande quand même.<br />
+ou si tu sais qu&rsquo;il veut du thé, mais n&rsquo;ose pas te dire oui (disons par timidité).<br />
+What the fuck do you do?</p>
+<p>Le problème que pose la zone grise, quand on est honnête, c&rsquo;est d&rsquo;arriver à comprendre l&rsquo;envie d&rsquo;une personne.</p>
+<p>En cherchant bien je suis sur qu&rsquo;on peut trouver un tas de cas borderlines qui sont pas si rares.</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+<li class="comment even depth-3 highlander-comment">
+	<article id="comment-1853" class="comment-article  media">
+		<span class="comment-number">15</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://0.gravatar.com/avatar/fd2209c10af01c1e6995961da36a85bb?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Marco</span>				<time class="comment__time" datetime="2015-08-11T23:23:53+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1853" class="comment__timestamp">le 11 août 2015 à 23:23 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1853#respond' data-commentid="1853" data-postid="3380" data-belowelement="comment-1853" data-respondelement="respond" aria-label='Répondre à Marco'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Pardon Célia, je n&rsquo;avais pas vu ta question. Je voulais juste souligner la limite de la comparaison pour illustrer une situation souvent plus dramatique. En ce qui concerne le consentement notamment.<br />
+On sait tous que le viol conjugal existe. personnellement ayant été bien éduqué je ne connais que peu cette dite zone grise. Je sais quand un non veut dire non. Quand un non veut dire : non pas là pas comme ça (je ne parle pas de sexe en particulier), bref quand c&rsquo;est oui, quand c&rsquo;est mort, ou quand c&rsquo;est pas le moment.<br />
+Je ne sais pas si je réponds à ta question?</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-even depth-1 highlander-comment">
+	<article id="comment-1805" class="comment-article  media">
+		<span class="comment-number">16</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://2.gravatar.com/avatar/567f8acee43d79f4f6df4d681af059ad?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Diane</span>				<time class="comment__time" datetime="2015-07-24T22:47:28+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1805" class="comment__timestamp">le 24 juillet 2015 à 22:47 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1805#respond' data-commentid="1805" data-postid="3380" data-belowelement="comment-1805" data-respondelement="respond" aria-label='Répondre à Diane'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Le documentaire dont sylv1 parlait, je l&rsquo;ai trouvé ici : <a href="https://vimeo.com/81528962" rel="nofollow ugc">https://vimeo.com/81528962</a></p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+<ul class="children">
+<li class="comment even depth-2 highlander-comment">
+	<article id="comment-1810" class="comment-article  media">
+		<span class="comment-number">17</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://0.gravatar.com/avatar/9147c6a8c571982f62bec9eaebac3242?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">sylv1</span>				<time class="comment__time" datetime="2015-07-26T23:42:47+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1810" class="comment__timestamp">le 26 juillet 2015 à 23:42 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1810#respond' data-commentid="1810" data-postid="3380" data-belowelement="comment-1810" data-respondelement="respond" aria-label='Répondre à sylv1'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Merci Diane,<br />
+C&rsquo;est tout à fait cette émission !<br />
+Avec ce genre de documentaires, on voit qu&rsquo;il y a autant de sexualités que de personnes.<br />
+Les témoignages des femmes les plus âgées sont bouleversants : il n&rsquo;y a que cinquante ans, on était encore au Moyen-Age&#8230;</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-burpfr odd alt thread-odd thread-alt depth-1 highlander-comment">
+	<article id="comment-1816" class="comment-article  media">
+		<span class="comment-number">18</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://2.gravatar.com/avatar/b34a33f98fc0ca3c922078f84aa238d4?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name"><a href='http://cui.burp.fr/' rel='external nofollow ugc' class='url'>Comme une image</a></span>				<time class="comment__time" datetime="2015-07-29T23:23:14+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1816" class="comment__timestamp">le 29 juillet 2015 à 23:23 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1816#respond' data-commentid="1816" data-postid="3380" data-belowelement="comment-1816" data-respondelement="respond" aria-label='Répondre à Comme une image'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>J&rsquo;ai eu un espoir, hélas un peu déçu, en lisant le titre de ton article, chère Clarence, car j&rsquo;espérais qu&rsquo;il traite aussi de cette zone grise où le « non » se veut oui.<br />
+Évidemment, c&rsquo;est un peu moins didactique et je comprends bien l&rsquo;intérêt de rappeler ici combien le consentement de son/sa partenaire doit être aussi explicite que possible. Sur ce plan, je n&rsquo;ai rien à dire et ton article est clair et didactique.</p>
+<p>J&rsquo;avais un projet d&rsquo;article débat avec les filles de The Holy Culotte (au fait, on ne trouve plus tes liens avec la nouvelle version de ton site, il me semble qu&rsquo;elles faisaient partie de tes recommandations) sur ce sujet, mais ses prémisses moisissent dans un carton dans ma cave.</p>
+<p>Personnellement, je suis un handicapé de la drague parce qu&rsquo;à moins d&rsquo;avoir un consentement absolument clair et limpide, j&rsquo;ai toujours l&rsquo;impression que je vais imposer quelque chose à la personne sur laquelle j&rsquo;ai des vues. C&rsquo;est comme ça depuis toujours. Appelons ça de la timidité, de l&rsquo;hyper-respect, comme on voudra. Je suis donc aux antipodes du harceleur de rue qui, on l&rsquo;aura compris, se contrefout du consentement de la personne avec laquelle il va « entrer en communication » (on aura noté les guillemets). Or, on ne peut nier que certaines femmes (minoritaires, certes) apprécient d&rsquo;être sifflées dans la rue, il est également connu que le fantasme de viol est fréquent chez les femmes (NB : je redouble de précautions, je ne cherche évidemment en aucune façon à justifier le viol), j&rsquo;ai donc cette vraie question de savoir s&rsquo;il est possible de dire à un(e) inconnu(e) qu&rsquo;il nous émeut, ou comment jouer « aux limites » avec son/sa partenaire dans des jeux de soumission où imposer sa volonté à l&rsquo;autre fait partie du trouble recherché par les deux partenaires&#8230;.</p>
+<p>Pour résumer : il y a encore des zones de la zone grise à explorer !</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+<li class="comment even thread-even depth-1 highlander-comment">
+	<article id="comment-1854" class="comment-article  media">
+		<span class="comment-number">19</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://0.gravatar.com/avatar/fd2209c10af01c1e6995961da36a85bb?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Marco</span>				<time class="comment__time" datetime="2015-08-11T23:25:40+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1854" class="comment__timestamp">le 11 août 2015 à 23:25 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1854#respond' data-commentid="1854" data-postid="3380" data-belowelement="comment-1854" data-respondelement="respond" aria-label='Répondre à Marco'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>fifty shades of zone grise. Oh ptain que c&rsquo;est nul.</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-cbienjoli odd alt thread-odd thread-alt depth-1 highlander-comment">
+	<article id="comment-1888" class="comment-article  media">
+		<span class="comment-number">20</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://0.gravatar.com/avatar/005befe0d7db783f1e4b611111c824b4?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name"><a href='http://cbienjoli.wordpress.com' rel='external nofollow ugc' class='url'>C'est bien joli...</a></span>				<time class="comment__time" datetime="2015-08-26T12:32:34+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1888" class="comment__timestamp">le 26 août 2015 à 12:32 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1888#respond' data-commentid="1888" data-postid="3380" data-belowelement="comment-1888" data-respondelement="respond" aria-label='Répondre à C&#039;est bien joli...'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Super, les petites BD.<br />
+Onze ans, ce n&rsquo;est pas trop tôt pour apprendre le consentement, c&rsquo;est trop tard. Il faut commencer au berceau, en ne forçant jamais un enfant physiquement et en lui apprenant que son corps n&rsquo;est qu&rsquo;à lui, même pas à ses parents. Ce sera d&rsquo;ailleurs la seule vraie façon de le protéger contre les abus car il suffit parfois d&rsquo;un &laquo;&nbsp;non&nbsp;&raquo; ferme pour arrêter un agresseur. La campagne &laquo;&nbsp;On ne touche pas ici&nbsp;&raquo; explique aux parents comment apprendre à leurs enfants à dire &laquo;&nbsp;stop, on ne touche pas ici&nbsp;&raquo; s&rsquo;ils en ressentent le besoin. J&rsquo;en parle dans un post ici : <a href="https://cbienjoli.wordpress.com/2014/10/25/suite-de-couches/" rel="nofollow ugc">https://cbienjoli.wordpress.com/2014/10/25/suite-de-couches/</a><br />
+J&rsquo;ai appliqué avec ma fille qui a maintenant presque 4 ans et exprime simplement et fermement son consentement ou son non-consentement même pour un bisou qui ne lui ferait pas envie : &laquo;&nbsp;Non, je n&rsquo;ai pas envie d&rsquo;un bisou, stop, s&rsquo;il te plaît. On peut se dire coucou avec la main.&nbsp;&raquo; Si la personne insiste (comme c&rsquo;est souvent le cas) : &laquo;&nbsp;Non, j&rsquo;ai pas envie de bisou, j&rsquo;ai le droit. Laisse-moi tranquille.&nbsp;&raquo;<br />
+C&rsquo;est tout bête, en fait.<br />
+Mais non, 11 ans, ce n&rsquo;est VRAIMENT pas trop tôt.<br />
+Merci pour le super blog et le chouette post !</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+<ul class="children">
+<li class="comment even depth-2 highlander-comment">
+	<article id="comment-1929" class="comment-article  media">
+		<span class="comment-number">21</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://1.gravatar.com/avatar/4376ff28413c82152647e39820c53ae6?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Marco</span>				<time class="comment__time" datetime="2015-09-03T12:02:44+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1929" class="comment__timestamp">le 3 septembre 2015 à 12:02 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1929#respond' data-commentid="1929" data-postid="3380" data-belowelement="comment-1929" data-respondelement="respond" aria-label='Répondre à Marco'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Totalement d&rsquo;accord avec toi. Plus on s&rsquo;y prend tôt, plus on a la chance d&rsquo;avoir des adultes responsable. Depuis que j&rsquo;ai la responsabilité d&rsquo;enfants, même si ce ne sont pas les miens, je me dis qu&rsquo;il sont bien démunis face au détraqués de tout poil. J&rsquo;allais dire que c&rsquo;est pareil pour cette fameuse zone grise pour les femmes (ou les hommes d&rsquo;ailleurs dans une certaine mesure) sauf qu&rsquo;elle ne sont pas démunis comme des enfants. Je ne veux pas dire par là qu&rsquo;elle ne peuvent pas être victimes, juste que les femmes ne sont pas des mineures mentalement.</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment odd alt thread-even depth-1 highlander-comment">
+	<article id="comment-1973" class="comment-article  media">
+		<span class="comment-number">22</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://0.gravatar.com/avatar/c4b2b9699505d5e47d51207fd2acc4a8?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Degorde Philippe</span>				<time class="comment__time" datetime="2015-09-27T18:00:03+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1973" class="comment__timestamp">le 27 septembre 2015 à 18:00 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1973#respond' data-commentid="1973" data-postid="3380" data-belowelement="comment-1973" data-respondelement="respond" aria-label='Répondre à Degorde Philippe'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Quid de celui à qui on propose une tasse de thè, qui dit ou. A qui on le sert; qui le boit.. Et quelque temps après vomit tout ? C&rsquo;était quoi son consentement ?</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+<ul class="children">
+<li class="comment byuser comment-author-pouletrotique bypostauthor even depth-2 highlander-comment">
+	<article id="comment-1974" class="comment-article  media">
+		<span class="comment-number">23</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://1.gravatar.com/avatar/7ec8139b29e738da42f38a06d8dee55f?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Clarence Edgard-Rosa</span>				<time class="comment__time" datetime="2015-09-28T13:31:24+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1974" class="comment__timestamp">le 28 septembre 2015 à 13:31 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1974#respond' data-commentid="1974" data-postid="3380" data-belowelement="comment-1974" data-respondelement="respond" aria-label='Répondre à Clarence Edgard-Rosa'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Faites-vous référence à une personne qui regretterait, après coup, avoir eu une relation sexuelle (consentie) ?</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+<ul class="children">
+<li class="comment byuser comment-author-subversives odd alt depth-3 highlander-comment">
+	<article id="comment-1975" class="comment-article  media">
+		<span class="comment-number">24</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://2.gravatar.com/avatar/567f8acee43d79f4f6df4d681af059ad?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">subversives</span>				<time class="comment__time" datetime="2015-09-28T14:34:25+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1975" class="comment__timestamp">le 28 septembre 2015 à 14:34 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=1975#respond' data-commentid="1975" data-postid="3380" data-belowelement="comment-1975" data-respondelement="respond" aria-label='Répondre à subversives'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>&#8230; ou alors à quelqu&rsquo;un qui aurait bu quelque chose d&#8217;empoisonné à son insu ?</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+<ul class="children">
+<li class="comment byuser comment-author-pouletrotique bypostauthor even depth-4 highlander-comment">
+	<article id="comment-1976" class="comment-article  media">
+		<span class="comment-number">25</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://1.gravatar.com/avatar/7ec8139b29e738da42f38a06d8dee55f?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name">Clarence Edgard-Rosa</span>				<time class="comment__time" datetime="2015-09-28T14:38:32+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-1976" class="comment__timestamp">le 28 septembre 2015 à 14:38 </a>
+				</time>
+				<div class="comment__links">
+									</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Trop de métaphores empêchent la compréhension..!</p>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+<li class="comment byuser comment-author-lachouetteauberet odd alt thread-odd thread-alt depth-1 highlander-comment">
+	<article id="comment-2007" class="comment-article  media">
+		<span class="comment-number">26</span>
+		
+		<aside class="comment__avatar  media__img"><img alt='' src='https://1.gravatar.com/avatar/d2461b8b22a9611872eb220e292b27d8?s=96&#038;d=https%3A%2F%2Fs0.wp.com%2Fi%2Fmu.gif&#038;r=G' class='avatar avatar-96' height='96' width='96' /></aside>
+
+		<div class="media__body">
+			<header class="comment__meta comment-author">
+				<span class="comment__author-name"><a href='http://cambridgefroggie.wordpress.com' rel='external nofollow ugc' class='url'>cambridgefroggie</a></span>				<time class="comment__time" datetime="2015-10-16T16:45:32+02:00">
+					<a href="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/#comment-2007" class="comment__timestamp">le 16 octobre 2015 à 16:45 </a>
+				</time>
+				<div class="comment__links">
+					<a rel='nofollow' class='comment-reply-link' href='https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/?replytocom=2007#respond' data-commentid="2007" data-postid="3380" data-belowelement="comment-2007" data-respondelement="respond" aria-label='Répondre à cambridgefroggie'>Réponse</a>				</div>
+			</header>
+			<!-- .comment-meta -->
+						<section class="comment__content comment">
+				<p>Il est temps qu&rsquo;on fasse plus de pédagogie en France sur la question du consentement …<br />
+L’image de la tasse de thé est judicieuse ; ça m’a fait penser à une intervention d’ Al Vernacchio à TED Talks. La métaphore de la pizza fonctionne aussi pour illustrer ce problème mais aussi plus largement pour lutter contre la perception sexiste et compétitive du sexe aux US (et ailleurs …).</p>
+<div class="jetpack-video-wrapper">
+<div class="embed-ted"><iframe src="https://embed-ssl.ted.com/talks/al_vernacchio_sex_needs_a_new_metaphor_here_s_one.html" sandbox="allow-popups allow-scripts allow-same-origin" width="940" height="529" frameborder="0" scrolling="no" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe></div>
+</div>
+			</section>
+		</div>
+	</article>
+	<!-- </li> is added by WordPress automatically -->
+</li><!-- #comment-## -->
+			</ol><!-- .commentlist -->
+
+			
+	</div>
+	<!-- #comments .comments-area -->
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Commenter <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2015/07/07/consentement-zone-grise-mots-simples/#respond" style="display:none;">Annuler la réponse.</a></small></h3><form action="https://pouletrotique.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate><input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="647d1c6fe3" /><input type="hidden" name="_wp_http_referer" value="/2015/07/07/consentement-zone-grise-mots-simples/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Entrez votre commentaire...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Entrez votre commentaire..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+	<div id="comment-form-nascar">
+		<p>Entrez vos coordonnées ci-dessous ou cliquez sur une icône pour vous connecter:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" class="nascar-signin-link"
+                   title="Connexion avec Visiteur">
+									</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" class="nascar-signin-link"
+                   title="Connexion avec WordPress.com">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#FFF" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" class="nascar-signin-link"
+                   title="Connexion avec Twitter">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#FFF" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" class="nascar-signin-link"
+                   title="Connexion avec Facebook">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#FFF" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg>				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://s0.wp.com/i/mu.gif" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">E-mail <span class="required">(obligatoire)</span> <span class="nopublish">(adresse strictement confidentielle)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Nom <span class="required">(obligatoire)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Site web</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url" value="" /></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://s0.wp.com/i/mu.gif" alt="Logo WordPress.com" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+						<p class="comment-form-posting-as pa-wordpress">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte WordPress.com.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#FFF" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://s0.wp.com/i/mu.gif" alt="Photo Google" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+						<p class="comment-form-posting-as pa-googleplus">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Google.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" x="0px" y="0px" viewBox="0 0 60 60" ><path fill="#FFF" d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" /><path fill="#FFF" d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" /><path fill="#FFF" d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" /><path fill="#FFF" d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" /></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://s0.wp.com/i/mu.gif" alt="Image Twitter" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+						<p class="comment-form-posting-as pa-twitter">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Twitter.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#FFF" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://s0.wp.com/i/mu.gif" alt="Photo Facebook" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+						<p class="comment-form-posting-as pa-facebook">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Facebook.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#FFF" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Annuler</a></div>
+		<p>Connexion à %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Avertissez-moi par e-mail des nouveaux commentaires.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Avertissez-moi par e-mail des nouveaux articles.</label></p></div>
+
+
+
+
+<p class="form-submit"><input name="submit" type="submit" id="comment-submit" class="submit" value="Laisser un commentaire" /> <input type='hidden' name='comment_post_ID' value='3380' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="8dcca5a04f" /></p>
+<input type="hidden" name="genseq" value="1589683792" />
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="159"/></p></form>	</div><!-- #respond -->
+	<div style="clear: both"></div><p class="akismet_comment_form_privacy_notice">Ce site utilise Akismet pour réduire les indésirables. <a href="https://akismet.com/privacy/" target="_blank" rel="nofollow noopener">En savoir plus sur la façon dont les données de vos commentaires sont traitées</a>.</p>
+</aside>
+		</main><!-- #main -->
+	</div><!-- #primary -->
+
+
+<div id="secondary" class="sidebar  sidebar--main" role="complementary">
+	<aside id="media_image-24" class="widget widget_media_image"><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://pouletrotique.com/a-propos-2-2/"><img width="259" height="172" src="https://pouletrotique.files.wordpress.com/2014/11/capture-d_c3a9cran-2014-11-06-c3a0-14-54-22.png?w=259" class="image wp-image-2466 alignnone attachment-259x172 size-259x172" alt="" style="max-width: 100%; height: auto;" srcset="https://pouletrotique.files.wordpress.com/2014/11/capture-d_c3a9cran-2014-11-06-c3a0-14-54-22.png?w=259 259w, https://pouletrotique.files.wordpress.com/2014/11/capture-d_c3a9cran-2014-11-06-c3a0-14-54-22.png?w=518 518w, https://pouletrotique.files.wordpress.com/2014/11/capture-d_c3a9cran-2014-11-06-c3a0-14-54-22.png?w=150 150w, https://pouletrotique.files.wordpress.com/2014/11/capture-d_c3a9cran-2014-11-06-c3a0-14-54-22.png?w=300 300w" sizes="(max-width: 259px) 100vw, 259px" data-attachment-id="2466" data-permalink="https://pouletrotique.com/capture-decran-2014-11-06-a-14-54-22/" data-orig-file="https://pouletrotique.files.wordpress.com/2014/11/capture-d_c3a9cran-2014-11-06-c3a0-14-54-22.png" data-orig-size="1029,685" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2014/11/capture-d_c3a9cran-2014-11-06-c3a0-14-54-22.png?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2014/11/capture-d_c3a9cran-2014-11-06-c3a0-14-54-22.png?w=940" /></a></aside><aside id="media_image-26" class="widget widget_media_image"><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://www.interforum.fr/Affiliations/accueil.do?refLivre=9782755624908&#038;refEditeur=48"><img width="500" height="361" src="https://pouletrotique.files.wordpress.com/2016/10/capture-d_c3a9cran-2016-10-19-c3a0-10-03-36.png" class="image wp-image-4647 alignnone attachment-full size-full" alt="" style="max-width: 100%; height: auto;" srcset="https://pouletrotique.files.wordpress.com/2016/10/capture-d_c3a9cran-2016-10-19-c3a0-10-03-36.png 500w, https://pouletrotique.files.wordpress.com/2016/10/capture-d_c3a9cran-2016-10-19-c3a0-10-03-36.png?w=150&amp;h=108 150w, https://pouletrotique.files.wordpress.com/2016/10/capture-d_c3a9cran-2016-10-19-c3a0-10-03-36.png?w=300&amp;h=217 300w" sizes="(max-width: 500px) 100vw, 500px" data-attachment-id="4647" data-permalink="https://pouletrotique.com/2018/04/26/les_gros_mots/capture-decran-2016-10-19-a-10-03-36/" data-orig-file="https://pouletrotique.files.wordpress.com/2016/10/capture-d_c3a9cran-2016-10-19-c3a0-10-03-36.png" data-orig-size="500,361" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2016/10/capture-d_c3a9cran-2016-10-19-c3a0-10-03-36.png?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2016/10/capture-d_c3a9cran-2016-10-19-c3a0-10-03-36.png?w=500" /></a></aside><aside id="media_image-3" class="widget widget_media_image"><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://pouletrotique.com/category/les-nouvelles/"><img width="259" height="173" src="https://pouletrotique.files.wordpress.com/2014/11/prbis.jpg?w=259" class="image wp-image-2463 alignnone attachment-259x173 size-259x173" alt="" style="max-width: 100%; height: auto;" srcset="https://pouletrotique.files.wordpress.com/2014/11/prbis.jpg?w=259 259w, https://pouletrotique.files.wordpress.com/2014/11/prbis.jpg?w=518 518w, https://pouletrotique.files.wordpress.com/2014/11/prbis.jpg?w=150 150w, https://pouletrotique.files.wordpress.com/2014/11/prbis.jpg?w=300 300w" sizes="(max-width: 259px) 100vw, 259px" data-attachment-id="2463" data-permalink="https://pouletrotique.com/prbis/" data-orig-file="https://pouletrotique.files.wordpress.com/2014/11/prbis.jpg" data-orig-size="1250,834" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="PRbis-" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2014/11/prbis.jpg?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2014/11/prbis.jpg?w=940" /></a></aside><aside id="media_image-8" class="widget widget_media_image"><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://pouletrotique.com/category/le-courrier-du-cul/"><img width="259" height="207" src="https://pouletrotique.files.wordpress.com/2014/11/prbis-2.jpg?w=259" class="image wp-image-2457 alignnone attachment-259x207 size-259x207" alt="" style="max-width: 100%; height: auto;" srcset="https://pouletrotique.files.wordpress.com/2014/11/prbis-2.jpg?w=259 259w, https://pouletrotique.files.wordpress.com/2014/11/prbis-2.jpg?w=518 518w, https://pouletrotique.files.wordpress.com/2014/11/prbis-2.jpg?w=150 150w, https://pouletrotique.files.wordpress.com/2014/11/prbis-2.jpg?w=300 300w" sizes="(max-width: 259px) 100vw, 259px" data-attachment-id="2457" data-permalink="https://pouletrotique.com/prbis-2/" data-orig-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-2.jpg" data-orig-size="1250,1001" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="PRbis-2" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-2.jpg?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-2.jpg?w=940" /></a></aside><aside id="media_image-6" class="widget widget_media_image"><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://pouletrotique.wordpress.com/category/les-humeurs/"><img width="259" height="173" src="https://pouletrotique.files.wordpress.com/2014/11/prbis-3.jpg?w=259" class="image wp-image-2456 alignnone attachment-259x173 size-259x173" alt="" style="max-width: 100%; height: auto;" srcset="https://pouletrotique.files.wordpress.com/2014/11/prbis-3.jpg?w=259 259w, https://pouletrotique.files.wordpress.com/2014/11/prbis-3.jpg?w=518 518w, https://pouletrotique.files.wordpress.com/2014/11/prbis-3.jpg?w=150 150w, https://pouletrotique.files.wordpress.com/2014/11/prbis-3.jpg?w=300 300w" sizes="(max-width: 259px) 100vw, 259px" data-attachment-id="2456" data-permalink="https://pouletrotique.com/prbis-3/" data-orig-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-3.jpg" data-orig-size="1250,834" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="PRbis-3" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-3.jpg?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-3.jpg?w=940" /></a></aside><aside id="media_image-4" class="widget widget_media_image"><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://pouletrotique.wordpress.com/category/la-bagarre/"><img width="259" height="173" src="https://pouletrotique.files.wordpress.com/2014/11/prbis-4.jpg?w=259" class="image wp-image-2461 alignnone attachment-259x173 size-259x173" alt="" style="max-width: 100%; height: auto;" srcset="https://pouletrotique.files.wordpress.com/2014/11/prbis-4.jpg?w=259 259w, https://pouletrotique.files.wordpress.com/2014/11/prbis-4.jpg?w=518 518w, https://pouletrotique.files.wordpress.com/2014/11/prbis-4.jpg?w=150 150w, https://pouletrotique.files.wordpress.com/2014/11/prbis-4.jpg?w=300 300w" sizes="(max-width: 259px) 100vw, 259px" data-attachment-id="2461" data-permalink="https://pouletrotique.com/prbis-4/" data-orig-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-4.jpg" data-orig-size="1250,834" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="PRbis-4" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-4.jpg?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-4.jpg?w=940" /></a></aside><aside id="media_image-7" class="widget widget_media_image"><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://pouletrotique.wordpress.com/category/la-reclame/"><img width="259" height="173" src="https://pouletrotique.files.wordpress.com/2014/11/prbis-5.jpg?w=259" class="image wp-image-2462 alignnone attachment-259x173 size-259x173" alt="" style="max-width: 100%; height: auto;" srcset="https://pouletrotique.files.wordpress.com/2014/11/prbis-5.jpg?w=259 259w, https://pouletrotique.files.wordpress.com/2014/11/prbis-5.jpg?w=518 518w, https://pouletrotique.files.wordpress.com/2014/11/prbis-5.jpg?w=150 150w, https://pouletrotique.files.wordpress.com/2014/11/prbis-5.jpg?w=300 300w" sizes="(max-width: 259px) 100vw, 259px" data-attachment-id="2462" data-permalink="https://pouletrotique.com/prbis-5/" data-orig-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-5.jpg" data-orig-size="1250,834" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="PRbis-5" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-5.jpg?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2014/11/prbis-5.jpg?w=940" /></a></aside><aside id="media_image-25" class="widget widget_media_image"><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><a href="https://pouletrotique.com/category/labecedaire-du-feminisme/"><img width="259" height="207" src="https://pouletrotique.files.wordpress.com/2015/02/pr-abc-v2.jpeg?w=259" class="image wp-image-2838  attachment-259x207 size-259x207" alt="" style="max-width: 100%; height: auto;" srcset="https://pouletrotique.files.wordpress.com/2015/02/pr-abc-v2.jpeg?w=259 259w, https://pouletrotique.files.wordpress.com/2015/02/pr-abc-v2.jpeg?w=518 518w, https://pouletrotique.files.wordpress.com/2015/02/pr-abc-v2.jpeg?w=150 150w, https://pouletrotique.files.wordpress.com/2015/02/pr-abc-v2.jpeg?w=300 300w" sizes="(max-width: 259px) 100vw, 259px" data-attachment-id="2838" data-permalink="https://pouletrotique.com/pr-abc-v2/" data-orig-file="https://pouletrotique.files.wordpress.com/2015/02/pr-abc-v2.jpeg" data-orig-size="1199,960" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;,&quot;orientation&quot;:&quot;0&quot;}" data-image-title="" data-image-description="" data-medium-file="https://pouletrotique.files.wordpress.com/2015/02/pr-abc-v2.jpeg?w=300" data-large-file="https://pouletrotique.files.wordpress.com/2015/02/pr-abc-v2.jpeg?w=940" /></a></aside><aside id="search-5" class="widget widget_search"><form role="search" method="get" class="search-form" action="https://pouletrotique.com/">
+				<label>
+					<span class="screen-reader-text">Rechercher&nbsp;:</span>
+					<input type="search" class="search-field" placeholder="Recherche&hellip;" value="" name="s" />
+				</label>
+				<input type="submit" class="search-submit" value="Rechercher" />
+			</form></aside><aside id="top-posts-3" class="widget widget_top-posts"><h1 class="widget-title">Les plus lus</h1><ul class='widgets-list-layout no-grav'>
+					<li>
+						<a href="https://pouletrotique.com/2017/12/18/pubs-sexistes-palmares-2017-de-lelegance/" title="Pubs sexistes : palmarès 2017 de l’élégance" class="bump-view" data-bump-view="tp">
+								<img width="40" height="40" src="https://pouletrotique.files.wordpress.com/2017/12/rencontres-d-arles-2016-demandez-le-programmem318389.jpg?resize=40%2C40" alt="Pubs sexistes : palmarès 2017 de l’élégance" data-pin-nopin="true" class="widgets-list-layout-blavatar"/>
+							</a>
+							<div class="widgets-list-layout-links">
+								<a href="https://pouletrotique.com/2017/12/18/pubs-sexistes-palmares-2017-de-lelegance/" title="Pubs sexistes : palmarès 2017 de l’élégance" class="bump-view" data-bump-view="tp">Pubs sexistes : palmarès 2017 de l’élégance</a>
+							</div>
+													</li>
+										<li>
+						<a href="https://pouletrotique.com/2018/06/04/education-sexuelle-le-cours-de-rattrapage-du-dr-kpote/" title="Education sexuelle: le cours de rattrapage du Dr Kpote" class="bump-view" data-bump-view="tp">
+								<img width="40" height="40" src="https://pouletrotique.files.wordpress.com/2018/06/capture-d_c3a9cran-2018-06-04-c3a0-17-21-45.png?resize=40%2C40" alt="Education sexuelle: le cours de rattrapage du Dr Kpote" data-pin-nopin="true" class="widgets-list-layout-blavatar"/>
+							</a>
+							<div class="widgets-list-layout-links">
+								<a href="https://pouletrotique.com/2018/06/04/education-sexuelle-le-cours-de-rattrapage-du-dr-kpote/" title="Education sexuelle: le cours de rattrapage du Dr Kpote" class="bump-view" data-bump-view="tp">Education sexuelle: le cours de rattrapage du Dr Kpote</a>
+							</div>
+													</li>
+										<li>
+						<a href="https://pouletrotique.com/2016/11/29/pubs-sexistes-palmares-2016-de-lelegance/" title="Pubs sexistes : palmarès 2016 de l&#039;élégance" class="bump-view" data-bump-view="tp">
+								<img width="40" height="40" src="https://pouletrotique.files.wordpress.com/2016/11/capture-d_c3a9cran-2016-11-29-c3a0-12-21-31.png?resize=40%2C40" alt="Pubs sexistes : palmarès 2016 de l&#039;élégance" data-pin-nopin="true" class="widgets-list-layout-blavatar"/>
+							</a>
+							<div class="widgets-list-layout-links">
+								<a href="https://pouletrotique.com/2016/11/29/pubs-sexistes-palmares-2016-de-lelegance/" title="Pubs sexistes : palmarès 2016 de l&#039;élégance" class="bump-view" data-bump-view="tp">Pubs sexistes : palmarès 2016 de l&#039;élégance</a>
+							</div>
+													</li>
+										<li>
+						<a href="https://pouletrotique.com/2018/04/07/ni-muse-ni-objet/" title="Ni muse, ni objet" class="bump-view" data-bump-view="tp">
+								<img width="40" height="40" src="https://pouletrotique.files.wordpress.com/2018/04/capture-d_c3a9cran-2018-04-07-c3a0-18-10-10.png?resize=40%2C40" alt="Ni muse, ni objet" data-pin-nopin="true" class="widgets-list-layout-blavatar"/>
+							</a>
+							<div class="widgets-list-layout-links">
+								<a href="https://pouletrotique.com/2018/04/07/ni-muse-ni-objet/" title="Ni muse, ni objet" class="bump-view" data-bump-view="tp">Ni muse, ni objet</a>
+							</div>
+													</li>
+										<li>
+						<a href="https://pouletrotique.com/2016/09/15/pas-de-ble-pour-legalite-vraiment/" title="Pas de blé pour l&#039;égalité. Vraiment ?" class="bump-view" data-bump-view="tp">
+								<img width="40" height="40" src="https://pouletrotique.files.wordpress.com/2016/09/capture-d_c3a9cran-2016-09-15-c3a0-14-53-47.png?resize=40%2C40" alt="Pas de blé pour l&#039;égalité. Vraiment ?" data-pin-nopin="true" class="widgets-list-layout-blavatar"/>
+							</a>
+							<div class="widgets-list-layout-links">
+								<a href="https://pouletrotique.com/2016/09/15/pas-de-ble-pour-legalite-vraiment/" title="Pas de blé pour l&#039;égalité. Vraiment ?" class="bump-view" data-bump-view="tp">Pas de blé pour l&#039;égalité. Vraiment ?</a>
+							</div>
+													</li>
+										<li>
+						<a href="https://pouletrotique.com/2017/08/19/la-vierge-emoustillee/" title="La vierge émoustillée" class="bump-view" data-bump-view="tp">
+								<img width="40" height="40" src="https://pouletrotique.files.wordpress.com/2017/06/capture-d_c3a9cran-2017-06-14-c3a0-12-02-22.png?resize=40%2C40" alt="La vierge émoustillée" data-pin-nopin="true" class="widgets-list-layout-blavatar"/>
+							</a>
+							<div class="widgets-list-layout-links">
+								<a href="https://pouletrotique.com/2017/08/19/la-vierge-emoustillee/" title="La vierge émoustillée" class="bump-view" data-bump-view="tp">La vierge émoustillée</a>
+							</div>
+													</li>
+					</ul>
+</aside><aside id="twitter-3" class="widget widget_twitter"><h1 class="widget-title"><a href='http://twitter.com/Clarence_ER'>Twitter</a></h1><ul class='tweets'>
+			<li>
+				@<a href='http://twitter.com/ThelmaLouiseRCP'>ThelmaLouiseRCP</a> Merci pour l’invitation ! _				<a href="http://twitter.com/Clarence_ER/statuses/1261343564581265408" class="timesince">1&nbsp;day&nbsp;ago</a>
+			</li>
+
+			
+			<li>
+				RT @<a href='http://twitter.com/ThelmaLouiseRCP'>ThelmaLouiseRCP</a>: Nouveau <a href='http://twitter.com/search?q=%23podcast'>#podcast</a> confiné à destination de vos petites oreilles et de votre petit cœur 🔥🎈
+
+On parle sexualité, couple,… _				<a href="http://twitter.com/Clarence_ER/statuses/1261343492300779521" class="timesince">1&nbsp;day&nbsp;ago</a>
+			</li>
+
+			
+			<li>
+				@<a href='http://twitter.com/jmdu91290'>jmdu91290</a> @<a href='http://twitter.com/AnneCMailfert'>AnneCMailfert</a> Oui, cardiologue pour une échographie du cœur de mon bébé. _				<a href="http://twitter.com/Clarence_ER/statuses/1260905509055614976" class="timesince">2&nbsp;days&nbsp;ago</a>
+			</li>
+
+			
+			<li>
+				@<a href='http://twitter.com/AnneCMailfert'>AnneCMailfert</a> Souvenir de mon écho avec un cardiologue à qui j’avais dit que je ne voulais pas connaître le sexe :… <a href="https://twitter.com/i/web/status/1260867224816046083"> twitter.com/i/web/status/1…</a> _				<a href="http://twitter.com/Clarence_ER/statuses/1260867224816046083" class="timesince">2&nbsp;days&nbsp;ago</a>
+			</li>
+
+			
+			<li>
+				@<a href='http://twitter.com/Cecile_AF'>Cecile_AF</a> @<a href='http://twitter.com/TutoConquerir'>TutoConquerir</a> @<a href='http://twitter.com/ClemBodoc'>ClemBodoc</a> Merci !! _				<a href="http://twitter.com/Clarence_ER/statuses/1256219870443823104" class="timesince">2&nbsp;weeks&nbsp;ago</a>
+			</li>
+
+			</ul><a href="http://twitter.com/Clarence_ER"  class='twitter-follow-button' data-show-count='false' data-link-color='#8c888c' data-text-color='#3d3e40'>Follow @Clarence_ER</a></aside><aside id="facebook-likebox-5" class="widget widget_facebook_likebox"><h1 class="widget-title"><a href="https://www.facebook.com/PouletRotique">Facebook</a></h1>		<div id="fb-root"></div>
+		<div class="fb-page" data-href="https://www.facebook.com/PouletRotique" data-width="300"  data-height="300" data-hide-cover="false" data-show-facepile="true" data-tabs="false" data-hide-cta="false" data-small-header="false">
+		<div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/PouletRotique"><a href="https://www.facebook.com/PouletRotique">Facebook</a></blockquote></div>
+		</div>
+		</aside><aside id="blog_subscription-3" class="widget widget_blog_subscription jetpack_subscription_widget"><h1 class="widget-title"><label for="subscribe-field">S&#039;abonner</label></h1>
+			<form
+				action="https://subscribe.wordpress.com"
+				method="post"
+				accept-charset="utf-8"
+				id=""
+			>
+									<p>Cliquez pour vous abonner à Poulet Rotique et être notifié-e des nouveaux articles par mail.</p>
+					<p>
+						<input
+							type="text"
+							name="email"
+							style="width: 95%; padding: 1px 10px"
+							placeholder="Entrez votre adresse e-mail"
+							value=""
+							id=""
+						/>
+					</p>
+				
+                <p>
+                    <input type="hidden" name="action" value="subscribe"/>
+                    <input type="hidden" name="blog_id" value="9466585"/>
+                    <input type="hidden" name="source" value="https://pouletrotique.com/2015/07/07/consentement-zone-grise-mots-simples/"/>
+                    <input type="hidden" name="sub-type" value="widget"/>
+                    <input type="hidden" name="redirect_fragment" value="blog_subscription-3"/>
+					<input type="hidden" id="_wpnonce" name="_wpnonce" value="d1fbc6a47f" />                    <button type="submit"
+	                    		                	                >
+	                    Suivre                    </button>
+                </p>
+            </form>
+			
+</aside><aside id="linkcat-1356" class="widget widget_links"><h1 class="widget-title">Blogroll</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://lemauvaisgenre.wordpress.com/" target="_blank">Le mauvais genre</a></li>
+<li><a href="http://www.toutalego.com">Tout à l&#039;ego</a></li>
+<li><a href="http://cabinetsdecuriosites.fr">Le cabinet de curiosité féminine</a></li>
+<li><a href="http://hypathie.blogspot.com/" target="_blank">Hypathie</a></li>
+<li><a href="http://www.gqmagazine.fr/sexactu">Sexactu</a></li>
+<li><a href="http://martiennes.wordpress.com" target="_blank">Les Martiennes</a></li>
+<li><a href="http://blogs.lexpress.fr/sexpress/" target="_blank">Sexpress</a></li>
+<li><a href="http://payetashnek.tumblr.com/">Paye ta shnek</a></li>
+<li><a href="http://cafaitgenre.org">Ca fait genre</a></li>
+<li><a href="http://www.crepegeorgette.com">Crêpe Georgette</a></li>
+<li><a href="http://sexes.blogs.liberation.fr/" target="_blank">Les 400 culs</a></li>
+<li><a href="http://www.theholyculotte.com">The Holy Culotte</a></li>
+<li><a href="http://salutcamaradesexiste.tumblr.com">Salut camarade sexiste</a></li>
+<li><a href="http://projetcrocodiles.tumblr.com">Projet Crocodiles</a></li>
+<li><a href="http://m-e-u-f-s.tumblr.com">Meufs</a></li>
+<li><a href="http://blog.plafonddeverre.fr/" target="_blank">Olympe et le plafond de verre</a></li>
+
+	</ul>
+</aside>
+</div><!-- #secondary --></div><!-- .container -->
+
+</div><!-- #content -->
+
+<footer id="colophon" class="site-footer" role="contentinfo">
+	<div class="container">
+		<div class="grid">
+			<div class="grid__item  site-info">
+				
+				
+							</div><!-- .site-info -->
+
+			<div class="grid__item  footer-navigation">
+				<nav><h5 class="screen-reader-text">Navigation du pied de page</h5><ul id="menu-credits" class="nav  nav--footer"><li id="menu-item-3257" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-3257"><a href="http://blank">Les propos tenus sur ce site n’engagent que son auteure, Clarence Edgard-Rosa. Exception faite des citations, la reproduction du contenu de ce site est interdite.</a></li>
+<li id="menu-item-4790" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4790"><a href="https://pouletrotique.com/a-propos-2-2/">A propos</a></li>
+<li id="menu-item-4791" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-4791"><a href="https://pouletrotique.com/contact-2-2/">Contact</a></li>
+</ul></nav>			</div>
+		</div>
+	</div><!-- .site-footer .container -->
+</footer><!-- #colophon -->
+</div><!-- #page -->
+
+	<div class="toolbar">
+		<div class="toolbar__head">
+			<nav id="social-navigation" class="toolbar-navigation" role="navigation">
+				<h5 class="screen-reader-text">Navigation Secondaire</h5>
+				<ul id="menu-social" class="nav  nav--social  nav--toolbar"><li id="menu-item-2174" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2174"><a href="https://www.facebook.com/Gaze.Zine">Facebook</a></li>
+<li id="menu-item-2175" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2175"><a href="http://twitter.com/Clarence_ER">Twitter</a></li>
+<li id="menu-item-2176" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-2176"><a href="https://pouletrotique.com/feed">Feed</a></li>
+</ul>					<ul class="nav  nav--toolbar">
+						<li class="nav__item--search"><a href="#">Recherche</a></li>
+					</ul>
+							</nav>
+			<!-- #social-navigation -->
+		</div>
+		<div class="toolbar__body">
+						<nav class="navigation post-navigation" role="navigation">
+				<h1 class="screen-reader-text">Navigation des articles</h1>
+
+				<div class="nav-links">
+					<div class="nav-home"><a href="https://pouletrotique.com"><i class="fa fa-th-large"></i></a></div><div class="nav-previous"><a href="https://pouletrotique.com/2015/06/28/feminisme-des-ressources-pour-les-jeunes-filles-1/" rel="prev"><i class="fa fa-long-arrow-left prev-arrow"></i><span>Féminisme : des ressources pour les jeunes filles&nbsp;#1</span></a></div><div class="nav-next"><a href="https://pouletrotique.com/2015/07/09/loud-proud-encore/" rel="next"><span>Loud &amp; Proud : encore&nbsp;!</span><i class="fa fa-long-arrow-right next-arrow"></i></a></div>				</div>
+				<!-- .nav-links -->
+			</nav><!-- .navigation -->
+				</div>
+	</div>
+	<div class="overlay--search">
+		<div class="overlay__wrapper">
+			<form role="search" method="get" class="search-form" action="https://pouletrotique.com/">
+				<label>
+					<span class="screen-reader-text">Rechercher&nbsp;:</span>
+					<input type="search" class="search-field" placeholder="Recherche&hellip;" value="" name="s" />
+				</label>
+				<input type="submit" class="search-submit" value="Rechercher" />
+			</form>			<p>Commencez à taper votre recherche ci-dessous et appuyez sur Entrée pour chercher. Appuyez sur Esc pour annuler.</p>
+		</div>
+		<b class="overlay__close"></b>
+	</div>
+<!--  -->
+	<div style="display:none">
+	<div class="grofile-hash-map-2b0163640e7dfb953ae93df21bace341">
+	</div>
+	<div class="grofile-hash-map-0d97fe748cde80c8e873f6f5caa0b2f8">
+	</div>
+	<div class="grofile-hash-map-7ec8139b29e738da42f38a06d8dee55f">
+	</div>
+	<div class="grofile-hash-map-63d80723ea84d33216ca069889185383">
+	</div>
+	<div class="grofile-hash-map-47a7c9f7e7d2de6c3902637e5132b7a9">
+	</div>
+	<div class="grofile-hash-map-7909b53b9b397a519c2d339bc1393c77">
+	</div>
+	<div class="grofile-hash-map-9147c6a8c571982f62bec9eaebac3242">
+	</div>
+	<div class="grofile-hash-map-c83bb736eac7742ae0374a3610174557">
+	</div>
+	<div class="grofile-hash-map-d38f71393c5ff795f78cf21d4ff4f336">
+	</div>
+	<div class="grofile-hash-map-cca3218c116a823ba46586eba9af8339">
+	</div>
+	<div class="grofile-hash-map-85cb55c58ba2075a2aa71803eb4a1d81">
+	</div>
+	<div class="grofile-hash-map-fd2209c10af01c1e6995961da36a85bb">
+	</div>
+	<div class="grofile-hash-map-567f8acee43d79f4f6df4d681af059ad">
+	</div>
+	<div class="grofile-hash-map-b34a33f98fc0ca3c922078f84aa238d4">
+	</div>
+	<div class="grofile-hash-map-005befe0d7db783f1e4b611111c824b4">
+	</div>
+	<div class="grofile-hash-map-4376ff28413c82152647e39820c53ae6">
+	</div>
+	<div class="grofile-hash-map-c4b2b9699505d5e47d51207fd2acc4a8">
+	</div>
+	<div class="grofile-hash-map-567f8acee43d79f4f6df4d681af059ad">
+	</div>
+	<div class="grofile-hash-map-d2461b8b22a9611872eb220e292b27d8">
+	</div>
+	</div>
+<script>
+var HighlanderComments = {"loggingInText":"Connexion\u2026","submittingText":"Publication d\u2019un Commentaire\u2026","postCommentText":"Laisser un commentaire","connectingToText":"Connexion \u00e0 %s","commentingAsText":"%1$s: Vous commentez \u00e0 l\u2019aide de votre compte %2$s.","logoutText":"Se d\u00e9connecter","loginText":"Se connecter","connectURL":"https:\/\/pouletrotique.wordpress.com\/public.api\/connect\/?action=request&domain=pouletrotique.com","logoutURL":"https:\/\/pouletrotique.wordpress.com\/wp-login.php?action=logout&_wpnonce=f37b16d984","homeURL":"https:\/\/pouletrotique.com\/","postID":"3380","gravDefault":"blank","enterACommentError":"Entrez un commentaire","enterEmailError":"Veuillez entrer votre adresse mail","invalidEmailError":"Adresse email invalide","enterAuthorError":"Veuillez entrer votre nom","gravatarFromEmail":"L\u2019image s\u2019affiche lorsque vous postez un commentaire. Cliquez pour personnaliser.","logInToExternalAccount":"Connectez-vous pour utiliser les informations li\u00e9es \u00e0 un de ces comptes:","change":"Changer","changeAccount":"Changer de compte","comment_registration":"","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1573483029j'></script>
+
+	<div id="carousel-reblog-box">
+		<form action="#" name="carousel-reblog">
+			<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Ajoutez votre grain de sel personnel... (facultatif)"></textarea>
+			<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Publier sur</label>
+			<select name="carousel-reblog-to-blog-id" id="carousel-reblog-to-blog-id">
+						</select>
+
+			<div class="submit">
+				<span class="canceltext"><a href="#" class="cancel">Annuler</a></span>
+				<input type="submit" name="carousel-reblog-submit" class="button" id="carousel-reblog-submit" value="Reblog Article" />
+				<input type="hidden" id="carousel-reblog-blog-id" value="9466585" />
+				<input type="hidden" id="carousel-reblog-blog-url" value="https://pouletrotique.com" />
+				<input type="hidden" id="carousel-reblog-blog-title" value="Poulet Rotique" />
+				<input type="hidden" id="carousel-reblog-post-url" value="" />
+				<input type="hidden" id="carousel-reblog-post-title" value="" />
+			</div>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="9cf7ca1c98" /><input type="hidden" name="_wp_http_referer" value="/2015/07/07/consentement-zone-grise-mots-simples/" />		</form>
+
+		<div class="arrow"></div>
+	</div>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/pouletrotique.com\/2015\/07\/07\/consentement-zone-grise-mots-simples\/":3380};
+	</script>
+					<div id="sharing_email" style="display: none;">
+		<form action="/2015/07/07/consentement-zone-grise-mots-simples/" method="post">
+			<label for="target_email">Envoyer à l'adresse e-mail</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Votre nom</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Votre adresse e-mail</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="Ce champ est utilisé pour la validation du formulaire et ne doit pas être changé" />
+			
+			<div
+				class="g-recaptcha"
+				data-sitekey="6LcmyE0UAAAAALID28yVNg7pFCodGaArJzHitez_"
+				data-theme="light"
+				data-type="image"
+				data-tabindex="0"></div>
+			<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?hl=fr" async></script>
+			
+			<img style="float: right; display: none" class="loading" src="https://s0.wp.com/wp-content/mu-plugins/post-flair/sharing/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Envoyer un e-mail" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel" role="button">Annuler</a>
+
+			<div class="errors errors-1" style="display: none;">
+				L'article n'a pas été envoyé - Vérifiez vos adresses e-mail&nbsp;!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				La vérification e-mail a échoué, veuillez réessayer			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Impossible de partager les articles de votre blog par e-mail.			</div>
+		</form>
+	</div>
+<script src='https://platform.twitter.com/widgets.js?ver=20111117'></script>
+<div class="widget widget_eu_cookie_law_widget"><div
+	class="hide-on-button"
+	data-hide-timeout="30"
+	data-consent-expiration="180"
+	id="eu-cookie-law"
+>
+	<form method="post">
+		<input type="submit" value="Fermer et accepter" class="accept" />
+
+		Confidentialité &amp; Cookies : Ce site utilise des cookies. En continuant à utiliser ce site, vous acceptez leur utilisation.<br />
+Pour en savoir davantage, y compris comment contrôler les cookies, voir :
+		<a href="https://automattic.com/cookies" >
+			Politique relative aux cookies		</a>
+ </form>
+</div>
+</div><link rel='stylesheet' id='all-css-0-3' href='https://s0.wp.com/_static/??-eJxty0sKgCAQANALNQ0iCi2is4gNofnDUbt+tGjn9sHDp4DNqVFqGDuU0C+XGK2puTMF9NSKsTf8sFrmBeepEpec2A2C4U7KE/n6EXehtJRa6E35F5AyMAg=?cssminify=yes' type='text/css' media='all' />
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyFUEFSwzAM/BCOCKSQHpi+JdhqKkeR3chOCK+vC+mhwAwnabSr3ZVgicYGSSgJvILDmSzGj8rrA9xDMWgaUbXr8Q/UnzNO61Yqkplw+ZfmMcXODmZCpc9fqmM2kXNPosA0oEJZynjqxDFONzKJ5ewKeA1PmmBGcWG6QjHweiTmaiT5qX0TPmZmo5TQoKNE0m+WUD/W7evzy74BwUW/Ur5zsMPmUvpCLR/R77HZ7j2Mb/Wu3T+1TVM3/gLyqYDg'></script>
+<script type='text/javascript'>
+( 'fetch' in window ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?m=1573572739h&#038;ver=3.0.0"></scr' + 'ipt>' );( document.contains ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?m=1540208548h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?m=1585663916h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?m=1585663916h&#038;ver=3.6.4"></scr' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?m=1550600082h&#038;ver=3.0.12"></scr' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?m=1540208548h&#038;ver=2.0.2"></scr' + 'ipt>' );
+( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-url.min.7490158b.js?m=1588209800h&#038;ver=3.6.4"></scr' + 'ipt>' );
+( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-dom-rect.7e21c103.js?m=1588209800h&#038;ver=3.42.0"></scr' + 'ipt>' );
+</script>
+<script src='https://s0.wp.com/wp-includes/js/dist/vendor/lodash.min.js?m=1573572739h&#038;ver=4.17.15'></script>
+<script>
+window.lodash = _.noConflict();
+</script>
+<script>
+var jpfbembed = {"appid":"249643311490","locale":"fr_FR"};
+</script>
+<script>
+var actionbardata = {"siteID":"9466585","siteName":"Poulet Rotique","siteURL":"https:\/\/pouletrotique.com","icon":"<img alt='' src='https:\/\/secure.gravatar.com\/blavatar\/3434a0ca681ba76c16640cf7c420d171?s=50&d=https%3A%2F%2Fs0.wp.com%2Fi%2Flogo%2Fwpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"premium\/hive","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fpouletrotique.com%2F2015%2F07%2F07%2Fconsentement-zone-grise-mots-simples%2F&signup_flow=account&domain=pouletrotique.com","themeURL":"","xhrURL":"https:\/\/pouletrotique.com\/wp-admin\/admin-ajax.php","nonce":"08de5007a5","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"d1fbc6a47f\" \/>","referer":"https:\/\/pouletrotique.com\/2015\/07\/07\/consentement-zone-grise-mots-simples\/","canFollow":"1","feedID":"4156087","statusMessage":"","customizeLink":"https:\/\/pouletrotique.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fpouletrotique.wordpress.com%2F2015%2F07%2F07%2Fconsentement-zone-grise-mots-simples%2F","postID":"3380","shortlink":"https:\/\/wp.me\/pDIGR-Sw","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/pouletrotique.com\/3380","statsLink":"https:\/\/wordpress.com\/stats\/post\/3380\/pouletrotique.com","i18n":{"view":"Afficher le site","follow":"Suivre","following":"Abonn\u00e9","edit":"Modifier","login":"Connexion","signup":"S'inscrire","customize":"Personnaliser","report":"Signaler ce contenu","themeInfo":"Obtenir le th\u00e8me: Hive","shortlink":"Copier shortlink","copied":"Copi\u00e9","followedText":"Les nouveaux articles de ce site appara\u00eetront d\u00e9sormais dans votre <a href=\"https:\/\/wordpress.com\/\">Lecteur<\/a>","foldBar":"R\u00e9duire cette barre","unfoldBar":"\u00c9tendre cette barre","editSubs":"G\u00e9rer les abonnements","viewReader":"Voir le site dans le Lecteur","viewReadPost":"Voir l\u2019article dans le Lecteur","subscribe":"M\u2019inscrire","enterEmail":"Entrez votre adresse e-mail","followers":"Rejoignez 1&nbsp;116 autres abonn\u00e9s","alreadyUser":"Vous disposez d\u00e9j\u00e0 d\u02bcun compte WordPress ? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fpouletrotique.com%2F2015%2F07%2F07%2Fconsentement-zone-grise-mots-simples%2F&signup_flow=account&domain=pouletrotique.com\">Connectez-vous maintenant.<\/a>","stats":"Statistiques"}};
+</script>
+<script>
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"fr","ajaxurl":"https:\/\/pouletrotique.com\/wp-admin\/admin-ajax.php","nonce":"e1e93fd6ec","display_exif":"0","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Commentaire","post_comment":"Laisser un commentaire","write_comment":"\u00c9crire un commentaire...","loading_comments":"Chargement des commentaires\u2026","download_original":"Afficher dans sa taille r\u00e9elle <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>.","no_comment_text":"Veuillez ajouter du contenu \u00e0 votre commentaire.","no_comment_email":"Merci de renseigner une adresse e-mail.","no_comment_author":"Merci de renseigner votre nom.","comment_post_error":"Une erreur s'est produite \u00e0 la publication de votre commentaire. Veuillez nous en excuser, et r\u00e9essayer dans quelques instants.","comment_approved":"Votre commentaire a \u00e9t\u00e9 approuv\u00e9.","comment_unapproved":"Votre commentaire est en attente de validation.","camera":"Appareil photo","aperture":"Ouverture","shutter_speed":"Vitesse d'obturation","focal_length":"Focale","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/pouletrotique.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fpouletrotique.com%2F2015%2F07%2F07%2Fconsentement-zone-grise-mots-simples%2F","blog_id":"9466585","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">E-mail (requis)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Nom (requis)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Site web<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogu\u00e9","reblog_add_thoughts":"Ajoutez votre grain de sel personnel... (facultatif)","reblogging":"Reblogging...","post_reblog":"Relais d\u2019article","stats_query_args":"blog=9466585&v=wpcom&tz=2&user_id=0&subd=pouletrotique","is_public":"1","reblog_enabled":""};
+</script>
+<script>
+var sharing_js_options = {"lang":"fr","counts":"1","is_stats_active":"1"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyVU9tugzAM/aEFl5Vt9GHa875iCsQFQy4sTuj69wtDVJWKmHgi2D7H9jkJXAZROxvQBhh0bMgyNDH9VuiblPEIZXbIDlBF0gooLy2QVfiTdfwE+8DKGeFRqus2wzlqLZgCClQUyDZizkB+yMu34+upAIsXHmTdi0q7umdQxAFq6V1k1HNQjISXpQXZWkeFDB0DGdkgaycVqsyQXasxkp311/v0MmVo0aSiwaOhaKClEUEyY3gk34XsviOmjq0b0X/+AfbhR0xbU7juQxm5LkDtjEnoZNegV2UwUSx+dRgmL+ArEcBZ1lg51ws01aMEdyipEquopJ/EDujTSUy7e5pGuMV2MgSfJuEtUB3I2Ql0O63tz8O6LrNLi1n3VSu9lgu5KCSWwAbGIw/OcnIpXWCFbiXyjx2yJzYYxDG9u9kS581G/eA4iLOW5IFb6dN7W74J9GHe85fy9FwWRV50vyBGjgQ='></script>
+<script type='text/javascript'>
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-tumblr', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtumblr', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-pocket', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcompocket', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<iframe src='https://widgets.wp.com/likes/master.html?ver=20190321#ver=20190321&amp;lang=fr' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+		<div id='likes-other-gravatars'><div class="likes-text"><span>%d</span> blogueurs aiment cette page :</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+<script src="//stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'9466585','blog_tz':'2','user_lang':'fr','blog_lang':'fr','user_id':'0'}]);
+_stq.push(['view', {'blog':'9466585','v':'wpcom','tz':'2','user_id':'0','post':'3380','subd':'pouletrotique'}]);
+_stq.push(['extra', {'crypt':'UE40eW5QN0p8M2Y/RE1hV3xrb2xUT3JBbjREZWgvK29XZW1Bbl82dys4Zj9tVXI0M0drUj1wLTgsNzdteT9DUTdrMjVlLV9zaTllS209VW1LblY0MkNfayxVSkhBOFFkOH5CQXU5VGROaHFpR3ZmSHMsRz9fbmJIT1RTSSV0XUdjaC5ucm04alFOZz9ONHxuX1t+Qzd5K3FfajNbeXk4ZENsVS89MER8bXhSeTFRaTdfUTh5L0MlXWxSbDFjVy4/X189bj8rZHpMPzV6OWQ0TFB8OHo0UXQ3Yj82eVthY2NaJVFHTUduby9FfjNDQTFGU1RvQn4uJV9JKy5iSixIel1DeU1Pcm1GbkUtdlpRd1AydzlOdiU/SzhybXVtWl0sLm1HdHclW185MS91Uno2JWhyajdKZVF1L0VXJmUmZGh+W3csUzhyYWxCQkJaTFRjKy0='}]);
+_stq.push([ 'clickTrackerInit', '9466585', '3380' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>

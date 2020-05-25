@@ -1,0 +1,49 @@
+---
+title: "« Girlfriend pranks » : quand les youtubeurs humilient leur copine pour du clic"
+url: http://www.neonmag.fr/girlfriend-pranks-quand-les-youtubeurs-humilient-leur-copine-pour-du-clic-482552.html
+keywords: pranks,girlfriend,youtube,vues,youtubeurs,quil,humilient,vie,vidéo,cest,millions,copine,femmes
+---
+Les vidéos de « michetonneuses » ou les « girlfriend pranks » importées des Etats-Unis mettent en scène des blagues très limites au détriment de jeunes femmes. Une catharsis sexiste qui cartonne. {#les-vidéos-de-michetonneuses-ou-les-girlfriend-pranks-importées-des-etats-unis-mettent-en-scène-des-blagues-très-limites-au-détriment-de-jeunes-femmes.-une-catharsis-sexiste-qui-cartonne. dir="ltr"}
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Quoi de plus romantique que de faire croire à sa copine qu'on la trompe, enregistrer la scène à son insu, et voir les clics que ça rapporte ? Autre option :  pourquoi ne pas draguer une fille dans la rue en lui proposant de monter dans une Ferrari, l'insulter, filmer le tout, et exploser son nombre de vues ?
+
+Pour plaire à ses abonnés, le youtubeur Birdyy a pris l'habitude de piéger sa copine. Qu'il lui fasse croire [qu'il est infidèle](https://www.youtube.com/watch?v=5xKGs4geP8Q), [qu'il prend de la coke](https://www.youtube.com/watch?v=0nXkpu5uqeQ), [qu'il drague sur Tinder](https://www.youtube.com/watch?v=a1eBPhyoRes) ou [qu'il la demande en mariage](https://www.youtube.com/watch?v=PaBSbZQcCEU), la jeune fille de 18 ans tombe la plupart du temps dans le panneau. Et le clou du spectacle d'une vidéo réussie, c'est quand même quand elle pleure.
+
+Mais le 21 janvier, le youtubeur genevois révèle qu'ils se séparent dans une capsule habilement nommée [« ma copine me quitte à cause des pranks explication ... »](https://www.youtube.com/channel/UCC91DAW39dNDsH5AA3JNvUQ). Et le professionnel du web ne lésine pas sur les détails : « Quand elle venait chez moi, je vous le dis honnêtement, c'était vraiment nul » ; « Sa mère veut plus du tout que je rentre en contact avec elle à cause des pranks » ; « J'ai rencontré quelqu'un depuis et je ferai sûrement une vidéo avec elle dans pas très longtemps si vous explosez la barre de likes. » La classe. Cette mise à nue de leur vie privée lui a rapporté 1,5 million de vues en cinq jour, soit plusieurs centaines d'euros. Et pas un rond pour Jessica.
+
+Contactée par NEON il y a quelques semaines, après avoir demandé l'autorisation à Birdyy pour nous parler, cette dernière nous avait assuré qu'elle était ravie de participer. « YouTube, c'est sa passion, je ne peux pas l'en empêcher. Parfois je le prends mal, mais je sais que c'est pour rigoler. » Si quelque chose la gênait, c'est plutôt dans les commentaires que ça se passait. « Je suis souvent attaquée sur mon physique -- trop maigre, pas de formes etc. -- au début c'était dur mais je n'y fais plus attention. » Après leur rupture, Jessica a refusé de nous répondre. Juste un texto : « Je ne souhaite pas en parler, on va régler ça entre nous. »
+
+Cette tendance des « girlfriend pranks », qui se développent de plus en plus, est née aux Etats-Unis, où les youtubeurs vont beaucoup plus loin que nos blagueurs hexagonaux. Jesse, de la chaîne PrankvsPrank, cumule 34 millions vues [en faisant croire à celle qui partage sa vie que son chat est tombé par la fenêtre](https://www.youtube.com/watch?v=GI6yvRZafLY). Repoussant toutes les limites de la décence, Nateslife va jusqu'à [simuler son suicide pour voir la réaction de sa petite amie](https://www.youtube.com/watch?v=F0X0wuudNik).
+
+Le Royaume-Uni n'est pas en reste non plus. La star des machos Brad Holmes, connu pour son couple avec [« la fille la plus bête d'Angleterre »](https://www.youtube.com/watch?v=KEmZREj3h0c), selon ses propres termes, a vu l'un de ses « pranks » se faire retirer de la toile par YouTube (fait assez exceptionnel pour être noté). Le gentleman avait frotté le tampon de sa copine avec du piment et l'avait filmée souffrant le martyre. Hilarant.
+
+Pour Cy., membre fondatrice des [Internettes](https://www.facebook.com/les1ternettes), collectif qui se bat pour une meilleure visibilité des femmes créatrices de contenus vidéo sur le web, ces « pranks » dégradants ne devraient pas exister. « Tout comme j'ai du mal à comprendre que YouTube laisse apparaître des commentaires du type "sale pute", je ne comprends pas comment des mecs comme lui peuvent être rémunérés. »
+
+Depuis décembre 2016, comme beaucoup de youtubeurs, la militante dénonce également le nouvel algorithme du site web. Plutôt que de prendre en compte des signes d'intérêt qualitatifs tels que les abonnements, YouTube se base encore davantage sur la popularité des vidéos pour déterminer celles qui seront mises en avant. « Ça pousse les vidéastes à être de plus en plus putassiers. »
+
+> « Il n'y a pas mort d'homme »
+
+Pour DerekDeso, qui a fait 5 millions de vues avec [cette vidéo](https://www.youtube.com/watch?v=ieTPc80m5PQ) -- dans laquelle il fait boire du laxatif à sa copine et verrouille toutes les salles de bains avant de la regarder chercher une clef en pleurs et finir par se soulager dans le jardin --, « il n'y a pas mort d'homme ». Ce Californien, qui gagne sa vie grâce à YouTube, nous raconte qu'il est en couple depuis sept ans. « Parfois, on s'embrouille vraiment ou elle m'envoie des piques pendant quelques jours mais on finit toujours par se réconcilier, assure-t-il. J'adore faire des blagues aux gens et, à ce que je sache, personne n'a jamais fini blessé ou hospitalisé. »
+
+La tradition des « pranks » aux Etats-Unis remonte à l'émission de caméra cachée des années 1950  [« Candid Camera »](https://www.youtube.com/channel/UCBH1PpAu9UZ0Dkn6qGqGsmg), qui consistait à piéger des anonymes dans des lieux publics (un peu à l'image d'[un François L'Embrouille vendeur de frites](https://www.youtube.com/watch?v=Q-CWjBCNoMg)). Rien de bien méchant.
+
+Mais la  « culture YouTube » est passé par là, nous explique Renee Hobbs, spécialiste d'éducation aux médias digitaux à l'université de Rhode Island. Un monde nourri par des années de télé-réalité, où plus le titre et la vignette de la vidéo sont provocateurs, plus il y aura de clics à la clé. « Dans le fait d'exploiter sa conjointe pour de l'audience il y a aussi l'idée que le nombre de vues est plus important qu'une relation humaine. »
+
+> Leçons pour michetonneuses
+
+Le très populaire IbraTV fait aussi partie de ceux dont les pièges misogynes sont le fond de commerce. Celui qui s'est fait connaître pour avoir « piégé un pédophile », [comme le raconte Slate.fr](http://www.slate.fr/story/125987/ibratv-youtubeurs-jouer-heros), est surtout le roi des « pranks » de mauvais goût. Sur sa chaîne YouTube, un grand nombre des vidéos sont des caméras cachées dans lesquelles le Russe de 24 ans et son cousin donnent des leçons à des « michetonneuses ».
+
+Définition : des femmes vénales qui ne s'intéressent aux hommes que s'ils ont de l'argent. Le scénario est simple et répétitif. Le jeune homme baraqué au français approximatif aborde lourdement une passante qui lui exprime son désintérêt. Il monte alors dans une voiture de luxe et l'invite à faire à tour. Cette dernière accepte et reçoit sa punition qui est, au choix, un entartage, un abandon en pleine forêt ou des insultes. Et ça marche : [« Gold Digger Extreme Karma! -- Le Pouvoir d'une Ferrari! »](https://www.youtube.com/watch?v=hXlxK6mvfyg), 4,5 millions de vues. [« PIÉGER UNE MICHETONNEUSE AVEC UNE LAMBORGHINI »](https://www.youtube.com/watch?v=4WaU1d6OicI), 2,2 millions de vues. [« Michetonneuse de Paris \| Gold Digger in Paris (Prank / Camera Cachée) »](https://www.youtube.com/watch?v=3-9liFxRpl4), 1,6 millions de vues.
+
+Mais pourquoi ces vidéos de qualité douteuse, basées sur l'humiliation, et dont les dénouements sont souvent décevants, attirent tant les internautes ? Et ce ne sont pas les accusations de « fake », permettant surtout d'alimenter l'espace commentaires, qui les freinent. Selon l'universitaire américaine, c'est notamment cette ambiguïté voyeuriste qui fait le succès de ces séquences.
+
+> Inverser le rapport de forces
+
+« Les adolescents se réunissent pour les regarder et se disputent pour savoir s'il s'agit de la réalité ou d'une mise en scène, cela crée du lien social. » Une autre donnée attrayante pour les jeunes garçons qui visionnent ces scènes : l'impression d'inverser le rapport de forces, qu'ils estiment en leur défaveur. « Quand un homme qui a du mal à plaire aux femmes voit ça, il a l'impression qu'on le venge, » analyse Renee Hobbs. En gros, les frasques d'IbraTV seraient une sorte de catharsis pour frustrés.
+
+Quitte à être à la limite de l'atteinte à l'intimité de la vie privée. L'avocat Olivier Iteanu, auteur du livre [Quand le digital défie l'Etat de droit](https://www.amazon.fr/Quand-digital-d%C3%A9fie-l%C3%89tat-droit/dp/2212118597) (Editions Eyrolles, 2016), justifie cette liberté quasi totale des contributeurs par le fait que le droit s'appliquant à YouTube est celui de l'Etat de Californie. « Ce que les Américains régulent très bien, ce sont les droits d'auteur. »
+
+Poussé par des maisons de disques influentes, YouTube ne perd pas de temps lorsqu'il s'agit de supprimer des clips musicaux illégaux. C'est une autre histoire quand un anonyme demande le retrait d'un contenu offensant. « C'est une liberté d'expression à géométrie variable. » La conclusion est la même pour YouTube, Twitter ou Facebook, des viviers à harcèlement et à revenge porn : les droits d'auteur sonnants et trébuchants y sont mieux protégés que les droits des femmes.
+
+ {#section .m_489515399688003838m_8944101254102928102m_1502619382875854027gmail_msg}

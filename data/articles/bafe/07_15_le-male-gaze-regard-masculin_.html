@@ -1,0 +1,1427 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="https://cafaitgenre.org/xmlrpc.php" />
+<!--[if lt IE 9]>
+<script src="https://s0.wp.com/wp-content/themes/pub/confit/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+
+<title>Le &laquo;&nbsp;male gaze&nbsp;&raquo; (regard masculin) &#8211; Genre !</title>
+<meta name="google-site-verification" content="-F-sUeQW8RLD_71HOMvv_OEfZz8YKxmRmZcBB-p8DqI" />
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9jYWZhaXRnZW5yZS5vcmc%3D"
+		+ "&wpcomid=27116365"
+		+ "&time=1589683607";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//cafaitgenre.wordpress.com' />
+<link rel='dns-prefetch' href='//wordpress.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.pubmine.com' />
+<link rel='dns-prefetch' href='//x.bidswitch.net' />
+<link rel='dns-prefetch' href='//static.criteo.net' />
+<link rel='dns-prefetch' href='//ib.adnxs.com' />
+<link rel='dns-prefetch' href='//aax.amazon-adsystem.com' />
+<link rel='dns-prefetch' href='//bidder.criteo.com' />
+<link rel='dns-prefetch' href='//cas.criteo.com' />
+<link rel='dns-prefetch' href='//gum.criteo.com' />
+<link rel='dns-prefetch' href='//ads.pubmatic.com' />
+<link rel='dns-prefetch' href='//gads.pubmatic.com' />
+<link rel='dns-prefetch' href='//tpc.googlesyndication.com' />
+<link rel='dns-prefetch' href='//ad.doubleclick.net' />
+<link rel='dns-prefetch' href='//googleads.g.doubleclick.net' />
+<link rel='dns-prefetch' href='//www.googletagservices.com' />
+<link rel='dns-prefetch' href='//cdn.switchadhub.com' />
+<link rel='dns-prefetch' href='//delivery.g.switchadhub.com' />
+<link rel='dns-prefetch' href='//delivery.swid.switchadhub.com' />
+<link rel='dns-prefetch' href='//a.teads.tv' />
+<link rel='dns-prefetch' href='//prebid.media.net' />
+<link rel='dns-prefetch' href='//adserver-us.adtech.advertising.com' />
+<link rel='dns-prefetch' href='//fastlane.rubiconproject.com' />
+<link rel='dns-prefetch' href='//prebid-server.rubiconproject.com' />
+<link rel='dns-prefetch' href='//hb-api.omnitagjs.com' />
+<link rel='dns-prefetch' href='//mtrx.go.sonobi.com' />
+<link rel='dns-prefetch' href='//apex.go.sonobi.com' />
+<link rel='dns-prefetch' href='//u.openx.net' />
+<link rel="alternate" type="application/rss+xml" title="Genre ! &raquo; Flux" href="https://cafaitgenre.org/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Genre ! &raquo; Flux des commentaires" href="https://cafaitgenre.org/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Genre ! &raquo; Le &laquo;&nbsp;male gaze&nbsp;&raquo; (regard masculin) Flux des commentaires" href="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s0.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.1"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s0.wp.com/_static/??-eJytk9FWwyAMhl9IyrpV7S48PguUFNmgcAhY+/bS0s26earH7Y6EfPnTv4T2jjS2C9AFaiJxOkrVIe1dYw1BozQMF1HRID7QBca1lV+g9YIJpFJbzvRV7ULCg2YBBHEWw0W0hml1BKQHCI41RzJFV+WnWhlTyMHLdOOB1sWm2FAelRbj0BPOPfMDxTBo+EObiVqos8HGQKRX4r8tPAuqk/gL3katCaoABIQagdkOWm7K+nn3tK9oBz1OHWcBofD0a0ZLc5q8K+jvrtIwbyOCvpOG82BUNGd03ZrGzqOUxXaXfm+eaE6Sm23N5unUNH9d7n+ZXXuw49NLeeNYGCtMkmKgwaSyNaxXQkJajFQyn0mAj3VkWlPOk4GI5GRjeEtaqyuVqHGavEyT4LdMRhXtbFCJxvPhtoWZr1pvfzAiD01d5GmWrlWLV/BqXsrHer+tq6qsDp9D18UU?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<link crossorigin="anonymous" rel='stylesheet' id='confit-font-muli-css'  href='https://fonts.googleapis.com/css?family=Muli:300,400,300italic,400italic' media='all' />
+<link crossorigin="anonymous" rel='stylesheet' id='confit-font-enriqueta-css'  href='https://fonts.googleapis.com/css?family=Enriqueta:400,700&#038;subset=latin,latin-ext' media='all' />
+<link rel='stylesheet' id='all-css-4-1' href='https://s0.wp.com/_static/??-eJyNjEESwiAMRS8kZqq1rhzPQjHF2ECYEga9veiqbtTd//l5D2oyTqJiVNArBsyQygjtNJECRQdZH4ymJidh63LewIoIxSQunmKGShePmgFLW2UmNGwrKIbEVpv1rflHMFmHYzMYprmF+2/SoxgWZ5UkfhQzsaXlG7rgyOJb9NC+VvUFncOpO+yOw77v+uH2BApZb20=?cssminify=yes' type='text/css' media='all' />
+<link rel='stylesheet' id='print-css-5-1' href='https://s0.wp.com/wp-content/mu-plugins/global-print/global-print.css?m=1465851035h&cssminify=yes' type='text/css' media='print' />
+<link rel='stylesheet' id='all-css-6-1' href='https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?m=1560469195h&cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-8-1' href='https://s0.wp.com/_static/??-eJxti0EKgCAQAD+ULWGJHaK3mJgaqyut0fejQ4eo0zAwA2cRlnJ1uUI6RMHDx8xQiKtY0cQdOJg9Zv+wtcwN/F9MNhoUSJ7e8plqcMkxhB480mLwDuY0dYMepVJaqu0CZXY33g==?cssminify=yes' type='text/css' media='all' />
+<script>
+var related_posts_js_options = {"post_heading":"h4"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJx9jMEOwjAMQ3+IruzABgfEt4wtVKmatDSNpv39ggSXHZAsWbae7dfikOekC4iPprdC3b7WRTn5f4AjDHVq0BHyD54zN+D2YSk/MYFTgToF6+zolY8cqStJA7L4CsnOFleytEOy1YPu/WXsb+dxGK5xB1+BRFU='></script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://cafaitgenre.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s0.wp.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='Le &laquo;&nbsp;Slut Shaming&nbsp;&raquo;' href='https://cafaitgenre.org/2013/07/09/le-slut-shaming/' />
+<link rel='next' title='Arguments anti-féministes (1) &laquo;&nbsp;Les féministes d&rsquo;aujourd&rsquo;hui&#8230;&nbsp;&raquo;' href='https://cafaitgenre.org/2013/08/22/arguments-anti-feministes-1-les-feministes-daujourdhui/' />
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/" />
+<link rel='shortlink' href='https://wp.me/p1PMcJ-yD' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fcafaitgenre.org%2F2013%2F07%2F15%2Fle-male-gaze-regard-masculin%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fcafaitgenre.org%2F2013%2F07%2F15%2Fle-male-gaze-regard-masculin%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Le &laquo;&nbsp;male gaze&nbsp;&raquo; (regard masculin)" />
+<meta property="og:url" content="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/" />
+<meta property="og:description" content="Après l&rsquo;article de Thomas la semaine dernière sur le &laquo;&nbsp;slut-shaming&nbsp;&raquo;, on continue avec les concepts féministes difficilement traduisibles. To gaze signifie en effet &amp;la…" />
+<meta property="article:published_time" content="2013-07-15T16:13:14+00:00" />
+<meta property="article:modified_time" content="2014-06-25T08:12:29+00:00" />
+<meta property="og:site_name" content="Genre !" />
+<meta property="og:image" content="https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_franc3a7ais.jpg?w=610" />
+<meta property="og:image:width" content="610" />
+<meta property="og:image:height" content="549" />
+<meta property="og:image:alt" content="Cliquer pour voir en plus grand" />
+<meta property="og:locale" content="fr_FR" />
+<meta name="twitter:creator" content="@A_C_Husson" />
+<meta name="twitter:site" content="@A_C_Husson" />
+<meta name="twitter:text:title" content="Le &laquo;&nbsp;male gaze&nbsp;&raquo; (regard masculin)" />
+<meta name="twitter:image" content="https://cafaitgenre.files.wordpress.com/2013/07/rear-window.jpg?w=640" />
+<meta name="twitter:image:alt" content="rear window" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://s0.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="icon" type="image/x-icon" href="https://s0.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="apple-touch-icon" href="https://s0.wp.com/i/webclip.png" />
+<link rel='openid.server' href='https://cafaitgenre.org/?openidserver=1' />
+<link rel='openid.delegate' href='https://cafaitgenre.org/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://cafaitgenre.org/osd.xml" title="Genre !" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<meta name="theme-color" content="#d31900" />
+		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="Genre !" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Je m&#039;interroge, tu t&#039;interroges, interrogez-vous" /><meta name="msapplication-task" content="name=Souscrire;action-uri=https://cafaitgenre.org/feed/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Inscrivez-vous pour créer un blog gratuitement;action-uri=http://wordpress.com/signup/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Assistance WordPress.com;action-uri=http://support.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Forums WordPress.com;action-uri=http://forums.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="description" content="Après l&#039;article de Thomas la semaine dernière sur le &quot;slut-shaming&quot;, on continue avec les concepts féministes difficilement traduisibles. To gaze signifie en effet &quot;regarder fixement&quot;, &quot;contempler&quot;; on peut le traduire par &quot;regard masculin&quot;, que j&#039;emploierai alternativement avec l&#039;expression anglaise. Issu de la critique cinématographique, ce concept est devenu central dans le vocabulaire du féminisme anglophone.&hellip;" />
+<style type="text/css" id="custom-background-css">
+	body.custom-background { background-color: #d31900; background-image: url('https://cafaitgenre.files.wordpress.com/2016/01/wallpaper_group-p4m-5.jpg'); background-repeat: repeat; background-position: top right; background-attachment: scroll; }
+	</style>
+		<script type="text/javascript">
+
+			window.doNotSellCallback = function() {
+
+				var linkElements = [
+					'a[href="https://wordpress.com/?ref=footer_blog"]',
+					'a[href="https://wordpress.com/?ref=footer_website"]',
+					'a[href="https://wordpress.com/?ref=vertical_footer"]',
+					'a[href^="https://wordpress.com/?ref=footer_segment_"]',
+				].join(',');
+
+				var dnsLink = document.createElement( 'a' );
+				dnsLink.href = 'https://wordpress.com/advertising-program-optout';
+				dnsLink.classList.add( 'do-not-sell-link' );
+				dnsLink.rel = 'nofollow';
+				dnsLink.style.marginLeft = '0.5em';
+				dnsLink.textContent = 'Ne pas vendre mes informations personnelles.';
+
+				var creditLinks = document.querySelectorAll( linkElements );
+
+				if ( 0 === creditLinks.length ) {
+					return false;
+				}
+
+				Array.prototype.forEach.call( creditLinks, function( el ) {
+					el.insertAdjacentElement( 'afterend', dnsLink );
+				});
+
+				return true;
+			};
+
+		</script>
+				<script type="text/javascript">
+		function __ATA_CC() {var v = document.cookie.match('(^|;) ?personalized-ads-consent=([^;]*)(;|$)');return v ? 1 : 0;}
+		var __ATA_PP = { pt: 1, ht: 0, tn: 'confit', amp: false, siteid: 8982, blogid: 27116365, consent: __ATA_CC() };
+		var __ATA = __ATA || {};
+		__ATA.cmd = __ATA.cmd || [];
+		__ATA.criteo = __ATA.criteo || {};
+		__ATA.criteo.cmd = __ATA.criteo.cmd || [];
+		</script>
+		<script type="text/javascript">
+		(function(){var g=Date.now||function(){return+new Date};function h(a,b){a:{for(var c=a.length,d="string"==typeof a?a.split(""):a,e=0;e<c;e++)if(e in d&&b.call(void 0,d[e],e,a)){b=e;break a}b=-1}return 0>b?null:"string"==typeof a?a.charAt(b):a[b]};function k(a,b,c){c=null!=c?"="+encodeURIComponent(String(c)):"";if(b+=c){c=a.indexOf("#");0>c&&(c=a.length);var d=a.indexOf("?");if(0>d||d>c){d=c;var e=""}else e=a.substring(d+1,c);a=[a.substr(0,d),e,a.substr(c)];c=a[1];a[1]=b?c?c+"&"+b:b:c;a=a[0]+(a[1]?"?"+a[1]:"")+a[2]}return a};var l=0;function m(a,b){var c=document.createElement("script");c.src=a;c.onload=function(){b&&b(void 0)};c.onerror=function(){b("error")};a=document.getElementsByTagName("head");var d;a&&0!==a.length?d=a[0]:d=document.documentElement;d.appendChild(c)}function n(a){var b=void 0===b?document.cookie:b;return(b=h(b.split("; "),function(c){return-1!=c.indexOf(a+"=")}))?b.split("=")[1]:""}function p(a){return"string"==typeof a&&0<a.length}
+		function r(a,b,c){b=void 0===b?"":b;c=void 0===c?".":c;var d=[];Object.keys(a).forEach(function(e){var f=a[e],q=typeof f;"object"==q&&null!=f||"function"==q?d.push(r(f,b+e+c)):null!==f&&void 0!==f&&(e=encodeURIComponent(b+e),d.push(e+"="+encodeURIComponent(f)))});return d.filter(p).join("&")}function t(a,b){a||((window.__ATA||{}).config=b.c,m(b.url))}var u=Math.floor(1E13*Math.random()),v=window.__ATA||{};window.__ATA=v;v.rid=u;v.createdAt=g();var w=window.__ATA||{},x="s.pubmine.com";
+		w&&w.serverDomain&&(x=w.serverDomain);var y="//"+x+"/conf",z=window.top===window,A=window.__ATA_PP&&window.__ATA_PP.gdpr_applies,B="boolean"===typeof A?Number(A):null,C=window.__ATA_PP||null,D=z?document.referrer?document.referrer:null:null,E=z?window.location.href:document.referrer?document.referrer:null,F,G=n("__ATA_tuuid");F=G?G:null;var H=window.innerWidth+"x"+window.innerHeight,I=n("usprivacy"),J=r({gdpr:B,pp:C,rid:u,src:D,ref:E,tuuid:F,vp:H,us_privacy:I?I:null},"",".");
+		(function(a){var b=void 0===b?"cb":b;l++;var c="callback__"+g().toString(36)+"_"+l.toString(36);a=k(a,b,c);window[c]=function(d){t(void 0,d)};m(a,function(d){d&&t(d)})})(y+"?"+J);}).call(this);
+		</script><link rel="amphtml" href="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/amp/"><script type="text/javascript">
+	window.google_analytics_uacct = "UA-52447-2";
+</script>
+
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-52447-2']);
+	_gaq.push(['_gat._anonymizeIp']);
+	_gaq.push(['_setDomainName', 'none']);
+	_gaq.push(['_setAllowLinker', true]);
+	_gaq.push(['_initData']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	})();
+</script>
+</head>
+
+<body class="post-template-default single single-post postid-2147 single-format-standard custom-background customizer-styles-applied group-blog highlander-enabled highlander-light">
+
+<div id="wrapper">
+	<div id="page" class="hfeed site">
+				<header id="masthead" class="site-header" role="banner">
+
+			
+			<a href="https://cafaitgenre.org/" class="site-logo-link" rel="home" itemprop="url"></a>
+			<hgroup>
+				<h1 class="site-title"><a href="https://cafaitgenre.org/" title="Genre !" rel="home">Genre !</a></h1>
+				<h2 class="site-description">Je m&#039;interroge, tu t&#039;interroges, interrogez-vous</h2>
+			</hgroup>
+
+			<nav role="navigation" class="site-navigation main-navigation">
+				<h1 class="assistive-text">Navigation</h1>
+				<div class="assistive-text skip-link"><a href="#content" title="Aller au contenu principal">Aller au contenu principal</a></div>
+
+				<div class="menu-menu-custom-container"><ul id="menu-menu-custom" class="menu"><li id="menu-item-2332" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2332"><a href="https://cafaitgenre.org/genre/">Genre?</a></li>
+<li id="menu-item-2635" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2635"><a href="https://cafaitgenre.org/des-questions/">Des questions?</a></li>
+<li id="menu-item-2333" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-2333"><a href="https://cafaitgenre.org/ressources-2/">Ressources</a>
+<ul class="sub-menu">
+	<li id="menu-item-2341" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2341"><a href="https://cafaitgenre.org/ressources-2/feminisme/">Féminisme</a></li>
+	<li id="menu-item-2340" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2340"><a href="https://cafaitgenre.org/ressources-2/sur-la-notion-meme-de-genre/">Sur la notion de &laquo; genre &raquo;</a></li>
+</ul>
+</li>
+<li id="menu-item-2339" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2339"><a href="https://cafaitgenre.org/moderation/">Modération</a></li>
+<li id="menu-item-2908" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2908"><a href="https://cafaitgenre.org/medias-et-publications/">Médias, publications, vidéos</a></li>
+<li id="menu-item-2963" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2963"><a href="https://cafaitgenre.org/lexique/">Lexique</a></li>
+</ul></div>			</nav><!-- .site-navigation .main-navigation -->
+		</header><!-- #masthead .site-header -->
+
+		<div id="main" class="site-main">
+
+		<div id="primary" class="content-area">
+			<div id="content" class="site-content" role="main">
+
+			
+					<nav role="navigation" id="nav-above" class="site-navigation post-navigation">
+		<h1 class="assistive-text">Navigation des articles</h1>
+
+	
+		<div class="nav-previous"><a href="https://cafaitgenre.org/2013/07/09/le-slut-shaming/" rel="prev"><span class="meta-nav">&larr;</span> Le &laquo;&nbsp;Slut Shaming&nbsp;&raquo;</a></div>		<div class="nav-next"><a href="https://cafaitgenre.org/2013/08/22/arguments-anti-feministes-1-les-feministes-daujourdhui/" rel="next">Arguments anti-féministes (1) &laquo;&nbsp;Les féministes d&rsquo;aujourd&rsquo;hui&#8230;&nbsp;&raquo; <span class="meta-nav">&rarr;</span></a></div>
+	
+	</nav><!-- #nav-above -->
+	
+				
+<article id="post-2147" class="post-2147 post type-post status-publish format-standard hentry category-concepts-feministes tag-bandes-dessinees tag-cinema tag-comics tag-feminisme-2 tag-jeux-video tag-male-gaze tag-publicite">
+	<header class="entry-header">
+		<h1 class="entry-title">Le &laquo;&nbsp;male gaze&nbsp;&raquo; (regard masculin)</h1>
+
+		<div class="entry-meta">
+		Publié le <a href="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/" title="6:13  " rel="bookmark"><time class="entry-date" datetime="2013-07-15T18:13:14+02:00" pubdate>15/07/2013</time></a><span class="byline"> par <span class="author vcard"><a class="url fn n" href="https://cafaitgenre.org/author/cafaitgenre/" title="Voir tous les articles par Genre!" rel="author">Genre!</a></span></span>		</div><!-- .entry-meta -->
+	</header><!-- .entry-header -->
+
+	<div class="entry-content">
+		<p>Après l&rsquo;article de Thomas la semaine dernière sur le <a href="https://cafaitgenre.org/2013/07/09/le-slut-shaming/">&laquo;&nbsp;slut-shaming&nbsp;&raquo;</a>, on continue avec les concepts féministes difficilement traduisibles. <em>To gaze</em> signifie en effet &laquo;&nbsp;regarder fixement&nbsp;&raquo;, &laquo;&nbsp;contempler&nbsp;&raquo;; on peut le traduire par &laquo;&nbsp;regard masculin&nbsp;&raquo;, que j&#8217;emploierai alternativement avec l&rsquo;expression anglaise. </p>
+<p>Issu de la critique cinématographique, ce concept est devenu central dans le vocabulaire du féminisme anglophone. Le &laquo;&nbsp;male gaze&nbsp;&raquo; peut en effet être étudié au cinéma, mais aussi dans d&rsquo;autres domaines de la culture visuelle (BD, publicité, jeux vidéo&#8230;). Selon moi, on peut aussi l&rsquo;étendre à l&rsquo;expérience quotidienne, celle d&rsquo;un regard omniprésent, un regard qui est aussi jugement et auquel on ne peut pas échapper. </p>
+<p><span id="more-2147"></span></p>
+<p><strong>Origines du concept: Laura Mulvey, &laquo;&nbsp;Visual pleasure and Narrative cinema&nbsp;&raquo;</strong></p>
+<p>En 1975, la critique de cinéma Laura Mulvey forge et définit le concept dans un article intitulé <a href="http://www.lignes-de-fuite.net/IMG/_article_PDF/article_173.pdf">&laquo;&nbsp;Plaisir visuel et cinéma narratif&nbsp;&raquo;</a>. Cet article a exercé une très grande influence sur les études cinématographiques. Elle utilise le cadre de la psychanalyse freudienne et lacanienne (analyse du rôle joué par le regard dans le <a href="http://fr.wikipedia.org/wiki/Stade_du_miroir">stade du miroir</a>) dans une perspective féministe et polémique. Je ne reprendrai ici que ce qui concerne le concept lui-même et ce qu&rsquo;il apporte à la théorie féministe. </p>
+<p>Mulvey distingue trois types de regards: celui de la caméra sur les acteurs et actrices, celui du public regardant le produit final, et celui des personnages se regardant les uns les autres au sein du film. Pour renforcer l&rsquo;illusion cinématographique et réduire autant que possible la distance du public avec le film (il faut faire en sorte que le public oublie qu&rsquo;il regarde un film), le cinéma narratif (qui raconte une histoire) efface les deux premiers regards au profit du 3ème. Le résultat est qu&rsquo;on voit le film à travers les yeux des personnages, mais pas n&rsquo;importe lesquels: dans l&rsquo;écrasante majorité des cas, il s&rsquo;agit du regard du héros masculin. Dans cette configuration, Mulvey décrit les personnages masculins comme actifs, par opposition aux personnages féminins passifs, regardés. Le rôle traditionnel du personnage féminin est donc double: elle est objet érotique pour le personnage et pour le spectateur masculins. Les spectatrices se voient en outre dans l&rsquo;obligation d&rsquo;adopter, elles aussi, le &laquo;&nbsp;male gaze&nbsp;&raquo;, le regard masculin. </p>
+<p>Melvey analyse notamment des films de Hitchcock, fasciné comme on sait par le voyeurisme (dans ses films comme dans la vie). Je trouve cette image, tirée de <em>Fenêtre sur cour</em>, film dans lequel le regard est évidemment central, particulièrement éclairante. </p>
+<p><a href="https://cafaitgenre.files.wordpress.com/2013/07/rear-window.jpg"><img data-attachment-id="2152" data-permalink="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/rear-window/#main" data-orig-file="https://cafaitgenre.files.wordpress.com/2013/07/rear-window.jpg" data-orig-size="396,327" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="rear window" data-image-description="" data-medium-file="https://cafaitgenre.files.wordpress.com/2013/07/rear-window.jpg?w=300" data-large-file="https://cafaitgenre.files.wordpress.com/2013/07/rear-window.jpg?w=396" src="https://cafaitgenre.files.wordpress.com/2013/07/rear-window.jpg?w=558" alt="rear window"   class="aligncenter size-full wp-image-2152" srcset="https://cafaitgenre.files.wordpress.com/2013/07/rear-window.jpg 396w, https://cafaitgenre.files.wordpress.com/2013/07/rear-window.jpg?w=150 150w, https://cafaitgenre.files.wordpress.com/2013/07/rear-window.jpg?w=300 300w" sizes="(max-width: 396px) 100vw, 396px" /></a></p>
+<p>Au premier plan, Grace Kelly (Lisa Fremont) est allongée dans une attitude faussement nonchalante, consciente du regard de James Stewart (L.B. &laquo;&nbsp;Jeff&nbsp;&raquo; Jefferies) sur elle alors qu&rsquo;elle lui tourne le dos. Le regard du spectateur n&rsquo;épouse pas exactement celui du personnage masculin, puisqu&rsquo;il la regarde de face alors que Jeff la regarde de dos; mais elle est offerte aux deux, qui fonctionnent de manière complémentaire, l&#8217;embrassant dans un regard unique et omnipotent. On peut lire <a href="http://www.liannespiderbaby.com/2010/11/lisa-freemont-laura-mulvey-rear-window.html">ici</a> une analyse du &laquo;&nbsp;male gaze&nbsp;&raquo; dans ce film, en anglais. </p>
+<p>Cela n&rsquo;est évidemment pas valable que pour le cinéma. Mulvey voit dans ce dispositif un avatar du rôle traditionnel de la femme dans les représentations artistiques, à la fois exhibée et regardée, passive, pour le plaisir du regard masculin.<br />
+<a href="https://cafaitgenre.files.wordpress.com/2013/07/cabanel_la_naissance_de_venus_1863.jpg"><img data-attachment-id="2150" data-permalink="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/cabanel_la_naissance_de_venus_1863/#main" data-orig-file="https://cafaitgenre.files.wordpress.com/2013/07/cabanel_la_naissance_de_venus_1863.jpg" data-orig-size="700,408" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;2.8&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;E5000&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;1030094620&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;7.1&quot;,&quot;iso&quot;:&quot;100&quot;,&quot;shutter_speed&quot;:&quot;0.11363636363636&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="cabanel_la_naissance_de_venus_1863" data-image-description="" data-medium-file="https://cafaitgenre.files.wordpress.com/2013/07/cabanel_la_naissance_de_venus_1863.jpg?w=300" data-large-file="https://cafaitgenre.files.wordpress.com/2013/07/cabanel_la_naissance_de_venus_1863.jpg?w=558" src="https://cafaitgenre.files.wordpress.com/2013/07/cabanel_la_naissance_de_venus_1863.jpg?w=558&#038;h=325" alt="cabanel_la_naissance_de_venus_1863"   class="aligncenter size-large wp-image-2150" srcset="https://cafaitgenre.files.wordpress.com/2013/07/cabanel_la_naissance_de_venus_1863.jpg?w=558&amp;h=325 558w, https://cafaitgenre.files.wordpress.com/2013/07/cabanel_la_naissance_de_venus_1863.jpg?w=150&amp;h=87 150w, https://cafaitgenre.files.wordpress.com/2013/07/cabanel_la_naissance_de_venus_1863.jpg?w=300&amp;h=175 300w, https://cafaitgenre.files.wordpress.com/2013/07/cabanel_la_naissance_de_venus_1863.jpg 700w" sizes="(max-width: 558px) 100vw, 558px" /></a></p>
+<p>Cette situation provoque une asymmétrie de pouvoir: </p>
+<ul>
+<em>le pouvoir du protagoniste masculin contrôlant les événements coincide avec le pouvoir actif du regard érotique, tous deux procurant une impression satisfaisante d&rsquo;omnipotence. Les caractéristiques glamour d&rsquo;un acteur star ne sont pas celles de l&rsquo;objet érotique du regard</em> (&laquo;&nbsp;gaze&nbsp;&raquo;)<em>, mais celle de l&rsquo;ego idéal plus parfait, plus complet, plus puissant conçu dans le moment originel de reconnaissance en face du miroir</em> [référence à la <a href="http://fr.wikipedia.org/wiki/Stade_du_miroir">théorie lacanienne</a> mentionnée ci-dessus].</ul>
+<p>La femme fonctionne comme icône, et peut être en tant que telle montrée fragmentée (gros plans sur des parties de son corps), alors que la figure masculine active a besoin d&rsquo;un espace en trois dimensions pour se réaliser et pour provoquer un phénomène de reconnaissance et d&rsquo;identification de la part du spectateur. </p>
+<p>On voit donc que ce concept est un outil majeur pour l&rsquo;analyse des représentations du féminin et du masculin et la mise en évidence des asymmétries qui les sous-tendent. Avant de montrer en quoi il s&rsquo;applique à d&rsquo;autres domaines de la culture visuelle, il faut signaler que ce &laquo;&nbsp;male gaze&nbsp;&raquo; est aussi la plupart du temps un regard hétérosexuel et blanc. </p>
+<p><strong>The white, male, heterosexual gaze</strong></p>
+<p>Cette vidéo montre très bien que le &laquo;&nbsp;regard masculin&nbsp;&raquo; est aussi, quasi automatiquement, un regard hétérosexuel. L&rsquo;argument est résumé d&rsquo;entrée: &laquo;&nbsp;because most films are made by heterosexual men, they are shot from the perspective of a straight man and force that perspective on the audience&nbsp;&raquo; (parce que la plupart des films sont faits par des hommes hétérosexuels, ils sont tournés selon la perspective d&rsquo;un homme straight et obligent les spectateurs/trices à adopter cette perspective). On nous force, en d&rsquo;autre termes, à voir le film (ou n&rsquo;importe quoi d&rsquo;autre) du point de vue d&rsquo;un homme hétéro, ce qui contribue à ériger ce point de vue comme la norme et à rendre invisibles les types de sexualités et de rôles de genre qui ne rentrent pas dans ce schéma regardants &#8211; regardées. </p>
+<p>La vidéo n&rsquo;est malheureusement pas traduite mais les images parlent d&rsquo;elles-mêmes. </p>
+<span class="embed-youtube" style="text-align:center; display: block;"><iframe class='youtube-player' width='560' height='315' src='https://www.youtube.com/embed/2_4aDJV_gjU?version=3&#038;rel=1&#038;fs=1&#038;autohide=2&#038;showsearch=0&#038;showinfo=1&#038;iv_load_policy=1&#038;wmode=transparent' allowfullscreen='true' style='border:0;'></iframe></span>
+<p>Les exemples illustrent la dimension &laquo;&nbsp;iconique&nbsp;&raquo; évoquée plus haut, qui autorise à fragmenter l&rsquo;image pour se concentrer sur des parties de corps féminins. Nous sommes complètement habitué-e-s à cette manière de filmer le corps féminin (gros plans, caméra remontant des chevilles au visage&#8230;); pourtant, cela met en danger l&rsquo;illusion cinématographique, avec comme seul objectif le plaisir du spectateur masculin hétérosexuel. </p>
+<p>Selon l&rsquo;auteur de la vidéo, certains plans sur des corps masculins (on remarquera qu&rsquo;ils sont alors traités comme les corps féminins &laquo;&nbsp;iconiques&nbsp;&raquo;, c&rsquo;est-à-dire fragmentés) sont de toute évidence destinés à un public féminin et gay (le public lesbien pouvant, selon lui, trouver son compte dans le &laquo;&nbsp;male gaze&nbsp;&raquo;, ce qui me semble discutable). Mais ces scènes sont destinées soit à un public très spécifique, soit, dans des films visant un public hétéro, à présenter le personnage masculin comme un modèle. Ces plans ne viseraient pas à objectifier les personnages en question mais à les présenter aux spectateurs masculins hétéro comme une version idéalisée d&rsquo;eux-mêmes &#8212; ce qui est aussi l&rsquo;argument de Laura Mulvey quand elle parle de &laquo;&nbsp;l’ego idéal plus parfait, plus complet, plus puissant&nbsp;&raquo; . Il fait remarquer que ces plans sont souvent statiques, vus de loin, et montrent presque l&rsquo;intégralité du corps, par opposition aux gros plans en ralenti sur des parties de corps féminins (à partir de 3&rsquo;36). Ce sont là &laquo;&nbsp;des images de force et de pouvoir&nbsp;&raquo;, et il ajoute: &laquo;&nbsp;les hommes hétéros retirent de ces images quelque chose de différent que, par exemple&#8230; moi&nbsp;&raquo;. </p>
+<p>Une autre théoricienne féministe du cinéma, E. Ann Kaplan, a proposé quant à elle le concept de &laquo;&nbsp;imperial gaze&nbsp;&raquo; dans une perspective post-colonialiste. Elle s&rsquo;appuie sur le concept de &laquo;&nbsp;male gaze&nbsp;&raquo; pour mettre en évidence d&rsquo;autres rapports de pouvoir à l&rsquo;oeuvre dans le regard, par lequel les observé&middot;e&middot;s se trouvent défini&middot;e&middot;s en fonction des valeurs et des préférences des observateurs/trices privilégiée&middot;e&middot;s. L'&nbsp;&raquo;imperial gaze&nbsp;&raquo; reflète l&rsquo;hypothèse selon laquelle le sujet occidental blanc est central, tout comme le &laquo;&nbsp;male gaze&nbsp;&raquo; implique la centralité du sujet masculin. </p>
+<p><strong>Male gaze et culture visuelle</strong></p>
+<p>Le concept est devenu central dans la théorie féministe et les &laquo;&nbsp;media studies&nbsp;&raquo;. J&rsquo;en donnerai juste quelques exemples. </p>
+<p><em>Jeux vidéo</em></p>
+<p>Dans un article publié sur ce blog, <a href="https://cafaitgenre.org/2012/06/01/genre-et-jeu-video-1-pour-le-plaisir-des-yeux-masculins/">&laquo;&nbsp;Pour le plaisir des yeux masculins&nbsp;&raquo;</a>, Mar_Lard analyse (brillamment comme toujours) la façon dont le &laquo;&nbsp;male gaze&nbsp;&raquo; fonctionne dans les jeux vidéo, même si elle n&#8217;emploie pas le concept lui-même. Elle cite par exemple le créateur du personnage de Lara Croft, Toby Gard: « Si le joueur va regarder un cul pendant des heures et des heures, autant que ce soit un joli cul.» Il s&rsquo;agit en effet d&rsquo;un jeu d&rsquo;aventure à la 3ème personne, où la perspective du joueur (ou de la joueuse, mais cela ne compte visiblement pas pour T. Gard) ressemble à ça:<br />
+<a href="https://cafaitgenre.files.wordpress.com/2013/07/lara.jpg"><img data-attachment-id="2154" data-permalink="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/lara/#main" data-orig-file="https://cafaitgenre.files.wordpress.com/2013/07/lara.jpg" data-orig-size="500,311" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="lara" data-image-description="" data-medium-file="https://cafaitgenre.files.wordpress.com/2013/07/lara.jpg?w=300" data-large-file="https://cafaitgenre.files.wordpress.com/2013/07/lara.jpg?w=500" src="https://cafaitgenre.files.wordpress.com/2013/07/lara.jpg?w=558" alt="lara"   class="aligncenter size-full wp-image-2154" srcset="https://cafaitgenre.files.wordpress.com/2013/07/lara.jpg 500w, https://cafaitgenre.files.wordpress.com/2013/07/lara.jpg?w=150 150w, https://cafaitgenre.files.wordpress.com/2013/07/lara.jpg?w=300 300w" sizes="(max-width: 500px) 100vw, 500px" /></a></p>
+<p>On ne peut évidemment pas analyser un jeu vidéo comme un film, mais on peut remarquer que ce jeu vidéo comme de multiples autres présuppose un regard masculin. Dans Lara Croft, ce regard est porté sur le personnage principal, qu&rsquo;on ne saurait accuser d&rsquo;être passive; mais le plus souvent, la fonction principale des personnages féminins dans les jeux vidéo est, comme le dit Mar_Lard, la satisfaction des &laquo;&nbsp;yeux masculins&nbsp;&raquo;. </p>
+<p><em>Bande dessinée et comics</em></p>
+<p>Les exemples sont innombrables. Dans cet <a href="http://girl-wonder.org/girlsreadcomics/?p=13">article</a>, par exemple, Karen Healey parle (&laquo;&nbsp;éxécute&nbsp;&raquo; serait plus juste, et c&rsquo;est joussif) de <em>All Star Batman And Robin, the Boy Wonder</em> de Frank Miller. Elle évoque notamment cette image que j&rsquo;aime particulièrement, puisqu&rsquo;elle représente le derrière parlant de Vicki Vale (et non le derrière de Vicki Vale parlant, la nuance est importante). </p>
+<p><a href="https://cafaitgenre.files.wordpress.com/2013/07/vickis-talking-butt.jpg"><img data-attachment-id="2173" data-permalink="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/vickis-talking-butt/#main" data-orig-file="https://cafaitgenre.files.wordpress.com/2013/07/vickis-talking-butt.jpg" data-orig-size="620,270" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Vicki&amp;rsquo;s talking butt" data-image-description="" data-medium-file="https://cafaitgenre.files.wordpress.com/2013/07/vickis-talking-butt.jpg?w=300" data-large-file="https://cafaitgenre.files.wordpress.com/2013/07/vickis-talking-butt.jpg?w=558" src="https://cafaitgenre.files.wordpress.com/2013/07/vickis-talking-butt.jpg?w=558&#038;h=242" alt="Vicki&#039;s talking butt"   class="aligncenter size-large wp-image-2173" srcset="https://cafaitgenre.files.wordpress.com/2013/07/vickis-talking-butt.jpg?w=556&amp;h=242 556w, https://cafaitgenre.files.wordpress.com/2013/07/vickis-talking-butt.jpg?w=150&amp;h=65 150w, https://cafaitgenre.files.wordpress.com/2013/07/vickis-talking-butt.jpg?w=300&amp;h=131 300w, https://cafaitgenre.files.wordpress.com/2013/07/vickis-talking-butt.jpg 620w" sizes="(max-width: 558px) 100vw, 558px" /></a></p>
+<p>On a également droit aux instructions de Miller au dessinateur Jim Lee: </p>
+<div data-shortcode="caption" id="attachment_2174" style="width: 310px" class="wp-caption aligncenter"><a href="https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_1.jpg"><img aria-describedby="caption-attachment-2174" data-attachment-id="2174" data-permalink="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/batman_instructions_1/#main" data-orig-file="https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_1.jpg" data-orig-size="562,154" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Batman_instructions_1" data-image-description="" data-medium-file="https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_1.jpg?w=300" data-large-file="https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_1.jpg?w=558" src="https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_1.jpg?w=300&#038;h=82" alt="Vicki continue. Elle penche la tête, secoue les cheveux. Détaille son SOUTIEN-GORGE. Ca va les rendre dingues, Jim. " width="300" height="82" class="size-medium wp-image-2174" srcset="https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_1.jpg?w=300&amp;h=82 300w, https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_1.jpg?w=150&amp;h=41 150w, https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_1.jpg 562w" sizes="(max-width: 300px) 100vw, 300px" /></a><p id="caption-attachment-2174" class="wp-caption-text">Vicki continue. Elle penche la tête, secoue les cheveux. Détaille son SOUTIEN-GORGE. Ca va les rendre dingues, Jim.</p></div>
+<div data-shortcode="caption" id="attachment_2175" style="width: 310px" class="wp-caption aligncenter"><a href="https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_2.jpg"><img aria-describedby="caption-attachment-2175" data-attachment-id="2175" data-permalink="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/batman_instructions_2/#main" data-orig-file="https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_2.jpg" data-orig-size="568,80" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Batman_instructions_2" data-image-description="" data-medium-file="https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_2.jpg?w=300" data-large-file="https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_2.jpg?w=558" src="https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_2.jpg?w=300&#038;h=42" alt="Plan sur son corps - haut des cuisses. Donne-nous un angle encore meilleur sur la poupée. De face. Marchant droit sur nous. Elle sait ce qu&#039;elle vaut. Fais-les baver. " width="300" height="42" class="size-medium wp-image-2175" srcset="https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_2.jpg?w=300&amp;h=42 300w, https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_2.jpg?w=150&amp;h=21 150w, https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_2.jpg 568w" sizes="(max-width: 300px) 100vw, 300px" /></a><p id="caption-attachment-2175" class="wp-caption-text">Plan sur son corps &#8211; haut des cuisses. Donne-nous un angle encore meilleur sur la poupée. De face. Marchant droit sur nous. Elle sait ce qu&rsquo;elle vaut. Fais-les baver.</p></div>
+<div data-shortcode="caption" id="attachment_2176" style="width: 310px" class="wp-caption aligncenter"><a href="https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_3.jpg"><img aria-describedby="caption-attachment-2176" data-attachment-id="2176" data-permalink="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/batman_instructions_3/#main" data-orig-file="https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_3.jpg" data-orig-size="566,110" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Batman_instructions_3" data-image-description="" data-medium-file="https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_3.jpg?w=300" data-large-file="https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_3.jpg?w=558" src="https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_3.jpg?w=300&#038;h=58" alt="OK, Jim, je n&#039;ai peur de rien. Faisons un PLAN SUR SON CUL. Détails de sa culotte. Ballons vus du dessus. Elle marche, comme toujours elle n&#039;arrête pas de bouger. On ne peut pas cesser de la regarder. Surtout qu&#039;elle a un cul magnifique. " width="300" height="58" class="size-medium wp-image-2176" srcset="https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_3.jpg?w=300&amp;h=58 300w, https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_3.jpg?w=150&amp;h=29 150w, https://cafaitgenre.files.wordpress.com/2013/07/batman_instructions_3.jpg 566w" sizes="(max-width: 300px) 100vw, 300px" /></a><p id="caption-attachment-2176" class="wp-caption-text">OK, Jim, je n&rsquo;ai peur de rien. Faisons un PLAN SUR SON CUL. Détails de sa culotte. Ballons vus du dessus. Elle marche, comme toujours elle n&rsquo;arrête pas de bouger. On ne peut pas cesser de la regarder. Surtout qu&rsquo;elle a un cul magnifique.</p></div>
+<p>Dans cette scène, Vicki est seule et se parle à elle-même. La scène est donc purement destinée à satisfaire le public masculin. Les instructions sont sans ambiguïté. &laquo;&nbsp;It&rsquo;ll drive them crazy&nbsp;&raquo; (ça va les rendre fous); &laquo;&nbsp;Walking right at us&nbsp;&raquo; (marchant droit sur nous), &laquo;&nbsp;Make them drool&nbsp;&raquo; (fais-les baver), &laquo;&nbsp;We can&rsquo;t take our eyes off her&nbsp;&raquo; (on ne peut pas cesser de la regarder): ce qui est désigné tantôt par &laquo;&nbsp;ils&nbsp;&raquo;, tantôt par &laquo;&nbsp;nous&nbsp;&raquo;, c&rsquo;est un public exclusivement mâle et hétérosexuel. Du pur <a href="http://fr.wikipedia.org/wiki/Fan_service">fan service</a> au profit du &laquo;&nbsp;male gaze&nbsp;&raquo;. </p>
+<p><em>Publicité</em></p>
+<p>J&rsquo;ai publié il y a plus d&rsquo;un an ici-même une série d&rsquo;articles intitulée <a href="https://cafaitgenre.org/?s=malaise+dans+la+pub">&laquo;&nbsp;Malaise dans la pub&nbsp;&raquo;</a>, où l&rsquo;on trouvera plusieurs exemples du &laquo;&nbsp;male gaze&nbsp;&raquo;. J&rsquo;évoquais en outre la <a href="https://cafaitgenre.org/2012/02/13/malaise-dans-la-pub-3-hetero-i-presume/">présomption d&rsquo;hétérosexualité</a> qu&rsquo;on retrouve dans d&rsquo;innombrables publicités, qui pré-supposent un regard masculin hétérosexuel. Quelques exemples:</p>
+<div data-shortcode="caption" id="attachment_2156" style="width: 221px" class="wp-caption aligncenter"><a href="https://cafaitgenre.files.wordpress.com/2013/07/tom-ford.jpg"><img aria-describedby="caption-attachment-2156" data-attachment-id="2156" data-permalink="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/tom-ford/#main" data-orig-file="https://cafaitgenre.files.wordpress.com/2013/07/tom-ford.jpg" data-orig-size="423,600" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Tom Ford" data-image-description="" data-medium-file="https://cafaitgenre.files.wordpress.com/2013/07/tom-ford.jpg?w=212" data-large-file="https://cafaitgenre.files.wordpress.com/2013/07/tom-ford.jpg?w=423" src="https://cafaitgenre.files.wordpress.com/2013/07/tom-ford.jpg?w=211&#038;h=300" alt="Celle-ci a été censurée, on se demande bien pourquoi" width="211" height="300" class="size-medium wp-image-2156" srcset="https://cafaitgenre.files.wordpress.com/2013/07/tom-ford.jpg?w=211&amp;h=300 211w, https://cafaitgenre.files.wordpress.com/2013/07/tom-ford.jpg?w=422&amp;h=599 422w, https://cafaitgenre.files.wordpress.com/2013/07/tom-ford.jpg?w=106&amp;h=150 106w" sizes="(max-width: 211px) 100vw, 211px" /></a><p id="caption-attachment-2156" class="wp-caption-text">Celle-ci a été censurée, on se demande bien pourquoi</p></div>
+<p><a href="https://cafaitgenre.files.wordpress.com/2013/07/williams-pub-sexisme-inside.jpg"><img data-attachment-id="2163" data-permalink="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/williams-pub-sexisme-inside/#main" data-orig-file="https://cafaitgenre.files.wordpress.com/2013/07/williams-pub-sexisme-inside.jpg" data-orig-size="464,484" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="williams-pub-sexisme-inside" data-image-description="" data-medium-file="https://cafaitgenre.files.wordpress.com/2013/07/williams-pub-sexisme-inside.jpg?w=288" data-large-file="https://cafaitgenre.files.wordpress.com/2013/07/williams-pub-sexisme-inside.jpg?w=464" src="https://cafaitgenre.files.wordpress.com/2013/07/williams-pub-sexisme-inside.jpg?w=287&#038;h=300" alt="williams-pub-sexisme-inside" width="287" height="300" class="aligncenter size-medium wp-image-2163" srcset="https://cafaitgenre.files.wordpress.com/2013/07/williams-pub-sexisme-inside.jpg?w=287&amp;h=300 287w, https://cafaitgenre.files.wordpress.com/2013/07/williams-pub-sexisme-inside.jpg?w=144&amp;h=150 144w, https://cafaitgenre.files.wordpress.com/2013/07/williams-pub-sexisme-inside.jpg 464w" sizes="(max-width: 287px) 100vw, 287px" /></a></p>
+<div data-shortcode="caption" id="attachment_2157" style="width: 295px" class="wp-caption aligncenter"><a href="https://cafaitgenre.files.wordpress.com/2013/07/digital.jpg"><img aria-describedby="caption-attachment-2157" data-attachment-id="2157" data-permalink="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/digital/#main" data-orig-file="https://cafaitgenre.files.wordpress.com/2013/07/digital.jpg" data-orig-size="285,180" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Digital" data-image-description="" data-medium-file="https://cafaitgenre.files.wordpress.com/2013/07/digital.jpg?w=285" data-large-file="https://cafaitgenre.files.wordpress.com/2013/07/digital.jpg?w=285" src="https://cafaitgenre.files.wordpress.com/2013/07/digital.jpg?w=558" alt="Publicité pour Digital, marque d&#039;électroménager (oui oui)"   class="size-full wp-image-2157" srcset="https://cafaitgenre.files.wordpress.com/2013/07/digital.jpg 285w, https://cafaitgenre.files.wordpress.com/2013/07/digital.jpg?w=150 150w" sizes="(max-width: 285px) 100vw, 285px" /></a><p id="caption-attachment-2157" class="wp-caption-text">Publicité pour Digital, marque d&rsquo;électroménager (oui oui)</p></div>
+<p><a href="https://cafaitgenre.files.wordpress.com/2013/07/lynx.jpg"><img data-attachment-id="2160" data-permalink="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/lynx/#main" data-orig-file="https://cafaitgenre.files.wordpress.com/2013/07/lynx.jpg" data-orig-size="400,457" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Lynx" data-image-description="" data-medium-file="https://cafaitgenre.files.wordpress.com/2013/07/lynx.jpg?w=263" data-large-file="https://cafaitgenre.files.wordpress.com/2013/07/lynx.jpg?w=400" src="https://cafaitgenre.files.wordpress.com/2013/07/lynx.jpg?w=558" alt="Lynx"   class="aligncenter size-full wp-image-2160" srcset="https://cafaitgenre.files.wordpress.com/2013/07/lynx.jpg 400w, https://cafaitgenre.files.wordpress.com/2013/07/lynx.jpg?w=131 131w, https://cafaitgenre.files.wordpress.com/2013/07/lynx.jpg?w=263 263w" sizes="(max-width: 400px) 100vw, 400px" /></a></p>
+<p><a href="https://cafaitgenre.files.wordpress.com/2013/07/la-foire-de-paris-pub-sexiste_96.jpg"><img data-attachment-id="2159" data-permalink="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/la-foire-de-paris-pub-sexiste_96/#main" data-orig-file="https://cafaitgenre.files.wordpress.com/2013/07/la-foire-de-paris-pub-sexiste_96.jpg" data-orig-size="400,273" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="la-foire-de-paris-pub-sexiste_96" data-image-description="" data-medium-file="https://cafaitgenre.files.wordpress.com/2013/07/la-foire-de-paris-pub-sexiste_96.jpg?w=300" data-large-file="https://cafaitgenre.files.wordpress.com/2013/07/la-foire-de-paris-pub-sexiste_96.jpg?w=400" src="https://cafaitgenre.files.wordpress.com/2013/07/la-foire-de-paris-pub-sexiste_96.jpg?w=558&#038;h=381" alt="la-foire-de-paris-pub-sexiste_96"   class="aligncenter size-large wp-image-2159" srcset="https://cafaitgenre.files.wordpress.com/2013/07/la-foire-de-paris-pub-sexiste_96.jpg 400w, https://cafaitgenre.files.wordpress.com/2013/07/la-foire-de-paris-pub-sexiste_96.jpg?w=150&amp;h=102 150w, https://cafaitgenre.files.wordpress.com/2013/07/la-foire-de-paris-pub-sexiste_96.jpg?w=300&amp;h=205 300w" sizes="(max-width: 400px) 100vw, 400px" /></a></p>
+<p><a href="https://cafaitgenre.files.wordpress.com/2013/07/virgin.jpg"><img data-attachment-id="2162" data-permalink="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/virgin/#main" data-orig-file="https://cafaitgenre.files.wordpress.com/2013/07/virgin.jpg" data-orig-size="220,177" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Virgin" data-image-description="" data-medium-file="https://cafaitgenre.files.wordpress.com/2013/07/virgin.jpg?w=220" data-large-file="https://cafaitgenre.files.wordpress.com/2013/07/virgin.jpg?w=220" src="https://cafaitgenre.files.wordpress.com/2013/07/virgin.jpg?w=558" alt="Virgin"   class="aligncenter size-full wp-image-2162" srcset="https://cafaitgenre.files.wordpress.com/2013/07/virgin.jpg 220w, https://cafaitgenre.files.wordpress.com/2013/07/virgin.jpg?w=150 150w" sizes="(max-width: 220px) 100vw, 220px" /></a></p>
+<p><a href="https://cafaitgenre.files.wordpress.com/2013/07/evan-rachel-wood-gucci-guilty-perfume-ad-campaign.jpg"><img data-attachment-id="2166" data-permalink="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/evan-rachel-wood-gucci-guilty-perfume-ad-campaign/#main" data-orig-file="https://cafaitgenre.files.wordpress.com/2013/07/evan-rachel-wood-gucci-guilty-perfume-ad-campaign.jpg" data-orig-size="470,311" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="evan-rachel-wood-gucci-guilty-perfume-ad-campaign" data-image-description="" data-medium-file="https://cafaitgenre.files.wordpress.com/2013/07/evan-rachel-wood-gucci-guilty-perfume-ad-campaign.jpg?w=300" data-large-file="https://cafaitgenre.files.wordpress.com/2013/07/evan-rachel-wood-gucci-guilty-perfume-ad-campaign.jpg?w=470" src="https://cafaitgenre.files.wordpress.com/2013/07/evan-rachel-wood-gucci-guilty-perfume-ad-campaign.jpg?w=558" alt="evan-rachel-wood-gucci-guilty-perfume-ad-campaign"   class="aligncenter size-full wp-image-2166" srcset="https://cafaitgenre.files.wordpress.com/2013/07/evan-rachel-wood-gucci-guilty-perfume-ad-campaign.jpg 470w, https://cafaitgenre.files.wordpress.com/2013/07/evan-rachel-wood-gucci-guilty-perfume-ad-campaign.jpg?w=150 150w, https://cafaitgenre.files.wordpress.com/2013/07/evan-rachel-wood-gucci-guilty-perfume-ad-campaign.jpg?w=300 300w" sizes="(max-width: 470px) 100vw, 470px" /></a></p>
+<p>Les exemples ci-dessus (sept parmi des millions; pour d&rsquo;autres exemples, vous pouvez faire un tour sur mon <a href="http://cafaitgenre.tumblr.com/">tumblr</a>) illustrent deux types de représentation extrêmement répandus. Le premier, dont j&rsquo;ai déjà parlé à propos du cinéma, est la fragmentation: femmes sans tête, déshumanisées, de purs objets de contemplation pour le plaisir du &laquo;&nbsp;male gaze&nbsp;&raquo;. Le second est plus subtil mais non moins répandu. Avez-vous remarqué le regard de ces femmes? Elles vous regardent, souvent droit dans les yeux. Elles savent que vous les regardez, elles aiment ça et elles en jouent. </p>
+<p>Dans <em>Gender Advertisements</em>, Erving Goffman fait remarquer que dans les publicités, les femmes posent souvent avec la tête inclinée, dans une attitude qu&rsquo;on peut lire, selon lui, comme &laquo;&nbsp;une acceptation de la subordination, une expression d&rsquo;intégration, de soumission et d&rsquo;apaisement&nbsp;&raquo;. Cette attitude est souvent combinée avec un doigt posé sur la bouche (avec signification sexuelle claire, cf. la pub Foire de Paris) ou sur le visage dans une attitude enfantine. </p>
+<p><img src="https://i0.wp.com/www.uvm.edu/~tstreete/powerpose/cant2.jpg" width="800" height="450" class="aligncenter" /><br />
+<img src="https://i0.wp.com/www.uvm.edu/~tstreete/powerpose/cant3.jpg" width="800" height="450" class="aligncenter" /></p>
+<p>Si vous n&rsquo;êtes pas convaincu-e du caractère étrange de ces poses, et du fait qu&rsquo;elles connotent la soumission, imaginez des hommes à la place (à partir de 2&rsquo;50). </p>
+<span class="embed-youtube" style="text-align:center; display: block;"><iframe class='youtube-player' width='560' height='315' src='https://www.youtube.com/embed/HaB2b1w52yE?version=3&#038;rel=1&#038;fs=1&#038;autohide=2&#038;showsearch=0&#038;showinfo=1&#038;iv_load_policy=1&#038;wmode=transparent' allowfullscreen='true' style='border:0;'></iframe></span>
+<p>Les exemples ci-dessus sont donnés dans un <a href="http://www.uvm.edu/~tstreete/powerpose/index.html">&laquo;&nbsp;web-essay&nbsp;&raquo;</a> très intéressant, qui souligne qu&rsquo;elles sont tirées pour la plupart de magazines féminins &#8212; et destinées, donc, à des regards féminins. Alors comment peut-on expliquer ces attitudes, ces poses? Même si ces publicités sont destinées à des femmes, nous sommes appelées à nous identifier à la personne regardée (le mannequin) et à un spectateur masculin hétérosexuel. Nous voulons <em>être</em> cette femme parce que les hommes veulent <em>avoir</em> cette femme. </p>
+<p>Les auteurs font remarquer que dans ces publicités, on fait poser les mannequins de manière à montrer non seulement qu&rsquo;elles savent qu&rsquo;on les regarde, mais qu&rsquo;elles contrôlent ce regard. Ces attitudes en apparence enfantines ou soumises sont donc présentées comme stratégiques: le vrai succès, le vrai pouvoir résiderait dans le fait d&rsquo;attirer et de contrôler le regard. En d&rsquo;autres termes, le pouvoir pour les femmes passe par le contrôle qu&rsquo;elles exercent sur le regard masculin. Même quand il est absent, même quand il n&rsquo;est pas le premier destinataire, il est toujours sous-entendu, impossible de lui échapper. </p>
+<p>Comme l&rsquo;écrit John Berger dans <em>Ways of seeing</em>: &laquo;&nbsp;Les hommes &lsquo;agissent&rsquo; et les femmes &lsquo;apparaissent&rsquo;. Les femmes se voient étant vues.&nbsp;&raquo; Les femmes ont l&rsquo;habitude de se voir à travers les yeux d&rsquo;un homme, réel ou non, parce que le spectateur idéal est toujours, implicitement, masculin. </p>
+<p><strong>L&rsquo;expérience permanente de &laquo;&nbsp;se voir vue&nbsp;&raquo;</strong></p>
+<p>Cette analyse ne vaut pas seulement pour les produits de la culture visuelle. C&rsquo;est une expérience que vivent en permanence les femmes, même si elles en ont plus ou moins conscience.</p>
+<p>Dans le <em>Deuxième sexe</em>, Simone de Beauvoir évoque une anecdote que lui a racontée une femme: </p>
+<ul>
+<em>A 13 ans je me promenais, jambes nues, en robe courte. Un homme a fait en ricanant une réflexion sur mes gros mollets. Le lendemain, maman m&rsquo;a fait porter des bas et allonger ma jupe: mais je n&rsquo;oublierai jamais le choc ressenti soudain à me voir vue.</em></ul>
+<p>Si vous êtes une femme, pensez à la première fois où vous avez pris conscience du &laquo;&nbsp;male gaze&nbsp;&raquo;, et du fait que cela ne s&rsquo;arrêterait plus. Pensez à la première fois qu&rsquo;on vous a klaxonnée dans la rue, qu&rsquo;on vous a crié &laquo;&nbsp;Eh Mademoiselle&nbsp;&raquo; pour vous demander numéro de téléphone, sourire ou fellation. </p>
+<p>Rien ne permet d&rsquo;échapper au &laquo;&nbsp;male gaze&nbsp;&raquo;, qui est aussi, toujours, un jugement. Vous êtes une grande athlète? Oui, mais si vous êtes moche, vous ne méritez sans doute pas de gagner. </p>
+<div data-shortcode="caption" id="attachment_2169" style="width: 568px" class="wp-caption aligncenter"><a href="https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_anglais.png"><img aria-describedby="caption-attachment-2169" data-attachment-id="2169" data-permalink="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/twitter_bartoli_anglais/#main" data-orig-file="https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_anglais.png" data-orig-size="1023,747" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="twitter_Bartoli_anglais" data-image-description="" data-medium-file="https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_anglais.png?w=300" data-large-file="https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_anglais.png?w=558" src="https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_anglais.png?w=558&#038;h=407" alt="Cliquer pour voir en plus grand"   class="size-large wp-image-2169" srcset="https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_anglais.png?w=558&amp;h=407 558w, https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_anglais.png?w=150&amp;h=110 150w, https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_anglais.png?w=300&amp;h=219 300w, https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_anglais.png?w=768&amp;h=561 768w, https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_anglais.png 1023w" sizes="(max-width: 558px) 100vw, 558px" /></a><p id="caption-attachment-2169" class="wp-caption-text">Cliquer pour voir en plus grand</p></div>
+<div data-shortcode="caption" id="attachment_2170" style="width: 568px" class="wp-caption aligncenter"><a href="https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_franc3a7ais.jpg"><img aria-describedby="caption-attachment-2170" data-attachment-id="2170" data-permalink="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/twitter_bartoli_francais/#main" data-orig-file="https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_franc3a7ais.jpg" data-orig-size="1000,900" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="twitter_Bartoli_français" data-image-description="" data-medium-file="https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_franc3a7ais.jpg?w=300" data-large-file="https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_franc3a7ais.jpg?w=558" src="https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_franc3a7ais.jpg?w=558&#038;h=502" alt="Cliquer pour voir en plus grand"   class="size-large wp-image-2170" srcset="https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_franc3a7ais.jpg?w=558&amp;h=502 558w, https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_franc3a7ais.jpg?w=150&amp;h=135 150w, https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_franc3a7ais.jpg?w=300&amp;h=270 300w, https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_franc3a7ais.jpg?w=768&amp;h=691 768w, https://cafaitgenre.files.wordpress.com/2013/07/twitter_bartoli_franc3a7ais.jpg 1000w" sizes="(max-width: 558px) 100vw, 558px" /></a><p id="caption-attachment-2170" class="wp-caption-text">Cliquer pour voir en plus grand</p></div>
+<p>Tous ces tweets ont été écrits par des hommes, ce qui ne veut pas dire que des femmes ne peuvent pas tenir des propos similaires. Au contraire: l&rsquo;un des aspects les plus pernicieux du &laquo;&nbsp;male gaze&nbsp;&raquo; est qu&rsquo;il devient naturel, omniprésent, nous l&rsquo;intégrons comme le nôtre et nous jugeons entre femmes en fonction de cela. On en revient à l&rsquo;analyse de Laura Mulvey: le point de vue masculin est implicite mais omniprésent. </p>
+<p>Dans un chapitre consacré au mariage, Simone de Beauvoir écrit que, socialement, &laquo;&nbsp;l&rsquo;homme est un individu autonome et complet&nbsp;&raquo;, par opposition aux femmes (ainsi, par le mariage, la femme passe traditionnellement du contrôle du père à celui du mari, ce qui est toujours perceptible aujourd&rsquo;hui à travers le changement de nom). Les femmes ne sont pas des individus autonomes et complets: elles n&rsquo;existent que par et pour le regard masculin. D&rsquo;où, notamment, le phénomène d&rsquo;invisibilisation des lesbiennes (élément majeur de la <a href="http://feminismes.net/post/2012/11/19/%E2%80%9CCa-va-parce-que-%C3%A7a-me-fait-bander%E2%80%9D-petit-pr%C3%A9cis-de-lesbophobie">lesbophobie</a>) : une femme n&rsquo;existant pas pour le regard masculin n&rsquo;existe tout simplement pas &#8212; à moins, bien sûr, que le lesbianisme ne soit qu&rsquo;une manière d&rsquo;attirer l&rsquo;attention des hommes, idée ô combien répandue. Quand je vous dis qu&rsquo;on ne peut pas y échapper. </p>
+<p><a href="https://twitter.com/A_C_Husson">AC Husson</a></p>
+<p style="text-align:center;">&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8211;</p>
+<p><strong>Pour aller plus loin</strong></p>
+<p><a href="http://finallyfeminism101.wordpress.com/2007/08/26/faq-what-is-the-%E2%80%9Cmale-gaze%E2%80%9D/">&laquo;&nbsp;What is the male gaze&nbsp;&raquo;</a> sur le (très utile) site d&rsquo;introduction au féminisme Feminism 101.<br />
+<a href="http://www.aber.ac.uk/media/Documents/gaze/gaze09.html">&laquo;&nbsp;Notes on &lsquo;The Gaze'&nbsp;&raquo;</a>, par Daniel Chandler.<br />
+<a href="http://www.ltcconline.net/lukas/gender/pages/gaze.htm">&laquo;&nbsp;The Male Gaze&nbsp;&raquo;</a> sur The Gender Ads Project.<br />
+John Berger, 1972, <em>Ways of Seeing</em>, British Broadcasting Corporation and Penguin Books.<br />
+Erving Goffman, 1979, <em>Gender Advertisements</em>, MacMillian (traduction française partielle ici: <a href="http://terrain.revues.org/1767">&laquo;&nbsp;Le déploiement du genre&nbsp;&raquo;</a>).<br />
+Erving Goffman, 1977, &laquo;&nbsp;La ritualisation de la féminité&nbsp;&raquo;, dans <em>Actes de la recherche en sciences sociales</em>, vol. 14, avril 1977, pp. 34-50 (extrait de <em>Gender Advertisements</em>).<br />
+Laura Mulvey, 1975, &laquo;&nbsp;Visual Pleasure and Narrative Cinema&nbsp;&raquo;, <em>Screen</em>, vol. 16 (3), pp. 6-18. Disponible <a href="http://terpconnect.umd.edu/~mquillig/20050131mulvey.pdf">en ligne</a>.<br />
+Laura Mulvey, &laquo;&nbsp;Repenser &lsquo;Plaisir visuel et Cinéma narratif&rsquo; à l&rsquo;ère des<br />
+changements de technologie&nbsp;&raquo;, trad. française dans Lignes de fuite, <a href="http://www.lignes-de-fuite.net/IMG/_article_PDF/article_173.pdf">en ligne</a>.<br />
+Thomas Streeter, Nicole Hintlian, Samantha Chipetz et Susanna Callender, <a href="http://www.uvm.edu/~tstreete/powerpose/index.html">&laquo;&nbsp;This is not sex. A Web Essay on the Male Gaze, Fashion Advertising, and the Pose&nbsp;&raquo;</a>. </p>
+<div id="atatags-370373-5ec0a59792b30">
+        <script type="text/javascript">
+            __ATA.cmd.push(function() {
+                __ATA.initVideoSlot('atatags-370373-5ec0a59792b30', {
+                    sectionId: '370373',
+                    format: 'inread'
+                });
+            });
+        </script>
+    </div>			<div id="atatags-26942-5ec0a59792c2e"></div>
+			
+			<script>
+				__ATA.cmd.push(function() {
+					__ATA.initDynamicSlot({
+						id: 'atatags-26942-5ec0a59792c2e',
+						location: 120,
+						formFactor: '001',
+						label: {
+							text: 'Publicités',
+						},
+						creative: {
+							reportAd: {
+								text: 'Report this Ad',
+							},
+							privacySettings: {
+								text: 'Paramètres de confidentialité',
+							}
+						}
+					});
+				});
+			</script><div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Partager ceci:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-2147" class="share-twitter sd-button share-icon" href="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/?share=twitter" target="_blank" title="Cliquez pour partager sur Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-2147" class="share-facebook sd-button share-icon" href="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/?share=facebook" target="_blank" title="Cliquez pour partager sur Facebook"><span>Facebook</span></a></li><li class="share-email"><a rel="nofollow noopener noreferrer" data-shared="" class="share-email sd-button share-icon" href="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/?share=email" target="_blank" title="Cliquez pour envoyer par e-mail à un ami"><span>E-mail</span></a></li><li class="share-tumblr"><a rel="nofollow noopener noreferrer" data-shared="" class="share-tumblr sd-button share-icon" href="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/?share=tumblr" target="_blank" title="Cliquez pour partager sur Tumblr"><span>Tumblr</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-27116365-2147-5ec0a59795f7a' data-src='//widgets.wp.com/likes/index.html?ver=20190321#blog_id=27116365&amp;post_id=2147&amp;origin=cafaitgenre.wordpress.com&amp;obj_id=27116365-2147-5ec0a59795f7a&amp;domain=cafaitgenre.org' data-name='like-post-frame-27116365-2147-5ec0a59795f7a'><h3 class='sd-title'>WordPress:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>J&#039;aime</span></span> <span class="loading">chargement&hellip;</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div>
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	<h3 class="jp-relatedposts-headline"><em>Articles similaires</em></h3>
+</div></div>			</div><!-- .entry-content -->
+
+	<footer class="entry-meta">
+		
+		Cette entrée, publiée dans <a href="https://cafaitgenre.org/category/matiere-a-reflechir-des-cles-pour-comprendre/concepts-feministes/" rel="category tag">Concepts féministes</a>, est taguée <a href="https://cafaitgenre.org/tag/bandes-dessinees/" rel="tag">bandes dessinées</a>, <a href="https://cafaitgenre.org/tag/cinema/" rel="tag">cinéma</a>, <a href="https://cafaitgenre.org/tag/comics/" rel="tag">comics</a>, <a href="https://cafaitgenre.org/tag/feminisme-2/" rel="tag">féminisme</a>, <a href="https://cafaitgenre.org/tag/jeux-video/" rel="tag">jeux vidéo</a>, <a href="https://cafaitgenre.org/tag/male-gaze/" rel="tag">male gaze</a>, <a href="https://cafaitgenre.org/tag/publicite/" rel="tag">publicité</a>. Bookmarquez ce <a href="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/" title="Permalien vers Le &laquo;&nbsp;male gaze&nbsp;&raquo; (regard masculin)" rel="bookmark">permalien</a>.
+			</footer><!-- .entry-meta -->
+</article><!-- #post-2147 -->
+
+					<nav role="navigation" id="nav-below" class="site-navigation post-navigation">
+		<h1 class="assistive-text">Navigation des articles</h1>
+
+	
+		<div class="nav-previous"><a href="https://cafaitgenre.org/2013/07/09/le-slut-shaming/" rel="prev"><span class="meta-nav">&larr;</span> Le &laquo;&nbsp;Slut Shaming&nbsp;&raquo;</a></div>		<div class="nav-next"><a href="https://cafaitgenre.org/2013/08/22/arguments-anti-feministes-1-les-feministes-daujourdhui/" rel="next">Arguments anti-féministes (1) &laquo;&nbsp;Les féministes d&rsquo;aujourd&rsquo;hui&#8230;&nbsp;&raquo; <span class="meta-nav">&rarr;</span></a></div>
+	
+	</nav><!-- #nav-below -->
+	
+				
+
+	<div id="comments" class="comments-area">
+
+	
+			<h2 class="comments-title">
+			98 r&eacute;flexions sur &ldquo;<span>Le &laquo;&nbsp;male gaze&nbsp;&raquo; (regard masculin)</span>&rdquo;		</h2>
+
+		<ol class="commentlist">
+				<li class="post pingback">
+		<p>Pingback:  <a href='http://www.pearltrees.com/estellebayon/feminisme-cinema/id14187312/item145288093' rel='external nofollow ugc' class='url'>Féminisme et cinéma | Pearltrees</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='http://www.pearltrees.com/etiennecepj/feminisme-jeux-videos/id13600411/item145895031' rel='external nofollow ugc' class='url'>Féminisme et jeux vidéos | Pearltrees</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='https://cafaitgenre.org/2015/06/01/petit-lexique-du-genre-presentation-du-projet/' rel='external nofollow ugc' class='url'>Petit lexique du genre: présentation du projet | Genre !</a></p>
+	</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-11425">
+		<article id="comment-11425" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://2.gravatar.com/avatar/eb75945cf0faa6c23dad9f76294c56f2?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn">ScamPs</cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/comment-page-2/#comment-11425"><time pubdate datetime="2015-10-20T19:41:50+02:00">
+					20/10/2015 à 7:41  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/?replytocom=11425#respond' data-commentid="11425" data-postid="2147" data-belowelement="comment-11425" data-respondelement="respond" aria-label='Répondre à ScamPs'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>Extrêmement intéressant. Merci pour cet article. Pour le coup, je suis un homme et ca me pose plein de questions sur mon propre regard en tant qu&rsquo;être mais aussi en tant que producteur d&rsquo;image (je suis photographe). C&rsquo;est dommage que ce sujet soit (pour l&rsquo;instant, je pense et d&rsquo;après vos référence dans &laquo;&nbsp;pour aller plus loin&nbsp;&raquo;) majoritairement traité en anglais.<br />
+Et petite parenthèse, je ne pensait pas qu&rsquo;autant de violence verbal était possible contre une sportive de haut niveau juste a cause de son physique.*je vais vomir je reviens* Et pour le coup, absolument personne n&rsquo;irait critiquer même de façon moins violente, les attributs d&rsquo;un sportif de haut niveau.</p>
+<p id="comment-like-11425" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/?like_comment=11425&#038;_wpnonce=0d91234ed0" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-11425" class="comment-like-feedback">Aimé par <a href="#" class="view-likers" data-like-count="1">1 personne</a></span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='http://www.pearltrees.com/organon/psychologie-psychology/id14309138/item160424560' rel='external nofollow ugc' class='url'>Psychologie Psychology | Pearltrees</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='https://womenandfictionblog.wordpress.com/2016/02/12/pour-la-reconnaissance-dun-genre-litteraire-dont-certains-sobstinent-a-nier-lexistence-le-chef-doeuvre-sexiste/' rel='external nofollow ugc' class='url'>Pour la reconnaissance d&rsquo;un genre littéraire dont certains s&rsquo;obstinent à nier l&rsquo;existence: le chef d&rsquo;oeuvre sexiste | Women &amp; Fiction</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='http://marsam.graphics/jessica-jones-femme-forte/' rel='external nofollow ugc' class='url'>Jessica Jones, femme forte &#8211; MARSAM</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='http://www.scoop.it/t/suivi-d-infos/p/4065675133/2016/06/26/le-male-gaze-regard-masculin' rel='external nofollow ugc' class='url'>Le &laquo;&nbsp;male gaze&nbsp;&raquo; (regard ...</a></p>
+	</li><!-- #comment-## -->
+	<li class="comment odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-11939">
+		<article id="comment-11939" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://2.gravatar.com/avatar/522eb6f99d3717ca2d8ca3c625edf3dd?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn">Catherine</cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/comment-page-2/#comment-11939"><time pubdate datetime="2016-09-08T09:16:39+02:00">
+					08/09/2016 à 9:16  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/?replytocom=11939#respond' data-commentid="11939" data-postid="2147" data-belowelement="comment-11939" data-respondelement="respond" aria-label='Répondre à Catherine'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p><a href="https://www.youtube.com/watch?v=4fJJiwAGRK8" rel="nofollow ugc">https://www.youtube.com/watch?v=4fJJiwAGRK8</a>  C&rsquo;est moi ou l&rsquo;auteur nie la fausse équivalence et le male gaze dans les comics, ici? D&rsquo;autant que ce tweet laisse à penser qu&rsquo;il n&rsquo;a rie ncontre le &laquo;&nbsp;male gaze &nbsp;&raquo; en fait&#8230;. <a href="http://nsa37.casimages.com/img/2016/09/07//16090711563269417.jpg" rel="nofollow ugc">http://nsa37.casimages.com/img/2016/09/07//16090711563269417.jpg</a></p>
+<p id="comment-like-11939" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/?like_comment=11939&#038;_wpnonce=6eef45cb73" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-11939" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='http://emmaclit.com/2016/09/28/le-regard-masculin/' rel='external nofollow ugc' class='url'>Le regard masculin | Emma</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='http://imagesociale.fr/3139' rel='external nofollow ugc' class='url'>Imposer le regard masculin &#8211; L&#039;image sociale</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='https://bingebitchin.wordpress.com/2017/04/25/first-blog-post/' rel='external nofollow ugc' class='url'>La femme fatale est un alien &#8211; Binge Bitchin</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='https://www.gazettedesfemmes.ca/14178/sois-belle-et-tais-toi-quand-le-cinema-objectifie-et-baillonne-les-femmes/' rel='external nofollow ugc' class='url'>Sois belle et tais-toi : quand le cinéma objectifie et bâillonne les femmes</a></p>
+	</li><!-- #comment-## -->
+	<li class="comment byuser comment-author-bigbangfonction4 even thread-even depth-1 highlander-comment" id="li-comment-13045">
+		<article id="comment-13045" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://1.gravatar.com/avatar/a7253703554177c54ae2f8f2953e8d0d?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn"><a href='http://gravatar.com/bigbangfonction4' rel='external nofollow ugc' class='url'>bigbangfonction4</a></cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/comment-page-2/#comment-13045"><time pubdate datetime="2018-01-07T16:17:13+01:00">
+					07/01/2018 à 4:17  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/?replytocom=13045#respond' data-commentid="13045" data-postid="2147" data-belowelement="comment-13045" data-respondelement="respond" aria-label='Répondre à bigbangfonction4'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>que dire après  avoir lu un tel article&#8230; déjà merci pour le caractère construit et claire de votre article, je vais le transmettre à plusieurs personnes pour essayer de les réveiller un peu et qu&rsquo;elles arrêtent de me dire &laquo;&nbsp;mais ça c&rsquo;est rien, y a plus grand comme lutte&nbsp;&raquo;. et ce même venant de professeur de sociologie qui ne comprennent pas qu&rsquo;on puisse s’attaquer, donc passer du temps, sur le problème que constitue les catalogues de jouets. car au final c&rsquo;est l&rsquo;accumulation des éléments qui créé un environnement sexiste. Très bon article ! super site,</p>
+<p id="comment-like-13045" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/?like_comment=13045&#038;_wpnonce=937cd77cf3" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-13045" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+		</ol><!-- .commentlist -->
+
+				<nav role="navigation" id="comment-nav-below" class="site-navigation comment-navigation">
+			<h1 class="assistive-text">Navigation des commentaires</h1>
+			<div class="nav-previous"><a href="https://cafaitgenre.org/2013/07/15/le-male-gaze-regard-masculin/comment-page-1/#comments" >&larr; Commentaires Pr&eacute;c&eacute;dents</a></div>
+			<div class="nav-next"></div>
+		</nav><!-- #comment-nav-below .site-navigation .comment-navigation -->
+		
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Votre commentaire <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2013/07/15/le-male-gaze-regard-masculin/#respond" style="display:none;">Annuler la réponse.</a></small></h3><form action="https://cafaitgenre.org/wp-comments-post.php" method="post" id="commentform" class="comment-form"><input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="647d1c6fe3" /><input type="hidden" name="_wp_http_referer" value="/2013/07/15/le-male-gaze-regard-masculin/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Entrez votre commentaire...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Entrez votre commentaire..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+	<div id="comment-form-nascar">
+		<p>Entrez vos coordonnées ci-dessous ou cliquez sur une icône pour vous connecter:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" class="nascar-signin-link"
+                   title="Connexion avec Visiteur">
+									</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" class="nascar-signin-link"
+                   title="Connexion avec WordPress.com">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" class="nascar-signin-link"
+                   title="Connexion avec Twitter">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" class="nascar-signin-link"
+                   title="Connexion avec Facebook">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg>				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">E-mail <span class="required">(obligatoire)</span> <span class="nopublish">(adresse strictement confidentielle)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Nom <span class="required">(obligatoire)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Site web</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url" value="" /></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Logo WordPress.com" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+						<p class="comment-form-posting-as pa-wordpress">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte WordPress.com.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Photo Google" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+						<p class="comment-form-posting-as pa-googleplus">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Google.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" x="0px" y="0px" viewBox="0 0 60 60" ><path fill="#519bf7" d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" /><path fill="#3db366" d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" /><path fill="#fdc600" d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" /><path fill="#f15b44" d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" /></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Image Twitter" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+						<p class="comment-form-posting-as pa-twitter">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Twitter.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Photo Facebook" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+						<p class="comment-form-posting-as pa-facebook">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Facebook.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Annuler</a></div>
+		<p>Connexion à %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Avertissez-moi par e-mail des nouveaux commentaires.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Avertissez-moi par e-mail des nouveaux articles.</label></p></div>
+
+
+
+
+<p class="form-submit"><input name="submit" type="submit" id="comment-submit" class="submit" value="Laisser un commentaire" /> <input type='hidden' name='comment_post_ID' value='2147' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="fb89d1a314" /></p>
+<input type="hidden" name="genseq" value="1589683607" />
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="228"/></p></form>	</div><!-- #respond -->
+	<div style="clear: both"></div>
+</div><!-- #comments .comments-area -->
+
+			
+			</div><!-- #content .site-content -->
+		</div><!-- #primary .content-area -->
+
+
+		</div><!-- #main .site-main -->
+
+		
+		<div id="secondary" class="widget-area" role="complementary">
+						<aside id="search-3" class="widget widget_search">	<form method="get" id="searchform" action="https://cafaitgenre.org/" role="search">
+		<label for="s" class="assistive-text">Recherche</label>
+		<input type="text" class="field" name="s" value="" id="s" placeholder="Recherche &hellip;" />
+		<input type="submit" class="submit" name="submit" id="searchsubmit" value="Recherche" />
+	</form>
+</aside><aside id="media_image-3" class="widget widget_media_image"><h1 class="widget-title">Le féminisme (en 7 slogans et citations)</h1><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><div style="width: 335px" class="wp-caption alignnone"><a href="http://www.lelombard.com/albums-fiche-bd/petite-bedetheque-savoirs/feminisme-7-slogans-et-citations,3502.html"><img class="image alignnone" src="http://bdi.dlpdomain.com/album/9782803637409/couv/I325x456/petite-bedetheque-savoirs-tome-11-feminisme-7-slogans-et-citations.jpg" alt="" width="325" height="456" /></a><p class="wp-caption-text">Paru en octobre 2016 aux éditions du Lombard (cliquer sur l'image)</p></div></aside><aside id="linkcat-542119702" class="widget widget_links"><h1 class="widget-title">Revue de presse</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="https://cafaitgenre.org/2016/12/11/on-parle-de-mon-livre-sur-les-interwebz/">On parle de mon livre sur les interwebz</a></li>
+
+	</ul>
+</aside>
+<aside id="categories-3" class="widget widget_categories"><h1 class="widget-title">Genres d&rsquo;articles</h1>		<ul>
+				<li class="cat-item cat-item-241915657"><a href="https://cafaitgenre.org/category/arguments-anti-feministes/">Arguments anti-féministes</a>
+</li>
+	<li class="cat-item cat-item-245564688"><a href="https://cafaitgenre.org/category/matiere-a-reflechir-des-cles-pour-comprendre/concepts-feministes/">Concepts féministes</a>
+</li>
+	<li class="cat-item cat-item-79501"><a href="https://cafaitgenre.org/category/coups-de-gueule/">Coups de gueule</a>
+</li>
+	<li class="cat-item cat-item-384303"><a href="https://cafaitgenre.org/category/dans-ma-bibliotheque/">Dans ma bibliothèque</a>
+</li>
+	<li class="cat-item cat-item-66367270"><a href="https://cafaitgenre.org/category/le-genre-dans-lactualite/genre-et-politique/">Genre et politique</a>
+</li>
+	<li class="cat-item cat-item-158877146"><a href="https://cafaitgenre.org/category/le-genre-dans-lactualite/" title="Réactions à des sujets d&#039;actualité, regard sur l&#039;actualité du point de vue du genre">Le genre dans l&#039;actualité</a>
+</li>
+	<li class="cat-item cat-item-64278490"><a href="https://cafaitgenre.org/category/matiere-a-reflechir-des-cles-pour-comprendre/" title="Questionnements, ressources et éclairages sur les questions liées au genre, pour rester curieux et attentifs, et pour se donner les moyens de réfléchir de manière éclairée!">Matière à réfléchir / Des clés pour comprendre</a>
+</li>
+	<li class="cat-item cat-item-2773730"><a href="https://cafaitgenre.org/category/mobilisations/">Mobilisations</a>
+</li>
+	<li class="cat-item cat-item-330146390"><a href="https://cafaitgenre.org/category/dans-ma-bibliotheque/podcasts-dans-ma-bibliotheque/">Podcasts</a>
+</li>
+	<li class="cat-item cat-item-6270"><a href="https://cafaitgenre.org/category/publications/">Publications</a>
+</li>
+	<li class="cat-item cat-item-60696323"><a href="https://cafaitgenre.org/category/reflexions-feministes/">Réflexions féministes</a>
+</li>
+	<li class="cat-item cat-item-64278403"><a href="https://cafaitgenre.org/category/representations-du-genre/" title="Essai de décryptage des différents types de discours tenus sue le féminin et le masculin dans les médias (popculture, publicité...)">Représentations du genre</a>
+</li>
+	<li class="cat-item cat-item-259679739"><a href="https://cafaitgenre.org/category/matiere-a-reflechir-des-cles-pour-comprendre/slogans-expliques/">Slogans expliqués</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="https://cafaitgenre.org/category/uncategorized/">Uncategorized</a>
+</li>
+		</ul>
+			</aside>		<aside id="recent-posts-3" class="widget widget_recent_entries">		<h1 class="widget-title">Articles récents</h1>		<ul>
+											<li>
+					<a href="https://cafaitgenre.org/2017/11/09/un-livre-peut-en-cacher-un-autre/">Un livre peut en cacher un autre</a>
+									</li>
+											<li>
+					<a href="https://cafaitgenre.org/2017/10/19/realiser-que-moi-aussi/">Réaliser: &laquo;&nbsp;moi aussi&nbsp;&raquo;</a>
+									</li>
+											<li>
+					<a href="https://cafaitgenre.org/2017/05/29/travail-militant-travail-emotionnel/">Travail militant, travail émotionnel</a>
+									</li>
+											<li>
+					<a href="https://cafaitgenre.org/2017/04/21/des-urnes-et-du-papier/">Des urnes et du papier</a>
+									</li>
+											<li>
+					<a href="https://cafaitgenre.org/2017/04/07/le-genre-dans-les-discours-de-la-presidentielle/">Le genre dans les discours de la Présidentielle</a>
+									</li>
+					</ul>
+		</aside><aside id="linkcat-158883272" class="widget widget_links"><h1 class="widget-title">Liens - Autour du genre</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://allodoxia.blog.lemonde.fr/" title="Observatoire critique de la vulgarisation (de nombreux articles sur le sexe et le genre)" target="_blank">Allodoxia</a></li>
+<li><a href="http://labogenere.fr/" title="Diffuser et expliquer les études de genre (laboratoire junior auquel j&rsquo;appartiens)" target="_blank">GenERe (Genre: Epistémologie &amp; Recherches)</a></li>
+<li><a href="http://penser-le-genre-catholique.over-blog.com/" target="_blank">Penser le genre catholique</a></li>
+
+	</ul>
+</aside>
+<aside id="linkcat-67793" class="widget widget_links"><h1 class="widget-title">Liens - Féminismes</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://www.acontrario.net/" target="_blank">A Contrario</a></li>
+<li><a href="http://antisexisme.wordpress.com/" title="Lutter contre le sexisme grâce aux sciences humaines" target="_blank">Antisexisme</a></li>
+<li><a href="http://egalitariste.net/" target="_blank">Égalitariste</a></li>
+<li><a href="http://www.crepegeorgette.com/" target="_blank">Crêpe Georgette</a></li>
+<li><a href="http://dariamarx.com/" target="_blank">Daria Marx</a></li>
+<li><a href="http://www.scoop.it/t/feminisme" title="Rassemble presque quotidiennement des articles en français et en anglais sur le thème du féminisme" target="_blank">Féminisme sur Scoop.it</a></li>
+<li><a href="http://www.feministfrequency.com/" title="« Conversations with Pop Culture » – vidéos, la plupart sont traduites en français" target="_blank">Feminist Frequency</a></li>
+<li><a href="http://blog.francetvinfo.fr/ladies-and-gentlemen/" target="_blank">Ladies and Gentlemen</a></li>
+<li><a href="http://www.dechainees.fr/" target="_blank">Les déchaînées</a></li>
+<li><a href="http://lesquestionscomposent.fr/" target="_blank">Les questions composent</a></li>
+<li><a href="http://www.sexysoucis.fr/" target="_blank">Sexy souciS</a></li>
+<li><a href="http://www.toutalego.com/" target="_blank">Tout à l&#039;ego</a></li>
+
+	</ul>
+</aside>
+<aside id="linkcat-219169176" class="widget widget_links"><h1 class="widget-title">Liens - sites d'infos</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://www.slate.fr/genres" title="Le fil genre de Slate" target="_blank">Classé X ou Y (Slate)</a></li>
+<li><a href="http://www.lesnouvellesnews.fr/" title="“L’autre genre d’info”" target="_blank">Les Nouvelles News</a></li>
+<li><a href="http://rue89.nouvelobs.com/rue69" target="_blank">Rue 69</a></li>
+<li><a href="http://blogs.lexpress.fr/sexpress/" title="Mettez le doigt dans l&rsquo;engrenage du genre" target="_blank">Sexpress</a></li>
+
+	</ul>
+</aside>
+<aside id="archives-3" class="widget widget_archive"><h1 class="widget-title">Archives</h1>		<label class="screen-reader-text" for="archives-dropdown-3">Archives</label>
+		<select id="archives-dropdown-3" name="archive-dropdown">
+			
+			<option value="">Sélectionner un mois</option>
+				<option value='https://cafaitgenre.org/2017/11/'> novembre 2017 </option>
+	<option value='https://cafaitgenre.org/2017/10/'> octobre 2017 </option>
+	<option value='https://cafaitgenre.org/2017/05/'> mai 2017 </option>
+	<option value='https://cafaitgenre.org/2017/04/'> avril 2017 </option>
+	<option value='https://cafaitgenre.org/2017/02/'> février 2017 </option>
+	<option value='https://cafaitgenre.org/2016/12/'> décembre 2016 </option>
+	<option value='https://cafaitgenre.org/2016/11/'> novembre 2016 </option>
+	<option value='https://cafaitgenre.org/2016/10/'> octobre 2016 </option>
+	<option value='https://cafaitgenre.org/2016/08/'> août 2016 </option>
+	<option value='https://cafaitgenre.org/2016/06/'> juin 2016 </option>
+	<option value='https://cafaitgenre.org/2016/05/'> mai 2016 </option>
+	<option value='https://cafaitgenre.org/2016/04/'> avril 2016 </option>
+	<option value='https://cafaitgenre.org/2016/03/'> mars 2016 </option>
+	<option value='https://cafaitgenre.org/2016/02/'> février 2016 </option>
+	<option value='https://cafaitgenre.org/2016/01/'> janvier 2016 </option>
+	<option value='https://cafaitgenre.org/2015/09/'> septembre 2015 </option>
+	<option value='https://cafaitgenre.org/2015/07/'> juillet 2015 </option>
+	<option value='https://cafaitgenre.org/2015/06/'> juin 2015 </option>
+	<option value='https://cafaitgenre.org/2015/05/'> mai 2015 </option>
+	<option value='https://cafaitgenre.org/2015/04/'> avril 2015 </option>
+	<option value='https://cafaitgenre.org/2015/02/'> février 2015 </option>
+	<option value='https://cafaitgenre.org/2015/01/'> janvier 2015 </option>
+	<option value='https://cafaitgenre.org/2014/12/'> décembre 2014 </option>
+	<option value='https://cafaitgenre.org/2014/11/'> novembre 2014 </option>
+	<option value='https://cafaitgenre.org/2014/09/'> septembre 2014 </option>
+	<option value='https://cafaitgenre.org/2014/08/'> août 2014 </option>
+	<option value='https://cafaitgenre.org/2014/07/'> juillet 2014 </option>
+	<option value='https://cafaitgenre.org/2014/06/'> juin 2014 </option>
+	<option value='https://cafaitgenre.org/2014/05/'> mai 2014 </option>
+	<option value='https://cafaitgenre.org/2014/04/'> avril 2014 </option>
+	<option value='https://cafaitgenre.org/2014/03/'> mars 2014 </option>
+	<option value='https://cafaitgenre.org/2014/02/'> février 2014 </option>
+	<option value='https://cafaitgenre.org/2014/01/'> janvier 2014 </option>
+	<option value='https://cafaitgenre.org/2013/12/'> décembre 2013 </option>
+	<option value='https://cafaitgenre.org/2013/11/'> novembre 2013 </option>
+	<option value='https://cafaitgenre.org/2013/09/'> septembre 2013 </option>
+	<option value='https://cafaitgenre.org/2013/08/'> août 2013 </option>
+	<option value='https://cafaitgenre.org/2013/07/'> juillet 2013 </option>
+	<option value='https://cafaitgenre.org/2013/06/'> juin 2013 </option>
+	<option value='https://cafaitgenre.org/2013/05/'> mai 2013 </option>
+	<option value='https://cafaitgenre.org/2013/04/'> avril 2013 </option>
+	<option value='https://cafaitgenre.org/2013/03/'> mars 2013 </option>
+	<option value='https://cafaitgenre.org/2013/02/'> février 2013 </option>
+	<option value='https://cafaitgenre.org/2013/01/'> janvier 2013 </option>
+	<option value='https://cafaitgenre.org/2012/12/'> décembre 2012 </option>
+	<option value='https://cafaitgenre.org/2012/11/'> novembre 2012 </option>
+	<option value='https://cafaitgenre.org/2012/10/'> octobre 2012 </option>
+	<option value='https://cafaitgenre.org/2012/09/'> septembre 2012 </option>
+	<option value='https://cafaitgenre.org/2012/08/'> août 2012 </option>
+	<option value='https://cafaitgenre.org/2012/07/'> juillet 2012 </option>
+	<option value='https://cafaitgenre.org/2012/06/'> juin 2012 </option>
+	<option value='https://cafaitgenre.org/2012/05/'> mai 2012 </option>
+	<option value='https://cafaitgenre.org/2012/04/'> avril 2012 </option>
+	<option value='https://cafaitgenre.org/2012/03/'> mars 2012 </option>
+	<option value='https://cafaitgenre.org/2012/02/'> février 2012 </option>
+	<option value='https://cafaitgenre.org/2012/01/'> janvier 2012 </option>
+	<option value='https://cafaitgenre.org/2011/12/'> décembre 2011 </option>
+	<option value='https://cafaitgenre.org/2011/11/'> novembre 2011 </option>
+	<option value='https://cafaitgenre.org/2011/10/'> octobre 2011 </option>
+	<option value='https://cafaitgenre.org/2011/09/'> septembre 2011 </option>
+
+		</select>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+	var dropdown = document.getElementById( "archives-dropdown-3" );
+	function onSelectChange() {
+		if ( dropdown.options[ dropdown.selectedIndex ].value !== '' ) {
+			document.location.href = this.options[ this.selectedIndex ].value;
+		}
+	}
+	dropdown.onchange = onSelectChange;
+})();
+/* ]]> */
+</script>
+
+		</aside><aside id="facebook-likebox-3" class="widget widget_facebook_likebox"><h1 class="widget-title"><a href="https://www.facebook.com/cafaitgenreleblog/">Veille sur le genre et les féminismes</a></h1>		<div id="fb-root"></div>
+		<div class="fb-page" data-href="https://www.facebook.com/cafaitgenreleblog/" data-width="340"  data-height="130" data-hide-cover="false" data-show-facepile="false" data-tabs="false" data-hide-cta="false" data-small-header="false">
+		<div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/cafaitgenreleblog/"><a href="https://www.facebook.com/cafaitgenreleblog/">Veille sur le genre et les féminismes</a></blockquote></div>
+		</div>
+		</aside><aside id="text-4" class="widget widget_text"><h1 class="widget-title">S&rsquo;abonner</h1>			<div class="textwidget"><a href="http://twitter.com/a_c_husson"><img src="https://cafaitgenre.files.wordpress.com/2014/01/twitter.png" alt="twitter" width="40" height="40" class="aligncenter size-full wp-image-2359" /></a>
+<a href="https://www.facebook.com/pages/Genre/258912184140660"><img src="https://cafaitgenre.files.wordpress.com/2014/01/facebook.png" alt="facebook" width="40" height="40" class="aligncenter size-full wp-image-2358" /></a><a href="https://cafaitgenre.org/feed/"><img src="https://cafaitgenre.files.wordpress.com/2014/01/rss.png" alt="rss" width="40" height="40" class="aligncenter size-full wp-image-2360" /></a></div>
+		</aside><aside id="text-3" class="widget widget_text"><h1 class="widget-title">Conditions de partage </h1>			<div class="textwidget"><p><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0;" src="https://i1.wp.com/i.creativecommons.org/l/by-nc-nd/3.0/fr/88x31.png" class="aligncenter" /></a></p>
+</div>
+		</aside>			<div id="atatags-286348-5ec0a597a5445"></div>
+			
+			<script>
+				__ATA.cmd.push(function() {
+					__ATA.initDynamicSlot({
+						id: 'atatags-286348-5ec0a597a5445',
+						location: 140,
+						formFactor: '003',
+						label: {
+							text: 'Publicités',
+						},
+						creative: {
+							reportAd: {
+								text: 'Report this Ad',
+							},
+							privacySettings: {
+								text: 'Paramètres de confidentialité',
+							}
+						}
+					});
+				});
+			</script>		</div><!-- #secondary .widget-area -->
+
+		<footer id="colophon" class="site-footer" role="contentinfo">
+			<div class="site-info">
+								<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Propulsé par WordPress.com.</a>
+				
+							</div><!-- .site-info -->
+		</footer><!-- #colophon .site-footer -->
+	</div><!-- #page .hfeed .site -->
+</div><!-- #wrapper -->
+<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202020y'></script>
+<script>
+var WPGroHo = {"my_hash":""};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-eb75945cf0faa6c23dad9f76294c56f2">
+	</div>
+	<div class="grofile-hash-map-522eb6f99d3717ca2d8ca3c625edf3dd">
+	</div>
+	<div class="grofile-hash-map-a7253703554177c54ae2f8f2953e8d0d">
+	</div>
+	</div>
+<script>
+var HighlanderComments = {"loggingInText":"Connexion\u2026","submittingText":"Publication d\u2019un Commentaire\u2026","postCommentText":"Laisser un commentaire","connectingToText":"Connexion \u00e0 %s","commentingAsText":"%1$s: Vous commentez \u00e0 l\u2019aide de votre compte %2$s.","logoutText":"Se d\u00e9connecter","loginText":"Se connecter","connectURL":"https:\/\/cafaitgenre.wordpress.com\/public.api\/connect\/?action=request&domain=cafaitgenre.org","logoutURL":"https:\/\/cafaitgenre.wordpress.com\/wp-login.php?action=logout&_wpnonce=f37b16d984","homeURL":"https:\/\/cafaitgenre.org\/","postID":"2147","gravDefault":"identicon","enterACommentError":"Entrez un commentaire","enterEmailError":"Veuillez entrer votre adresse mail","invalidEmailError":"Adresse email invalide","enterAuthorError":"Veuillez entrer votre nom","gravatarFromEmail":"L\u2019image s\u2019affiche lorsque vous postez un commentaire. Cliquez pour personnaliser.","logInToExternalAccount":"Connectez-vous pour utiliser les informations li\u00e9es \u00e0 un de ces comptes:","change":"Changer","changeAccount":"Changer de compte","comment_registration":"","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1573483029j'></script>
+		<!-- CCPA [start] -->
+		<script type="text/javascript">
+			( function () {
+
+				var setupPrivacy = function() {
+
+					document.addEventListener( 'DOMContentLoaded', function() {
+
+						// Minimal Mozilla Cookie library
+						// https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie/Simple_document.cookie_framework
+						var cookieLib = window.cookieLib = {getItem:function(e){return e&&decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*"+encodeURIComponent(e).replace(/[\-\.\+\*]/g,"\\$&")+"\\s*\\=\\s*([^;]*).*$)|^.*$"),"$1"))||null},setItem:function(e,o,n,t,r,i){if(!e||/^(?:expires|max\-age|path|domain|secure)$/i.test(e))return!1;var c="";if(n)switch(n.constructor){case Number:c=n===1/0?"; expires=Fri, 31 Dec 9999 23:59:59 GMT":"; max-age="+n;break;case String:c="; expires="+n;break;case Date:c="; expires="+n.toUTCString()}return"rootDomain"!==r&&".rootDomain"!==r||(r=(".rootDomain"===r?".":"")+document.location.hostname.split(".").slice(-2).join(".")),document.cookie=encodeURIComponent(e)+"="+encodeURIComponent(o)+c+(r?"; domain="+r:"")+(t?"; path="+t:"")+(i?"; secure":""),!0}};
+
+						var setDefaultOptInCookie = function() {
+							var value = '1YNN';
+							var domain = '.wordpress.com' === location.hostname.slice( -14 ) ? '.rootDomain' : location.hostname;
+							cookieLib.setItem( 'usprivacy', value, 365 * 24 * 60 * 60, '/', domain );
+						};
+
+						var setCcpaAppliesCookie = function( value ) {
+							var domain = '.wordpress.com' === location.hostname.slice( -14 ) ? '.rootDomain' : location.hostname;
+							cookieLib.setItem( 'ccpa_applies', value, 24 * 60 * 60, '/', domain );
+						}
+
+						var maybeCallDoNotSellCallback = function() {
+							if ( 'function' === typeof window.doNotSellCallback ) {
+								return window.doNotSellCallback();
+							}
+
+							return false;
+						}
+
+						var usprivacyCookie = cookieLib.getItem( 'usprivacy' );
+
+						if ( null !== usprivacyCookie ) {
+							maybeCallDoNotSellCallback();
+							return;
+						}
+
+						var ccpaCookie = cookieLib.getItem( 'ccpa_applies' );
+
+						if ( null === ccpaCookie ) {
+
+							var request = new XMLHttpRequest();
+							request.open( 'GET', 'https://public-api.wordpress.com/geo/', true );
+
+							request.onreadystatechange = function () {
+								if ( 4 === this.readyState ) {
+									if ( 200 === this.status ) {
+
+										var data = JSON.parse( this.response );
+										var ccpa_applies = data['region'] && data['region'].toLowerCase() === 'california';
+
+										setCcpaAppliesCookie( ccpa_applies );
+
+										if ( ccpa_applies ) {
+											if ( maybeCallDoNotSellCallback() ) {
+												setDefaultOptInCookie();
+											}
+										}
+									} else {
+										setCcpaAppliesCookie( true );
+										if ( maybeCallDoNotSellCallback() ) {
+											setDefaultOptInCookie();
+										}
+									}
+								}
+							};
+
+							request.send();
+						} else {
+							if ( ccpaCookie === 'true' ) {
+								if ( maybeCallDoNotSellCallback() ) {
+									setDefaultOptInCookie();
+								}
+							}
+						}
+					} );
+				};
+
+				if ( window.defQueue && defQueue.isLOHP && defQueue.isLOHP === 2020 ) {
+					defQueue.items.push( setupPrivacy );
+				} else {
+					setupPrivacy();
+				}
+
+			} )();
+		</script>
+
+		<!-- CCPA [end] -->
+		
+	<div id="carousel-reblog-box">
+		<form action="#" name="carousel-reblog">
+			<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Ajoutez votre grain de sel personnel... (facultatif)"></textarea>
+			<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Publier sur</label>
+			<select name="carousel-reblog-to-blog-id" id="carousel-reblog-to-blog-id">
+						</select>
+
+			<div class="submit">
+				<span class="canceltext"><a href="#" class="cancel">Annuler</a></span>
+				<input type="submit" name="carousel-reblog-submit" class="button" id="carousel-reblog-submit" value="Reblog Article" />
+				<input type="hidden" id="carousel-reblog-blog-id" value="27116365" />
+				<input type="hidden" id="carousel-reblog-blog-url" value="https://cafaitgenre.org" />
+				<input type="hidden" id="carousel-reblog-blog-title" value="Genre !" />
+				<input type="hidden" id="carousel-reblog-post-url" value="" />
+				<input type="hidden" id="carousel-reblog-post-title" value="" />
+			</div>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="9cf7ca1c98" /><input type="hidden" name="_wp_http_referer" value="/2013/07/15/le-male-gaze-regard-masculin/" />		</form>
+
+		<div class="arrow"></div>
+	</div>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/cafaitgenre.org\/2013\/07\/15\/le-male-gaze-regard-masculin\/":2147};
+	</script>
+					<div id="sharing_email" style="display: none;">
+		<form action="/2013/07/15/le-male-gaze-regard-masculin/" method="post">
+			<label for="target_email">Envoyer à l'adresse e-mail</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Votre nom</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Votre adresse e-mail</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="Ce champ est utilisé pour la validation du formulaire et ne doit pas être changé" />
+			
+			<div
+				class="g-recaptcha"
+				data-sitekey="6LcmyE0UAAAAALID28yVNg7pFCodGaArJzHitez_"
+				data-theme="light"
+				data-type="image"
+				data-tabindex="0"></div>
+			<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?hl=fr" async></script>
+			
+			<img style="float: right; display: none" class="loading" src="https://s0.wp.com/wp-content/mu-plugins/post-flair/sharing/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Envoyer un e-mail" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel" role="button">Annuler</a>
+
+			<div class="errors errors-1" style="display: none;">
+				L'article n'a pas été envoyé - Vérifiez vos adresses e-mail&nbsp;!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				La vérification e-mail a échoué, veuillez réessayer			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Impossible de partager les articles de votre blog par e-mail.			</div>
+		</form>
+	</div>
+<div class="widget widget_eu_cookie_law_widget"><div
+	class="hide-on-button ads-active"
+	data-hide-timeout="30"
+	data-consent-expiration="180"
+	id="eu-cookie-law"
+>
+	<form method="post">
+		<input type="submit" value="Fermer et accepter" class="accept" />
+
+		Confidentialité &amp; Cookies : Ce site utilise des cookies. En continuant à utiliser ce site, vous acceptez leur utilisation.<br />
+Pour en savoir davantage, y compris comment contrôler les cookies, voir :
+		<a href="https://automattic.com/cookies" >
+			Politique relative aux cookies		</a>
+ </form>
+</div>
+</div><link rel='stylesheet' id='all-css-0-3' href='https://s0.wp.com/wp-content/mu-plugins/carousel/jetpack-carousel.css?m=1563361695h&cssminify=yes' type='text/css' media='all' />
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyFUEFSwzAM/BCOCKSQHpi+JdhqKkeR3chOCK+vC+mhwAwnabSr3ZVgicYGSSgJvILDmSzGj8rrA9xDMWgaUbXr8Q/UnzNO61Yqkplw+ZfmMcXODmZCpc9fqmM2kXNPosA0oEJZynjqxDFONzKJ5ewKeA1PmmBGcWG6QjHweiTmaiT5qX0TPmZmo5TQoKNE0m+WUD/W7evzy74BwUW/Ur5zsMPmUvpCLR/R77HZ7j2Mb/Wu3T+1TVM3/gLyqYDg'></script>
+<script type='text/javascript'>
+( 'fetch' in window ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?m=1573572739h&#038;ver=3.0.0"></scr' + 'ipt>' );( document.contains ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?m=1540208548h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?m=1585663916h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?m=1585663916h&#038;ver=3.6.4"></scr' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?m=1550600082h&#038;ver=3.0.12"></scr' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?m=1540208548h&#038;ver=2.0.2"></scr' + 'ipt>' );
+( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-url.min.7490158b.js?m=1588209800h&#038;ver=3.6.4"></scr' + 'ipt>' );
+( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-dom-rect.7e21c103.js?m=1588209800h&#038;ver=3.42.0"></scr' + 'ipt>' );
+</script>
+<script src='https://s0.wp.com/wp-includes/js/dist/vendor/lodash.min.js?m=1573572739h&#038;ver=4.17.15'></script>
+<script>
+window.lodash = _.noConflict();
+</script>
+<script>
+var comment_like_text = {"loading":"chargement\u2026"};
+</script>
+<script>
+var jpfbembed = {"appid":"249643311490","locale":"fr_FR"};
+</script>
+<script>
+var actionbardata = {"siteID":"27116365","siteName":"Genre !","siteURL":"https:\/\/cafaitgenre.org","icon":"<img alt='' src='https:\/\/s0.wp.com\/i\/logo\/wpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/confit","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fcafaitgenre.org%2F2013%2F07%2F15%2Fle-male-gaze-regard-masculin%2F&signup_flow=account&domain=cafaitgenre.org","themeURL":"https:\/\/wordpress.com\/theme\/confit\/","xhrURL":"https:\/\/cafaitgenre.org\/wp-admin\/admin-ajax.php","nonce":"08de5007a5","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"bb3655026b\" \/>","referer":"https:\/\/cafaitgenre.org\/2013\/07\/15\/le-male-gaze-regard-masculin\/","canFollow":"1","feedID":"1313951","statusMessage":"","customizeLink":"https:\/\/cafaitgenre.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fcafaitgenre.wordpress.com%2F2013%2F07%2F15%2Fle-male-gaze-regard-masculin%2F","postID":"2147","shortlink":"https:\/\/wp.me\/p1PMcJ-yD","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/cafaitgenre.org\/2147","statsLink":"https:\/\/wordpress.com\/stats\/post\/2147\/cafaitgenre.org","i18n":{"view":"Afficher le site","follow":"Suivre","following":"Abonn\u00e9","edit":"Modifier","login":"Connexion","signup":"S'inscrire","customize":"Personnaliser","report":"Signaler ce contenu","themeInfo":"Obtenir le th\u00e8me: Confit","shortlink":"Copier shortlink","copied":"Copi\u00e9","followedText":"Les nouveaux articles de ce site appara\u00eetront d\u00e9sormais dans votre <a href=\"https:\/\/wordpress.com\/\">Lecteur<\/a>","foldBar":"R\u00e9duire cette barre","unfoldBar":"\u00c9tendre cette barre","editSubs":"G\u00e9rer les abonnements","viewReader":"Voir le site dans le Lecteur","viewReadPost":"Voir l\u2019article dans le Lecteur","subscribe":"M\u2019inscrire","enterEmail":"Entrez votre adresse e-mail","followers":"Rejoignez 10&nbsp;500 autres abonn\u00e9s","alreadyUser":"Vous disposez d\u00e9j\u00e0 d\u02bcun compte WordPress ? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fcafaitgenre.org%2F2013%2F07%2F15%2Fle-male-gaze-regard-masculin%2F&signup_flow=account&domain=cafaitgenre.org\">Connectez-vous maintenant.<\/a>","stats":"Statistiques"}};
+</script>
+<script>
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"fr","ajaxurl":"https:\/\/cafaitgenre.org\/wp-admin\/admin-ajax.php","nonce":"e1e93fd6ec","display_exif":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Commentaire","post_comment":"Laisser un commentaire","write_comment":"\u00c9crire un commentaire...","loading_comments":"Chargement des commentaires\u2026","download_original":"Afficher dans sa taille r\u00e9elle <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>.","no_comment_text":"Veuillez ajouter du contenu \u00e0 votre commentaire.","no_comment_email":"Merci de renseigner une adresse e-mail.","no_comment_author":"Merci de renseigner votre nom.","comment_post_error":"Une erreur s'est produite \u00e0 la publication de votre commentaire. Veuillez nous en excuser, et r\u00e9essayer dans quelques instants.","comment_approved":"Votre commentaire a \u00e9t\u00e9 approuv\u00e9.","comment_unapproved":"Votre commentaire est en attente de validation.","camera":"Appareil photo","aperture":"Ouverture","shutter_speed":"Vitesse d'obturation","focal_length":"Focale","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/cafaitgenre.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fcafaitgenre.org%2F2013%2F07%2F15%2Fle-male-gaze-regard-masculin%2F","blog_id":"27116365","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">E-mail (requis)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Nom (requis)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Site web<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogu\u00e9","reblog_add_thoughts":"Ajoutez votre grain de sel personnel... (facultatif)","reblogging":"Reblogging...","post_reblog":"Relais d\u2019article","stats_query_args":"blog=27116365&v=wpcom&tz=2&user_id=0&subd=cafaitgenre","is_public":"1","reblog_enabled":""};
+</script>
+<script>
+var sharing_js_options = {"lang":"fr","counts":"1","is_stats_active":"1"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyVkt1uwjAMhV9oqenotnIx7VGmtHGL2/wtTuh4+6WCMkCoEldJjv05zolh8qJ1NqKN4HXqyTL0KR8bDH2OBIS62BQbaBJpBVTWFsgq/C0GfoHnYOWMCCjVcb1Cl7QWTBEFKopke3GKQLkp64/t+64CixN72Y6i0a4dGRRxhFYGlxj1SRQHwun+CpPEckvrjMmS0DQiw8CgqQGeyOMz0I2wgGRbndRtQkCvj4Uhe1897tHkVJ+anGs7ijPFRmYPMphWmplI9RgZMOWoGwmFlhNENF7LiHf6Sp0B4+wlfOe+oZMtNpkSaBpUK5RU+TGikQGM5Igh74Q7YAg0v/yiPVkhhtwJr0FtJGdn6LJ7ZDv7f6ev9eEnYTiel+I669FvnwdqcUgswlp/I7HBKLZ56k+GumBW8r3jKDotKQDvZcjTvqwZ+jKf5Vu9e62rqqyGP4vBW5E='></script>
+<script type='text/javascript'>
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-tumblr', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtumblr', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<iframe src='https://widgets.wp.com/likes/master.html?ver=20190321#ver=20190321&amp;lang=fr' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+		<div id='likes-other-gravatars'><div class="likes-text"><span>%d</span> blogueurs aiment cette page :</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+<script src="//stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'27116365','blog_tz':'2','user_lang':'fr','blog_lang':'fr','user_id':'0'}]);
+_stq.push(['view', {'blog':'27116365','v':'wpcom','tz':'2','user_id':'0','post':'2147','subd':'cafaitgenre'}]);
+_stq.push(['extra', {'crypt':'UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdWtpP0NsWnVkPS9sL0ViLndld3AyMWJHeTE5ZSxINUQvYTM1OTF4ZXlaSXdXZ3JnTW9hUHdSdVdnLmFGd01DWXpRfkl6N3d4VXdJek95SWNLaXJOay1EMFkyZCwwJTNNR196SDg3Z0cuZ35EbktQc2tuRElWeTAvSXJmcXd2X1l2L3lSQjlvUz1NPzlqLiVuUXVFX2YyZFo1XXBdOEJ8eTksRzZUL05aSFFFb3FVRmslL1NQRUldby9iNlMsTHhwUkdCbFN0MF1+Vm82bEQwXS0yLFBuM3hyRCU/RD1+YnxsQXZaNmV5WTNWfGc3fHZ1cEZxSzNkNUpkUmdiZkkuOUFHNDJTbiV5Ug=='}]);
+_stq.push([ 'clickTrackerInit', '27116365', '2147' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>
+<!--
+	generated in 0.280 seconds
+	146949 bytes batcached for 300 seconds
+-->

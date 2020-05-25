@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="fr-FR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width" />
+<link rel="profile" href="http://gmpg.org/xfn/11" />
+<link rel="pingback" href="https://cafaitgenre.org/xmlrpc.php" />
+<!--[if lt IE 9]>
+<script src="https://s0.wp.com/wp-content/themes/pub/confit/js/html5.js" type="text/javascript"></script>
+<![endif]-->
+
+<title>Dans ma bibliothèque &#8211; Simone de Beauvoir, Le Deuxième sexe &#8211; Genre !</title>
+<meta name="google-site-verification" content="-F-sUeQW8RLD_71HOMvv_OEfZz8YKxmRmZcBB-p8DqI" />
+
+<!-- Async WordPress.com Remote Login -->
+<script id="wpcom_remote_login_js">
+var wpcom_remote_login_extra_auth = '';
+function wpcom_remote_login_remove_dom_node_id( element_id ) {
+	var dom_node = document.getElementById( element_id );
+	if ( dom_node ) { dom_node.remove(); }
+}
+function wpcom_remote_login_remove_dom_node_classes( class_name ) {
+	var dom_nodes = document.querySelectorAll( '.' + class_name );
+	for ( var i = 0; i < dom_nodes.length; i++ ) {
+		dom_nodes[i].remove();
+	}
+}
+function wpcom_remote_login_final_cleanup() {
+	wpcom_remote_login_remove_dom_node_classes( "wpcom_remote_login_msg" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_validate" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_js" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_iframe" );
+	wpcom_remote_login_remove_dom_node_id( "wpcom_request_access_styles" );
+}
+
+// Watch for messages back from the remote login
+window.addEventListener( "message", function( e ) {
+	if ( e.origin === "https://r-login.wordpress.com" ) {
+		var data = {};
+		try {
+			data = JSON.parse( e.data );
+		} catch( e ) {
+			wpcom_remote_login_final_cleanup();
+			return;
+		}
+
+		if ( data.msg === 'LOGIN' ) {
+			// Clean up the login check iframe
+			wpcom_remote_login_remove_dom_node_id( "wpcom_remote_login_key" );
+
+			var id_regex = new RegExp( /^[0-9]+$/ );
+			var token_regex = new RegExp( /^.*|.*|.*$/ );
+			if (
+				token_regex.test( data.token )
+				&& id_regex.test( data.wpcomid )
+			) {
+				// We have everything we need to ask for a login
+				var script = document.createElement( "script" );
+				script.setAttribute( "id", "wpcom_remote_login_validate" );
+				script.src = '/remote-login.php?wpcom_remote_login=validate'
+					+ '&wpcomid=' + data.wpcomid
+					+ '&token=' + encodeURIComponent( data.token )
+					+ '&host=' + window.location.protocol
+						+ '//' + window.location.hostname;
+				document.body.appendChild( script );
+			}
+
+			return;
+		}
+
+		// Safari ITP, not logged in, so redirect
+		if ( data.msg === 'LOGIN-REDIRECT' ) {
+			window.location = 'https://wordpress.com/log-in?redirect_to=' + window.location.href;
+			return;
+		}
+
+		// Safari ITP, storage access failed, remove the request
+		if ( data.msg === 'LOGIN-REMOVE' ) {
+			var css_zap = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } @media screen and ( max-width: 782px ) { html { margin-top: 0 !important; } * html body { margin-top: 0 !important; } }';
+			var style_zap = document.createElement( 'style' );
+			style_zap.type = 'text/css';
+			style_zap.appendChild( document.createTextNode( css_zap ) );
+			document.body.appendChild( style_zap );
+
+			var e = document.getElementById( 'wpcom_request_access_iframe' );
+			e.parentNode.removeChild( e );
+
+			document.cookie = 'wordpress_com_login_access=denied; path=/; max-age=31536000';
+
+			return;
+		}
+
+		// Safari ITP
+		if ( data.msg === 'REQUEST_ACCESS' ) {
+			console.log( 'request access: safari' );
+
+			// Check ITP iframe enable/disable knob
+			if ( wpcom_remote_login_extra_auth !== 'safari_itp_iframe' ) {
+				return;
+			}
+
+			// If we are in a "private window" there is no ITP.
+			var private_window = false;
+			try {
+				var opendb = window.openDatabase( null, null, null, null );
+			} catch( e ) {
+				private_window = true;
+			}
+
+			if ( private_window ) {
+				console.log( 'private window' );
+				return;
+			}
+
+			var iframe = document.createElement( 'iframe' );
+			iframe.id = 'wpcom_request_access_iframe';
+			iframe.setAttribute( 'scrolling', 'no' );
+			iframe.setAttribute( 'sandbox', 'allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-top-navigation-by-user-activation' );
+			iframe.src = 'https://r-login.wordpress.com/remote-login.php?wpcom_remote_login=request_access&origin=' + encodeURIComponent( data.origin ) + '&wpcomid=' + encodeURIComponent( data.wpcomid );
+
+			var css = 'html { -webkit-transition: margin-top 1s; transition: margin-top 1s; } /* 9001 */ html { margin-top: 46px !important; } * html body { margin-top: 46px !important; } @media screen and ( max-width: 660px ) { html { margin-top: 71px !important; } * html body { margin-top: 71px !important; } #wpcom_request_access_iframe { display: block; height: 71px !important; } } #wpcom_request_access_iframe { border: 0px; height: 46px; position: fixed; top: 0; left: 0; width: 100%; min-width: 100%; z-index: 99999; background: #23282d; } ';
+
+			var style = document.createElement( 'style' );
+			style.type = 'text/css';
+			style.id = 'wpcom_request_access_styles';
+			style.appendChild( document.createTextNode( css ) );
+			document.body.appendChild( style );
+
+			document.body.appendChild( iframe );
+		}
+
+		if ( data.msg === 'DONE' ) {
+			wpcom_remote_login_final_cleanup();
+		}
+	}
+}, false );
+
+// Inject the remote login iframe after the page has had a chance to load
+// more critical resources
+window.addEventListener( "DOMContentLoaded", function( e ) {
+	var iframe = document.createElement( "iframe" );
+	iframe.style.display = "none";
+	iframe.setAttribute( "scrolling", "no" );
+	iframe.setAttribute( "id", "wpcom_remote_login_key" );
+	iframe.src = "https://r-login.wordpress.com/remote-login.php"
+		+ "?wpcom_remote_login=key"
+		+ "&origin=aHR0cHM6Ly9jYWZhaXRnZW5yZS5vcmc%3D"
+		+ "&wpcomid=27116365"
+		+ "&time=1589683606";
+	document.body.appendChild( iframe );
+}, false );
+</script>
+<link rel='dns-prefetch' href='//s0.wp.com' />
+<link rel='dns-prefetch' href='//cafaitgenre.wordpress.com' />
+<link rel='dns-prefetch' href='//wordpress.com' />
+<link rel='dns-prefetch' href='//fonts.googleapis.com' />
+<link rel='dns-prefetch' href='//s.pubmine.com' />
+<link rel='dns-prefetch' href='//x.bidswitch.net' />
+<link rel='dns-prefetch' href='//static.criteo.net' />
+<link rel='dns-prefetch' href='//ib.adnxs.com' />
+<link rel='dns-prefetch' href='//aax.amazon-adsystem.com' />
+<link rel='dns-prefetch' href='//bidder.criteo.com' />
+<link rel='dns-prefetch' href='//cas.criteo.com' />
+<link rel='dns-prefetch' href='//gum.criteo.com' />
+<link rel='dns-prefetch' href='//ads.pubmatic.com' />
+<link rel='dns-prefetch' href='//gads.pubmatic.com' />
+<link rel='dns-prefetch' href='//tpc.googlesyndication.com' />
+<link rel='dns-prefetch' href='//ad.doubleclick.net' />
+<link rel='dns-prefetch' href='//googleads.g.doubleclick.net' />
+<link rel='dns-prefetch' href='//www.googletagservices.com' />
+<link rel='dns-prefetch' href='//cdn.switchadhub.com' />
+<link rel='dns-prefetch' href='//delivery.g.switchadhub.com' />
+<link rel='dns-prefetch' href='//delivery.swid.switchadhub.com' />
+<link rel='dns-prefetch' href='//a.teads.tv' />
+<link rel='dns-prefetch' href='//prebid.media.net' />
+<link rel='dns-prefetch' href='//adserver-us.adtech.advertising.com' />
+<link rel='dns-prefetch' href='//fastlane.rubiconproject.com' />
+<link rel='dns-prefetch' href='//prebid-server.rubiconproject.com' />
+<link rel='dns-prefetch' href='//hb-api.omnitagjs.com' />
+<link rel='dns-prefetch' href='//mtrx.go.sonobi.com' />
+<link rel='dns-prefetch' href='//apex.go.sonobi.com' />
+<link rel='dns-prefetch' href='//u.openx.net' />
+<link rel="alternate" type="application/rss+xml" title="Genre ! &raquo; Flux" href="https://cafaitgenre.org/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Genre ! &raquo; Flux des commentaires" href="https://cafaitgenre.org/comments/feed/" />
+<link rel="alternate" type="application/rss+xml" title="Genre ! &raquo; Dans ma bibliothèque &#8211; Simone de Beauvoir, Le Deuxième sexe Flux des commentaires" href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/feed/" />
+	<script type="text/javascript">
+		/* <![CDATA[ */
+		function addLoadEvent(func) {
+			var oldonload = window.onload;
+			if (typeof window.onload != 'function') {
+				window.onload = func;
+			} else {
+				window.onload = function () {
+					oldonload();
+					func();
+				}
+			}
+		}
+		/* ]]> */
+	</script>
+			<script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/72x72\/","ext":".png","svgUrl":"https:\/\/s0.wp.com\/wp-content\/mu-plugins\/wpcom-smileys\/twemoji\/2\/svg\/","svgExt":".svg","source":{"concatemoji":"https:\/\/s0.wp.com\/wp-includes\/js\/wp-emoji-release.min.js?m=1582709031h&ver=5.4.1"}};
+			/*! This file is auto-generated */
+			!function(e,a,t){var r,n,o,i,p=a.createElement("canvas"),s=p.getContext&&p.getContext("2d");function c(e,t){var a=String.fromCharCode;s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,e),0,0);var r=p.toDataURL();return s.clearRect(0,0,p.width,p.height),s.fillText(a.apply(this,t),0,0),r===p.toDataURL()}function l(e){if(!s||!s.fillText)return!1;switch(s.textBaseline="top",s.font="600 32px Arial",e){case"flag":return!c([127987,65039,8205,9895,65039],[127987,65039,8203,9895,65039])&&(!c([55356,56826,55356,56819],[55356,56826,8203,55356,56819])&&!c([55356,57332,56128,56423,56128,56418,56128,56421,56128,56430,56128,56423,56128,56447],[55356,57332,8203,56128,56423,8203,56128,56418,8203,56128,56421,8203,56128,56430,8203,56128,56423,8203,56128,56447]));case"emoji":return!c([55357,56424,55356,57342,8205,55358,56605,8205,55357,56424,55356,57340],[55357,56424,55356,57342,8203,55358,56605,8203,55357,56424,55356,57340])}return!1}function d(e){var t=a.createElement("script");t.src=e,t.defer=t.type="text/javascript",a.getElementsByTagName("head")[0].appendChild(t)}for(i=Array("flag","emoji"),t.supports={everything:!0,everythingExceptFlag:!0},o=0;o<i.length;o++)t.supports[i[o]]=l(i[o]),t.supports.everything=t.supports.everything&&t.supports[i[o]],"flag"!==i[o]&&(t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&t.supports[i[o]]);t.supports.everythingExceptFlag=t.supports.everythingExceptFlag&&!t.supports.flag,t.DOMReady=!1,t.readyCallback=function(){t.DOMReady=!0},t.supports.everything||(n=function(){t.readyCallback()},a.addEventListener?(a.addEventListener("DOMContentLoaded",n,!1),e.addEventListener("load",n,!1)):(e.attachEvent("onload",n),a.attachEvent("onreadystatechange",function(){"complete"===a.readyState&&t.readyCallback()})),(r=t.source||{}).concatemoji?d(r.concatemoji):r.wpemoji&&r.twemoji&&(d(r.twemoji),d(r.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+	<link rel='stylesheet' id='all-css-0-1' href='https://s0.wp.com/_static/??-eJytk9FWwyAMhl9IyrpV7S48PguUFNmgcAhY+/bS0s26earH7Y6EfPnTv4T2jjS2C9AFaiJxOkrVIe1dYw1BozQMF1HRID7QBca1lV+g9YIJpFJbzvRV7ULCg2YBBHEWw0W0hml1BKQHCI41RzJFV+WnWhlTyMHLdOOB1sWm2FAelRbj0BPOPfMDxTBo+EObiVqos8HGQKRX4r8tPAuqk/gL3katCaoABIQagdkOWm7K+nn3tK9oBz1OHWcBofD0a0ZLc5q8K+jvrtIwbyOCvpOG82BUNGd03ZrGzqOUxXaXfm+eaE6Sm23N5unUNH9d7n+ZXXuw49NLeeNYGCtMkmKgwaSyNaxXQkJajFQyn0mAj3VkWlPOk4GI5GRjeEtaqyuVqHGavEyT4LdMRhXtbFCJxvPhtoWZr1pvfzAiD01d5GmWrlWLV/BqXsrHer+tq6qsDp9D18UU?cssminify=yes' type='text/css' media='all' />
+<style id='wp-block-library-inline-css'>
+.has-text-align-justify {
+	text-align:justify;
+}
+</style>
+<link crossorigin="anonymous" rel='stylesheet' id='confit-font-muli-css'  href='https://fonts.googleapis.com/css?family=Muli:300,400,300italic,400italic' media='all' />
+<link crossorigin="anonymous" rel='stylesheet' id='confit-font-enriqueta-css'  href='https://fonts.googleapis.com/css?family=Enriqueta:400,700&#038;subset=latin,latin-ext' media='all' />
+<link rel='stylesheet' id='all-css-4-1' href='https://s0.wp.com/_static/??-eJyNjEESwiAMRS8kZqq1rhzPQjHF2ECYEga9veiqbtTd//l5D2oyTqJiVNArBsyQygjtNJECRQdZH4ymJidh63LewIoIxSQunmKGShePmgFLW2UmNGwrKIbEVpv1rflHMFmHYzMYprmF+2/SoxgWZ5UkfhQzsaXlG7rgyOJb9NC+VvUFncOpO+yOw77v+uH2BApZb20=?cssminify=yes' type='text/css' media='all' />
+<link rel='stylesheet' id='print-css-5-1' href='https://s0.wp.com/wp-content/mu-plugins/global-print/global-print.css?m=1465851035h&cssminify=yes' type='text/css' media='print' />
+<link rel='stylesheet' id='all-css-6-1' href='https://s0.wp.com/wp-content/mu-plugins/actionbar/actionbar.css?m=1560469195h&cssminify=yes' type='text/css' media='all' />
+<style id='jetpack-global-styles-frontend-style-inline-css'>
+:root { --font-headings: unset; --font-base: unset; --font-headings-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif; --font-base-default: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;}
+</style>
+<link rel='stylesheet' id='all-css-8-1' href='https://s0.wp.com/_static/??-eJxti0EKgCAQAD+ULWGJHaK3mJgaqyut0fejQ4eo0zAwA2cRlnJ1uUI6RMHDx8xQiKtY0cQdOJg9Zv+wtcwN/F9MNhoUSJ7e8plqcMkxhB480mLwDuY0dYMepVJaqu0CZXY33g==?cssminify=yes' type='text/css' media='all' />
+<script>
+var related_posts_js_options = {"post_heading":"h4"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJx9jMEOwjAMQ3+IruzABgfEt4wtVKmatDSNpv39ggSXHZAsWbae7dfikOekC4iPprdC3b7WRTn5f4AjDHVq0BHyD54zN+D2YSk/MYFTgToF6+zolY8cqStJA7L4CsnOFleytEOy1YPu/WXsb+dxGK5xB1+BRFU='></script>
+<link rel='stylesheet' id='all-css-0-2' href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style.css?m=1530132353h&cssminify=yes' type='text/css' media='all' />
+<!--[if lt IE 8]>
+<link rel='stylesheet' id='highlander-comments-ie7-css'  href='https://s0.wp.com/wp-content/mu-plugins/highlander-comments/style-ie7.css?m=1351637563h&#038;ver=20110606' media='all' />
+<![endif]-->
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://cafaitgenre.wordpress.com/xmlrpc.php?rsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://s0.wp.com/wp-includes/wlwmanifest.xml" /> 
+<link rel='prev' title='&laquo;&nbsp;Sexes et races, deux réalités&nbsp;&raquo;: une réponse à Nancy Huston et Michel Raymond' href='https://cafaitgenre.org/2013/05/20/sexes-et-races-deux-realites-une-reponse-a-nancy-huston-et-michel-raymond/' />
+<link rel='next' title='&laquo;&nbsp;Théorie du genre&nbsp;&raquo;: la belle aubaine' href='https://cafaitgenre.org/2013/06/14/theorie-du-genre-la-belle-aubaine/' />
+<meta name="generator" content="WordPress.com" />
+<link rel="canonical" href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/" />
+<link rel='shortlink' href='https://wp.me/p1PMcJ-y1' />
+<link rel="alternate" type="application/json+oembed" href="https://public-api.wordpress.com/oembed/?format=json&amp;url=https%3A%2F%2Fcafaitgenre.org%2F2013%2F06%2F05%2Fdans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe%2F&amp;for=wpcom-auto-discovery" /><link rel="alternate" type="application/xml+oembed" href="https://public-api.wordpress.com/oembed/?format=xml&amp;url=https%3A%2F%2Fcafaitgenre.org%2F2013%2F06%2F05%2Fdans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe%2F&amp;for=wpcom-auto-discovery" />
+<!-- Jetpack Open Graph Tags -->
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Dans ma bibliothèque &#8211; Simone de Beauvoir, Le Deuxième sexe" />
+<meta property="og:url" content="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/" />
+<meta property="og:description" content="Simone de Beauvoir, Le Deuxième sexe, tomes 1 et 2, Gallimard, [1949] 1964. Il serait difficile d&rsquo;exagérer l&rsquo;importance de cet ouvrage paru en 1949 et son influence sur la pensée fémini…" />
+<meta property="article:published_time" content="2013-06-05T16:16:38+00:00" />
+<meta property="article:modified_time" content="2013-06-05T16:17:43+00:00" />
+<meta property="og:site_name" content="Genre !" />
+<meta property="og:image" content="https://cafaitgenre.files.wordpress.com/2013/06/le_deuxic3a8me_sexe.gif" />
+<meta property="og:image:width" content="250" />
+<meta property="og:image:height" content="359" />
+<meta property="og:image:alt" content="Le_deuxiÃ¨me_sexe" />
+<meta property="og:locale" content="fr_FR" />
+<meta name="twitter:creator" content="@A_C_Husson" />
+<meta name="twitter:site" content="@A_C_Husson" />
+<meta name="twitter:text:title" content="Dans ma bibliothèque &#8211; Simone de Beauvoir, Le Deuxième sexe" />
+<meta name="twitter:image" content="https://cafaitgenre.files.wordpress.com/2013/06/le_deuxic3a8me_sexe.gif?w=144" />
+<meta name="twitter:image:alt" content="Le_deuxiÃ¨me_sexe" />
+<meta name="twitter:card" content="summary" />
+<meta property="article:publisher" content="https://www.facebook.com/WordPresscom" />
+
+<!-- End Jetpack Open Graph Tags -->
+<link rel="shortcut icon" type="image/x-icon" href="https://s0.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="icon" type="image/x-icon" href="https://s0.wp.com/i/favicon.ico" sizes="16x16 24x24 32x32 48x48" />
+<link rel="apple-touch-icon" href="https://s0.wp.com/i/webclip.png" />
+<link rel='openid.server' href='https://cafaitgenre.org/?openidserver=1' />
+<link rel='openid.delegate' href='https://cafaitgenre.org/' />
+<link rel="search" type="application/opensearchdescription+xml" href="https://cafaitgenre.org/osd.xml" title="Genre !" />
+<link rel="search" type="application/opensearchdescription+xml" href="https://s1.wp.com/opensearch.xml" title="WordPress.com" />
+<meta name="theme-color" content="#d31900" />
+		<style type="text/css">
+			.recentcomments a {
+				display: inline !important;
+				padding: 0 !important;
+				margin: 0 !important;
+			}
+
+			table.recentcommentsavatartop img.avatar, table.recentcommentsavatarend img.avatar {
+				border: 0px;
+				margin: 0;
+			}
+
+			table.recentcommentsavatartop a, table.recentcommentsavatarend a {
+				border: 0px !important;
+				background-color: transparent !important;
+			}
+
+			td.recentcommentsavatarend, td.recentcommentsavatartop {
+				padding: 0px 0px 1px 0px;
+				margin: 0px;
+			}
+
+			td.recentcommentstextend {
+				border: none !important;
+				padding: 0px 0px 2px 10px;
+			}
+
+			.rtl td.recentcommentstextend {
+				padding: 0px 10px 2px 0px;
+			}
+
+			td.recentcommentstexttop {
+				border: none;
+				padding: 0px 0px 0px 10px;
+			}
+
+			.rtl td.recentcommentstexttop {
+				padding: 0px 10px 0px 0px;
+			}
+		</style>
+		<meta name="application-name" content="Genre !" /><meta name="msapplication-window" content="width=device-width;height=device-height" /><meta name="msapplication-tooltip" content="Je m&#039;interroge, tu t&#039;interroges, interrogez-vous" /><meta name="msapplication-task" content="name=Souscrire;action-uri=https://cafaitgenre.org/feed/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Inscrivez-vous pour créer un blog gratuitement;action-uri=http://wordpress.com/signup/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Assistance WordPress.com;action-uri=http://support.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="msapplication-task" content="name=Forums WordPress.com;action-uri=http://forums.wordpress.com/;icon-uri=https://s0.wp.com/i/favicon.ico" /><meta name="description" content="Simone de Beauvoir, Le Deuxième sexe, tomes 1 et 2, Gallimard, [1949] 1964. Il serait difficile d&#039;exagérer l&#039;importance de cet ouvrage paru en 1949 et son influence sur la pensée féministe ainsi que dans l&#039;élaboration du concept de genre. Il s&#039;agit d&#039;un classique parmi les classiques, et pourtant, il a été abondamment, parfois violemment critiqué&hellip;" />
+<style type="text/css" id="custom-background-css">
+	body.custom-background { background-color: #d31900; background-image: url('https://cafaitgenre.files.wordpress.com/2016/01/wallpaper_group-p4m-5.jpg'); background-repeat: repeat; background-position: top right; background-attachment: scroll; }
+	</style>
+		<script type="text/javascript">
+
+			window.doNotSellCallback = function() {
+
+				var linkElements = [
+					'a[href="https://wordpress.com/?ref=footer_blog"]',
+					'a[href="https://wordpress.com/?ref=footer_website"]',
+					'a[href="https://wordpress.com/?ref=vertical_footer"]',
+					'a[href^="https://wordpress.com/?ref=footer_segment_"]',
+				].join(',');
+
+				var dnsLink = document.createElement( 'a' );
+				dnsLink.href = 'https://wordpress.com/advertising-program-optout';
+				dnsLink.classList.add( 'do-not-sell-link' );
+				dnsLink.rel = 'nofollow';
+				dnsLink.style.marginLeft = '0.5em';
+				dnsLink.textContent = 'Ne pas vendre mes informations personnelles.';
+
+				var creditLinks = document.querySelectorAll( linkElements );
+
+				if ( 0 === creditLinks.length ) {
+					return false;
+				}
+
+				Array.prototype.forEach.call( creditLinks, function( el ) {
+					el.insertAdjacentElement( 'afterend', dnsLink );
+				});
+
+				return true;
+			};
+
+		</script>
+				<script type="text/javascript">
+		function __ATA_CC() {var v = document.cookie.match('(^|;) ?personalized-ads-consent=([^;]*)(;|$)');return v ? 1 : 0;}
+		var __ATA_PP = { pt: 1, ht: 0, tn: 'confit', amp: false, siteid: 8982, blogid: 27116365, consent: __ATA_CC() };
+		var __ATA = __ATA || {};
+		__ATA.cmd = __ATA.cmd || [];
+		__ATA.criteo = __ATA.criteo || {};
+		__ATA.criteo.cmd = __ATA.criteo.cmd || [];
+		</script>
+		<script type="text/javascript">
+		(function(){var g=Date.now||function(){return+new Date};function h(a,b){a:{for(var c=a.length,d="string"==typeof a?a.split(""):a,e=0;e<c;e++)if(e in d&&b.call(void 0,d[e],e,a)){b=e;break a}b=-1}return 0>b?null:"string"==typeof a?a.charAt(b):a[b]};function k(a,b,c){c=null!=c?"="+encodeURIComponent(String(c)):"";if(b+=c){c=a.indexOf("#");0>c&&(c=a.length);var d=a.indexOf("?");if(0>d||d>c){d=c;var e=""}else e=a.substring(d+1,c);a=[a.substr(0,d),e,a.substr(c)];c=a[1];a[1]=b?c?c+"&"+b:b:c;a=a[0]+(a[1]?"?"+a[1]:"")+a[2]}return a};var l=0;function m(a,b){var c=document.createElement("script");c.src=a;c.onload=function(){b&&b(void 0)};c.onerror=function(){b("error")};a=document.getElementsByTagName("head");var d;a&&0!==a.length?d=a[0]:d=document.documentElement;d.appendChild(c)}function n(a){var b=void 0===b?document.cookie:b;return(b=h(b.split("; "),function(c){return-1!=c.indexOf(a+"=")}))?b.split("=")[1]:""}function p(a){return"string"==typeof a&&0<a.length}
+		function r(a,b,c){b=void 0===b?"":b;c=void 0===c?".":c;var d=[];Object.keys(a).forEach(function(e){var f=a[e],q=typeof f;"object"==q&&null!=f||"function"==q?d.push(r(f,b+e+c)):null!==f&&void 0!==f&&(e=encodeURIComponent(b+e),d.push(e+"="+encodeURIComponent(f)))});return d.filter(p).join("&")}function t(a,b){a||((window.__ATA||{}).config=b.c,m(b.url))}var u=Math.floor(1E13*Math.random()),v=window.__ATA||{};window.__ATA=v;v.rid=u;v.createdAt=g();var w=window.__ATA||{},x="s.pubmine.com";
+		w&&w.serverDomain&&(x=w.serverDomain);var y="//"+x+"/conf",z=window.top===window,A=window.__ATA_PP&&window.__ATA_PP.gdpr_applies,B="boolean"===typeof A?Number(A):null,C=window.__ATA_PP||null,D=z?document.referrer?document.referrer:null:null,E=z?window.location.href:document.referrer?document.referrer:null,F,G=n("__ATA_tuuid");F=G?G:null;var H=window.innerWidth+"x"+window.innerHeight,I=n("usprivacy"),J=r({gdpr:B,pp:C,rid:u,src:D,ref:E,tuuid:F,vp:H,us_privacy:I?I:null},"",".");
+		(function(a){var b=void 0===b?"cb":b;l++;var c="callback__"+g().toString(36)+"_"+l.toString(36);a=k(a,b,c);window[c]=function(d){t(void 0,d)};m(a,function(d){d&&t(d)})})(y+"?"+J);}).call(this);
+		</script><link rel="amphtml" href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/amp/"><script type="text/javascript">
+	window.google_analytics_uacct = "UA-52447-2";
+</script>
+
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push(['_setAccount', 'UA-52447-2']);
+	_gaq.push(['_gat._anonymizeIp']);
+	_gaq.push(['_setDomainName', 'none']);
+	_gaq.push(['_setAllowLinker', true]);
+	_gaq.push(['_initData']);
+	_gaq.push(['_trackPageview']);
+
+	(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ga);
+	})();
+</script>
+</head>
+
+<body class="post-template-default single single-post postid-2109 single-format-standard custom-background customizer-styles-applied group-blog highlander-enabled highlander-light">
+
+<div id="wrapper">
+	<div id="page" class="hfeed site">
+				<header id="masthead" class="site-header" role="banner">
+
+			
+			<a href="https://cafaitgenre.org/" class="site-logo-link" rel="home" itemprop="url"></a>
+			<hgroup>
+				<h1 class="site-title"><a href="https://cafaitgenre.org/" title="Genre !" rel="home">Genre !</a></h1>
+				<h2 class="site-description">Je m&#039;interroge, tu t&#039;interroges, interrogez-vous</h2>
+			</hgroup>
+
+			<nav role="navigation" class="site-navigation main-navigation">
+				<h1 class="assistive-text">Navigation</h1>
+				<div class="assistive-text skip-link"><a href="#content" title="Aller au contenu principal">Aller au contenu principal</a></div>
+
+				<div class="menu-menu-custom-container"><ul id="menu-menu-custom" class="menu"><li id="menu-item-2332" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2332"><a href="https://cafaitgenre.org/genre/">Genre?</a></li>
+<li id="menu-item-2635" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2635"><a href="https://cafaitgenre.org/des-questions/">Des questions?</a></li>
+<li id="menu-item-2333" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children menu-item-2333"><a href="https://cafaitgenre.org/ressources-2/">Ressources</a>
+<ul class="sub-menu">
+	<li id="menu-item-2341" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2341"><a href="https://cafaitgenre.org/ressources-2/feminisme/">Féminisme</a></li>
+	<li id="menu-item-2340" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2340"><a href="https://cafaitgenre.org/ressources-2/sur-la-notion-meme-de-genre/">Sur la notion de &laquo; genre &raquo;</a></li>
+</ul>
+</li>
+<li id="menu-item-2339" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2339"><a href="https://cafaitgenre.org/moderation/">Modération</a></li>
+<li id="menu-item-2908" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2908"><a href="https://cafaitgenre.org/medias-et-publications/">Médias, publications, vidéos</a></li>
+<li id="menu-item-2963" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-2963"><a href="https://cafaitgenre.org/lexique/">Lexique</a></li>
+</ul></div>			</nav><!-- .site-navigation .main-navigation -->
+		</header><!-- #masthead .site-header -->
+
+		<div id="main" class="site-main">
+
+		<div id="primary" class="content-area">
+			<div id="content" class="site-content" role="main">
+
+			
+					<nav role="navigation" id="nav-above" class="site-navigation post-navigation">
+		<h1 class="assistive-text">Navigation des articles</h1>
+
+	
+		<div class="nav-previous"><a href="https://cafaitgenre.org/2013/05/20/sexes-et-races-deux-realites-une-reponse-a-nancy-huston-et-michel-raymond/" rel="prev"><span class="meta-nav">&larr;</span> &laquo;&nbsp;Sexes et races, deux réalités&nbsp;&raquo;: une réponse à Nancy Huston et Michel Raymond</a></div>		<div class="nav-next"><a href="https://cafaitgenre.org/2013/06/14/theorie-du-genre-la-belle-aubaine/" rel="next">&laquo;&nbsp;Théorie du genre&nbsp;&raquo;: la belle aubaine <span class="meta-nav">&rarr;</span></a></div>
+	
+	</nav><!-- #nav-above -->
+	
+				
+<article id="post-2109" class="post-2109 post type-post status-publish format-standard hentry category-dans-ma-bibliotheque tag-beauvoir tag-privilege">
+	<header class="entry-header">
+		<h1 class="entry-title">Dans ma bibliothèque &#8211; Simone de Beauvoir, Le Deuxième sexe</h1>
+
+		<div class="entry-meta">
+		Publié le <a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/" title="6:16  " rel="bookmark"><time class="entry-date" datetime="2013-06-05T18:16:38+02:00" pubdate>05/06/2013</time></a><span class="byline"> par <span class="author vcard"><a class="url fn n" href="https://cafaitgenre.org/author/cafaitgenre/" title="Voir tous les articles par Genre!" rel="author">Genre!</a></span></span>		</div><!-- .entry-meta -->
+	</header><!-- .entry-header -->
+
+	<div class="entry-content">
+		<p>Simone de Beauvoir, <em>Le Deuxième sexe</em>, tomes 1 et 2, Gallimard, [1949] 1964.</p>
+<p><a href="https://cafaitgenre.files.wordpress.com/2013/06/le_deuxic3a8me_sexe.gif"><img data-attachment-id="2110" data-permalink="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/le_deuxieme_sexe/#main" data-orig-file="https://cafaitgenre.files.wordpress.com/2013/06/le_deuxic3a8me_sexe.gif" data-orig-size="250,359" data-comments-opened="1" data-image-meta="{&quot;aperture&quot;:&quot;0&quot;,&quot;credit&quot;:&quot;&quot;,&quot;camera&quot;:&quot;&quot;,&quot;caption&quot;:&quot;&quot;,&quot;created_timestamp&quot;:&quot;0&quot;,&quot;copyright&quot;:&quot;&quot;,&quot;focal_length&quot;:&quot;0&quot;,&quot;iso&quot;:&quot;0&quot;,&quot;shutter_speed&quot;:&quot;0&quot;,&quot;title&quot;:&quot;&quot;}" data-image-title="Le_deuxième_sexe" data-image-description="" data-medium-file="https://cafaitgenre.files.wordpress.com/2013/06/le_deuxic3a8me_sexe.gif?w=209" data-large-file="https://cafaitgenre.files.wordpress.com/2013/06/le_deuxic3a8me_sexe.gif?w=250" src="https://cafaitgenre.files.wordpress.com/2013/06/le_deuxic3a8me_sexe.gif?w=558" alt="Le_deuxième_sexe"   class="alignleft size-full wp-image-2110" /></a>Il serait difficile d&rsquo;exagérer l&rsquo;importance de cet ouvrage paru en 1949 et son influence sur la pensée féministe ainsi que dans l&rsquo;élaboration du concept de genre. Il s&rsquo;agit d&rsquo;un classique parmi les classiques, et pourtant, il a été abondamment, parfois violemment critiqué par certaines féministes de la « deuxième vague » ; j&rsquo;évoquerai quelques-unes de ces critiques. L&rsquo;intérêt pour son œuvre ne s&rsquo;est cependant pas démenti et une phrase, sur laquelle j&rsquo;aurai également l&rsquo;occasion de revenir, est restée particulièrement célèbre : « On ne naît pas femme, on le devient ». </p>
+<p>Je serai honnête : ne vous sentez pas obligé&middot;e&middot;s de lire l&rsquo;intégralité du <i>Deuxième sexe</i>. Certains passages sont franchement datés et, disons-le, carrément ennuyeux. Je vais cependant essayer de montrer ce que, selon moi, on peut retenir de l&rsquo;ouvrage, et les raisons pour lesquelles il faut continuer à le lire&#8230; par morceaux. </p>
+<p><b>Le projet féministe de Simone de Beauvoir</b></p>
+<p>Pour comprendre le projet du <i>Deuxième sexe</i>, il est utile de citer un passage de l&rsquo;introduction, frappant par son actualité. Les numéros de pages que j&rsquo;indique correspondent à l&rsquo;édition Gallimard de 1964. </p>
+<ul>
+<em>Pour prouver l&rsquo;infériorité de la femme, les antiféministes ont alors mis à contribution non seulement comme naguère la religion, la philosophie, la théologie mais aussi la science : biologie, psychologie expérimentale, etc. Tout au plus consentait-on à accorder à l&rsquo;autre sexe « l&rsquo;égalité dans la différence ». Cette formule qui a fait fortune est très significative : c&rsquo;est exactement celle qu&rsquo;utilisent à propos des Noirs d&rsquo;Amérique les lois Jim Crow</em> [arrêtés et règlements établissant la ségrégation raciale aux USA, 1876-1964]<em> ; or, cette ségrégation soi-disant égalitaire n&rsquo;a servi qu&rsquo;à introduire les plus extrêmes discriminations. Cette rencontre n&rsquo;a rien d&rsquo;un hasard : qu&rsquo;il s&rsquo;agisse d&rsquo;une race, d&rsquo;une caste, d&rsquo;une classe, d&rsquo;un sexe réduits à une condition inférieure, les processus de justification sont les mêmes. « L&rsquo;éternel féminin » c&rsquo;est l&rsquo;homologue de « l&rsquo;âme noire » et du « caractère juif ». […] Il y a de profondes analogies entre la situation des femmes et celle des Noirs [aux USA] : les unes et les autres s&rsquo;émancipent aujourd&rsquo;hui d&rsquo;un même paternalisme et la caste naguère maîtresse veut les maintenir à « leur place », c&rsquo;est-à-dire à la place qu&rsquo;elle a choisie pour eux ; dans les deux cas elle se répand en éloges plus ou moins sincères sur les vertus du « bon Noir » […] et de la femme « vraiment femme », c&rsquo;est-à-dire frivole, puérile, irresponsable, la femme soumise à l&rsquo;homme. […] On retrouve ce cercle vicieux en toutes circonstances analogues : quand un individu ou un groupe d&rsquo;individus est maintenu en situation d&rsquo;infériorité, le fait est qu&rsquo;il est inférieur ; mais c&rsquo;est sur la portée du mot être qu&rsquo;il faudrait s&rsquo;entendre ; […] être c&rsquo;est être devenu, c&rsquo;est avoir été fait tel qu&rsquo;on se manifeste ; oui, les femmes dans l&rsquo;ensemble sont aujourd&rsquo;hui inférieures aux hommes, c&rsquo;est-à-dire que leur situation leur ouvre de moindres possibilités : le problème c&rsquo;est de savoir si cet état de choses doit se perpétuer.</em> (I, Introduction, 24-25)</ul>
+<p>La réponse, évidemment, est non. Beauvoir envisage non pas la « nature » des femmes mais leur « situation » contingente. Elle ne se réfère pas à un mythique « éternel féminin », ni à une essence immuable : au contraire, elle montre que les « mythes » associés à la féminité ne sont qu&rsquo;une conséquence de la situation de domination des femmes. Ils sont inventés par les hommes pour maintenir cette situation. En effet, leur situation (elle aussi, bien sûr, contingente) donne aux hommes le privilège d&rsquo;élaborer de tels mythes et de définir ce que « femme », « féminin » ou encore « féminité » veulent dire. </p>
+<p><strong>Résumé</strong></p>
+<p>Beauvoir l&rsquo;affirme avec force : aucun « destin » ne justifie la situation de domination dans laquelle se trouvent les femmes (elle écrit presque systématiquement « la femme »). C&rsquo;est l&rsquo;objet du premier tome, <em>Les faits et les mythes</em>. Elle montre que les tentatives d&rsquo;expliquer cette situation, quand elles sont le fait d&rsquo;hommes (proclamant adopter le point de vue de l&rsquo;universel), sont orientées à leur avantage et discute en longueur, avant de les rejeter, celles de la biologie, de la psychanalyse et du matérialisme historique (je vous conseille de passer rapidement ces sections&#8230;). Elle propose un autre récit rendant compte de la constitution de la catégorie « femme » en Autre absolu afin de justifier et perpétuer la domination d&rsquo;une caste sur l&rsquo;autre.</p>
+<p>Le début du deuxième tome, <i>L&rsquo;expérience vécue</i>, est extrêmement célèbre et mérite de ne pas être limité à sa première phrase : </p>
+<ul>
+<em>On ne naît pas femme : on le devient. Aucun destin biologique, psychique, économique ne définit la figure que revêt au sein de la société la femelle humaine ; c&rsquo;est l&rsquo;ensemble de la civilisation qui élabore ce produit intermédiaire entre le mâle et le castrat qu&rsquo;on qualifie de féminin. […] Jusqu&rsquo;à douze ans la fillette est aussi robuste que ses frères, elle manifeste les mêmes capacités intellectuelles ; il n&rsquo;y a aucun domaine où il lui soit interdit de rivaliser avec eux. Si, bien avant la puberté, et parfois même dès sa toute petite enfance, elle nous apparaît déjà comme sexuellement spécifiée, ce n&rsquo;est pas que de mystérieux instincts immédiatement la vouent à la passivité, à la coquetterie, à la maternité : c&rsquo;est que l&rsquo;intervention d&rsquo;autrui dans la vie de l&rsquo;enfant est presque originelle et que dès ses premières années sa vocation lui est impérieusement insufflée.</em> (II, « Formation », 13-14)</ul>
+<p>Dans ce deuxième tome, Beauvoir se tourne vers la situation concrète des femmes, qu&rsquo;elle a dorénavant dégagée des récits visant à naturaliser et donc justifier leur oppression. Elle évoque donc le « destin traditionnel de la femme », un destin imposé par sa situation de dominée, à travers sa « formation » (enfance, adolescence, sexualité) et sa « situation » (mariage, maternité, vie en société, prostitution&#8230;). Elle s&rsquo;intéresse en particulier aux mécanismes par lesquels les femmes s&rsquo;accommodent de leur situation, à leurs vains efforts pour « convertir [leur] prison en un ciel de gloire, [leur] servitude en souveraine liberté » (II, « Situation », 455). </p>
+<p>Il faut en effet mentionner un concept clé dans la pensée de Simone de Beauvoir, celui d’ambiguïté. Dans le cas des rapports entre les sexes, l’ambiguïté se manifeste par le fait que les femmes ne sont pas simplement opprimées : elles sont complices, dans une certaine mesure, dans leur oppression, mais dans la mesure seulement où elles n&rsquo;ont pas d&rsquo;autre possibilité. Quitte à être vouées à une situation de domination, autant trouver des moyens de s&rsquo;en accommoder au mieux. </p>
+<p>La 4ème et dernière partie, « Vers la libération », s&rsquo;interroge sur la figure de « la femme indépendante » qui, selon Beauvoir, commence à apparaître. Au moment de l&rsquo;écriture du <i>Deuxième sexe</i>, Beauvoir pense encore que l&rsquo;indépendance pour les femmes et une véritable égalité ne peuvent exister que dans un monde socialiste (elle abandonne par la suite cette idée). </p>
+<p><strong>Le concept de privilège</strong></p>
+<p>Il existe de multiples manières d&rsquo;aborder la pensée de Simone de Beauvoir et le but de cet article n&rsquo;est pas de les présenter toutes. J&rsquo;aimerais seulement évoquer la réflexion qu&rsquo;elle élabore à propos du concept de privilège. Il s&rsquo;agit en effet d&rsquo;un concept important pour comprendre sa pensée. </p>
+<p>Elle s&rsquo;interroge en effet sur le privilège masculin. Il faut à mon avis comprendre ce concept dans deux sens : il s&rsquo;agit à la fois du prestige, des valeurs attachées au masculin et assurant sa position de dominant, et de l&rsquo;ensemble des privilèges que cette position confère aux hommes. Le fait d&rsquo;être un homme est, et a historiquement toujours été, un privilège ; il faut donc le comprendre comme une caractéristique de l&rsquo;individu, mais une caractéristique qui lui donne accès à des avantages concrets. Dans leur tentative de rationaliser et de justifier la subordination des femmes, les hommes ont cherché à faire de ce privilège un donné naturel, absolu, inébranlable : en effet, « les mâles n&rsquo;auraient pas pu jouir pleinement [du privilège d&rsquo;être mâles] s&rsquo;ils ne l&rsquo;avaient considéré comme fondé dans l&rsquo;absolu et dans l&rsquo;éternité : du fait de leur suprématie ils ont cherché à faire un droit » (I, 22, c&rsquo;est moi qui souligne). Elle cite alors Poulain de la Barre, qu&rsquo;elle présente comme un précurseur du féminisme : « Ceux qui ont fait et compilé les lois ont favorisé leur sexe, et les jurisconsultes ont tourné les lois en principes ». Beauvoir écrit plus loin : « la situation privilégiée de l&rsquo;homme vient de l&rsquo;intégration de son rôle biologiquement agressif à sa fonction sociale de chef, de maître ; c&rsquo;est à travers celle-ci que les différences biologiques prennent tout leur sens » (II, « Formation », 135). Les différences biologiques n&rsquo;ont pas de sens en soi, elles n&rsquo;ont que le sens que leur confère la société ; dans une société qui valorise la force physique, la force masculine est interprétée comme un atout, mieux encore, comme une valeur liée au pouvoir et justifiant la domination. </p>
+<p>Beauvoir résume très bien ce qu&rsquo;est le privilège masculin dans la phrase suivante : « Le privilège que l&rsquo;homme détient et qui se fait sentir dès son enfance, c&rsquo;est que sa vocation d&rsquo;être humain ne contrarie pas sa destinée de mâle » (II, « Vers la libération », 524). Sa masculinité n&rsquo;est jamais un obstacle pour sa réussite, au contraire ; tandis que les femmes se retrouvent (c&rsquo;est là un aspect très polémique de la pensée de Beauvoir) dans la situation de choisir entre la féminité (définie culturellement comme passivité) et le succès, qui suppose d&rsquo;adopter des caractéristiques masculines masculines, c&rsquo;est-à-dire de « répudier son sexe, » « renoncer à sa féminité », à « une part de son humanité ». Mais par ce renoncement, « on n&rsquo;acquiert pas des attributs virils » : il est impossible pour les femmes, en tout cas à l&rsquo;époque de Beauvoir, de ne plus être des femmes – mais cela est-il même désirable ? </p>
+<p>Il existe donc un privilège de naissance, qui mêle différences biologiques et interprétation culturelle, qui est exacerbé, figé et légitimé par la culture. Le privilège masculin n&rsquo;est pas naturel, la nature ne servant qu&rsquo;à justifier a posteriori une situation. Il est social, économique. Mais la situation est beaucoup plus compliquée que cela : elle ne peut pas se résumer par une opposition entre possession et absence de privilège, qui recouperait l&rsquo;opposition dominants / dominées. Les femmes bénéficient elles aussi de certains privilèges du fait de leur identité féminine. Pour Beauvoir, qui s&rsquo;inscrit dans le cadre de la psychanalyse, les petites filles sont par exemple privilégiées jusqu&rsquo;à un certain âge car, contrairement aux petits garçons, elles ne sont pas brutalement sevrées et continuent de bénéficier de la proximité de leur mère et de cajoleries (II, « Formation », 16). </p>
+<p>Elle explique également que la maternité est entourée d&rsquo;un prestige d&rsquo;ordre quasi-magique destiné à confiner les femmes dans un rôle précis sans qu&rsquo;elles n&rsquo;apparaissent pour autant comme perdantes : la mère est idolâtrée et la maternité est présentée comme le destin non seulement désirable mais indépassable pour les femmes. La maternité apparaît alors comme un privilège, et Beauvoir écrit que « la mère apparaît douée de la puissance mirifique des fées » et que « beaucoup de garçons se désolent qu&rsquo;un tel privilège leur soit refusé », alors qu&rsquo;on fait miroiter aux petites filles ce pouvoir en germe dans leurs corps. Reconnaître la maternité comme un privilège a des avantages concrets&#8230; pour les hommes : </p>
+<ul>
+<em>On répète à la femme depuis son enfance qu&rsquo;elle est faite pour engendrer et on lui chante la splendeur de la maternité ; les inconvénients de sa condition – règles, maladies, etc. &#8211; l&rsquo;ennui des tâches ménagères, tout est justifié par ce merveilleux privilège qu&rsquo;elle détient de mettre des enfants au monde.</em> (II, « Situation », 299-300)</ul>
+<p>Il existe donc des privilèges féminins, non pas naturels mais décrétés par la société ; or l&rsquo;existence de ces privilèges rend leur domination éminemment ambiguë. En effet, ce qui différencie selon Beauvoir la domination des Noirs aux USA  et celle des femmes (elle ne parle jamais de la situation spécifique des femmes noires), c&rsquo;est que les premiers ne jouissent d&rsquo;aucun privilège et, par conséquent, « subissent leur sort dans la révolte […] tandis que la femme est invitée à la complicité » (II, « Formation », 47). La petite fille voit son univers et ses capacités d&rsquo;action limités ? On lui fait miroiter « les délices de la passivité » ; mais « en acceptant sa passivité, elle accepte aussi de subir sans résistance un destin qui va lui être imposé du dehors, et cette fatalité l&rsquo;effraie ». Sa soumission n&rsquo;est pas un aveuglement, elle est acceptation et complicité, elle est une manière de s&rsquo;accommoder, en quelque sorte, de sa situation. </p>
+<p><b>Quelques problèmes posés par <i>Le Deuxième sexe</i></b></p>
+<p>L&rsquo;ouvrage a été abondamment critiqué, y compris parmi les féministes. On lui a reproché tout et son contraire ; en particulier, certain&middot;e&middot;s considèrent que sa vision de la biologie est essentialiste, d&rsquo;autres au contraire qu&rsquo;elle est excessivement constructionniste. La vérité se situe certainement quelque part entre les deux mais ce n&rsquo;est pas le lieu d&rsquo;en décider. J&rsquo;aimerais seulement signaler deux points qui m&rsquo;ont particulièrement dérangée à la lecture de l&rsquo;ouvrage. </p>
+<p>D&rsquo;abord, l&rsquo;hétérosexualité est implicitement posée comme horizon indépassable de l&rsquo;humanité. Elle discute en longueur la sexualité, très souvent sous l&rsquo;angle psychanalytique, et n&rsquo;évoque l&rsquo;homosexualité que comme exception à l&rsquo;égard de la norme, alors que l&rsquo;on sait qu&rsquo;elle a eu elle même plusieurs expériences homosexuelles. Elle fait quelques allusions à l&rsquo;homosexualité masculine mais la sexualité lesbienne n&rsquo;apparaît qu&rsquo;au 2ème tome, dans un chapitre consacré à « la lesbienne ». Ce chapitre a été critiqué par exemple par Marie-Hélène Bourcier dans <i>Queer Zones</i> ; Maxime Foerster écrit qu&rsquo;elle ramène le lesbianisme « à une stratégie de défense contre la domination masculine » : « la lesbienne intéresse Beauvoir non pas en tant que femme qui aime les femmes mais en tant que femme hétérosexuelle ayant recours à l&rsquo;homosexualité comme mise à distance de l&rsquo;homme, comme rapport de force avec l&rsquo;homme par femme interposée » (<i>La différence des sexes à l&rsquo;épreuve de la République</i>, p. 73). </p>
+<p>De plus, Beauvoir fait preuve dans <i>Le Deuxième sexe</i> d&rsquo;un ethnocentrisme extrêmement dérangeant aujourd&rsquo;hui, voire de racisme. Elle oppose ainsi « l&rsquo;Occidental » et l&rsquo; « Oriental » et décrète que la situation des femmes orientales confine au pur asservissement. Un exemple parmi beaucoup d&rsquo;autres : « Chez les Arabes, les Indiens, dans beaucoup de populations rurales, la femme n&rsquo;est qu&rsquo;une femelle domestique qu&rsquo;on apprécie selon le travail qu&rsquo;elle fournit et qu&rsquo;on remplace sans regret si elle disparaît. Dans la civilisation moderne, elle est aux yeux de son mari plus ou moins individualisée […]. » (II, « Situation », 342). Par « civilisation moderne », il faut comprendre « sociétés occidentales modernes et contemporaines ». </p>
+<p>Une dernière chose, qui a plutôt à voir avec la méthode qu&rsquo;elle adopte. <i>Le Deuxième sexe</i> s&rsquo;inscrit dans le cadre des théories psychanalytiques du temps, que Beauvoir utilise et commente longuement. Outre que la plupart de ces théories paraissent aujourd&rsquo;hui pour le moins datées, elle a recours, pour illustrer la « situation » des femmes, à de nombreux témoignages de première main, issus d&rsquo;autobiographies ou de journaux intimes, qu&rsquo;elle analyse souvent sous l&rsquo;angle de la psychanalyse. Elle utilise également des témoignages de seconde main, ceux des patientes de psychanalystes. Elle donne par conséquent une vision non seulement négative mais anxiogène de la « condition féminine », décrite à travers les témoignages de femmes malheureuses ou sous un angle pathologique, ce qui, à la longue, est extrêmement lassant. </p>
+<p><strong>Conclusion</strong></p>
+<p>En conclusion, j&rsquo;aimerais simplement citer un passage de « Vers la libération », où elle envisage l&rsquo;accession par les femmes à « la parfaite égalité économique et sociale ». Son propos, comme celui que je citais en introduction, est toujours d&rsquo;actualité en 2013.</p>
+<ul>
+<em>En tout cas, objecteront certains, si un tel monde est possible, il n&rsquo;est pas désirable. Quand la femme sera « la même » que son mâle, la vie perdra « son sel poignant ». Cet argument non plus n&rsquo;est pas nouveau : ceux qui ont intérêt à perpétuer le présent versent toujours des larmes sur le mirifique passé qui va disparaître sans accorder un sourire au jeune avenir. Il est vrai qu&rsquo;en supprimant les marchés d&rsquo;esclaves, on a assassiné les grandes plantations si magnifiquement parées d&rsquo;azalées et de camélias, on a ruiné toute la délicate civilisation susdite ; les vieilles dentelles ont rejoint dans les greniers du temps les timbres si purs des castrats de la Sixtine et il y a un certain « charme féminin » qui menace de tomber lui aussi en poussière. […] On peut apprécier la beauté des fleurs, le charme des femmes et les apprécier à leur prix; si ces trésors se paient avec du sang ou avec du malheur, il faut savoir les sacrifier.<br />
+	Le fait est que ce sacrifice paraît aux hommes singulièrement lourd; il en est peu pour souhaiter du fond du cœur que la femme achève de s&rsquo;accomplir; ceux qui la méprisent ne voient pas ce qu&rsquo;ils auraient à y gagner, ceux qui la chérissent voient trop ce qu&rsquo;ils ont à y perdre; et il est vrai que l&rsquo;évolution actuelle ne menace pas seulement le charme féminin : […] assurément l&rsquo;autonomie de la femme, si elle épargne aux mâles bien des ennuis, leur déniera aussi maintes facilités; assurément il est certaines manières de vivre l&rsquo;aventure sexuelle qui seront perdues dans le monde de demain : mais cela ne signifie pas que l&rsquo;amour, le bonheur, la poésie, le rêve en seront bannis. […] rien ne me paraît plus contestable que le slogan qui voue le monde nouveau à l&rsquo;uniformité, donc à l&rsquo;ennui. Je ne vois pas que de ce monde-ci l&rsquo;ennui soit absent ni que jamais la liberté crée l&rsquo;uniformité. D&rsquo;abord, […] ceux qui parlent tant d&rsquo;« égalité dans la différence » auraient mauvaise grâce à ne pas m&rsquo;accorder qu&rsquo;il puisse exister des différences dans l&rsquo;égalité.</em> (574-575)</ul>
+<p><a href="https://twitter.com/A_C_Husson">AC Husson</a></p>
+<p><strong>Pour aller plus loin</strong><br />
+de Beauvoir, Simone, <em>Privilèges</em>, Gallimard, 1955; réédité sous le titre <em>Faut-il brûler Sade ?</em>, Gallimard, 2011.<br />
+Bourcier, Marie-Hélène, Queer Zones. Politiques des identités sexuelles, des représentations et des savoirs, Balland, 2001.<br />
+Butler, Judith, &laquo;&nbsp;Gendering the Body: Beauvoir&rsquo;s Philosophical Contribution&nbsp;&raquo;, dans <em>Women, Knowledge and Reality</em>, A. Garry et P. Pearsall (éds), Unwin et Hyman, 1989, pp. 253-262.<br />
+Kruks, Sonia, &laquo;&nbsp;Simone de Beauvoir and the Politics of Privilege&nbsp;&raquo;, <em>Hypatia</em>, vol. 20, n°1, 2005, pp. 178-205.<br />
+Wittig, Monique, &laquo;&nbsp;On ne naît pas femme&nbsp;&raquo;, dans <em>La Pensée straight</em>, Amsterdam, 2001.</p>
+<div id="atatags-370373-5ec0a5961ad60">
+        <script type="text/javascript">
+            __ATA.cmd.push(function() {
+                __ATA.initVideoSlot('atatags-370373-5ec0a5961ad60', {
+                    sectionId: '370373',
+                    format: 'inread'
+                });
+            });
+        </script>
+    </div>			<div id="atatags-26942-5ec0a5961adda"></div>
+			
+			<script>
+				__ATA.cmd.push(function() {
+					__ATA.initDynamicSlot({
+						id: 'atatags-26942-5ec0a5961adda',
+						location: 120,
+						formFactor: '001',
+						label: {
+							text: 'Publicités',
+						},
+						creative: {
+							reportAd: {
+								text: 'Report this Ad',
+							},
+							privacySettings: {
+								text: 'Paramètres de confidentialité',
+							}
+						}
+					});
+				});
+			</script><div id="jp-post-flair" class="sharedaddy sd-like-enabled sd-sharing-enabled"><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-icon-text sd-sharing"><h3 class="sd-title">Partager ceci:</h3><div class="sd-content"><ul><li class="share-twitter"><a rel="nofollow noopener noreferrer" data-shared="sharing-twitter-2109" class="share-twitter sd-button share-icon" href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?share=twitter" target="_blank" title="Cliquez pour partager sur Twitter"><span>Twitter</span></a></li><li class="share-facebook"><a rel="nofollow noopener noreferrer" data-shared="sharing-facebook-2109" class="share-facebook sd-button share-icon" href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?share=facebook" target="_blank" title="Cliquez pour partager sur Facebook"><span>Facebook</span></a></li><li class="share-email"><a rel="nofollow noopener noreferrer" data-shared="" class="share-email sd-button share-icon" href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?share=email" target="_blank" title="Cliquez pour envoyer par e-mail à un ami"><span>E-mail</span></a></li><li class="share-tumblr"><a rel="nofollow noopener noreferrer" data-shared="" class="share-tumblr sd-button share-icon" href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?share=tumblr" target="_blank" title="Cliquez pour partager sur Tumblr"><span>Tumblr</span></a></li><li class="share-end"></li></ul></div></div></div><div class='sharedaddy sd-block sd-like jetpack-likes-widget-wrapper jetpack-likes-widget-unloaded' id='like-post-wrapper-27116365-2109-5ec0a5961bd18' data-src='//widgets.wp.com/likes/index.html?ver=20190321#blog_id=27116365&amp;post_id=2109&amp;origin=cafaitgenre.wordpress.com&amp;obj_id=27116365-2109-5ec0a5961bd18&amp;domain=cafaitgenre.org' data-name='like-post-frame-27116365-2109-5ec0a5961bd18'><h3 class='sd-title'>WordPress:</h3><div class='likes-widget-placeholder post-likes-widget-placeholder' style='height: 55px;'><span class='button'><span>J&#039;aime</span></span> <span class="loading">chargement&hellip;</span></div><span class='sd-text-color'></span><a class='sd-link-color'></a></div>
+<div id='jp-relatedposts' class='jp-relatedposts' >
+	<h3 class="jp-relatedposts-headline"><em>Articles similaires</em></h3>
+</div></div>			</div><!-- .entry-content -->
+
+	<footer class="entry-meta">
+		
+		Cette entrée, publiée dans <a href="https://cafaitgenre.org/category/dans-ma-bibliotheque/" rel="category tag">Dans ma bibliothèque</a>, est taguée <a href="https://cafaitgenre.org/tag/beauvoir/" rel="tag">Beauvoir</a>, <a href="https://cafaitgenre.org/tag/privilege/" rel="tag">privilège</a>. Bookmarquez ce <a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/" title="Permalien vers Dans ma bibliothèque &#8211; Simone de Beauvoir, Le Deuxième sexe" rel="bookmark">permalien</a>.
+			</footer><!-- .entry-meta -->
+</article><!-- #post-2109 -->
+
+					<nav role="navigation" id="nav-below" class="site-navigation post-navigation">
+		<h1 class="assistive-text">Navigation des articles</h1>
+
+	
+		<div class="nav-previous"><a href="https://cafaitgenre.org/2013/05/20/sexes-et-races-deux-realites-une-reponse-a-nancy-huston-et-michel-raymond/" rel="prev"><span class="meta-nav">&larr;</span> &laquo;&nbsp;Sexes et races, deux réalités&nbsp;&raquo;: une réponse à Nancy Huston et Michel Raymond</a></div>		<div class="nav-next"><a href="https://cafaitgenre.org/2013/06/14/theorie-du-genre-la-belle-aubaine/" rel="next">&laquo;&nbsp;Théorie du genre&nbsp;&raquo;: la belle aubaine <span class="meta-nav">&rarr;</span></a></div>
+	
+	</nav><!-- #nav-below -->
+	
+				
+
+	<div id="comments" class="comments-area">
+
+	
+			<h2 class="comments-title">
+			20 r&eacute;flexions sur &ldquo;<span>Dans ma bibliothèque &#8211; Simone de Beauvoir, Le Deuxième sexe</span>&rdquo;		</h2>
+
+		<ol class="commentlist">
+				<li class="post pingback">
+		<p>Pingback:  <a href='http://www.scoop.it/t/liberte-de-genre-egalite-des-sexes-et-solidarite-pour-tous/p/4002786809/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe' rel='external nofollow ugc' class='url'>Dans ma biblioth&egrave;que - Simone de Beauvoi...</a></p>
+	</li><!-- #comment-## -->
+	<li class="comment byuser comment-author-violemmenthumaine even thread-even depth-1 highlander-comment" id="li-comment-4458">
+		<article id="comment-4458" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://0.gravatar.com/avatar/f590e14cff1a8ba520d2feeb57ab5648?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn"><a href='http://violemmenthumaine.wordpress.com' rel='external nofollow ugc' class='url'>violemmenthumaine</a></cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/#comment-4458"><time pubdate datetime="2013-06-06T13:08:01+02:00">
+					06/06/2013 à 1:08  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?replytocom=4458#respond' data-commentid="4458" data-postid="2109" data-belowelement="comment-4458" data-respondelement="respond" aria-label='Répondre à violemmenthumaine'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>Bonjour,<br />
+merci pour cette présentation dépassionnée de cet incontournable.</p>
+<p>Personnellement, je rajouterai un commentaire personnel: quand je me suis lancée dans la lecture du Deuxième Sexe, j&rsquo;avais l&rsquo;esprit tout embué de l&rsquo;aura phénoménale de Simone de Beauvoir, je m&rsquo;attendais à lire un travail extrêmement sérieux du point de vue intellectuel.<br />
+Or, si comme vous le dîtes, le premier tome est daté, il est également extrêmement choquant du point de vue épistémologique. Elle choisit (délibérement?) uniquement des &laquo;&nbsp;données&nbsp;&raquo; qui vont dans son sens, et beaucoup de ses affirmations sont fausses du point de vue anthropologique, et cela était (contrairement aux thèses psy, quoique cela puisse se pisputer: Freud n&rsquo;était déjà plus la seule et unique référence à la fin des années 40!!!!!) déjà parfaitement su et reconnu dans la sphère anthropologico-ethnologique. Elle ne cite jamais aucune de ses sources et se présente comme &laquo;&nbsp;celle qui sait&nbsp;&raquo;, sans jamais prouver ce qu&rsquo;elle avance (y compris quand elle rejoint les théories pseudo -new-age d&rsquo;une matriarchie originelle.)<br />
+A l&rsquo;époque, cela m&rsquo;a profondément choquée, et j&rsquo;ai passé plus d&rsquo;un an avant de me convaincre d&rsquo;ouvrir le second tome, qui lui ne m&rsquo;a pas posé de tels problèmes de conscience intellectuelle.</p>
+<p>Par ailleurs, vous soulignez le racisme latent de l’œuvre, mais je trouve également que l&rsquo;ouvrage entier est imprégné d&rsquo;un mépris de classe particulièrement gênant (surtout de la part d&rsquo;une personne ayant joué un rôle aussi important dans la vie intellectuelle de gauche voire d&rsquo;extrême-gauche).</p>
+<p>Bref, si la lecture du second tome m&rsquo;a extrêmement intéressée (notamment un passage sur la violence physique, qui m&rsquo;a ouvert des perspectives), que je suis heureuse d&rsquo;avoir lu ce livre et que je le garde précieusement dans ma bibliothèque, j&rsquo;ai conclu ma lecture avec une antipathie totale envers son auteur, que je considère plus désormais comme une &laquo;&nbsp;donneuse d&rsquo;opinion&nbsp;&raquo; magistralement capable de convaincre de la justesse de sa subjectivité que comme une intellectuelle tirant ses analyses d&rsquo;une démarche scientifique se voulant objective.</p>
+<p id="comment-like-4458" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?like_comment=4458&#038;_wpnonce=d91a1f5453" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-4458" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment odd alt depth-2 highlander-comment" id="li-comment-6462">
+		<article id="comment-6462" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://1.gravatar.com/avatar/1565d053caaa03b46c82a1c195654627?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn">Marie-Hélène</cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/#comment-6462"><time pubdate datetime="2014-01-16T22:52:35+01:00">
+					16/01/2014 à 10:52  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?replytocom=6462#respond' data-commentid="6462" data-postid="2109" data-belowelement="comment-6462" data-respondelement="respond" aria-label='Répondre à Marie-Hélène'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>Merci pour cette intéressante discussion dans laquelle je retrouve nombre de mes perplexités à la récente relecture de cet ouvrage (lu à l&rsquo;origine voici trente ans). Oui il est daté, mais c&rsquo;est surtout la question des classes qui m&rsquo;a sauté aux yeux. La notion de &laquo;&nbsp;jeune fille&nbsp;&raquo; (le terme est employé par SdB plusieurs fois, les exemples, tout désigne la haute bourgeoisie d&rsquo;où était issue notre Simone nationale, qui ne s&rsquo;en est jamais cachée d&rsquo;ailleurs, ni défaite (on n&rsquo;échappe pas à son destin !). Il manque à ce 2e sexe une lecture marxiste, n&rsquo;en déplaise à la compagne du directeur de publication de la Cause du Peuple.<br />
+ Cela dit, je trouve sévère et injustifié le terme de &laquo;&nbsp;donneuse d&rsquo;opinion&nbsp;&raquo;. Beauvoir était une philosophe, une vraie. Avec la sécheresse démonstrative qui la caractérisait, avec sa difficulté dans le registre d&rsquo;une écriture romanesque où elle a, de mon point de vue, totalement échoué, difficulté qu&rsquo;on retrouve dans certaines pages du 2e sexe, mais c&rsquo;est un peu plus qu&rsquo;une &laquo;&nbsp;donneuse d&rsquo;opinion&nbsp;&raquo;, car elle opère des démonstrations, développe des argumentaires, ce qui est si je ne m&rsquo;abuse très différent d&rsquo;émettre une opinion.</p>
+<p id="comment-like-6462" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?like_comment=6462&#038;_wpnonce=ebeef31016" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-6462" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-violemmenthumaine even depth-3 highlander-comment" id="li-comment-6468">
+		<article id="comment-6468" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://0.gravatar.com/avatar/f590e14cff1a8ba520d2feeb57ab5648?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn"><a href='http://violemmenthumaine.wordpress.com' rel='external nofollow ugc' class='url'>violemmenthumaine</a></cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/#comment-6468"><time pubdate datetime="2014-01-17T15:54:20+01:00">
+					17/01/2014 à 3:54  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?replytocom=6468#respond' data-commentid="6468" data-postid="2109" data-belowelement="comment-6468" data-respondelement="respond" aria-label='Répondre à violemmenthumaine'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>Je ne m&rsquo;attendais pas à recevoir autant de réactions à mon commentaire 🙂<br />
+@Marie-Hélène: je comprends qu&rsquo;on trouve excessif la qualification de donneuse d&rsquo;opinion; elle l&rsquo;est. Cependant, elle correspond à la violence de la déception et même du choc que j&rsquo;ai eu en lisant le premier tome.<br />
+Comme le répète après moi, et plus clairement encore, @ Aurélie.n, une grande partie de ce qu&rsquo;elle affirme dans ce premier tome est juste FAUX, et, je le répète, on le savait déjà à l&rsquo;époque.<br />
+En ce qui concerne la bibliographie (ou plutôt son absence, en ce qui concerne le Deuxième Sexe), je reconnais n&rsquo;avoir que très peu d&rsquo;idées sur les normes en vigueur à l&rsquo;époque, et reconnais encore plus volontiers que ma connaissance des écrits philosophiques à proprement parler est plus que parcellaire. Cependant, je sais que certains écrits d&rsquo;anthropo respectaient déjà les normes actuelles, d&rsquo;une part, et que certains philosophes (je pense par exemple à Foucault ou Derrida) ont toujours sourcé les données qu&rsquo;ils utilisaient pour construire leur raisonnement.<br />
+Voilà, c&rsquo;est tout: je ne faisais que témoigner de l&rsquo;intense déception que j&rsquo;ai ressentie en lisant un livre &laquo;&nbsp;culte&nbsp;&raquo;. Si je n&rsquo;avais pas autant entendu parler du Deuxième Sexe, je n&rsquo;aurai probablement pas réagi ainsi.<br />
+Mais oui, bien sûr, le fait est qu&rsquo;il existe, autant dans l&rsquo;histoire du féminisme, des &laquo;&nbsp;études de genre&nbsp;&raquo; et dans l&rsquo;Histoire tout court un avant et un après &laquo;&nbsp;le Deuxième Sexe&nbsp;&raquo;. 🙂</p>
+<p id="comment-like-6468" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?like_comment=6468&#038;_wpnonce=11a2f7c048" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-6468" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment byuser comment-author-audrenlerioual odd alt thread-odd thread-alt depth-1 highlander-comment" id="li-comment-4461">
+		<article id="comment-4461" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://2.gravatar.com/avatar/2dc4acf46e895ecff988b18be842e15c?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn"><a href='http://lesfessesdelacremiere.wordpress.com' rel='external nofollow ugc' class='url'>audren</a></cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/#comment-4461"><time pubdate datetime="2013-06-07T08:27:55+02:00">
+					07/06/2013 à 8:27  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?replytocom=4461#respond' data-commentid="4461" data-postid="2109" data-belowelement="comment-4461" data-respondelement="respond" aria-label='Répondre à audren'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>Bravo et mille fois merci. C&rsquo;est clair et factuel et ça me fera ça de moins à lire 😉</p>
+<p>Je voudrais en rajouter une couche sur l&rsquo;idée que &laquo;&nbsp;le succès, [&#8230;] suppose d’adopter des caractéristiques  masculines, c’est-à-dire de « répudier son sexe, » &laquo;&nbsp;. Je pense que reprendre aux hommes des comportements ou des activités traditionnellement interdits aux femmes n&rsquo;est pas synonyme de se renier en tant que femme. Et inversement un homme qui décide de devenir sage-femme ou de prendre un congé parental n&rsquo;en est pas moins homme. Dans le temps, instituteur était un métier essentiellement masculin, de même que secrétaire.</p>
+<p>Ça a été beaucoup reproché aux féministes que de vouloir transformer les femmes en hommes. Dès qu&rsquo;on veut sortir de la case sociale dans laquelle on nous range, certains croient qu&rsquo;on veut absolument rentrer dans la case d&rsquo;en face.</p>
+<p>J&rsquo;ai écrit un petit truc là-dessus récemment : <a href="http://lesfessesdelacremiere.wordpress.com/2013/05/10/lexil-collectif-sur-venus/" rel="nofollow">l&rsquo;exil collectif sur Vénus</a></p>
+<p id="comment-like-4461" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?like_comment=4461&#038;_wpnonce=9de6d795dd" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-4461" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-audrenlerioual even depth-2 highlander-comment" id="li-comment-4462">
+		<article id="comment-4462" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://2.gravatar.com/avatar/2dc4acf46e895ecff988b18be842e15c?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn"><a href='http://lesfessesdelacremiere.wordpress.com' rel='external nofollow ugc' class='url'>audren</a></cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/#comment-4462"><time pubdate datetime="2013-06-07T08:29:16+02:00">
+					07/06/2013 à 8:29  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?replytocom=4462#respond' data-commentid="4462" data-postid="2109" data-belowelement="comment-4462" data-respondelement="respond" aria-label='Répondre à audren'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>erratum &#8211; avt-dernier §, lire &laquo;&nbsp;On a beaucoup reproché aux féministes de vouloir transformer&#8230;&nbsp;&raquo;</p>
+<p id="comment-like-4462" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?like_comment=4462&#038;_wpnonce=4fc66d8187" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-4462" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-4476">
+		<article id="comment-4476" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://0.gravatar.com/avatar/68f6fab7b57c931816ecfa5385a748b4?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn">lyly</cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/#comment-4476"><time pubdate datetime="2013-06-12T22:28:22+02:00">
+					12/06/2013 à 10:28  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?replytocom=4476#respond' data-commentid="4476" data-postid="2109" data-belowelement="comment-4476" data-respondelement="respond" aria-label='Répondre à lyly'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>C&rsquo;est toujours choquant le racisme latent mais il faut remettre les personnes dans leur époque, avec leur éducation, les informations dont ils avaient accès. L’œuvre d&rsquo;Agatha Christie pue d&rsquo;antisémitisme, pourtant elle savait finement analyser son époque mais elle n&rsquo;y a pas échappé.<br />
+C&rsquo;est dans l&rsquo;autobiographie de Simone de Beauvoir que j&rsquo;aie lu une très belle phrase : &laquo;&nbsp;on peut avoir des certitudes fausses&nbsp;&raquo;</p>
+<p id="comment-like-4476" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?like_comment=4476&#038;_wpnonce=7621d842e5" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-4476" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-4477">
+		<article id="comment-4477" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://1.gravatar.com/avatar/4beed307726b1ffbdd30dab06cdfe3cb?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn">Lène</cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/#comment-4477"><time pubdate datetime="2013-06-12T23:40:55+02:00">
+					12/06/2013 à 11:40  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?replytocom=4477#respond' data-commentid="4477" data-postid="2109" data-belowelement="comment-4477" data-respondelement="respond" aria-label='Répondre à Lène'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>Bonsoir,<br />
+quant à moi j&rsquo;ai lu &laquo;&nbsp;le Deuxième Sexe&nbsp;&raquo; au lycée, après &laquo;&nbsp;Mémoires d&rsquo;une Jeune Fille Rangée&nbsp;&raquo;, qui avait été un choc pour l&rsquo;adolescente un peu tourmentée que j&rsquo;étais.<br />
+J&rsquo;ai enfin pu mettre des concepts, des idées claires sur des choses vues et vécues, des sentiments, des situations, qui grâce à cet ouvrage ont fait sens. Pour moi ce fut capital. Le point de départ d&rsquo;autres réflexions, d&rsquo;autres pensées. Aussi vous ai-je trouvée un peu injuste. Oui, certains passages ont vieilli, des analyses se sont révélées être fausses. Mais beaucoup d&rsquo;entre elles restent vraies. Par exemple, l&rsquo;opposition nature/culture, immanence/transcendance associée à féminin/masculin est une idée structurante et fondatrice des inégalités de genre encore aujourd&rsquo;hui (cf Aldo Naouri encore récemment).<br />
+Personnellement je n&rsquo;ai pas souvenir d&rsquo;une pensée raciste dans son oeuvre, mais j&rsquo;ai pu oublier. Lorsqu&rsquo;on lit ses mémoires, on n&rsquo;en trouve pas trace en tous cas.</p>
+<p>Merci en tous cas d&rsquo;avoir fait la chronique d&rsquo;un essai que je trouve encore pertinent et utile par bien des côtés.</p>
+<p id="comment-like-4477" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?like_comment=4477&#038;_wpnonce=0a5e990e8f" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-4477" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="comment odd alt thread-even depth-1 highlander-comment" id="li-comment-4487">
+		<article id="comment-4487" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://0.gravatar.com/avatar/98c4c50e3d2b1346d48cf257c2c1b9dd?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn">Aurélie.n</cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/#comment-4487"><time pubdate datetime="2013-06-14T21:56:00+02:00">
+					14/06/2013 à 9:56  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?replytocom=4487#respond' data-commentid="4487" data-postid="2109" data-belowelement="comment-4487" data-respondelement="respond" aria-label='Répondre à Aurélie.n'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>Merci pour ce beau résumé qui est assorti d&rsquo;un commentaire critique très pertinent (chose suffisamment rare quand on connaît l&rsquo;aura de S. de Beauvoir).</p>
+<p>J&rsquo;ajouterai simplement quelques éléments à ce qui a été déroulé jusqu&rsquo;à présent. Le &laquo;&nbsp;Deuxième sexe&nbsp;&raquo; est totalement aberrant du point de vue de l&rsquo;anthropologie. Outre le fait que l&rsquo;auteure expose des théories déjà critiquées à son époque (comme l&rsquo;existence de sociétés matrilinéaires originelles, le culte universel de la &laquo;&nbsp;déesse-mère&nbsp;&raquo; ou l&rsquo;ignorance des &laquo;&nbsp;primitifs&nbsp;&raquo; qui méconnaîtraient le lien entre copulation et parturition), elle fait reposer l&rsquo;ensemble de son raisonnement sur une démarche évolutionniste qu&rsquo;elle conjugue, par le biais de circonvolutions intellectuelles surprenantes, avec une approche structuraliste. Intellectuellement, c&rsquo;est critiquable. </p>
+<p>On pourrait rajouter à cela qu&rsquo;à l&rsquo;époque de la rédaction de l&rsquo;ouvrage, il n&rsquo;existait aucune règle précise en termes de bibliographie ou de citations. Par conséquent, S. de Beauvoir propose un certain nombre de thèses, sans nécessairement préciser d&rsquo;où elles les tirent, ce qui peut effectivement donner l&rsquo;impression &laquo;&nbsp;qu&rsquo;elle ne prouve jamais ce qu&rsquo;elle avance&nbsp;&raquo;.  </p>
+<p>Cela dit, je vais me replonger dans la lecture du &laquo;&nbsp;Deuxième sexe&nbsp;&raquo;&#8230;certes, c&rsquo;est imparfait et parfois bancal. Malgré sa méthode improbable, elle écrit et dit des choses puissantes, vraiment puissantes.</p>
+<p id="comment-like-4487" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?like_comment=4487&#038;_wpnonce=82a71dc8fe" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-4487" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='https://cafaitgenre.org/2014/03/21/parler-du-feminisme-et-du-genre-a-des-enfants-et-des-ados/' rel='external nofollow ugc' class='url'>Parler du féminisme et du genre à des enfants et des ados | Genre !</a></p>
+	</li><!-- #comment-## -->
+	<li class="comment even thread-odd thread-alt depth-1 highlander-comment" id="li-comment-7444">
+		<article id="comment-7444" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://1.gravatar.com/avatar/76fc5a1c323e234b2a6ee33c603017e7?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn">Cass</cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/#comment-7444"><time pubdate datetime="2014-05-29T18:41:57+02:00">
+					29/05/2014 à 6:41  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?replytocom=7444#respond' data-commentid="7444" data-postid="2109" data-belowelement="comment-7444" data-respondelement="respond" aria-label='Répondre à Cass'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>@violemmenthumaine: &nbsp;&raquo; beaucoup de ses affirmations sont fausses du point de vue anthropologique&nbsp;&raquo; -&gt; Comme quoi par exemple?</p>
+<p>Sinon pour les commentaires qui affirment que Beauvoir est rasciste ou que l&rsquo;oeuvre est teinté de rascisme: faut arrêter de dire n&rsquo;importe quoi sérieux. Beauvoir a écrit ce livre suite à un voyage aux US où elle a vu la révolte noire s&rsquo;organiser ce qui l&rsquo;a beaucoup inspirée. Ensuite vous pouvez pas mettre ça en commentaire d&rsquo;un article ou y&rsquo;a 3 lignes plus haut la citation: , &laquo;&nbsp;Pour prouver l’infériorité de la femme, les antiféministes ont mis à contribution la science : biologie, psychologie expérimentale, etc.« L’éternel féminin » c’est l’homologue de « l’âme noire » et du « caractère juif ».&nbsp;&raquo; Ca fait limite troll tellement c&rsquo;est absurde et injustifié.</p>
+<p>Par contre je rejoins totalement la critique concernant l&rsquo;homosexualité.</p>
+<p id="comment-like-7444" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?like_comment=7444&#038;_wpnonce=875284c808" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-7444" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	<ul class="children">
+	<li class="comment byuser comment-author-violemmenthumaine odd alt depth-2 highlander-comment" id="li-comment-7565">
+		<article id="comment-7565" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://0.gravatar.com/avatar/f590e14cff1a8ba520d2feeb57ab5648?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn"><a href='http://violemmenthumaine.wordpress.com' rel='external nofollow ugc' class='url'>violemmenthumaine</a></cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/#comment-7565"><time pubdate datetime="2014-06-12T14:00:23+02:00">
+					12/06/2014 à 2:00  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?replytocom=7565#respond' data-commentid="7565" data-postid="2109" data-belowelement="comment-7565" data-respondelement="respond" aria-label='Répondre à violemmenthumaine'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>@ Cass: là tout de suite là maintenant je n&rsquo;ai pas le temps de chercher des sources biblio pour étayer ce que je vais dire et j&rsquo;en suis désolée.<br />
+En résumé Beauvoir reprend la mythologie du &laquo;&nbsp;matriarcat originel&nbsp;&raquo; en le présentant comme une conclusion anthropologique prouvée. Sauf que non: il n&rsquo;y a jamais eu de matriarcat au sein des sociétés humaines. (Ce qui s&rsquo;en rapproche le plus est la période de quelques siècles de l&rsquo;antiquité égyptienne ptoléméenne). Ce mythe, au sens propre du terme, est depuis longtemps considéré comme tel en anthropologie et archéologie mais perdure hélas via l&rsquo;instrumentalisation des statuaires callipyges et &#8211; surtout- la mé-compréhension de la matrilinéarité que beaucoup assimilent à un matriarcat. Si la plupart des sociétés matrilinéaires offrent en effet aux femmes des possibilités de statut social moins rarement et moins difficilement élevés que dans les sociétés patrilinéaires le pouvoir y appartient toujours aux hommes, (ceux du lignage de la mère au lieu de ceux du lignage du père pour les sociétés patrilinéaires). 🙂 🙂</p>
+<p id="comment-like-7565" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?like_comment=7565&#038;_wpnonce=ae7c004714" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-7565" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+	<li class="comment even thread-even depth-1 highlander-comment" id="li-comment-8293">
+		<article id="comment-8293" class="comment">
+			<footer class="clear">
+				<div class="comment-author vcard">
+					<span><img alt='' src='https://0.gravatar.com/avatar/9a5ae2b782c4056e866daa3aa51d96d7?s=44&#038;d=identicon&#038;r=G' class='avatar avatar-44' height='44' width='44' /></span>
+					<cite class="fn">Karōshi</cite>				</div><!-- .comment-author .vcard -->
+
+				<div class="comment-meta commentmetadata">
+					<a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/#comment-8293"><time pubdate datetime="2014-09-11T09:57:56+02:00">
+					11/09/2014 à 9:57  					</time></a>
+										<a rel='nofollow' class='comment-reply-link' href='https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?replytocom=8293#respond' data-commentid="8293" data-postid="2109" data-belowelement="comment-8293" data-respondelement="respond" aria-label='Répondre à Karōshi'>Réponse</a>				</div><!-- .comment-meta .commentmetadata -->
+			</footer>
+
+			<div class="comment-content">
+				<p>Bonjour, on me fait passer cette annonce sur une liste de diffusion et je pense que ça peut vous intéresser (désolé si ça peut passer pour du spam) :</p>
+<p>Parution le 14 octobre de Simone De Beauvoir aujourd&rsquo;hui par Roswitha Scholz<br />
+<a href="http://www.editionsbdl.com/fr/books/simone-de-beauvoir-aujourdhui/419/" rel="nofollow ugc">http://www.editionsbdl.com/fr/books/simone-de-beauvoir-aujourdhui/419/</a></p>
+<p id="comment-like-8293" data-liked=comment-not-liked class="comment-likes comment-not-liked"><a href="https://cafaitgenre.org/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/?like_comment=8293&#038;_wpnonce=e995c23e87" class="comment-like-link needs-login" rel="nofollow" data-blog="27116365"><span>J&#039;aime</span></a><span id="comment-like-count-8293" class="comment-like-feedback">J&#039;aime</span></p>
+							</div>
+
+		</article><!-- #comment-## -->
+
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='https://cafaitgenre.org/2014/09/15/slogans-4-mon-corps-est-a-moi/' rel='external nofollow ugc' class='url'>Slogans (4) Mon corps est à moi | Genre !</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='http://www.pearltrees.com/daphnechave/tpe/id12572604/item129228029' rel='external nofollow ugc' class='url'>TPE | Pearltrees</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='https://cafaitgenre.org/2014/11/17/quels-sont-les-rapports-entre-sexe-et-genre/' rel='external nofollow ugc' class='url'>Quels sont les rapports entre sexe et genre? | Genre !</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='http://www.pearltrees.com/lamediatheque/simone-beauvoir/id13885469/item141164168' rel='external nofollow ugc' class='url'>Simone de Beauvoir | Pearltrees</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='https://cafaitgenre.org/2015/06/22/petit-lexique-du-genre-2-feminite-masculinite-masculinite-hegemonique/' rel='external nofollow ugc' class='url'>Petit lexique du genre (2): féminité, masculinité, masculinité hégémonique | Genre !</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='http://www.pearltrees.com/gabigabi/genre/id12851483/item149699874' rel='external nofollow ugc' class='url'>Genre - Autour du sexe | Pearltrees</a></p>
+	</li><!-- #comment-## -->
+	<li class="post pingback">
+		<p>Pingback:  <a href='https://cafaitgenre.org/2016/02/22/aux-origines-du-genre-3-avant-le-genre/' rel='external nofollow ugc' class='url'>Aux origines du genre (3): avant le genre | Genre !</a></p>
+	</li><!-- #comment-## -->
+		</ol><!-- .commentlist -->
+
+		
+	
+	
+		<div id="respond" class="comment-respond">
+		<h3 id="reply-title" class="comment-reply-title">Votre commentaire <small><a rel="nofollow" id="cancel-comment-reply-link" href="/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/#respond" style="display:none;">Annuler la réponse.</a></small></h3><form action="https://cafaitgenre.org/wp-comments-post.php" method="post" id="commentform" class="comment-form"><input type="hidden" id="highlander_comment_nonce" name="highlander_comment_nonce" value="647d1c6fe3" /><input type="hidden" name="_wp_http_referer" value="/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/" />
+<input type="hidden" name="hc_post_as" id="hc_post_as" value="guest" />
+
+<div class="comment-form-field comment-textarea">
+	<label for="comment">Entrez votre commentaire...</label>
+	<div id="comment-form-comment"><textarea id="comment" name="comment" title="Entrez votre commentaire..."></textarea></div>
+</div>
+
+<div id="comment-form-identity">
+	<div id="comment-form-nascar">
+		<p>Entrez vos coordonnées ci-dessous ou cliquez sur une icône pour vous connecter:</p>
+		<ul>
+			<li class="selected" style="display:none;">
+				<a href="#comment-form-guest" id="postas-guest" class="nascar-signin-link"
+                   title="Connexion avec Visiteur">
+									</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:WordPress.com" id="postas-wordpress" class="nascar-signin-link"
+                   title="Connexion avec WordPress.com">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Twitter" id="postas-twitter" class="nascar-signin-link"
+                   title="Connexion avec Twitter">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg>				</a>
+			</li>
+			<li>
+				<a href="#comment-form-load-service:Facebook" id="postas-facebook" class="nascar-signin-link"
+                   title="Connexion avec Facebook">
+					<svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg>				</a>
+			</li>
+		</ul>
+	</div>
+
+	<div id="comment-form-guest" class="comment-form-service selected">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+<a href="https://gravatar.com/site/signup/" target="_blank">				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Gravatar" width="25" class="no-grav" />
+</a>			</div>
+
+				<div class="comment-form-fields">
+				<div class="comment-form-field comment-form-email">
+					<label for="email">E-mail <span class="required">(obligatoire)</span> <span class="nopublish">(adresse strictement confidentielle)</span></label>
+					<div class="comment-form-input"><input id="email" name="email" type="email" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-author">
+					<label for="author">Nom <span class="required">(obligatoire)</span></label>
+					<div class="comment-form-input"><input id="author" name="author" type="text" value="" /></div>
+				</div>
+				<div class="comment-form-field comment-form-url">
+					<label for="url">Site web</label>
+					<div class="comment-form-input"><input id="url" name="url" type="url" value="" /></div>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+
+	<div id="comment-form-wordpress" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Logo WordPress.com" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="wp_avatar" id="wordpress-avatar" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_user_id" id="wordpress-user_id" class="comment-meta-wordpress" value="" />
+				<input type="hidden" name="wp_access_token" id="wordpress-access_token" class="comment-meta-wordpress" value="" />
+						<p class="comment-form-posting-as pa-wordpress">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte WordPress.com.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'wordpress' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#0087be" d="M12.158 12.786l-2.698 7.84c.806.236 1.657.365 2.54.365 1.047 0 2.05-.18 2.986-.51-.024-.037-.046-.078-.065-.123l-2.762-7.57zM3.008 12c0 3.56 2.07 6.634 5.068 8.092L3.788 8.342c-.5 1.117-.78 2.354-.78 3.658zm15.06-.454c0-1.112-.398-1.88-.74-2.48-.456-.74-.883-1.368-.883-2.11 0-.825.627-1.595 1.51-1.595.04 0 .078.006.116.008-1.598-1.464-3.73-2.36-6.07-2.36-3.14 0-5.904 1.613-7.512 4.053.21.008.41.012.58.012.94 0 2.395-.114 2.395-.114.484-.028.54.684.057.74 0 0-.487.058-1.03.086l3.275 9.74 1.968-5.902-1.4-3.838c-.485-.028-.944-.085-.944-.085-.486-.03-.43-.77.056-.742 0 0 1.484.114 2.368.114.94 0 2.397-.114 2.397-.114.486-.028.543.684.058.74 0 0-.488.058-1.03.086l3.25 9.665.897-2.997c.456-1.17.684-2.137.684-2.907zm1.82-3.86c.04.286.06.593.06.924 0 .912-.17 1.938-.683 3.22l-2.746 7.94c2.672-1.558 4.47-4.454 4.47-7.77 0-1.564-.4-3.033-1.1-4.314zM12 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-googleplus" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Photo Google" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="googleplus_avatar" id="googleplus-avatar" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_user_id" id="googleplus-user_id" class="comment-meta-googleplus" value="" />
+				<input type="hidden" name="googleplus_access_token" id="googleplus-access_token" class="comment-meta-googleplus" value="" />
+						<p class="comment-form-posting-as pa-googleplus">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Google.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'googleplus' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" x="0px" y="0px" viewBox="0 0 60 60" ><path fill="#519bf7" d="M56.3,30c0,-1.6 -0.2,-3.4 -0.6,-5h-3.1H42.2H30v10.6h14.8C44,39.3 42,42 39.1,43.9l8.8,6.8C53,46 56.3,39 56.3,30z" /><path fill="#3db366" d="M30,57.5c6.7,0 13.1,-2.4 17.9,-6.8l-8.8,-6.8c-2.5,1.6 -5.6,2.4 -9.1,2.4c-7.2,0 -13.3,-4.7 -15.4,-11.2l-9.3,7.1C9.8,51.3 19.1,57.5 30,57.5z" /><path fill="#fdc600" d="M5.3,42.2l9.3,-7.1c-0.5,-1.6 -0.8,-3.3 -0.8,-5.1s0.3,-3.5 0.8,-5.1l-9.3,-7.1C3.5,21.5 2.5,25.6 2.5,30S3.5,38.5 5.3,42.2z" /><path fill="#f15b44" d="M40.1,17.4l8,-8C43.3,5.1 37,2.5 30,2.5C19.1,2.5 9.8,8.7 5.3,17.8l9.3,7.1c2.1,-6.5 8.2,-11.1 15.4,-11.1C33.9,13.7 37.4,15.1 40.1,17.4z" /></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-twitter" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Image Twitter" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="twitter_avatar" id="twitter-avatar" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_user_id" id="twitter-user_id" class="comment-meta-twitter" value="" />
+				<input type="hidden" name="twitter_access_token" id="twitter-access_token" class="comment-meta-twitter" value="" />
+						<p class="comment-form-posting-as pa-twitter">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Twitter.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'twitter' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#1DA1F2" d="M22.23 5.924c-.736.326-1.527.547-2.357.646.847-.508 1.498-1.312 1.804-2.27-.793.47-1.67.812-2.606.996C18.325 4.498 17.258 4 16.078 4c-2.266 0-4.103 1.837-4.103 4.103 0 .322.036.635.106.935-3.41-.17-6.433-1.804-8.457-4.287-.353.607-.556 1.312-.556 2.064 0 1.424.724 2.68 1.825 3.415-.673-.022-1.305-.207-1.86-.514v.052c0 1.988 1.415 3.647 3.293 4.023-.344.095-.707.145-1.08.145-.265 0-.522-.026-.773-.074.522 1.63 2.038 2.817 3.833 2.85-1.404 1.1-3.174 1.757-5.096 1.757-.332 0-.66-.02-.98-.057 1.816 1.164 3.973 1.843 6.29 1.843 7.547 0 11.675-6.252 11.675-11.675 0-.178-.004-.355-.012-.53.802-.578 1.497-1.3 2.047-2.124z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+	<div id="comment-form-facebook" class="comment-form-service">
+		<div class="comment-form-padder">
+			<div class="comment-form-avatar">
+				<img src="https://1.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=25&amp;d=identicon&amp;forcedefault=y&amp;r=G" alt="Photo Facebook" width="25" class="no-grav" />
+			</div>
+
+				<div class="comment-form-fields">
+				<input type="hidden" name="fb_avatar" id="facebook-avatar" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_user_id" id="facebook-user_id" class="comment-meta-facebook" value="" />
+				<input type="hidden" name="fb_access_token" id="facebook-access_token" class="comment-meta-facebook" value="" />
+						<p class="comment-form-posting-as pa-facebook">
+			<strong></strong>
+			Vous commentez à l’aide de votre compte Facebook.			<span class="comment-form-log-out">
+				(&nbsp;<a href="javascript:HighlanderComments.doExternalLogout( 'facebook' );">Déconnexion</a>&nbsp;/&nbsp;
+				<a href="#" onclick="javascript:HighlanderComments.switchAccount();return false;">Changer</a>&nbsp;)
+			</span>
+			<span class="pa-icon"><svg xmlns="http://www.w3.org/2000/svg" role="presentation" viewBox="0 0 24 24" ><rect x="0" fill="none" width="24" height="24"/><g><path fill="#3B5998" d="M20.007 3H3.993C3.445 3 3 3.445 3 3.993v16.013c0 .55.445.994.993.994h8.62v-6.97H10.27V11.31h2.346V9.31c0-2.325 1.42-3.59 3.494-3.59.993 0 1.847.073 2.096.106v2.43h-1.438c-1.128 0-1.346.537-1.346 1.324v1.734h2.69l-.35 2.717h-2.34V21h4.587c.548 0 .993-.445.993-.993V3.993c0-.548-.445-.993-.993-.993z"/></g></svg></span>
+		</p>
+					</div>
+	
+		</div>
+	</div>
+
+
+	<div id="comment-form-load-service" class="comment-form-service">
+		<div class="comment-form-posting-as-cancel"><a href="javascript:HighlanderComments.cancelExternalWindow();">Annuler</a></div>
+		<p>Connexion à %s</p>
+	</div>
+
+</div>
+
+<script type="text/javascript">
+var highlander_expando_javascript = function(){
+	var input = document.createElement( 'input' ),
+	    comment = jQuery( '#comment' );
+
+	if ( 'placeholder' in input ) {
+		comment.attr( 'placeholder', jQuery( '.comment-textarea label' ).remove().text() );
+	}
+
+	// Expando Mode: start small, then auto-resize on first click + text length
+	jQuery( '#comment-form-identity' ).hide();
+	jQuery( '#comment-form-subscribe' ).hide();
+	jQuery( '#commentform .form-submit' ).hide();
+
+	comment.css( { 'height':'10px' } ).one( 'focus', function() {
+		var timer = setInterval( HighlanderComments.resizeCallback, 10 )
+		jQuery( this ).animate( { 'height': HighlanderComments.initialHeight } ).delay( 100 ).queue( function(n) { clearInterval( timer ); HighlanderComments.resizeCallback(); n(); } );
+		jQuery( '#comment-form-identity' ).slideDown();
+		jQuery( '#comment-form-subscribe' ).slideDown();
+		jQuery( '#commentform .form-submit' ).slideDown();
+	});
+}
+jQuery(document).ready( highlander_expando_javascript );
+</script>
+
+<div id="comment-form-subscribe">
+	<p class="comment-subscription-form"><input type="checkbox" name="subscribe" id="subscribe" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-label" for="subscribe" style="display: inline;">Avertissez-moi par e-mail des nouveaux commentaires.</label></p><p class="post-subscription-form"><input type="checkbox" name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto;"/> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog"  style="display: inline;">Avertissez-moi par e-mail des nouveaux articles.</label></p></div>
+
+
+
+
+<p class="form-submit"><input name="submit" type="submit" id="comment-submit" class="submit" value="Laisser un commentaire" /> <input type='hidden' name='comment_post_ID' value='2109' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+</p><p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="14bae29c1c" /></p>
+<input type="hidden" name="genseq" value="1589683606" />
+<p style="display: none;"><input type="hidden" id="ak_js" name="ak_js" value="46"/></p></form>	</div><!-- #respond -->
+	<div style="clear: both"></div>
+</div><!-- #comments .comments-area -->
+
+			
+			</div><!-- #content .site-content -->
+		</div><!-- #primary .content-area -->
+
+
+		</div><!-- #main .site-main -->
+
+		
+		<div id="secondary" class="widget-area" role="complementary">
+						<aside id="search-3" class="widget widget_search">	<form method="get" id="searchform" action="https://cafaitgenre.org/" role="search">
+		<label for="s" class="assistive-text">Recherche</label>
+		<input type="text" class="field" name="s" value="" id="s" placeholder="Recherche &hellip;" />
+		<input type="submit" class="submit" name="submit" id="searchsubmit" value="Recherche" />
+	</form>
+</aside><aside id="media_image-3" class="widget widget_media_image"><h1 class="widget-title">Le féminisme (en 7 slogans et citations)</h1><style>.widget.widget_media_image { overflow: hidden; }.widget.widget_media_image img { height: auto; max-width: 100%; }</style><div style="width: 335px" class="wp-caption alignnone"><a href="http://www.lelombard.com/albums-fiche-bd/petite-bedetheque-savoirs/feminisme-7-slogans-et-citations,3502.html"><img class="image alignnone" src="http://bdi.dlpdomain.com/album/9782803637409/couv/I325x456/petite-bedetheque-savoirs-tome-11-feminisme-7-slogans-et-citations.jpg" alt="" width="325" height="456" /></a><p class="wp-caption-text">Paru en octobre 2016 aux éditions du Lombard (cliquer sur l'image)</p></div></aside><aside id="linkcat-542119702" class="widget widget_links"><h1 class="widget-title">Revue de presse</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="https://cafaitgenre.org/2016/12/11/on-parle-de-mon-livre-sur-les-interwebz/">On parle de mon livre sur les interwebz</a></li>
+
+	</ul>
+</aside>
+<aside id="categories-3" class="widget widget_categories"><h1 class="widget-title">Genres d&rsquo;articles</h1>		<ul>
+				<li class="cat-item cat-item-241915657"><a href="https://cafaitgenre.org/category/arguments-anti-feministes/">Arguments anti-féministes</a>
+</li>
+	<li class="cat-item cat-item-245564688"><a href="https://cafaitgenre.org/category/matiere-a-reflechir-des-cles-pour-comprendre/concepts-feministes/">Concepts féministes</a>
+</li>
+	<li class="cat-item cat-item-79501"><a href="https://cafaitgenre.org/category/coups-de-gueule/">Coups de gueule</a>
+</li>
+	<li class="cat-item cat-item-384303"><a href="https://cafaitgenre.org/category/dans-ma-bibliotheque/">Dans ma bibliothèque</a>
+</li>
+	<li class="cat-item cat-item-66367270"><a href="https://cafaitgenre.org/category/le-genre-dans-lactualite/genre-et-politique/">Genre et politique</a>
+</li>
+	<li class="cat-item cat-item-158877146"><a href="https://cafaitgenre.org/category/le-genre-dans-lactualite/" title="Réactions à des sujets d&#039;actualité, regard sur l&#039;actualité du point de vue du genre">Le genre dans l&#039;actualité</a>
+</li>
+	<li class="cat-item cat-item-64278490"><a href="https://cafaitgenre.org/category/matiere-a-reflechir-des-cles-pour-comprendre/" title="Questionnements, ressources et éclairages sur les questions liées au genre, pour rester curieux et attentifs, et pour se donner les moyens de réfléchir de manière éclairée!">Matière à réfléchir / Des clés pour comprendre</a>
+</li>
+	<li class="cat-item cat-item-2773730"><a href="https://cafaitgenre.org/category/mobilisations/">Mobilisations</a>
+</li>
+	<li class="cat-item cat-item-330146390"><a href="https://cafaitgenre.org/category/dans-ma-bibliotheque/podcasts-dans-ma-bibliotheque/">Podcasts</a>
+</li>
+	<li class="cat-item cat-item-6270"><a href="https://cafaitgenre.org/category/publications/">Publications</a>
+</li>
+	<li class="cat-item cat-item-60696323"><a href="https://cafaitgenre.org/category/reflexions-feministes/">Réflexions féministes</a>
+</li>
+	<li class="cat-item cat-item-64278403"><a href="https://cafaitgenre.org/category/representations-du-genre/" title="Essai de décryptage des différents types de discours tenus sue le féminin et le masculin dans les médias (popculture, publicité...)">Représentations du genre</a>
+</li>
+	<li class="cat-item cat-item-259679739"><a href="https://cafaitgenre.org/category/matiere-a-reflechir-des-cles-pour-comprendre/slogans-expliques/">Slogans expliqués</a>
+</li>
+	<li class="cat-item cat-item-1"><a href="https://cafaitgenre.org/category/uncategorized/">Uncategorized</a>
+</li>
+		</ul>
+			</aside>		<aside id="recent-posts-3" class="widget widget_recent_entries">		<h1 class="widget-title">Articles récents</h1>		<ul>
+											<li>
+					<a href="https://cafaitgenre.org/2017/11/09/un-livre-peut-en-cacher-un-autre/">Un livre peut en cacher un autre</a>
+									</li>
+											<li>
+					<a href="https://cafaitgenre.org/2017/10/19/realiser-que-moi-aussi/">Réaliser: &laquo;&nbsp;moi aussi&nbsp;&raquo;</a>
+									</li>
+											<li>
+					<a href="https://cafaitgenre.org/2017/05/29/travail-militant-travail-emotionnel/">Travail militant, travail émotionnel</a>
+									</li>
+											<li>
+					<a href="https://cafaitgenre.org/2017/04/21/des-urnes-et-du-papier/">Des urnes et du papier</a>
+									</li>
+											<li>
+					<a href="https://cafaitgenre.org/2017/04/07/le-genre-dans-les-discours-de-la-presidentielle/">Le genre dans les discours de la Présidentielle</a>
+									</li>
+					</ul>
+		</aside><aside id="linkcat-158883272" class="widget widget_links"><h1 class="widget-title">Liens - Autour du genre</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://allodoxia.blog.lemonde.fr/" title="Observatoire critique de la vulgarisation (de nombreux articles sur le sexe et le genre)" target="_blank">Allodoxia</a></li>
+<li><a href="http://labogenere.fr/" title="Diffuser et expliquer les études de genre (laboratoire junior auquel j&rsquo;appartiens)" target="_blank">GenERe (Genre: Epistémologie &amp; Recherches)</a></li>
+<li><a href="http://penser-le-genre-catholique.over-blog.com/" target="_blank">Penser le genre catholique</a></li>
+
+	</ul>
+</aside>
+<aside id="linkcat-67793" class="widget widget_links"><h1 class="widget-title">Liens - Féminismes</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://www.acontrario.net/" target="_blank">A Contrario</a></li>
+<li><a href="http://antisexisme.wordpress.com/" title="Lutter contre le sexisme grâce aux sciences humaines" target="_blank">Antisexisme</a></li>
+<li><a href="http://egalitariste.net/" target="_blank">Égalitariste</a></li>
+<li><a href="http://www.crepegeorgette.com/" target="_blank">Crêpe Georgette</a></li>
+<li><a href="http://dariamarx.com/" target="_blank">Daria Marx</a></li>
+<li><a href="http://www.scoop.it/t/feminisme" title="Rassemble presque quotidiennement des articles en français et en anglais sur le thème du féminisme" target="_blank">Féminisme sur Scoop.it</a></li>
+<li><a href="http://www.feministfrequency.com/" title="« Conversations with Pop Culture » – vidéos, la plupart sont traduites en français" target="_blank">Feminist Frequency</a></li>
+<li><a href="http://blog.francetvinfo.fr/ladies-and-gentlemen/" target="_blank">Ladies and Gentlemen</a></li>
+<li><a href="http://www.dechainees.fr/" target="_blank">Les déchaînées</a></li>
+<li><a href="http://lesquestionscomposent.fr/" target="_blank">Les questions composent</a></li>
+<li><a href="http://www.sexysoucis.fr/" target="_blank">Sexy souciS</a></li>
+<li><a href="http://www.toutalego.com/" target="_blank">Tout à l&#039;ego</a></li>
+
+	</ul>
+</aside>
+<aside id="linkcat-219169176" class="widget widget_links"><h1 class="widget-title">Liens - sites d'infos</h1>
+	<ul class='xoxo blogroll'>
+<li><a href="http://www.slate.fr/genres" title="Le fil genre de Slate" target="_blank">Classé X ou Y (Slate)</a></li>
+<li><a href="http://www.lesnouvellesnews.fr/" title="“L’autre genre d’info”" target="_blank">Les Nouvelles News</a></li>
+<li><a href="http://rue89.nouvelobs.com/rue69" target="_blank">Rue 69</a></li>
+<li><a href="http://blogs.lexpress.fr/sexpress/" title="Mettez le doigt dans l&rsquo;engrenage du genre" target="_blank">Sexpress</a></li>
+
+	</ul>
+</aside>
+<aside id="archives-3" class="widget widget_archive"><h1 class="widget-title">Archives</h1>		<label class="screen-reader-text" for="archives-dropdown-3">Archives</label>
+		<select id="archives-dropdown-3" name="archive-dropdown">
+			
+			<option value="">Sélectionner un mois</option>
+				<option value='https://cafaitgenre.org/2017/11/'> novembre 2017 </option>
+	<option value='https://cafaitgenre.org/2017/10/'> octobre 2017 </option>
+	<option value='https://cafaitgenre.org/2017/05/'> mai 2017 </option>
+	<option value='https://cafaitgenre.org/2017/04/'> avril 2017 </option>
+	<option value='https://cafaitgenre.org/2017/02/'> février 2017 </option>
+	<option value='https://cafaitgenre.org/2016/12/'> décembre 2016 </option>
+	<option value='https://cafaitgenre.org/2016/11/'> novembre 2016 </option>
+	<option value='https://cafaitgenre.org/2016/10/'> octobre 2016 </option>
+	<option value='https://cafaitgenre.org/2016/08/'> août 2016 </option>
+	<option value='https://cafaitgenre.org/2016/06/'> juin 2016 </option>
+	<option value='https://cafaitgenre.org/2016/05/'> mai 2016 </option>
+	<option value='https://cafaitgenre.org/2016/04/'> avril 2016 </option>
+	<option value='https://cafaitgenre.org/2016/03/'> mars 2016 </option>
+	<option value='https://cafaitgenre.org/2016/02/'> février 2016 </option>
+	<option value='https://cafaitgenre.org/2016/01/'> janvier 2016 </option>
+	<option value='https://cafaitgenre.org/2015/09/'> septembre 2015 </option>
+	<option value='https://cafaitgenre.org/2015/07/'> juillet 2015 </option>
+	<option value='https://cafaitgenre.org/2015/06/'> juin 2015 </option>
+	<option value='https://cafaitgenre.org/2015/05/'> mai 2015 </option>
+	<option value='https://cafaitgenre.org/2015/04/'> avril 2015 </option>
+	<option value='https://cafaitgenre.org/2015/02/'> février 2015 </option>
+	<option value='https://cafaitgenre.org/2015/01/'> janvier 2015 </option>
+	<option value='https://cafaitgenre.org/2014/12/'> décembre 2014 </option>
+	<option value='https://cafaitgenre.org/2014/11/'> novembre 2014 </option>
+	<option value='https://cafaitgenre.org/2014/09/'> septembre 2014 </option>
+	<option value='https://cafaitgenre.org/2014/08/'> août 2014 </option>
+	<option value='https://cafaitgenre.org/2014/07/'> juillet 2014 </option>
+	<option value='https://cafaitgenre.org/2014/06/'> juin 2014 </option>
+	<option value='https://cafaitgenre.org/2014/05/'> mai 2014 </option>
+	<option value='https://cafaitgenre.org/2014/04/'> avril 2014 </option>
+	<option value='https://cafaitgenre.org/2014/03/'> mars 2014 </option>
+	<option value='https://cafaitgenre.org/2014/02/'> février 2014 </option>
+	<option value='https://cafaitgenre.org/2014/01/'> janvier 2014 </option>
+	<option value='https://cafaitgenre.org/2013/12/'> décembre 2013 </option>
+	<option value='https://cafaitgenre.org/2013/11/'> novembre 2013 </option>
+	<option value='https://cafaitgenre.org/2013/09/'> septembre 2013 </option>
+	<option value='https://cafaitgenre.org/2013/08/'> août 2013 </option>
+	<option value='https://cafaitgenre.org/2013/07/'> juillet 2013 </option>
+	<option value='https://cafaitgenre.org/2013/06/'> juin 2013 </option>
+	<option value='https://cafaitgenre.org/2013/05/'> mai 2013 </option>
+	<option value='https://cafaitgenre.org/2013/04/'> avril 2013 </option>
+	<option value='https://cafaitgenre.org/2013/03/'> mars 2013 </option>
+	<option value='https://cafaitgenre.org/2013/02/'> février 2013 </option>
+	<option value='https://cafaitgenre.org/2013/01/'> janvier 2013 </option>
+	<option value='https://cafaitgenre.org/2012/12/'> décembre 2012 </option>
+	<option value='https://cafaitgenre.org/2012/11/'> novembre 2012 </option>
+	<option value='https://cafaitgenre.org/2012/10/'> octobre 2012 </option>
+	<option value='https://cafaitgenre.org/2012/09/'> septembre 2012 </option>
+	<option value='https://cafaitgenre.org/2012/08/'> août 2012 </option>
+	<option value='https://cafaitgenre.org/2012/07/'> juillet 2012 </option>
+	<option value='https://cafaitgenre.org/2012/06/'> juin 2012 </option>
+	<option value='https://cafaitgenre.org/2012/05/'> mai 2012 </option>
+	<option value='https://cafaitgenre.org/2012/04/'> avril 2012 </option>
+	<option value='https://cafaitgenre.org/2012/03/'> mars 2012 </option>
+	<option value='https://cafaitgenre.org/2012/02/'> février 2012 </option>
+	<option value='https://cafaitgenre.org/2012/01/'> janvier 2012 </option>
+	<option value='https://cafaitgenre.org/2011/12/'> décembre 2011 </option>
+	<option value='https://cafaitgenre.org/2011/11/'> novembre 2011 </option>
+	<option value='https://cafaitgenre.org/2011/10/'> octobre 2011 </option>
+	<option value='https://cafaitgenre.org/2011/09/'> septembre 2011 </option>
+
+		</select>
+
+<script type="text/javascript">
+/* <![CDATA[ */
+(function() {
+	var dropdown = document.getElementById( "archives-dropdown-3" );
+	function onSelectChange() {
+		if ( dropdown.options[ dropdown.selectedIndex ].value !== '' ) {
+			document.location.href = this.options[ this.selectedIndex ].value;
+		}
+	}
+	dropdown.onchange = onSelectChange;
+})();
+/* ]]> */
+</script>
+
+		</aside><aside id="facebook-likebox-3" class="widget widget_facebook_likebox"><h1 class="widget-title"><a href="https://www.facebook.com/cafaitgenreleblog/">Veille sur le genre et les féminismes</a></h1>		<div id="fb-root"></div>
+		<div class="fb-page" data-href="https://www.facebook.com/cafaitgenreleblog/" data-width="340"  data-height="130" data-hide-cover="false" data-show-facepile="false" data-tabs="false" data-hide-cta="false" data-small-header="false">
+		<div class="fb-xfbml-parse-ignore"><blockquote cite="https://www.facebook.com/cafaitgenreleblog/"><a href="https://www.facebook.com/cafaitgenreleblog/">Veille sur le genre et les féminismes</a></blockquote></div>
+		</div>
+		</aside><aside id="text-4" class="widget widget_text"><h1 class="widget-title">S&rsquo;abonner</h1>			<div class="textwidget"><a href="http://twitter.com/a_c_husson"><img src="https://cafaitgenre.files.wordpress.com/2014/01/twitter.png" alt="twitter" width="40" height="40" class="aligncenter size-full wp-image-2359" /></a>
+<a href="https://www.facebook.com/pages/Genre/258912184140660"><img src="https://cafaitgenre.files.wordpress.com/2014/01/facebook.png" alt="facebook" width="40" height="40" class="aligncenter size-full wp-image-2358" /></a><a href="https://cafaitgenre.org/feed/"><img src="https://cafaitgenre.files.wordpress.com/2014/01/rss.png" alt="rss" width="40" height="40" class="aligncenter size-full wp-image-2360" /></a></div>
+		</aside><aside id="text-3" class="widget widget_text"><h1 class="widget-title">Conditions de partage </h1>			<div class="textwidget"><p><a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/3.0/fr/"><img alt="Licence Creative Commons" style="border-width:0;" src="https://i1.wp.com/i.creativecommons.org/l/by-nc-nd/3.0/fr/88x31.png" class="aligncenter" /></a></p>
+</div>
+		</aside>			<div id="atatags-286348-5ec0a5962f7cc"></div>
+			
+			<script>
+				__ATA.cmd.push(function() {
+					__ATA.initDynamicSlot({
+						id: 'atatags-286348-5ec0a5962f7cc',
+						location: 140,
+						formFactor: '003',
+						label: {
+							text: 'Publicités',
+						},
+						creative: {
+							reportAd: {
+								text: 'Report this Ad',
+							},
+							privacySettings: {
+								text: 'Paramètres de confidentialité',
+							}
+						}
+					});
+				});
+			</script>		</div><!-- #secondary .widget-area -->
+
+		<footer id="colophon" class="site-footer" role="contentinfo">
+			<div class="site-info">
+								<a href="https://wordpress.com/?ref=footer_blog" rel="nofollow">Propulsé par WordPress.com.</a>
+				
+							</div><!-- .site-info -->
+		</footer><!-- #colophon .site-footer -->
+	</div><!-- #page .hfeed .site -->
+</div><!-- #wrapper -->
+<!--  -->
+<script src='//0.gravatar.com/js/gprofiles.js?ver=202020y'></script>
+<script>
+var WPGroHo = {"my_hash":""};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/wp-content/mu-plugins/gravatar-hovercards/wpgroho.js?m=1380573781h'></script>
+
+	<script>
+		//initialize and attach hovercards to all gravatars
+		jQuery( document ).ready( function( $ ) {
+
+			if (typeof Gravatar === "undefined"){
+				return;
+			}
+
+			if ( typeof Gravatar.init !== "function" ) {
+				return;
+			}			
+
+			Gravatar.profile_cb = function( hash, id ) {
+				WPGroHo.syncProfileData( hash, id );
+			};
+			Gravatar.my_hash = WPGroHo.my_hash;
+			Gravatar.init( 'body', '#wp-admin-bar-my-account' );
+		});
+	</script>
+
+		<div style="display:none">
+	<div class="grofile-hash-map-f590e14cff1a8ba520d2feeb57ab5648">
+	</div>
+	<div class="grofile-hash-map-1565d053caaa03b46c82a1c195654627">
+	</div>
+	<div class="grofile-hash-map-2dc4acf46e895ecff988b18be842e15c">
+	</div>
+	<div class="grofile-hash-map-68f6fab7b57c931816ecfa5385a748b4">
+	</div>
+	<div class="grofile-hash-map-4beed307726b1ffbdd30dab06cdfe3cb">
+	</div>
+	<div class="grofile-hash-map-98c4c50e3d2b1346d48cf257c2c1b9dd">
+	</div>
+	<div class="grofile-hash-map-76fc5a1c323e234b2a6ee33c603017e7">
+	</div>
+	<div class="grofile-hash-map-9a5ae2b782c4056e866daa3aa51d96d7">
+	</div>
+	</div>
+<script>
+var HighlanderComments = {"loggingInText":"Connexion\u2026","submittingText":"Publication d\u2019un Commentaire\u2026","postCommentText":"Laisser un commentaire","connectingToText":"Connexion \u00e0 %s","commentingAsText":"%1$s: Vous commentez \u00e0 l\u2019aide de votre compte %2$s.","logoutText":"Se d\u00e9connecter","loginText":"Se connecter","connectURL":"https:\/\/cafaitgenre.wordpress.com\/public.api\/connect\/?action=request&domain=cafaitgenre.org","logoutURL":"https:\/\/cafaitgenre.wordpress.com\/wp-login.php?action=logout&_wpnonce=f37b16d984","homeURL":"https:\/\/cafaitgenre.org\/","postID":"2109","gravDefault":"identicon","enterACommentError":"Entrez un commentaire","enterEmailError":"Veuillez entrer votre adresse mail","invalidEmailError":"Adresse email invalide","enterAuthorError":"Veuillez entrer votre nom","gravatarFromEmail":"L\u2019image s\u2019affiche lorsque vous postez un commentaire. Cliquez pour personnaliser.","logInToExternalAccount":"Connectez-vous pour utiliser les informations li\u00e9es \u00e0 un de ces comptes:","change":"Changer","changeAccount":"Changer de compte","comment_registration":"","userIsLoggedIn":"","isJetpack":"","text_direction":"ltr"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??/wp-content/js/jquery/jquery.autoresize.js,/wp-content/mu-plugins/highlander-comments/script.js?m=1573483029j'></script>
+		<!-- CCPA [start] -->
+		<script type="text/javascript">
+			( function () {
+
+				var setupPrivacy = function() {
+
+					document.addEventListener( 'DOMContentLoaded', function() {
+
+						// Minimal Mozilla Cookie library
+						// https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie/Simple_document.cookie_framework
+						var cookieLib = window.cookieLib = {getItem:function(e){return e&&decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*"+encodeURIComponent(e).replace(/[\-\.\+\*]/g,"\\$&")+"\\s*\\=\\s*([^;]*).*$)|^.*$"),"$1"))||null},setItem:function(e,o,n,t,r,i){if(!e||/^(?:expires|max\-age|path|domain|secure)$/i.test(e))return!1;var c="";if(n)switch(n.constructor){case Number:c=n===1/0?"; expires=Fri, 31 Dec 9999 23:59:59 GMT":"; max-age="+n;break;case String:c="; expires="+n;break;case Date:c="; expires="+n.toUTCString()}return"rootDomain"!==r&&".rootDomain"!==r||(r=(".rootDomain"===r?".":"")+document.location.hostname.split(".").slice(-2).join(".")),document.cookie=encodeURIComponent(e)+"="+encodeURIComponent(o)+c+(r?"; domain="+r:"")+(t?"; path="+t:"")+(i?"; secure":""),!0}};
+
+						var setDefaultOptInCookie = function() {
+							var value = '1YNN';
+							var domain = '.wordpress.com' === location.hostname.slice( -14 ) ? '.rootDomain' : location.hostname;
+							cookieLib.setItem( 'usprivacy', value, 365 * 24 * 60 * 60, '/', domain );
+						};
+
+						var setCcpaAppliesCookie = function( value ) {
+							var domain = '.wordpress.com' === location.hostname.slice( -14 ) ? '.rootDomain' : location.hostname;
+							cookieLib.setItem( 'ccpa_applies', value, 24 * 60 * 60, '/', domain );
+						}
+
+						var maybeCallDoNotSellCallback = function() {
+							if ( 'function' === typeof window.doNotSellCallback ) {
+								return window.doNotSellCallback();
+							}
+
+							return false;
+						}
+
+						var usprivacyCookie = cookieLib.getItem( 'usprivacy' );
+
+						if ( null !== usprivacyCookie ) {
+							maybeCallDoNotSellCallback();
+							return;
+						}
+
+						var ccpaCookie = cookieLib.getItem( 'ccpa_applies' );
+
+						if ( null === ccpaCookie ) {
+
+							var request = new XMLHttpRequest();
+							request.open( 'GET', 'https://public-api.wordpress.com/geo/', true );
+
+							request.onreadystatechange = function () {
+								if ( 4 === this.readyState ) {
+									if ( 200 === this.status ) {
+
+										var data = JSON.parse( this.response );
+										var ccpa_applies = data['region'] && data['region'].toLowerCase() === 'california';
+
+										setCcpaAppliesCookie( ccpa_applies );
+
+										if ( ccpa_applies ) {
+											if ( maybeCallDoNotSellCallback() ) {
+												setDefaultOptInCookie();
+											}
+										}
+									} else {
+										setCcpaAppliesCookie( true );
+										if ( maybeCallDoNotSellCallback() ) {
+											setDefaultOptInCookie();
+										}
+									}
+								}
+							};
+
+							request.send();
+						} else {
+							if ( ccpaCookie === 'true' ) {
+								if ( maybeCallDoNotSellCallback() ) {
+									setDefaultOptInCookie();
+								}
+							}
+						}
+					} );
+				};
+
+				if ( window.defQueue && defQueue.isLOHP && defQueue.isLOHP === 2020 ) {
+					defQueue.items.push( setupPrivacy );
+				} else {
+					setupPrivacy();
+				}
+
+			} )();
+		</script>
+
+		<!-- CCPA [end] -->
+		
+	<div id="carousel-reblog-box">
+		<form action="#" name="carousel-reblog">
+			<textarea id="carousel-reblog-content" name="carousel-reblog-content" placeholder="Ajoutez votre grain de sel personnel... (facultatif)"></textarea>
+			<label for="carousel-reblog-to-blog-id" id="carousel-reblog-lblogid">Publier sur</label>
+			<select name="carousel-reblog-to-blog-id" id="carousel-reblog-to-blog-id">
+						</select>
+
+			<div class="submit">
+				<span class="canceltext"><a href="#" class="cancel">Annuler</a></span>
+				<input type="submit" name="carousel-reblog-submit" class="button" id="carousel-reblog-submit" value="Reblog Article" />
+				<input type="hidden" id="carousel-reblog-blog-id" value="27116365" />
+				<input type="hidden" id="carousel-reblog-blog-url" value="https://cafaitgenre.org" />
+				<input type="hidden" id="carousel-reblog-blog-title" value="Genre !" />
+				<input type="hidden" id="carousel-reblog-post-url" value="" />
+				<input type="hidden" id="carousel-reblog-post-title" value="" />
+			</div>
+
+			<input type="hidden" id="_wpnonce" name="_wpnonce" value="9cf7ca1c98" /><input type="hidden" name="_wp_http_referer" value="/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/" />		</form>
+
+		<div class="arrow"></div>
+	</div>
+
+	<script type="text/javascript">
+		window.WPCOM_sharing_counts = {"https:\/\/cafaitgenre.org\/2013\/06\/05\/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe\/":2109};
+	</script>
+					<div id="sharing_email" style="display: none;">
+		<form action="/2013/06/05/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe/" method="post">
+			<label for="target_email">Envoyer à l'adresse e-mail</label>
+			<input type="email" name="target_email" id="target_email" value="" />
+
+			
+				<label for="source_name">Votre nom</label>
+				<input type="text" name="source_name" id="source_name" value="" />
+
+				<label for="source_email">Votre adresse e-mail</label>
+				<input type="email" name="source_email" id="source_email" value="" />
+
+						<input type="text" id="jetpack-source_f_name" name="source_f_name" class="input" value="" size="25" autocomplete="off" title="Ce champ est utilisé pour la validation du formulaire et ne doit pas être changé" />
+			
+			<div
+				class="g-recaptcha"
+				data-sitekey="6LcmyE0UAAAAALID28yVNg7pFCodGaArJzHitez_"
+				data-theme="light"
+				data-type="image"
+				data-tabindex="0"></div>
+			<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?hl=fr" async></script>
+			
+			<img style="float: right; display: none" class="loading" src="https://s0.wp.com/wp-content/mu-plugins/post-flair/sharing/images/loading.gif" alt="loading" width="16" height="16" />
+			<input type="submit" value="Envoyer un e-mail" class="sharing_send" />
+			<a rel="nofollow" href="#cancel" class="sharing_cancel" role="button">Annuler</a>
+
+			<div class="errors errors-1" style="display: none;">
+				L'article n'a pas été envoyé - Vérifiez vos adresses e-mail&nbsp;!			</div>
+
+			<div class="errors errors-2" style="display: none;">
+				La vérification e-mail a échoué, veuillez réessayer			</div>
+
+			<div class="errors errors-3" style="display: none;">
+				Impossible de partager les articles de votre blog par e-mail.			</div>
+		</form>
+	</div>
+<div class="widget widget_eu_cookie_law_widget"><div
+	class="hide-on-button ads-active"
+	data-hide-timeout="30"
+	data-consent-expiration="180"
+	id="eu-cookie-law"
+>
+	<form method="post">
+		<input type="submit" value="Fermer et accepter" class="accept" />
+
+		Confidentialité &amp; Cookies : Ce site utilise des cookies. En continuant à utiliser ce site, vous acceptez leur utilisation.<br />
+Pour en savoir davantage, y compris comment contrôler les cookies, voir :
+		<a href="https://automattic.com/cookies" >
+			Politique relative aux cookies		</a>
+ </form>
+</div>
+</div><link rel='stylesheet' id='all-css-0-3' href='https://s0.wp.com/wp-content/mu-plugins/carousel/jetpack-carousel.css?m=1563361695h&cssminify=yes' type='text/css' media='all' />
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyFUEFSwzAM/BCOCKSQHpi+JdhqKkeR3chOCK+vC+mhwAwnabSr3ZVgicYGSSgJvILDmSzGj8rrA9xDMWgaUbXr8Q/UnzNO61Yqkplw+ZfmMcXODmZCpc9fqmM2kXNPosA0oEJZynjqxDFONzKJ5ewKeA1PmmBGcWG6QjHweiTmaiT5qX0TPmZmo5TQoKNE0m+WUD/W7evzy74BwUW/Ur5zsMPmUvpCLR/R77HZ7j2Mb/Wu3T+1TVM3/gLyqYDg'></script>
+<script type='text/javascript'>
+( 'fetch' in window ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-fetch.min.js?m=1573572739h&#038;ver=3.0.0"></scr' + 'ipt>' );( document.contains ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-node-contains.min.js?m=1540208548h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-dom-rect.min.js?m=1585663916h&#038;ver=3.42.0"></scr' + 'ipt>' );( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-url.min.js?m=1585663916h&#038;ver=3.6.4"></scr' + 'ipt>' );( window.FormData && window.FormData.prototype.keys ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-formdata.min.js?m=1550600082h&#038;ver=3.0.12"></scr' + 'ipt>' );( Element.prototype.matches && Element.prototype.closest ) || document.write( '<script src="https://s0.wp.com/wp-includes/js/dist/vendor/wp-polyfill-element-closest.min.js?m=1540208548h&#038;ver=2.0.2"></scr' + 'ipt>' );
+( window.URL && window.URL.prototype && window.URLSearchParams ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-url.min.7490158b.js?m=1588209800h&#038;ver=3.6.4"></scr' + 'ipt>' );
+( window.DOMRect ) || document.write( '<script src="https://s0.wp.com/wp-content/plugins/gutenberg-core/8.0.0/vendor/wp-polyfill-dom-rect.7e21c103.js?m=1588209800h&#038;ver=3.42.0"></scr' + 'ipt>' );
+</script>
+<script src='https://s0.wp.com/wp-includes/js/dist/vendor/lodash.min.js?m=1573572739h&#038;ver=4.17.15'></script>
+<script>
+window.lodash = _.noConflict();
+</script>
+<script>
+var comment_like_text = {"loading":"chargement\u2026"};
+</script>
+<script>
+var jpfbembed = {"appid":"249643311490","locale":"fr_FR"};
+</script>
+<script>
+var actionbardata = {"siteID":"27116365","siteName":"Genre !","siteURL":"https:\/\/cafaitgenre.org","icon":"<img alt='' src='https:\/\/s0.wp.com\/i\/logo\/wpcom-gray-white.png' class='avatar avatar-50' height='50' width='50' \/>","canManageOptions":"","canCustomizeSite":"","isFollowing":"","themeSlug":"pub\/confit","signupURL":"https:\/\/wordpress.com\/start\/","loginURL":"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fcafaitgenre.org%2F2013%2F06%2F05%2Fdans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe%2F&signup_flow=account&domain=cafaitgenre.org","themeURL":"https:\/\/wordpress.com\/theme\/confit\/","xhrURL":"https:\/\/cafaitgenre.org\/wp-admin\/admin-ajax.php","nonce":"08de5007a5","isSingular":"1","isFolded":"","isLoggedIn":"","isMobile":"","subscribeNonce":"<input type=\"hidden\" id=\"_wpnonce\" name=\"_wpnonce\" value=\"bb3655026b\" \/>","referer":"https:\/\/cafaitgenre.org\/2013\/06\/05\/dans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe\/","canFollow":"1","feedID":"1313951","statusMessage":"","customizeLink":"https:\/\/cafaitgenre.wordpress.com\/wp-admin\/customize.php?url=https%3A%2F%2Fcafaitgenre.wordpress.com%2F2013%2F06%2F05%2Fdans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe%2F","postID":"2109","shortlink":"https:\/\/wp.me\/p1PMcJ-y1","canEditPost":"","editLink":"https:\/\/wordpress.com\/post\/cafaitgenre.org\/2109","statsLink":"https:\/\/wordpress.com\/stats\/post\/2109\/cafaitgenre.org","i18n":{"view":"Afficher le site","follow":"Suivre","following":"Abonn\u00e9","edit":"Modifier","login":"Connexion","signup":"S'inscrire","customize":"Personnaliser","report":"Signaler ce contenu","themeInfo":"Obtenir le th\u00e8me: Confit","shortlink":"Copier shortlink","copied":"Copi\u00e9","followedText":"Les nouveaux articles de ce site appara\u00eetront d\u00e9sormais dans votre <a href=\"https:\/\/wordpress.com\/\">Lecteur<\/a>","foldBar":"R\u00e9duire cette barre","unfoldBar":"\u00c9tendre cette barre","editSubs":"G\u00e9rer les abonnements","viewReader":"Voir le site dans le Lecteur","viewReadPost":"Voir l\u2019article dans le Lecteur","subscribe":"M\u2019inscrire","enterEmail":"Entrez votre adresse e-mail","followers":"Rejoignez 10&nbsp;500 autres abonn\u00e9s","alreadyUser":"Vous disposez d\u00e9j\u00e0 d\u02bcun compte WordPress ? <a href=\"https:\/\/wordpress.com\/log-in?redirect_to=https%3A%2F%2Fcafaitgenre.org%2F2013%2F06%2F05%2Fdans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe%2F&signup_flow=account&domain=cafaitgenre.org\">Connectez-vous maintenant.<\/a>","stats":"Statistiques"}};
+</script>
+<script>
+var jetpackCarouselStrings = {"widths":[370,700,1000,1200,1400,2000],"is_logged_in":"","lang":"fr","ajaxurl":"https:\/\/cafaitgenre.org\/wp-admin\/admin-ajax.php","nonce":"e1e93fd6ec","display_exif":"1","display_geo":"1","single_image_gallery":"1","single_image_gallery_media_file":"","background_color":"black","comment":"Commentaire","post_comment":"Laisser un commentaire","write_comment":"\u00c9crire un commentaire...","loading_comments":"Chargement des commentaires\u2026","download_original":"Afficher dans sa taille r\u00e9elle <span class=\"photo-size\">{0}<span class=\"photo-size-times\">\u00d7<\/span>{1}<\/span>.","no_comment_text":"Veuillez ajouter du contenu \u00e0 votre commentaire.","no_comment_email":"Merci de renseigner une adresse e-mail.","no_comment_author":"Merci de renseigner votre nom.","comment_post_error":"Une erreur s'est produite \u00e0 la publication de votre commentaire. Veuillez nous en excuser, et r\u00e9essayer dans quelques instants.","comment_approved":"Votre commentaire a \u00e9t\u00e9 approuv\u00e9.","comment_unapproved":"Votre commentaire est en attente de validation.","camera":"Appareil photo","aperture":"Ouverture","shutter_speed":"Vitesse d'obturation","focal_length":"Focale","copyright":"Copyright","comment_registration":"0","require_name_email":"1","login_url":"https:\/\/cafaitgenre.wordpress.com\/wp-login.php?redirect_to=https%3A%2F%2Fcafaitgenre.org%2F2013%2F06%2F05%2Fdans-ma-bibliotheque-simone-de-beauvoir-le-deuxieme-sexe%2F","blog_id":"27116365","meta_data":["camera","aperture","shutter_speed","focal_length","copyright"],"local_comments_commenting_as":"<fieldset><label for=\"email\">E-mail (requis)<\/label> <input type=\"text\" name=\"email\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-email-field\" \/><\/fieldset><fieldset><label for=\"author\">Nom (requis)<\/label> <input type=\"text\" name=\"author\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-author-field\" \/><\/fieldset><fieldset><label for=\"url\">Site web<\/label> <input type=\"text\" name=\"url\" class=\"jp-carousel-comment-form-field jp-carousel-comment-form-text-field\" id=\"jp-carousel-comment-form-url-field\" \/><\/fieldset>","reblog":"Reblog","reblogged":"Reblogu\u00e9","reblog_add_thoughts":"Ajoutez votre grain de sel personnel... (facultatif)","reblogging":"Reblogging...","post_reblog":"Relais d\u2019article","stats_query_args":"blog=27116365&v=wpcom&tz=2&user_id=0&subd=cafaitgenre","is_public":"1","reblog_enabled":""};
+</script>
+<script>
+var sharing_js_options = {"lang":"fr","counts":"1","is_stats_active":"1"};
+</script>
+<script type='text/javascript' src='https://s0.wp.com/_static/??-eJyVkt1uwjAMhV9oqenotnIx7VGmtHGL2/wtTuh4+6WCMkCoEldJjv05zolh8qJ1NqKN4HXqyTL0KR8bDH2OBIS62BQbaBJpBVTWFsgq/C0GfoHnYOWMCCjVcb1Cl7QWTBEFKopke3GKQLkp64/t+64CixN72Y6i0a4dGRRxhFYGlxj1SRQHwun+CpPEckvrjMmS0DQiw8CgqQGeyOMz0I2wgGRbndRtQkCvj4Uhe1897tHkVJ+anGs7ijPFRmYPMphWmplI9RgZMOWoGwmFlhNENF7LiHf6Sp0B4+wlfOe+oZMtNpkSaBpUK5RU+TGikQGM5Igh74Q7YAg0v/yiPVkhhtwJr0FtJGdn6LJ7ZDv7f6ev9eEnYTiel+I669FvnwdqcUgswlp/I7HBKLZ56k+GumBW8r3jKDotKQDvZcjTvqwZ+jKf5Vu9e62rqqyGP4vBW5E='></script>
+<script type='text/javascript'>
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-twitter', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtwitter', 'menubar=1,resizable=1,width=600,height=350' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-facebook', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+var windowOpen;
+			jQuery( document.body ).on( 'click', 'a.share-tumblr', function() {
+				// If there's another sharing window open, close it.
+				if ( 'undefined' !== typeof windowOpen ) {
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery( this ).attr( 'href' ), 'wpcomtumblr', 'menubar=1,resizable=1,width=450,height=450' );
+				return false;
+			});
+</script>
+<script type="text/javascript">
+// <![CDATA[
+(function() {
+try{
+  if ( window.external &&'msIsSiteMode' in window.external) {
+    if (window.external.msIsSiteMode()) {
+      var jl = document.createElement('script');
+      jl.type='text/javascript';
+      jl.async=true;
+      jl.src='/wp-content/plugins/ie-sitemode/custom-jumplist.php';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(jl, s);
+    }
+  }
+}catch(e){}
+})();
+// ]]>
+</script>		<iframe src='https://widgets.wp.com/likes/master.html?ver=20190321#ver=20190321&amp;lang=fr' scrolling='no' id='likes-master' name='likes-master' style='display:none;'></iframe>
+		<div id='likes-other-gravatars'><div class="likes-text"><span>%d</span> blogueurs aiment cette page :</div><ul class="wpl-avatars sd-like-gravatars"></ul></div>
+<script src="//stats.wp.com/w.js?61" type="text/javascript" async defer></script>
+<script type="text/javascript">
+_tkq = window._tkq || [];
+_stq = window._stq || [];
+_tkq.push(['storeContext', {'blog_id':'27116365','blog_tz':'2','user_lang':'fr','blog_lang':'fr','user_id':'0'}]);
+_stq.push(['view', {'blog':'27116365','v':'wpcom','tz':'2','user_id':'0','post':'2109','subd':'cafaitgenre'}]);
+_stq.push(['extra', {'crypt':'UE5XaGUuOTlwaD85flAmcm1mcmZsaDhkV11YdWtpP0NsWnVkPS9sL0ViLndld3AyMWJHeTE5ZSxINUQvYTM1OTF4ZXlaSXdXZ3JnTW9hUHdSdVdnLmFGd01DWXpRfkl6N3d4VXdJek95SWNLaXJOay1sREx+aXlOdkYuU19qZlVNTWxvUFBJTzdQcFsuRElyTj9rREdhJVZ4NzVYXW0tdlZIR05TY1lMNEY3L1ZNR0lyfHpReCZZW2k0MVprWVtufHRPdTQxVFRdMS18Z3NuZ1AxbUJBcHFEVVYrYz1sU2swSk5iVHlLWywuYnFySytlWGoxWStmd2FWV11YJkF5WkZBVEtZSjRbVXhLN1RocjVzdHV2bVhWQ3FKVUtVSl8wPUtO'}]);
+_stq.push([ 'clickTrackerInit', '27116365', '2109' ]);
+	</script>
+<noscript><img src="https://pixel.wp.com/b.gif?v=noscript" style="height:0px;width:0px;overflow:hidden" alt="" /></noscript>
+<script>
+if ( 'object' === typeof wpcom_mobile_user_agent_info ) {
+
+	wpcom_mobile_user_agent_info.init();
+	var mobileStatsQueryString = "";
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedPlatformName )
+		mobileStatsQueryString += "&x_" + 'mobile_platforms' + '=' + wpcom_mobile_user_agent_info.matchedPlatformName;
+	
+	if( false !== wpcom_mobile_user_agent_info.matchedUserAgentName )
+		mobileStatsQueryString += "&x_" + 'mobile_devices' + '=' + wpcom_mobile_user_agent_info.matchedUserAgentName;
+	
+	if( wpcom_mobile_user_agent_info.isIPad() )
+		mobileStatsQueryString += "&x_" + 'ipad_views' + '=' + 'views';
+
+	if( "" != mobileStatsQueryString ) {
+		new Image().src = document.location.protocol + '//pixel.wp.com/g.gif?v=wpcom-no-pv' + mobileStatsQueryString + '&baba=' + Math.random();
+	}
+	
+}
+</script>
+</body>
+</html>
