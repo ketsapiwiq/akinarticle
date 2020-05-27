@@ -22,6 +22,7 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 from sklearn.model_selection import GridSearchCV
 from pprint import pprint
 
+# %%
 # Plotting tools
 import pyLDAvis
 import pyLDAvis.sklearn
@@ -39,24 +40,28 @@ from collections import Counter
 # <h1>Load in Dataset
 
 # %%
-df = pd.DataFrame()
-with open('data/articles/readable_bafe.jsonl', 'r') as file:
-    for line in file.readline():
-        df = df + pd.read_json('../Data/df_with_gensim_summaries.csv')
-
+df = pd.read_json('data/articles/readable_bafe.jsonl', lines=True)
 
 # %%
-df.drop(['Unnamed: 0', 'Unnamed: 0.1.1'], axis = 1, inplace = True)
-
+# Not sure if working
+df = df.drop_duplicates(subset = "content")
+# Should drop superfluous columns
+# df.drop(['content', 'date'], axis = 1, inplace = True)
 
 # %%
-#df.head()
+import re
+pat = re.compile('<.*?>')
+# Should operate on plain_content to delete all HTML tags.
+df['plain_content'] = df['plain_content'].replace(pat, '')
+
+# %%
+df.head()
 
 # %% [markdown]
 # <h3>Tokenize
 
 # %%
-df.first_100 = df.first_100.str.lower()
+df. = df.content.str.lower()
 
 
 # %%
