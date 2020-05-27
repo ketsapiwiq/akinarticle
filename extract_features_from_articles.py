@@ -32,7 +32,7 @@ import seaborn as sns
 
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
-from sklearn.metrics import calinski_harabaz_score
+# from sklearn.metrics import calinski_harabaz_score
 
 from collections import Counter
 
@@ -43,16 +43,17 @@ from collections import Counter
 df = pd.read_json('data/articles/readable_bafe.jsonl', lines=True)
 
 # %%
-# Not sure if working
-df = df.drop_duplicates(subset = "content")
-# Should drop superfluous columns
-# df.drop(['content', 'date'], axis = 1, inplace = True)
-
+df = df.dropna(subset = ["plain_content"], axis='index', how='all')
+#  drop superfluous columns
+try:
+    df = df.drop(['plain_text'], axis = 1)
+except KeyError:
+    pass
 # %%
 import re
 pat = re.compile('<.*?>')
 # Should operate on plain_content to delete all HTML tags.
-df['plain_content'] = df['plain_content'].replace(pat, '')
+df.plain_content = df.plain_content.replace(pat, '')
 
 # %%
 df.head()
@@ -61,23 +62,20 @@ df.head()
 # <h3>Tokenize
 
 # %%
-df. = df.content.str.lower()
+df.plain_content = df.plain_content.str.lower()
 
 
 # %%
-df['tokenized_first_100'] = df.first_100.apply(lambda x: word_tokenize(x, language = 'en'))
+df['tokenized_content'] = df.plain_content.apply(lambda x: word_tokenize(x, language = 'french') if x else x)
+
+# %%
+df.head()
 
 # %% [markdown]
 # <h3>Remove Stop Words
 
 # %%
-stops = list(set(stopwords.words('english'))) + list(punctuation) + ['s', "'", 't', 'and', '"', 'a', 'or', '/', 'in',
-                                                                    'for', '&', '-', "''"]
-
-
-# %%
-#df.head()
-
+stops = list(set(stopwords.words('french'))) + list(punctuation) + []
 
 # %%
 #function to remove stop words
@@ -95,46 +93,48 @@ def remove_stops(text):
 
 
 # %%
-df['first_100_no_stops'] = df['tokenized_first_100'].apply(lambda x: remove_stops(x))
+df['no_stops_content'] = df['tokenized_content'].apply(lambda x: remove_stops(x) if x else x)
 
 
 # %%
 #verify that it worked
-#df.head()
+df.head()
 
 # %% [markdown]
-# <h3>Lemmatization
+# ### Lemmatization
 
 # %%
-#initialize WordNetLemmatizer
-lemmatizer = nltk.stem.WordNetLemmatizer()
-
+#lemmatizer = nltk.stem.WordNetLemmatizer()
+import spacy
+spacy_french = spacy.load('fr_core_news_md')
 
 # %%
 #function to lemmatize text
-def lemmatize_text(text):
+def lemmatize_list(list):
     lemmatized = []
-    for word in text:
-        lemmatized.append(lemmatizer.lemmatize(word))
+    for word in list:
+        doc = spacy_french(word)
+        for item in doc:
+            lemmatized.append(item.lemma_)
     return lemmatized
-        
 
 
 # %%
-df['lemmatize_first_100'] = df['first_100_no_stops'].apply(lemmatize_text)
+df['lemmatized_content'] = df['no_stops_content'].apply(lemmatize_list)
 
 
 # %%
-df['lemmatize_first_100'] = df['lemmatize_first_100'].apply(lambda x: ' '.join(x))
+# Should fix the string to list to string again, especially since spacy doesn't need it
+df['lemmatized_content'] = df['lemmatized_content'].apply(lambda x: ' '.join(x))
 
 
 # %%
-#df.head()
+df.head()
 
 
 # %%
 #Checkpoint -- save to csv
-#df.to_csv('df_with_lemmings.csv')
+df.to_csv('df_with_lemmings.csv')
 
 # %% [markdown]
 # <h3>KMEANS CLUSTERING
