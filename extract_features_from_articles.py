@@ -62,11 +62,15 @@ df.head()
 # <h3>Tokenize
 
 # %%
-df.plain_content = df.plain_content.str.lower()
+# To be rewritten/deleted for spacy
+
+# df.plain_content = df.plain_content.str.lower()
 
 
 # %%
-df['tokenized_content'] = df.plain_content.apply(lambda x: word_tokenize(x, language = 'french') if x else x)
+# To be rewritten/deleted for spacy
+
+# df['tokenized_content'] = df.plain_content.apply(lambda x: word_tokenize(x, language = 'french') if x else x)
 
 # %%
 df.head()
@@ -75,6 +79,8 @@ df.head()
 # <h3>Remove Stop Words
 
 # %%
+# To be rewritten for spacy
+
 stops = list(set(stopwords.words('french'))) + list(punctuation) + []
 
 # %%
@@ -93,7 +99,8 @@ def remove_stops(text):
 
 
 # %%
-df['no_stops_content'] = df['tokenized_content'].apply(lambda x: remove_stops(x) if x else x)
+
+# df['no_stops_content'] = df['tokenized_content'].apply(lambda x: remove_stops(x) if x else x)
 
 
 # %%
@@ -104,27 +111,30 @@ df.head()
 # ### Lemmatization
 
 # %%
-#lemmatizer = nltk.stem.WordNetLemmatizer()
 import spacy
 spacy_french = spacy.load('fr_core_news_md')
 
 # %%
 #function to lemmatize text
-def lemmatize_list(list):
+def lemmatize_text(text):
     lemmatized = []
-    for word in list:
-        doc = spacy_french(word)
-        for item in doc:
-            lemmatized.append(item.lemma_)
+    nlp = spacy_french(text)
+    for item in nlp:
+        lemmatized.append(item.lemma_)
     return lemmatized
 
 
 # %%
-df['lemmatized_content'] = df['no_stops_content'].apply(lemmatize_list)
-
+# /!\ Highly inefficient
+# df['lemmatized_content'] = df['no_stops_content'].apply(lemmatize_list)
 
 # %%
-# Should fix the string to list to string again, especially since spacy doesn't need it
+# Spacy version 
+
+df['lemmatized_content'] = df.plain_content.apply(lambda x: lemmatize_text)
+
+# %%
+
 df['lemmatized_content'] = df['lemmatized_content'].apply(lambda x: ' '.join(x))
 
 
@@ -164,8 +174,8 @@ df.groupby('language').count()
 
 
 # %%
-#drop rows that are not english
-df = df.loc[df['language'] == 'en']
+#drop rows that are not french
+df = df.loc[df['language'] == 'fr']
 
 
 # %%
