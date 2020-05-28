@@ -1,0 +1,91 @@
+body {
+  line-height: 1.5;
+  background: #fff;
+  margin: 0;
+}
+
+input {
+  font-family: "America-mono";
+  text-transform: uppercase;
+  font-size: large;
+  border: 2px solid black;
+  padding: 5px 10px;
+  background-color: white;
+}
+
+a {
+  color: black;
+}
+
+a:hover,
+input:hover {
+  color: #666;
+}
+
+a img {
+  border: none;
+}
+
+/* America mono + America */
+@font-face {
+  font-family: "America-mono";
+  src: url("f/GT-America-Mono-Medium.eot");
+  src: local("☺"), url("f/GT-America-Mono-Medium.woff") format("woff"),
+    url("f/GT-America-Mono-Medium.ttf") format("truetype"),
+    url("f/GT-America-Mono-Medium.svg") format("svg");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "America";
+  src: url("f/GT-America-Extended-Black.eot");
+  src: local("☺"), url("f/GT-America-Extended-Black.woff") format("woff"),
+    url("f/GT-America-Extended-Black.ttf") format("truetype"),
+    url("f/GT-America-Extended-Black.svg") format("svg");
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* h1, */
+body {
+    background-color: white;
+  color: black;
+  font-family: "America-mono";
+  width: 80%;
+  /* text-transform: uppercase; */
+
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#guess,
+#suggest,
+header,
+h2,
+/* a, */
+.value {
+    text-transform: uppercase;
+    font-family: "America";
+}
+
+#guess, 
+#question {
+    font-family: "America-mono";
+    font-size: 2em;
+    color: red;
+    display: block;
+    padding: 50px 0;
+}
+
+#retrain,
+#display_data {
+    text-align: left;
+    float: left;
+}
+
+footer {
+  margin: 100px;
+  font-size: small;
+  color: #666;
+}
