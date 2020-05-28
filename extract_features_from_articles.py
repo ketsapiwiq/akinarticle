@@ -16,31 +16,19 @@ import numpy as np
 import pandas as pd
 import re, spacy, gensim
 
-# Sklearn
-from sklearn.decomposition import LatentDirichletAllocation, TruncatedSVD
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
-from sklearn.model_selection import GridSearchCV
-from pprint import pprint
-
-# %%
-# Plotting tools
-import pyLDAvis
-import pyLDAvis.sklearn
-import matplotlib.pyplot as plt
-get_ipython().run_line_magic('matplotlib', 'inline')
-import seaborn as sns
-
-from sklearn.feature_extraction.text import CountVectorizer
-from sklearn.feature_extraction.text import TfidfTransformer
-# from sklearn.metrics import calinski_harabaz_score
-
-from collections import Counter
 
 # %% [markdown]
 # <h1>Load in Dataset
 
 # %%
 df = pd.read_json('data/articles/readable_bafe.jsonl', lines=True)
+
+
+# %%
+# If performance is an issue, only do first 100
+preview = False
+if (preview):
+    df = df.head(100)
 
 # %%
 df = df.dropna(subset = ["plain_content"], axis='index', how='all')
@@ -59,59 +47,9 @@ df.plain_content = df.plain_content.replace(pat, '')
 df.head()
 
 # %% [markdown]
-# <h3>Tokenize
+# <h3>Tokenize and lemmatize
 
 # %%
-# To be rewritten/deleted for spacy
-
-# df.plain_content = df.plain_content.str.lower()
-
-
-# %%
-# To be rewritten/deleted for spacy
-
-# df['tokenized_content'] = df.plain_content.apply(lambda x: word_tokenize(x, language = 'french') if x else x)
-
-# %%
-df.head()
-
-# %% [markdown]
-# <h3>Remove Stop Words
-
-# %%
-# To be rewritten for spacy
-
-stops = list(set(stopwords.words('french'))) + list(punctuation) + []
-
-# %%
-#function to remove stop words
-def remove_stops(text):
-    text_no_stops = []
-    for i in text:
-        if i not in stops:
-            if len(i) == 1:
-                pass
-            else:
-                text_no_stops.append(i)
-        else:
-            pass
-    return text_no_stops
-
-
-# %%
-
-# df['no_stops_content'] = df['tokenized_content'].apply(lambda x: remove_stops(x) if x else x)
-
-
-# %%
-#verify that it worked
-df.head()
-
-# %% [markdown]
-# ### Lemmatization
-
-# %%
-import spacy
 spacy_french = spacy.load('fr_core_news_md')
 
 # %%
@@ -123,19 +61,65 @@ def lemmatize_text(text):
         lemmatized.append(item.lemma_)
     return lemmatized
 
+# %%
+# Spacy nlp on entries
+
+df['lemmatized_content_with_stop_words'] = df.plain_content.apply(lambda x: lemmatize_text(x))
+
+
 
 # %%
-# /!\ Highly inefficient
-# df['lemmatized_content'] = df['no_stops_content'].apply(lemmatize_list)
+#verify that it worked
+df.head()
+# Cimer la lemmatisation de "elle" c'est "lui"...
+
+#Checkpoint -- save to csv
+if not preview:
+    df.to_csv('df_with_lemmings_and_stopwords.csv')
+
+
+# %% [markdown]
+# <h3>Remove Stop Words
 
 # %%
-# Spacy version 
+stops = list(set(stopwords.words('french'))) + list(punctuation) + ["l'","d'","n'","c'","j'","m'","s'","qu'", 'cela', 'faire', 'comme', 'avoir', 'être']
 
-df['lemmatized_content'] = df.plain_content.apply(lambda x: lemmatize_text)
+# %%
+#function to remove stop words
+def remove_stops(word_list):
+    word_list_no_stops = []
+    # print(word_list)
+    if len(word_list) == 1:
+        return word_list
+    for word in word_list:
+        word = word.replace("’", "'")
+        if word not in stops and not (len(word) == 1):
+            word_list_no_stops.append(word)
+        else:
+            pass
+    return word_list_no_stops
+
 
 # %%
 
+df['lemmatized_content'] = df['lemmatized_content_with_stop_words'].apply(lambda x: remove_stops(x) if x else x)
+# df['lemmatized_content'] = df['lemmatized_content_with_stop_words'].apply(lambda x: remove_stops(x) if x and not x == ' nan' else x)
+
+
+# %%
+#verify that it worked
+df.head()
+
+
+
+# %%
+# recreate string
 df['lemmatized_content'] = df['lemmatized_content'].apply(lambda x: ' '.join(x))
+
+
+# %%
+
+df['lemmatized_content'] = df['lemmatized_content'].str.lower()
 
 
 # %%
@@ -144,20 +128,12 @@ df.head()
 
 # %%
 #Checkpoint -- save to csv
-df.to_csv('df_with_lemmings.csv')
+if not preview:
+    df.to_csv('df_with_lemmings.csv')
 
-# %% [markdown]
-# <h3>KMEANS CLUSTERING
 
 # %%
-from sklearn.feature_extraction import text
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.cluster import KMeans
-import numpy as np
-import pandas as pd
 from langdetect import detect
-from nltk.stem import PorterStemmer
-from nltk.stem.snowball import SnowballStemmer
 from nltk.corpus import words
 from nltk.tokenize import RegexpTokenizer
 import ast
@@ -166,7 +142,7 @@ import ast
 # <h3> Detect languages of articles
 
 # %%
-df['language'] = df['lemmatize_first_100'].apply(detect)
+df['language'] = df['lemmatized_content'].apply(detect)
 
 
 # %%
@@ -179,54 +155,12 @@ df = df.loc[df['language'] == 'fr']
 
 
 # %%
-#df.to_csv('df_english_articles.csv')
+if not preview:
+    df.to_csv('df_french_articles.csv')
 
 # %% [markdown]
 # <h3>Modeling
 
-# %%
-df = pd.read_csv('../Data/df_english_articles.csv')
-
 
 # %%
-stemmer = PorterStemmer()
-
-
-# %%
-#create function to stem each word in a list and concat the list
-def stem_list(lst):
-    stemmed_list = []
-    for i in lst:
-        stemmed_list.append(stemmer.stem(i))
-    stem_string = ' '.join(stemmed_list)
-    return stem_string
-
-
-# %%
-#convert list contained in string to a regular list so it can be stemmed
-df['stemmed'] = df["first_100_no_stops"].apply(lambda x: ast.literal_eval(x))
-
-
-# %%
-#stem words in list
-df['stemmed'] = df["stemmed"].apply(lambda x: stem_list(x))
-
-
-# %%
-#verify that it worked
-#df.head()
-
-
-# %%
-#drop specific duplicate rows
-df = df[~df['stemmed'].str.contains("archiveteam.org contain", case=False)]
-
-
-# %%
-df.shape
-
-
-# %%
-#CHECKPOINT --- SAVE TO CSV
-#df.to_csv('df_with_stems_final.csv')
-
+print(df.shape)
