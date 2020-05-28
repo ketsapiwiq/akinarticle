@@ -20,3 +20,6 @@ While playing, you can even use 'y', 'n', and 'u', to answer questions instead o
 * Export individual sheets *with LibreOffice* to UTF-8 CSV
 * Transform to SQL with [sqlizer.io](https://sqlizer.io)
 * Import into current SQLite databes with *DBeaver* or *DB Browser for SQLite*
+
+## Resources
+* OnevsRest: https://towardsdatascience.com/multi-label-text-classification-with-scikit-learn-30714b7819c5
