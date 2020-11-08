@@ -1,6 +1,0 @@
----
-title: "Jesus Christ’s Return to Earth"
-url: http://www.pewresearch.org/daily-number/jesus-christs-return-to-earth/
-keywords: christ,christs,americans,likely,jesus,white,college,earth,predict,2050,return
----
-By the year 2050, 41% of Americans believe that Jesus Christ definitely (23%) or probably (18%) will have returned to earth. However, a 46%-plurality of the public does not believe Christ will return during the next 40 years. Fully 58% of white evangelical Christians say Christ will return to earth in this period, by far the highest percentage in any religious group. Only about a third of Catholics (32%) and even fewer white mainline Protestants (27%) predict Christ's return to earth by 2050. One-in-five religiously unaffiliated Americans also see Christ returning during the next four decades. Americans with no college experience (59%) are much more likely than those with some college experience (35%) or college graduates (19%) to expect Jesus Christ's return. By region, those in the South (52%) are the most likely to predict a Second Coming by 2050. [Read More](https://www.pewresearch.org/pubs/1635/future-life-2050-computers-cancer-cure-space-travel-energy-world-war-terroist-jesus-return)

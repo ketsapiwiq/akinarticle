@@ -1,6 +1,0 @@
----
-title: "Lobbying: le gouvernement a édulcoré la réforme"
-url: http://mdpt.fr/2q4Oh8b
-keywords: édulcoré,ultime,sinscrire,transparence,soumis,gouvernement,votée,vie,tard,réforme,lobbying,sénateurs,semblait,éclairer
----
-Ultime dérobade. En matière de transparence, c'était pourtant l'une des plus belles conquêtes du quinquennat Hollande. [Votée en novembre 2016](https://www.legifrance.gouv.fr/eli/loi/2016/12/9/ECFM1605542L/jo#JORFSCTA000033558530), la loi anticorruption dite « Sapin 2 » imposait pour la première fois des règles de transparence à tous les lobbyistes de France, priés de s'inscrire sur un registre public et d'y déclarer leurs activités d'influence (déjeuners, colloques, etc.), le tout soumis au contrôle de la Haute autorité pour la transparence de la vie publique (HATVP). L'idée maîtresse semblait claire pour tout le monde, les Français allaient désormais connaître l'identité des députés, sénateurs, conseillers ministériels ou encore hauts fonctionnaires démarchés sur tel ou tel sujet, par tel ou tel lobby. Objectif : éclairer la fabrique des lois et favoriser l'équité entre représentants d'intérêts, petits et grands. Cinq mois plus tard, patatras. Le Medef est passé par là.

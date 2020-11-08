@@ -1,8 +1,0 @@
----
-title: "Affaire Traoré : Cazeneuve soutient la maire de Beaumont-sur-Oise"
-url: http://www.liberation.fr/direct/element/affaire-traore-cazeneuve-soutient-la-maire-de-beaumont-sur-oise_52674/
-keywords: famille,beaumontsuroise,suite,soutient,groux,affaire,maire,décès,traoré,dadama,reçu,cazeneuve
----
-Bernard Cazeneuve a reçu ce vendredi place Beauvau la maire de Beaumont-sur-Oise, Nathalie Groux (UDI), [«suite aux violences récurrentes consécutives au décès»](https://www.liberation.fr/france/2016/11/24/colere-a-beaumont-sur-oise-apres-l-incarceration-de-deux-freres-d-adama-traore_1530671) d\'Adama Traoré en juillet. Le jeune homme de 24 ans avait trouvé la mort dans la cour d\'une gendarmerie à la suite de son interpellation. Le ministre de l\'intérieur a reçu la maire très critiquée pour son attitude vis-à-vis de la famille Traoré et lui a confirmé «que les renforts d\'ores et déjà déployés» à Beaumont-sur-Oise et dans le Val d\'Oise seront «maintenus, voire renforcés, autant que nécessaire».
-
-Selon le communiqué du ministère, Cazeneuve a assuré Mme Groux et le président du département Arnaud Bazin de «son entier soutien», condamnant «les pressions et menaces» dont ils auraient fait l\'objet. Une seule phrase s\'adresse à la famille Traoré, qui a «droit à la vérité sur les circonstances du décès» d\'Adama, «ce à quoi s\'attache l\'autorité judiciaire». Interpellé sur l\'affaire par un député à l\'Assemblée [début novembre](http://www.lcp.fr/la-politique-en-video/interpelle-sur-la-mort-dadama-traore-cazeneuve-fustige-la-mise-en-cause), Cazeneuve n\'avait pas prononcé une seule fois le nom d\'Adama Traoré, préférant fustiger «la mise en cause permanente à longueur de semaines du travail fait par les forces de l\'ordre».
