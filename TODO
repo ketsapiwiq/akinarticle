@@ -1,0 +1,1 @@
+* use HAR instead of WARC: https://stackoverflow.com/questions/56442782/how-to-serialize-requests-response-object-as-har
